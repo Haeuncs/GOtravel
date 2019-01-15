@@ -78,11 +78,11 @@ class searchTravelLocationViewController:UIViewController{
 //            }
 //        }
         
-        let name = UIApplication.willEnterForegroundNotification
-        foregroundRestorationObserver = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil, using: { [weak self] (_) in
-            // Get a new location when returning from Settings to enable location services.
-            self?.locationManager.requestLocation()
-        })
+//        let name = UIApplication.willEnterForegroundNotification
+//        foregroundRestorationObserver = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil, using: { [weak self] (_) in
+//            // Get a new location when returning from Settings to enable location services.
+//            self?.locationManager.requestLocation()
+//        })
     }
     
     override func viewDidLoad() {
@@ -112,7 +112,7 @@ class searchTravelLocationViewController:UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        locationManager.requestLocation()
+//        locationManager.requestLocation()
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -175,7 +175,7 @@ class searchTravelLocationViewController:UIViewController{
 //                print("error")
                 return
             }
-            print(response?.mapItems)
+//            print(response?.mapItems)
 
             self?.places = response?.mapItems
             
@@ -185,18 +185,19 @@ class searchTravelLocationViewController:UIViewController{
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
 
             let mapItem = self?.places?[0]
-            print(mapItem)
             // Pass the new bounding region to the map destination view controller and center it on the single placemark.
             var region = self?.boundingRegion
             region?.center = mapItem!.placemark.coordinate
             
             let uvc = self!.storyboard!.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-            
-            region?.center = mapItem!.placemark.coordinate
+                        
             uvc.boundingRegion = region
             // Pass the individual place to our map destination view controller.
             uvc.mapItems = [mapItem] as! [MKMapItem]
             
+            print(mapItem)
+            print(self!.boundingRegion)
+
             self!.navigationController?.pushViewController(uvc, animated: true)
             
 

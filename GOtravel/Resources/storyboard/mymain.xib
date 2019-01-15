@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="mymain" customModule="GOtravel" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="OEz-Cc-0lM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="japan-2014618_1280" translatesAutoresizingMaskIntoConstraints="NO" id="RxS-oA-9hW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+                </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rug-B9-ZvY">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bWI-r1-HZg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jcH-Iv-VP0">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="336"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ENC-Sg-jbf">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="168"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일본 여행" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzb-6c-cnE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오사카" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saZ-Vt-8py">
+                                    <rect key="frame" x="0.0" y="84" width="375" height="84"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qd2-sx-89f">
+                            <rect key="frame" x="0.0" y="168" width="375" height="168"/>
+                            <color key="backgroundColor" red="0.82090871710526314" green="0.45499338204199974" blue="0.46109197095972076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="55"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="RxS-oA-9hW" secondAttribute="bottom" id="Jw4-cd-p5A"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Rug-B9-ZvY" secondAttribute="bottom" id="NDd-gT-h4V"/>
+                <constraint firstItem="Rug-B9-ZvY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ONI-CQ-ddE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Rug-B9-ZvY" secondAttribute="trailing" id="UAZ-je-XUC"/>
+                <constraint firstItem="Rug-B9-ZvY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Wty-cu-MAB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jcH-Iv-VP0" secondAttribute="trailing" id="axM-bi-w0L"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="jcH-Iv-VP0" secondAttribute="bottom" id="de0-U6-a5Z"/>
+                <constraint firstItem="RxS-oA-9hW" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="dtN-tZ-GpN"/>
+                <constraint firstItem="RxS-oA-9hW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="h4M-dz-QKQ"/>
+                <constraint firstItem="RxS-oA-9hW" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="hcu-ge-2dC"/>
+                <constraint firstItem="jcH-Iv-VP0" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="hlK-NG-m49"/>
+                <constraint firstItem="jcH-Iv-VP0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="pTH-oS-Jv0"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-84" y="-224"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="japan-2014618_1280" width="1280" height="851"/>
+    </resources>
+</document>

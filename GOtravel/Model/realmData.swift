@@ -14,7 +14,6 @@ class countryRealm : Object{
     @objc dynamic var country: String = ""
     @objc dynamic var city: String = ""
     @objc dynamic var date: Date?
-    @objc dynamic var days: Int = 0
     @objc dynamic var period: Int = 0
     @objc dynamic var longitude: Double = 0.0
     @objc dynamic var latitude: Double = 0.0

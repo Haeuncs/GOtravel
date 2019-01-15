@@ -158,7 +158,9 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             cell.isHidden=false
             cell.lbl.text="\(calcDate)"
             
-            if date.isInSameYear(date: today) && date.isInSameMonth(date: today) && date.isInSameDay(date: today) {                      cell.lbl.textColor = .red
+            if date.isInSameYear(date: today) && date.isInSameMonth(date: today) && date.isInSameDay(date: today) {
+                cell.lbl.textColor = .red
+                cell.isUserInteractionEnabled=true
             }
             
             if (dateRange.contains(date)){
@@ -207,32 +209,41 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             firstDate = date
             dateRange.append(firstDate!)
             myCollectionView.reloadData()
-            
         }else if firstDate != nil && secondData == nil{
             secondData = date
             if firstDate == secondData{
-                return
+                dateRange.removeAll()
+                myCollectionView.reloadData()
             }else{
                 // 만약 첫번째 터치가 두번째 터치보다 크다면 SWAP
                 if firstDate! > secondData!{
                     let temp = secondData
                     secondData = firstDate
-                    firstDate = Calendar.current.date(byAdding: .day, value: -1, to: temp!)
+                    firstDate = temp
+//                    firstDate = Calendar.current.date(byAdding: .day, value: -1, to: temp!)
                 }
+                dateRange.append(date)
                 var addDate = Calendar.current.date(byAdding: .day, value: 1, to: firstDate!)
-                while addDate! <= secondData! {
+//                print(addDate)
+                while addDate! < secondData! {
                     dateRange.append(addDate!)
                     addDate = Calendar.current.date(byAdding: .day, value: 1, to: addDate!)!
                 }
                 dateRange = dateRange.sorted(by: {$0 < $1})
-                print(dateRange)
+//                print(dateRange)
+                // 몇 일 남았는지 계산
                 let interval = dateRange.last!.timeIntervalSince(dateRange.first!)
                 let days = Int(interval / 86400)
+                // D-day 계산
                 let inervalToday = dateRange.first!.timeIntervalSince(Date())
                 let dday = Int(inervalToday / 86400)
+                
                 DispatchQueue.main.async {
                     self.ddayLabel.text = "\(days)박 \(days+1)일, D-\(dday+1)"
                     self.addBtn.isHidden = false
+                    ddayDB = days + 1
+                    nightDB = dday + 1
+                    dayDate = self.dateRange.first!
                 }
                 myCollectionView.reloadData()
             }
@@ -343,38 +354,46 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         ddayLabel.bottomAnchor.constraint(equalTo: monthView.topAnchor).isActive=true
         //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
         ddayLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-
-        addSubview(addBtn)
-        addBtn.topAnchor.constraint(equalTo: myCollectionView.bottomAnchor,constant: 20).isActive=true
-        //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
-        addBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        addBtn.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive=true
-        addBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive=true
-        addBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
-
+//
+//        addSubview(addBtn)
+//        addBtn.topAnchor.constraint(equalTo: myCollectionView.bottomAnchor,constant: 20).isActive=true
+//        //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
+//        addBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        addBtn.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive=true
+//        addBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive=true
+//        addBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
+//
         }
-    func buttonAction(sender: UIButton!) {
+    @objc func buttonAction(sender: UIButton!) {
         let btnsendtag: UIButton = sender
+        print("select")
         if btnsendtag.tag == 0 {
             let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
             let uvc = sb.instantiateViewController(withIdentifier: "mainViewController")
             let nav = UINavigationController(rootViewController: uvc)
 
             nav.popToRootViewController(animated: true)
         }
     }
+    @objc func buttonClicked(sender : UIButton){
+        print("??SFLnkdshfhdslj")
+//        let alert = UIAlertController(title: "Clicked", message: "You have clicked on the button", preferredStyle: .alert)
+//
+//        present(alert, animated: true, completion: nil)
+    }
 
     let addBtn : UIButton = {
         let b = UIButton()
         b.translatesAutoresizingMaskIntoConstraints=false
         b.layer.cornerRadius = 5
-        b.puls()
+//        b.puls()
         b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
         b.isHidden = true
         b.setTitle("일정 추가하기", for: .normal)
         b.setTitleColor(.white, for: .normal)
         b.tag = 0
+        b.isSelected = true
+        b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         return b
     }()
     let monthView: MonthView = {
@@ -527,12 +546,14 @@ extension UIButton {
         pulse.toValue = 1.0
         pulse.autoreverses = true
         pulse.repeatCount = Float.infinity
+        
 //        pulse.initialVelocity = 0.9
 //        pulse.damping = 1.0
         layer.add(pulse,forKey:nil)
 
     }
 }
+
 
 
 
