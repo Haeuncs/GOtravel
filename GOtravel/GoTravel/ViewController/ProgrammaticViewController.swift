@@ -144,14 +144,16 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
 		return countryRealmDB?.count ?? 0
 	}
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
         UIView.animate(withDuration: 0.3) {
-            if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
-                cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
+            if (cell != nil) {
+                cell!.contentView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
+        detailView.selectCellColor = cell?.contentView.backgroundColor
         self.present(nav1, animated: true, completion: nil)
     }
     

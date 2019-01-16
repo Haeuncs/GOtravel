@@ -39,7 +39,7 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일본 여행" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzb-6c-cnE">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="36"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
