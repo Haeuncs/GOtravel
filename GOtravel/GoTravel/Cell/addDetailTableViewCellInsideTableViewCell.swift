@@ -10,7 +10,7 @@ import UIKit
 class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        print("sub test style")
+//        print("sub test style")
         contentView.backgroundColor = .white
         initView()
     }
@@ -18,6 +18,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     func initView(){
         
         mainView.addSubview(timeLabel)
@@ -51,7 +52,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     }
     let colorView : UIView = {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

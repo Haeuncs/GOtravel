@@ -10,7 +10,6 @@
 		4A38F3D721EA6B030097914B /* Main.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BF721E5A2F00016DB49 /* Main.storyboard */; };
 		4A38F3D821EA6B070097914B /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BFC21E5A2F50016DB49 /* LaunchScreen.storyboard */; };
 		4A38F3DA21EA80820097914B /* mymain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A38F3D921EA80820097914B /* mymain.xib */; };
-		4A38F3DD21EA82130097914B /* mymain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38F3DC21EA82130097914B /* mymain.swift */; };
 		4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */; };
 		4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4F21E7C24B00CCE52F /* mainViewController.swift */; };
 		4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */; };
@@ -33,18 +32,24 @@
 		4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C221EB8E74004E2536 /* WeekdaysView.swift */; };
 		4AA331C721EB8EB0004E2536 /* calendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C621EB8EB0004E2536 /* calendarViewController.swift */; };
 		4AA331CE21ECA71A004E2536 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331CD21ECA71A004E2536 /* Extension.swift */; };
-		4AC7103C21EE10C600B20448 /* addDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* addDetailView.swift */; };
+		4AC7103C21EE10C600B20448 /* addDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* addDetailViewController.swift */; };
 		4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7103D21EE110C00B20448 /* detailTest.xib */; };
 		4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */; };
 		4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */; };
 		4AC7107421EFD5B200B20448 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */; };
+		4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */; };
+		4AC710A821F0B6D100B20448 /* exchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710A721F0B6D000B20448 /* exchangeViewController.swift */; };
+		4AC710AA21F0C6C900B20448 /* placeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */; };
+		4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */; };
+		4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */; };
+		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
+		4AC710B321F103EF00B20448 /* addDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* addDetailView.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.release.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.release.xcconfig"; sourceTree = "<group>"; };
 		4A38F3D921EA80820097914B /* mymain.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = mymain.xib; sourceTree = "<group>"; };
-		4A38F3DC21EA82130097914B /* mymain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mymain.swift; sourceTree = "<group>"; };
 		4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4A779F4F21E7C24B00CCE52F /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addTravelInfoViewController.swift; sourceTree = "<group>"; };
@@ -71,11 +76,18 @@
 		4AA331C221EB8E74004E2536 /* WeekdaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
 		4AA331C621EB8EB0004E2536 /* calendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarViewController.swift; sourceTree = "<group>"; };
 		4AA331CD21ECA71A004E2536 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		4AC7103B21EE10C600B20448 /* addDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailView.swift; sourceTree = "<group>"; };
+		4AC7103B21EE10C600B20448 /* addDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailViewController.swift; sourceTree = "<group>"; };
 		4AC7103D21EE110C00B20448 /* detailTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailTest.xib; sourceTree = "<group>"; };
 		4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
+		4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailViewTableViewDelegate.swift; sourceTree = "<group>"; };
+		4AC710A721F0B6D000B20448 /* exchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = exchangeViewController.swift; path = GOtravel/GoTravel/ViewController/exchangeViewController.swift; sourceTree = SOURCE_ROOT; };
+		4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeSearchViewController.swift; sourceTree = "<group>"; };
+		4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeSearchTableViewCell.swift; sourceTree = "<group>"; };
+		4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = googleMapViewController.swift; sourceTree = "<group>"; };
+		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
+		4AC710B221F103EF00B20448 /* addDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailView.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,15 +107,15 @@
 		4A38F3D621EA618A0097914B /* GoTravel */ = {
 			isa = PBXGroup;
 			children = (
+				4AC710AB21F0D36100B20448 /* Cell */,
+				4A779F5D21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift */,
 				4AC7107121EFD22300B20448 /* public */,
 				4AA331D021ECA848004E2536 /* View */,
 				4AA331CF21ECA823004E2536 /* ViewController */,
 				4AA331CB21ECA6EA004E2536 /* Extension */,
-				4AA331B421EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift */,
-				4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */,
 				4A779F5321E7C24B00CCE52F /* LocationManager.swift */,
 				4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */,
-				4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */,
+				4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */,
 			);
 			path = GoTravel;
 			sourceTree = "<group>";
@@ -122,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				4AA331BE21EB7119004E2536 /* realmData.swift */,
+				4AC710B021F0EE1400B20448 /* struct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -152,7 +165,6 @@
 				4A6EB2B021E64F0800A96C61 /* Model */,
 				4A969BFF21E5A2F50016DB49 /* Info.plist */,
 				4A779F4F21E7C24B00CCE52F /* mainViewController.swift */,
-				4A38F3DC21EA82130097914B /* mymain.swift */,
 			);
 			path = GOtravel;
 			sourceTree = "<group>";
@@ -172,14 +184,16 @@
 		4AA331CF21ECA823004E2536 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4AC710A721F0B6D000B20448 /* exchangeViewController.swift */,
 				4A969BF521E5A2F00016DB49 /* ViewController.swift */,
 				4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */,
 				4AA331B321EB3D92004E2536 /* ProgrammaticViewController.swift */,
 				4A779F5221E7C24B00CCE52F /* MapViewController.swift */,
-				4A779F5D21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift */,
 				4A779F5421E7C24B00CCE52F /* searchTravelLocationViewController.swift */,
 				4AA331C621EB8EB0004E2536 /* calendarViewController.swift */,
-				4AC7103B21EE10C600B20448 /* addDetailView.swift */,
+				4AC7103B21EE10C600B20448 /* addDetailViewController.swift */,
+				4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */,
+				4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -191,6 +205,7 @@
 				4AA331C021EB8E73004E2536 /* CalenderView.swift */,
 				4AA331C121EB8E74004E2536 /* MonthView.swift */,
 				4AA331C221EB8E74004E2536 /* WeekdaysView.swift */,
+				4AC710B221F103EF00B20448 /* addDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -211,6 +226,17 @@
 			children = (
 			);
 			path = public;
+			sourceTree = "<group>";
+		};
+		4AC710AB21F0D36100B20448 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */,
+				4AA331B421EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift */,
+				4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */,
+				4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		7EE67DA17128548DFC6AA525 /* Pods */ = {
@@ -242,6 +268,7 @@
 				4A969BED21E5A2F00016DB49 /* Frameworks */,
 				4A969BEE21E5A2F00016DB49 /* Resources */,
 				42B924D9955BB40D13940D17 /* [CP] Embed Pods Frameworks */,
+				B80A38B2D4E1155D8E113B6A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,20 +354,46 @@
 				"${BUILT_PRODUCTS_DIR}/CenteredCollectionView/CenteredCollectionView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FAPanels/FAPanels.framework",
+				"${BUILT_PRODUCTS_DIR}/FanMenu/FanMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/Macaw/Macaw.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CenteredCollectionView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FAPanels.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FanMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Macaw.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B80A38B2D4E1155D8E113B6A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -351,33 +404,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A38F3D821EA6B070097914B /* LaunchScreen.storyboard in Sources */,
-				4A38F3DD21EA82130097914B /* mymain.swift in Sources */,
 				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
 				4A38F3D721EA6B030097914B /* Main.storyboard in Sources */,
+				4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */,
 				4AA331B621EB3D92004E2536 /* ProgrammaticViewController.swift in Sources */,
 				4A779F5E21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+Extensions.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+Extensions.swift in Sources */,
+				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
 				4AA331C721EB8EB0004E2536 /* calendarViewController.swift in Sources */,
 				4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
 				4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */,
 				4AC7107421EFD5B200B20448 /* UIDevice+Extensions.swift in Sources */,
+				4AC710B121F0EE1400B20448 /* struct.swift in Sources */,
 				4A779F5921E7C24C00CCE52F /* MKPlacemark+Extension.swift in Sources */,
-				4AC7103C21EE10C600B20448 /* addDetailView.swift in Sources */,
+				4AC710B321F103EF00B20448 /* addDetailView.swift in Sources */,
+				4AC7103C21EE10C600B20448 /* addDetailViewController.swift in Sources */,
 				4A969BF421E5A2F00016DB49 /* AppDelegate.swift in Sources */,
+				4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */,
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
 				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,
 				4AA331CE21ECA71A004E2536 /* Extension.swift in Sources */,
 				4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
+				4AC710AA21F0C6C900B20448 /* placeSearchViewController.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift in Sources */,
 				4A779F5A21E7C24C00CCE52F /* MapViewController.swift in Sources */,
 				4A779F5B21E7C24C00CCE52F /* LocationManager.swift in Sources */,
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
+				4AC710A821F0B6D100B20448 /* exchangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

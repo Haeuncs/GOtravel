@@ -8,14 +8,16 @@
 
 import Foundation
 import UIKit
-var count = 0
+import RealmSwift
 
-public enum sizeConstant {
-    public static let paddingSize = 20
-}
+
 //let paddingSize = 10
 
 class addDetailViewController: UIViewController {
+    
+    var table_data = Array<TableData>()
+    let impact = UIImpactFeedbackGenerator() // 1
+    var currentIndexPath : IndexPath?
     var selectCellColor : UIColor?
     let arr = ["1일","2일","3일","4일"]
     let arr1 = ["인천공항","간사이 국제 공항","숙소","햅파이브"]
@@ -29,11 +31,57 @@ class addDetailViewController: UIViewController {
     }
 
     func initView(){
+
+        var new_elements:TableData
+        
+        new_elements = TableData()
+        new_elements.section = "Section 1"
+        new_elements.data.append("Element 1")
+        new_elements.data.append("Element 2")
+        new_elements.data.append("Element 3")
+        new_elements.data.append("Element 4")
+        new_elements.data.append("Element 5")
+        
+        table_data.append(new_elements)
+        
+        
+        new_elements = TableData()
+        new_elements.section = "Section 2"
+        new_elements.data.append("Element 1")
+        new_elements.data.append("Element 2")
+        
+        table_data.append(new_elements)
+        
+        new_elements = TableData()
+        new_elements.section = "Section 3"
+        new_elements.data.append("Element 1")
+        new_elements.data.append("Element 2")
+        new_elements.data.append("Element 3")
+        new_elements.data.append("Element 4")
+        new_elements.data.append("Element 5")
+        new_elements.data.append("Element 6")
+        new_elements.data.append("Element 7")
+        
+        table_data.append(new_elements)
+        
+        new_elements = TableData()
+        new_elements.section = "Section 4"
+        new_elements.data.append("Element 1")
+        new_elements.data.append("Element 2")
+        new_elements.data.append("Element 3")
+        new_elements.data.append("Element 4")
+        new_elements.data.append("Element 5")
+        new_elements.data.append("Element 6")
+        new_elements.data.append("Element 7")
+        
+        table_data.append(new_elements)
+
         // 뷰 겹치는거 방지
         self.navigationController!.navigationBar.isTranslucent = false
         // 아래 그림자 생기는거 지우기
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.barTintColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        self.scheduleMainTableView.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.someFunc))
         self.navigationItem.leftBarButtonItem = leftButton
         
@@ -158,7 +206,7 @@ class addDetailViewController: UIViewController {
 
     var dateView : UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -172,7 +220,6 @@ class addDetailViewController: UIViewController {
     var scheduleMainTableView : UITableView = {
         let tableView = UITableView()
         tableView.tag = 0
-//        tableView.backgroundColor = .yellow
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -214,7 +261,72 @@ class addDetailViewController: UIViewController {
 //        stackView.backgroundColor = .blue
 //        return stackView
 //    }()
+    @objc func btnAction(_ sender: UIButton) {
+        print("add button")
+        impact.impactOccurred()
+        let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
+        let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
+        print("row is = \(indexPath.row)")
+        currentIndexPath = indexPath
+        buttonEvent(indexPath: indexPath)
+    }
+    @objc func placeButtonEvent(){
+        impact.impactOccurred()
+        let placeVC = placeSearchViewController()
+        placeVC.myBackgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        
+        self.navigationController?.pushViewController(placeVC, animated: true)
+    }
+    func buttonEvent(indexPath : IndexPath){
+        let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? addDetailTableViewCell
+        
+        //        sender.backgroundColor = .red
+        // duration 작을 수록 느리게 애니메이션
+        UIView.animate(withDuration: 0.5, animations: {
+            if currentCell?.buttonSelect == false {
+                let transformScaled = CGAffineTransform
+                    .identity
+                    .scaledBy(x: 0.8, y: 0.8)
+                
+                let moveMoney = CGAffineTransform(translationX: -50, y: 0)
+                let movedetail = CGAffineTransform(translationX: 50, y: 0)
+                currentCell?.addBtn.transform = transformScaled
+                currentCell?.moneyBtn.transform = moveMoney
+                currentCell?.detailBtn.transform = movedetail
+                currentCell?.moneyBtn.alpha = 1
+                currentCell?.detailBtn.alpha = 1
+                currentCell?.buttonSelect = true
+                currentCell?.addBtn.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            }else{
+                let transformScaled = CGAffineTransform
+                    .identity
+                    .scaledBy(x: 1.0, y: 1.0)
+                
+                let moveMoney = CGAffineTransform(translationX: 0, y: 0)
+                let movedetail = CGAffineTransform(translationX: 0, y: 0)
+                currentCell?.addBtn.transform = transformScaled
+                currentCell?.moneyBtn.transform = moveMoney
+                currentCell?.detailBtn.transform = movedetail
+                currentCell?.moneyBtn.alpha = 0.0
+                currentCell?.detailBtn.alpha = 0.0
+                currentCell?.buttonSelect = false
+                currentCell?.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
 
+                self.currentIndexPath = nil
+            }
+        }) { (finished) in
+            if finished {
+                UIView.animate(withDuration: 0.5, animations: {
+                    let transformScaled = CGAffineTransform
+                        .identity
+                        .scaledBy(x: 1.0, y: 1.0)
+                    
+                    //                    sender.transform = transformScaled
+                })
+            }
+        }
+
+    }
 }
 extension addDetailViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -222,9 +334,9 @@ extension addDetailViewController : UITableViewDelegate{
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(80 * 5 + (sizeConstant.paddingSize * 2))
+        let rowCount = table_data[indexPath.row].data.count
+        return CGFloat(80 * rowCount + (sizeConstant.paddingSize))
     }
-    
 }
 extension addDetailViewController : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -234,11 +346,17 @@ extension addDetailViewController : UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView.tag == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCell
+            cell.contentView.setCardView(view: cell.contentView)
+
             cell.dateLabel.text = arr[indexPath.row]
+            cell.detailScheduleTableView.tag = indexPath.row
+            cell.table_data.data = table_data[indexPath.row].data
+            cell.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
+            cell.detailBtn.addTarget(self, action: #selector(placeButtonEvent), for: .touchUpInside)
+
 //            print()
 //            cell.detailScheduleTableView.reloadData()
 //            print(cell.contentView.frame.height)
-            
             return cell
         }else{
             print("tag different")
@@ -253,4 +371,16 @@ extension addDetailViewController : UITableViewDataSource{
     }
     
     
+}
+extension addDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        buttonEvent(indexPath: self.currentIndexPath)
+        print("scroll")
+    }
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("start")
+        if currentIndexPath != nil{
+            buttonEvent(indexPath: currentIndexPath!)
+        }
+    }
 }

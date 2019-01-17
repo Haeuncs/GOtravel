@@ -62,7 +62,7 @@ class calendarViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent=false
         self.navigationController?.navigationBar.prefersLargeTitles = true
 
-        self.view.backgroundColor=Style.bgColor
+        self.view.backgroundColor = Style.bgColor
         let availableWidth = view.frame.width - 7 - 10
         let widthPerItem = availableWidth / 7
 
