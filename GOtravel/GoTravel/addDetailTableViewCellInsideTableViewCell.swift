@@ -27,7 +27,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
         NSLayoutConstraint.activate([
             colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             colorView.topAnchor.constraint(equalTo: contentView.topAnchor,constant:5),
-            colorView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:5),
+            colorView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:10),
             colorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:-5),
             
             mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:25),

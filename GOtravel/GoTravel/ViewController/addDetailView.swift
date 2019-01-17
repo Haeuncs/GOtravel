@@ -10,22 +10,39 @@ import Foundation
 import UIKit
 var count = 0
 
+public enum sizeConstant {
+    public static let paddingSize = 20
+}
+//let paddingSize = 10
+
 class addDetailViewController: UIViewController {
-    
     var selectCellColor : UIColor?
     let arr = ["1일","2일","3일","4일"]
     let arr1 = ["인천공항","간사이 국제 공항","숙소","햅파이브"]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
     }
+    @objc func someFunc() {
+        print("It Works")
+        dismiss(animated: true, completion: nil)
+    }
+
     func initView(){
         // 뷰 겹치는거 방지
         self.navigationController!.navigationBar.isTranslucent = false
         // 아래 그림자 생기는거 지우기
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.barTintColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.someFunc))
+        self.navigationItem.leftBarButtonItem = leftButton
+        
+        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.someFunc))
+        self.navigationItem.rightBarButtonItem = rightButton
+
+        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+
 
         
         scheduleMainTableView.register(addDetailTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -65,7 +82,7 @@ class addDetailViewController: UIViewController {
             dateLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor,constant:5),
             dateLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
             // data size에 맞추기 위한 앵커
-            mainView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
+            mainView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:5),
             
             //            dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: mainView.bottomAnchor)
             scheduleMainTableView.topAnchor.constraint(equalTo: mainView.bottomAnchor),
@@ -205,7 +222,7 @@ extension addDetailViewController : UITableViewDelegate{
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 * 5
+        return CGFloat(80 * 5 + (sizeConstant.paddingSize * 2))
     }
     
 }

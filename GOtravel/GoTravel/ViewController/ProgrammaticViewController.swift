@@ -12,7 +12,9 @@ import RealmSwift
 
 class ProgrammaticViewController: UIViewController {
     @IBOutlet weak var subView: UIView!
-    
+    let selection = UISelectionFeedbackGenerator()
+    let notification = UINotificationFeedbackGenerator()
+
 	let centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
     var collectionView: UICollectionView!
 
@@ -150,6 +152,7 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
                 cell!.contentView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }
+        notification.notificationOccurred(.success)
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]

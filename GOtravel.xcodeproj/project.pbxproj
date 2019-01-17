@@ -37,6 +37,7 @@
 		4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7103D21EE110C00B20448 /* detailTest.xib */; };
 		4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */; };
 		4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */; };
+		4AC7107421EFD5B200B20448 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		4AC7103D21EE110C00B20448 /* detailTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailTest.xib; sourceTree = "<group>"; };
 		4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
+		4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 		4A38F3D621EA618A0097914B /* GoTravel */ = {
 			isa = PBXGroup;
 			children = (
+				4AC7107121EFD22300B20448 /* public */,
 				4AA331D021ECA848004E2536 /* View */,
 				4AA331CF21ECA823004E2536 /* ViewController */,
 				4AA331CB21ECA6EA004E2536 /* Extension */,
@@ -161,6 +164,7 @@
 				4AA331BA21EB3EF8004E2536 /* UIView+Extensions.swift */,
 				4AA331CD21ECA71A004E2536 /* Extension.swift */,
 				4A779F5121E7C24B00CCE52F /* MKPlacemark+Extension.swift */,
+				4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -200,6 +204,13 @@
 				4AC7103D21EE110C00B20448 /* detailTest.xib */,
 			);
 			path = storyboard;
+			sourceTree = "<group>";
+		};
+		4AC7107121EFD22300B20448 /* public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = public;
 			sourceTree = "<group>";
 		};
 		7EE67DA17128548DFC6AA525 /* Pods */ = {
@@ -352,6 +363,7 @@
 				4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
 				4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */,
+				4AC7107421EFD5B200B20448 /* UIDevice+Extensions.swift in Sources */,
 				4A779F5921E7C24C00CCE52F /* MKPlacemark+Extension.swift in Sources */,
 				4AC7103C21EE10C600B20448 /* addDetailView.swift in Sources */,
 				4A969BF421E5A2F00016DB49 /* AppDelegate.swift in Sources */,

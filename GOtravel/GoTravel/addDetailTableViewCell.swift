@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
-    let arr = ["인천공항","간사이 국제 공항","숙소","햅파이브","edklrhjfkdshkjfhjkdshfkhdskjhfjkhdsjkfhkdshjfhkjdshkfjhjdkshfkdhskjfhjkdshkfhjkdshfkjhdsjkhfkjdhskjfhkjdshfkjhdskjhfjkhdjkshjkhfkjhjkhk"]
+    var arr = ["인천공항","간사이 국제 공항","숙소","햅파이브","edklrhjfkdshkjfhjkdshfkhdskjhfjkhdsjkfhkdshjfhkjdshkfjhjdkshfkdhskjfhjkdshkfhjkdshfkjhdsjkhfkjdhskjfhkjdshfkjhdskjhfjkhdjkshjkhfkjhjkhk"]
     var calcHeight = Dictionary<Int,CGFloat>()
 
     let dateLabel : UILabel = {
@@ -44,7 +44,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     let detailScheduleTableView : UITableView = {
         let tableView = UITableView()
         tableView.tag = 1
-        tableView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -57,6 +57,20 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    var paddingViewTop : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var paddingViewBottom : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         print("testNib")
@@ -77,6 +91,8 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
 
     func initView(){
         contentView.addSubview(stackView)
+        contentView.addSubview(paddingViewBottom)
+        contentView.addSubview(paddingViewTop)
         
         dateView.addSubview(dateLabel)
         dateView.addSubview(dayOfTheWeek)
@@ -94,11 +110,22 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
 //            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
 ////            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
 //            contentView.bottomAnchor.constraint(equalTo: detailScheduleTableView.bottomAnchor),
-            
+            paddingViewTop.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            paddingViewTop.topAnchor.constraint(equalTo: contentView.topAnchor),
+            paddingViewTop.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
+            paddingViewTop.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            paddingViewTop.bottomAnchor.constraint(equalTo: stackView.topAnchor),
+
+            paddingViewBottom.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
+            paddingViewBottom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            paddingViewBottom.topAnchor.constraint(equalTo: stackView.bottomAnchor),
+            paddingViewBottom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            paddingViewBottom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.topAnchor.constraint(equalTo: paddingViewTop.bottomAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: paddingViewBottom.topAnchor),
             
             dateLabel.leadingAnchor.constraint(equalTo: dateView.leadingAnchor,constant:5),
             dateLabel.topAnchor.constraint(equalTo: dateView.topAnchor,constant:5),
@@ -140,6 +167,18 @@ extension addDetailTableViewCell {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            arr.remove(at: indexPath.row)
+            // Delete the row from the TableView tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+            tableView.reloadData()
+        }
+
+    }
+
+    
 }
 extension addDetailTableViewCell{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,4 +195,5 @@ extension addDetailTableViewCell{
         
         return cell
     }
+    
 }
