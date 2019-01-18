@@ -26,6 +26,7 @@ class calendarViewController: UIViewController {
 
     var mapItem: MKMapItem?
     var saveCountryRealmData = countryRealm()
+    var dayListDB = List<dayRealm>()
     var region: MKCoordinateRegion?
     
     var theme = MyTheme.dark
@@ -51,7 +52,15 @@ class calendarViewController: UIViewController {
         saveCountryRealmData.date = dayDate
         saveCountryRealmData.period = nightDB
         saveCountryRealmData.longitude = (region?.center.longitude)!
-        saveCountryRealmData.latitude = (region?.center.latitude)!        
+        saveCountryRealmData.latitude = (region?.center.latitude)!
+        
+        for i in 1...nightDB{
+            let dayRealmDB = dayRealm()
+            dayRealmDB.day = i
+            dayListDB.append(dayRealmDB)
+        }
+        
+        saveCountryRealmData.dayList = dayListDB
         try! realm.write {
             realm.add(saveCountryRealmData)
         }

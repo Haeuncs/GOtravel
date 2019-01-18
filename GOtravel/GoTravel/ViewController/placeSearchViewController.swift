@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 import GooglePlaces
+import RealmSwift
 
 class placeSearchViewController : UIViewController {
+    var countryRealmDB : countryRealm?
+    var dayRealmDB  = dayRealm()
+    
     private var searchController: UISearchController!
     private var tableView: UITableView = {
         let table = UITableView()
@@ -113,7 +117,7 @@ class placeSearchViewController : UIViewController {
         tableView.dataSource = self
         
         
-//        self.tableView.reloadData()
+        //        self.tableView.reloadData()
         
     }
 }
@@ -138,6 +142,7 @@ extension placeSearchViewController : UITableViewDelegate,UITableViewDataSource{
         print(tablePlaceInfo[indexPath.row])
         googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
         googleMapVC.myColor = myBackgroundColor
+        googleMapVC.dayRealmDB = dayRealmDB
         self.navigationController?.pushViewController(googleMapVC, animated: true)
     }
     
@@ -152,7 +157,7 @@ extension placeSearchViewController: GMSAutocompleteFetcherDelegate {
     func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
         tablePlaceInfo.removeAll()
         let dispatchGroup = DispatchGroup()
-
+        
         for prediction in predictions {
             
             var new_data = PlaceInfo()
@@ -180,7 +185,7 @@ extension placeSearchViewController: GMSAutocompleteFetcherDelegate {
                 new_data.placeID = place.placeID
                 self.tablePlaceInfo.append(new_data)
                 dispatchGroup.leave()
-                })
+            })
         }
         dispatchGroup.notify(queue:.main) {
             self.tableView.reloadData()

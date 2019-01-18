@@ -241,8 +241,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 DispatchQueue.main.async {
                     self.ddayLabel.text = "\(days)박 \(days+1)일, D-\(dday+1)"
                     self.addBtn.isHidden = false
-                    ddayDB = days + 1
-                    nightDB = dday + 1
+                    ddayDB = dday + 1
+                    nightDB = days + 1
                     dayDate = self.dateRange.first!
                 }
                 myCollectionView.reloadData()

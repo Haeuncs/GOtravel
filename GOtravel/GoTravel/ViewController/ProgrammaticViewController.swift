@@ -14,41 +14,41 @@ class ProgrammaticViewController: UIViewController {
     @IBOutlet weak var subView: UIView!
     let selection = UISelectionFeedbackGenerator()
     let notification = UINotificationFeedbackGenerator()
-
-	let centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
+    
+    let centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
     var collectionView: UICollectionView!
-
-	let controlCenter = ControlCenterView()
-	let cellPercentWidth: CGFloat = 0.8
-	var scrollToEdgeEnabled = false
-
+    
+    let controlCenter = ControlCenterView()
+    let cellPercentWidth: CGFloat = 0.8
+    var scrollToEdgeEnabled = false
+    
     let realm = try? Realm()
     // 기본 저장 데이터
     var countryRealmDB : Results<countryRealm>?
     
     
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-//        collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    //        collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
+    //        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    //    }
+    //
+    //    required init?(coder aDecoder: NSCoder) {
+    //        fatalError("init(coder:) has not been implemented")
+    //    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear")
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-
+        
     }
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         print("viewdidLoad")
         initView()
-
-	}
+        
+    }
     func initView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
@@ -77,18 +77,12 @@ class ProgrammaticViewController: UIViewController {
         subView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            //            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            //            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             stackView.widthAnchor.constraint(equalToConstant: self.subView.frame.width),
             stackView.heightAnchor.constraint(equalToConstant: self.subView.frame.height/2),
             stackView.centerXAnchor.constraint(equalTo: self.subView.centerXAnchor),
-            //            stackView.topAnchor.constraint(equalTo: self.subView.topAnchor, constant: 10)
             stackView.centerYAnchor.constraint(equalTo: self.subView.centerYAnchor),
             
             ])
-        //        stackView.heightAnchor.constraint(equalToConstant: 88).isActive = true
         
         // register collection cells
         collectionView.register(
@@ -104,7 +98,7 @@ class ProgrammaticViewController: UIViewController {
         centeredCollectionViewFlowLayout.minimumLineSpacing = 20
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-
+        
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
         
@@ -112,40 +106,27 @@ class ProgrammaticViewController: UIViewController {
         
         countryRealmDB = realm?.objects(countryRealm.self)
         countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-        print(countryRealmDB?.count)
+//        print(countryRealmDB?.count)
         //        self.collectionView.reloadData()
-
+        
     }
 }
 
 extension ProgrammaticViewController: ControlCenterViewDelegate {
     func stateChanged(scrollDirection: UICollectionView.ScrollDirection) {
-		centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
-	}
-
-	func stateChanged(scrollToEdgeEnabled: Bool) {
-		self.scrollToEdgeEnabled = scrollToEdgeEnabled
+        centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
+    }
+    
+    func stateChanged(scrollToEdgeEnabled: Bool) {
+        self.scrollToEdgeEnabled = scrollToEdgeEnabled
         
-	}
+    }
 }
 
 extension ProgrammaticViewController: UICollectionViewDelegate {
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		print("Selected Cell #\(indexPath.row)")
-//        if scrollToEdgeEnabled,
-//            let currentCenteredPage = centeredCollectionViewFlowLayout.currentCenteredPage,
-//            currentCenteredPage != indexPath.row {
-//            centeredCollectionViewFlowLayout.scrollToPage(index: indexPath.row, animated: true)
-//        }
-	}
-    
-}
-
-extension ProgrammaticViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return countryRealmDB?.count ?? 0
-	}
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(countryRealmDB![indexPath.row])
+        let data    = countryRealmDB![indexPath.row]
         let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
         UIView.animate(withDuration: 0.3) {
             if (cell != nil) {
@@ -157,19 +138,33 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
         detailView.selectCellColor = cell?.contentView.backgroundColor
+        detailView.countryRealmDB = data
+        
         self.present(nav1, animated: true, completion: nil)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-//        UIView.animate(withDuration: 0.5) {
-//            if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
-//                cell.contentView.transform = .identity
-//            }
-//        }
+}
+
+extension ProgrammaticViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return countryRealmDB?.count ?? 0
     }
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        //        let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
+        //        UIView.animate(withDuration: 0.3) {
+        //            if (cell != nil) {
+        //                cell!.contentView.transform = .init(scaleX: 0.95, y: 0.95)
+        //            }
+        //        }
+        //        notification.notificationOccurred(.success)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
-//        cell.titleLabel.text = "Cell #\(indexPath.row)"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
+        //        cell.titleLabel.text = "Cell #\(indexPath.row)"
         cell.countryLabel.text = countryRealmDB?[indexPath.row].country
         cell.cityLabel.text = countryRealmDB?[indexPath.row].city
         let inervalToday = countryRealmDB?[indexPath.row].date!.timeIntervalSince(Date())
@@ -182,23 +177,23 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
         }
         // random color 를 cell의 background
         cell.contentView.backgroundColor = HSBrandomColor()
-		return cell
-	}
-
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		print("Current centered index: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
-	}
-
-	func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-		print("Current centered index: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
-	}
+        return cell
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("Current centered index1: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print("Current centered index2: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
+    }
     // hsb random color
     func HSBrandomColor() -> UIColor{
         let saturation : CGFloat =  0.45
         let brigtness : CGFloat = 0.85
         let randomHue = CGFloat.random(in: 0.0..<1.0)
-//        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
+        //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
         return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
-
+    
 }

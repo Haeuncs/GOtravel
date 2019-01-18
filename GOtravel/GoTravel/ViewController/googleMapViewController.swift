@@ -9,9 +9,13 @@
 import Foundation
 import UIKit
 import GoogleMaps
+import RealmSwift
 
 class googleMapViewController : UIViewController {
+    let realm = try! Realm()
     var selectPlaceInfo = PlaceInfo()
+    var dayRealmDB = dayRealm()
+    
     var myColor : UIColor?
     override func loadView() {
         
@@ -46,6 +50,19 @@ class googleMapViewController : UIViewController {
     }
     @objc func selectSave(){
         print("select")
+        let detailRealmDB = detailRealm()
+        detailRealmDB.title = selectPlaceInfo.title
+        detailRealmDB.address = selectPlaceInfo.address
+        detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
+        detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
+        try! realm.write {
+            dayRealmDB.detailList.append(detailRealmDB)
+
+        }
+        self.navigationController?.popToRootViewController(animated: true)
+//        try! realm.write {
+//
+//        }
     }
     
 }
