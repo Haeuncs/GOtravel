@@ -138,7 +138,8 @@ extension ProgrammaticViewController: UICollectionViewDelegate {
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
         detailView.selectCellColor = cell?.contentView.backgroundColor
-        detailView.countryRealmDB = data
+//        detailView.countryRealmDB = data
+        detailView.selectIndex = indexPath.row
         
         self.present(nav1, animated: true, completion: nil)
     }

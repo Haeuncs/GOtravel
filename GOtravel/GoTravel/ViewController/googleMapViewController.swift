@@ -15,15 +15,47 @@ class googleMapViewController : UIViewController {
     let realm = try! Realm()
     var selectPlaceInfo = PlaceInfo()
     var dayRealmDB = dayRealm()
-    
+    var arrayMap = false
     var myColor : UIColor?
+    var currentSelect = detailRealm()
+    var dayDetailRealm = List<detailRealm>()
     override func loadView() {
         
         
     }
     override func viewDidLoad() {
         // cell 에서 받은 placeInfo 위치
-        print(selectPlaceInfo)
+
+//        marker.appearAnimation = .pop
+        // add save Btn
+        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
+
+        navigationItem.rightBarButtonItem = rightButton
+        if arrayMap == false{
+            map()
+        }else{
+            array_map()
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    func array_map(){
+        let camera = GMSCameraPosition.camera(withLatitude: currentSelect.latitude, longitude: currentSelect.longitude, zoom: 25)
+        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        view = mapView
+        for i in dayDetailRealm{
+            let marker = GMSMarker()
+            marker.icon = GMSMarker.markerImage(with: myColor ?? #colorLiteral(red: 0.8544613487, green: 0.4699537418, blue: 0.4763622019, alpha: 1))
+            marker.position = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
+            marker.title = i.title
+            marker.snippet = i.address
+            marker.map = mapView
+//            mapView.selectedMarker = marker
+        }
+    }
+    func map(){
+        //        print(selectPlaceInfo)
         let camera = GMSCameraPosition.camera(withLatitude:selectPlaceInfo.location!.latitude, longitude: selectPlaceInfo.location!.longitude, zoom: 15)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
@@ -38,15 +70,6 @@ class googleMapViewController : UIViewController {
         marker.map = mapView
         mapView.selectedMarker = marker
 
-//        marker.appearAnimation = .pop
-        // add save Btn
-        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
-
-        navigationItem.rightBarButtonItem = rightButton
-	
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        
     }
     @objc func selectSave(){
         print("select")

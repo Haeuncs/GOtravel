@@ -16,14 +16,14 @@ public enum sizeConstant {
 }
 //let paddingSize = 10
 
-class addDetailViewController: UIViewController {
+class addDetailViewController: UIViewController,protocolTest {
     
     let realm = try! Realm()
     
     
     // push 로 데이터 전달됨
     var countryRealmDB = countryRealm()
-    
+    var selectIndex = 0
     // 진동 feedback
     let impact = UIImpactFeedbackGenerator()
     
@@ -41,7 +41,26 @@ class addDetailViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.scheduleMainTableView.reloadData()
+        for sub in scheduleMainTableView.subviews{
+            sub.removeFromSuperview()
+        }
+        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
+
+        print("\(countryRealmDB), here")
+        mainView.countryLabel.text = countryRealmDB.country
+        mainView.subLabel.text = countryRealmDB.city
+        let dateFormatter = DateFormatter()
+
+        let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period, to: countryRealmDB.date!)
+        
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let startDay = dateFormatter.string(from: countryRealmDB.date!)
+        let endDay = dateFormatter.string(from: DBDate!)
+        
+        
+        mainView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
+        scheduleMainTableView.reloadData()
+        //        self.scheduleMainTableView.reloadData()
     }
     func initView(){
         
@@ -82,10 +101,6 @@ class addDetailViewController: UIViewController {
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
         
-        mainView.countryLabel.text = countryRealmDB.country
-        mainView.subLabel.text = countryRealmDB.city
-//
-        mainView.dateLabel.text = "\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
     }
     @objc func dismissEvent() {
         dismiss(animated: true, completion: nil)
@@ -216,10 +231,26 @@ class addDetailViewController: UIViewController {
             
         }
     }
+    func callAction(with data : String){
+        print("pushing view")
+        print(data)
+//        let view = googleMapViewController()
+//        self.navigationController?.pushViewController(view, animated: true)
+    }
+    func userIsDone(str:String){
+        print("test")
+        print(str)
+    }
 }
+protocol protocolTest : class{
+    func userIsDone(str : String)
+}
+
 extension addDetailViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("select")
         // 지금은 select 이벤트 없음
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let rowCount = countryRealmDB.dayList[indexPath.row].detailList.count
@@ -239,14 +270,25 @@ extension addDetailViewController : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCell
+
         cell.dayRealmDB = countryRealmDB.dayList[indexPath.row]
         cell.initView()
         
         //            cell.contentView.setCardView(view: cell.contentView)
         cell.detailScheduleTableView.tag = indexPath.row
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko-KR")
+        print(countryRealmDB.dayList[indexPath.row].day - 1)
+        let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.dayList[indexPath.row].day - 1, to: countryRealmDB.date!)
         
-        cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day)
-        //        print(countryRealmDB.dayList[indexPath.row].detailList.count)
+        dateFormatter.setLocalizedDateFormatFromTemplate("e")
+        let day = dateFormatter.string(from: DBDate ?? Date())
+        cell.dateView.dayOfTheWeek.text = day + "요일"
+        cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일"
+        cell.selectIndex = indexPath.row
+        
+        cell.count = countryRealmDB.dayList[indexPath.row].detailList.count
+        print(countryRealmDB.dayList[indexPath.row].detailList.count)
         //        print(countryRealmDB.dayList[indexPath.row].detailList
         //        )
         publicdayCount = countryRealmDB.dayList.count

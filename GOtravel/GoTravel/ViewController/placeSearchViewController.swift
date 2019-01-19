@@ -143,6 +143,7 @@ extension placeSearchViewController : UITableViewDelegate,UITableViewDataSource{
         googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
         googleMapVC.myColor = myBackgroundColor
         googleMapVC.dayRealmDB = dayRealmDB
+        googleMapVC.arrayMap = false
         self.navigationController?.pushViewController(googleMapVC, animated: true)
     }
     

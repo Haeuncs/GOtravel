@@ -487,38 +487,6 @@ class dateCVCell: UICollectionViewCell {
     }
 }
 
-//get first day of the month
-extension Date {
-    var weekday: Int {
-        return Calendar.current.component(.weekday, from: self)
-    }
-    var firstDayOfTheMonth: Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year,.month], from: self))!
-    }
-    
-    static func parse(_ string: String, format: String = "yyyy-MM-dd") -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.default
-        dateFormatter.dateFormat = format
-        
-        let date = dateFormatter.date(from: string)!
-        return date
-    }
-    
-    func isInSameMonth(date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .month)
-    }
-    func isInSameYear(date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .year)
-    }
-    func isInSameDay(date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .day)
-    }
-
-
-
-}
-
 //get date from string
 extension String {
     static var dateFormatter: DateFormatter = {

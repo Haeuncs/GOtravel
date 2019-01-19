@@ -50,28 +50,29 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 //            titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
             ])
     }
-    let colorView : UIView = {
+    lazy var colorView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.6705882353, blue: 0.2352941176, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let mainView : UIView = {
+    lazy var mainView : UIView = {
         let view = UIView()
 //        view.backgroundColor = .green
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    let titleLabel : UILabel = {
+    lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
 //        label.backgroundColor = .blue
 //        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let timeLabel : UILabel = {
+    lazy var timeLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)

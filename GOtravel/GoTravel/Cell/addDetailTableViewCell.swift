@@ -10,28 +10,39 @@
 import Foundation
 import UIKit
 import RealmSwift
-class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
-    var countryRealmDB : Results<countryRealm>?
 
+class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
+
+    var passDelegate: PassData?
+    var countryRealmDB : Results<countryRealm>?
+    var nav = UINavigationController()
 //    var table_data = TableData()
     var buttonSelect = false
 //    var currentIndexPath : IndexPath?
 
     var dayRealmDB : dayRealm?
-    
-    let dateView : addDetailViewCellView = {
+    var count = 0
+    var selectIndex : Int?
+    weak var delegate : protocolTest?
+    deinit {
+        if let delegate = delegate {
+            delegate.userIsDone(str: "tesst")
+        }
+
+    }
+    lazy var dateView : addDetailViewCellView = {
         let view = addDetailViewCellView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let detailScheduleTableView : UITableView = {
+    lazy var detailScheduleTableView : UITableView = {
         let tableView = UITableView()
         tableView.tag = 1
         tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    let stackView : UIStackView = {
+    lazy var stackView : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .fill
@@ -40,7 +51,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    var label : UILabel = {
+    lazy var label : UILabel = {
         let label = UILabel()
         label.text = "일정을 추가하세요."
         label.textAlignment = .center
@@ -49,7 +60,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var paddingViewBottom : addDetailViewCellButtonView = {
+    lazy var paddingViewBottom : addDetailViewCellButtonView = {
         let view = addDetailViewCellButtonView()
 //        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +69,10 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     override func prepareForReuse()
     {
         super.prepareForReuse()
-//        print("재사용")
+        print("재사용")
+        initView()
+
+//        initView()
         for sub in detailScheduleTableView.subviews{
             sub.removeFromSuperview()
         }
@@ -66,10 +80,9 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        initView()
         if detailScheduleTableView.subviews.isEmpty {
             detailScheduleTableView.reloadData()
-
         }
     }
 
@@ -85,76 +98,68 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     }
     
     func initView(){
-
         contentView.addSubview(stackView)
-        print(dayRealmDB as Any) 
-        // 1/4 로 dateLabel 과 detailScheduleTableView 를 나눈다.
-        if publicdayCount == 0 {
-            print("runnn")
-            let stackViewMultiplerWidth = NSLayoutConstraint(item: dateView, attribute: .width, relatedBy: .equal, toItem: label, attribute: .width, multiplier: 0.25, constant: 0.0)
-
-//            stackView.alignment = .center
+        let stackViewMultiplerWidth = NSLayoutConstraint(item: dateView, attribute: .width, relatedBy: .equal, toItem: detailScheduleTableView, attribute: .width, multiplier: 0.25, constant: 0.0)
+        contentView.addSubview(paddingViewBottom)
+        
+        stackView.addArrangedSubview(dateView)
+        stackView.addArrangedSubview(detailScheduleTableView)
+        
+        NSLayoutConstraint.activate([
+            paddingViewBottom.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
+            paddingViewBottom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            paddingViewBottom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            paddingViewBottom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            contentView.addSubview(paddingViewBottom)
-
-            stackView.addArrangedSubview(dateView)
-            stackView.addArrangedSubview(label)
-
-
-            NSLayoutConstraint.activate([
-                paddingViewBottom.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
-                paddingViewBottom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                paddingViewBottom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                paddingViewBottom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                
-                stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: paddingViewBottom.topAnchor),
-
-                stackViewMultiplerWidth
-                
-                ])
-        }else{
-            print("run")
-            let stackViewMultiplerWidth = NSLayoutConstraint(item: dateView, attribute: .width, relatedBy: .equal, toItem: detailScheduleTableView, attribute: .width, multiplier: 0.25, constant: 0.0)
-            contentView.addSubview(paddingViewBottom)
-
-            stackView.addArrangedSubview(dateView)
-            stackView.addArrangedSubview(detailScheduleTableView)
-
-            NSLayoutConstraint.activate([
-                paddingViewBottom.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
-                paddingViewBottom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                paddingViewBottom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                paddingViewBottom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                
-                stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: paddingViewBottom.topAnchor),
-                
-                
-                stackViewMultiplerWidth
-                
-                ])
-            // programmatically 방식의 cell
-            detailScheduleTableView.register(addDetailTableViewCellInsideTableViewCell.self, forCellReuseIdentifier: "cell")
-
-            detailScheduleTableView.delegate = self
-            detailScheduleTableView.dataSource = self
-            detailScheduleTableView.separatorStyle = .none
-            detailScheduleTableView.rowHeight = UITableView.automaticDimension
-            detailScheduleTableView.estimatedRowHeight = 200
-            detailScheduleTableView.allowsSelection = false
-
-        }
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: paddingViewBottom.topAnchor),
+            
+            
+            stackViewMultiplerWidth
+            
+            ])
+        // programmatically 방식의 cell
+        detailScheduleTableView.register(addDetailTableViewCellInsideTableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        detailScheduleTableView.delegate = self
+        detailScheduleTableView.dataSource = self
+        detailScheduleTableView.separatorStyle = .none
+        detailScheduleTableView.rowHeight = UITableView.automaticDimension
+        detailScheduleTableView.estimatedRowHeight = 200
+        detailScheduleTableView.allowsSelection = true
         
     }
+    
+    
+}
+protocol PassData {
+    func callAction(with data: String) //Set argument type to Type that you want pass instead of String
 }
 
 extension addDetailTableViewCell {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("select Cell")
+        delegate?.userIsDone(str: "test")
+        let destination = googleMapViewController() // Your destination
+        nav.pushViewController(destination, animated: true)
+
+
+        
+//        let googleMapVC = googleMapViewController()
+//        googleMapVC.dayDetailRealm = dayRealmDB!.detailList
+//        googleMapVC.arrayMap = true
+//        googleMapVC.currentSelect = dayRealmDB!.detailList[indexPath.row]
+        
+        
+//        beforeView.present(googleMapVC, animated: true, completion: nil)
+        
+        
+        
+        
+//        nav.pushViewController(new, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
@@ -183,17 +188,50 @@ extension addDetailTableViewCell {
     }
 }
 extension addDetailTableViewCell{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dayRealmDB?.detailList.count ?? 0
+        if count == 0{
+            return 1
+        }else{
+            return dayRealmDB?.detailList.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCellInsideTableViewCell
-        cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title
-        if ((dayRealmDB?.detailList.count) != nil){
-            cell.timeLabel.text = "날짜 테스트"
+//        cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title
+//        print(dayRealmDB?.detailList.isEmpty)
+//        if (!((dayRealmDB?.detailList.isEmpty)!)){
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "ko-KR")
+//            dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm:ss a")
+//            let day = dateFormatter.string(from: dayRealmDB!.detailList[indexPath.row].date ?? Date())
+//
+//            cell.timeLabel.text = day
+//        }else{
+//            cell.titleLabel.text = "저장된 일정이 없습니다."
+//            cell.titleLabel.textAlignment = .center
+//            cell.titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+//            cell.titleLabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+//        }
+        if count == 0{
+            cell.titleLabel.text = "저장된 일정이 없습니다."
+            cell.titleLabel.textAlignment = .center
+            cell.titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+            cell.titleLabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            cell.timeLabel.text = ""
+        }else{
+            cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ko-KR")
+            dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm:ss a")
+            let day = dateFormatter.string(from: dayRealmDB!.detailList[indexPath.row].date ?? Date())
+            label.textColor = .black
+            label.font = UIFont.systemFont(ofSize: 16)
+            cell.titleLabel.textAlignment = .natural
+            cell.timeLabel.text = day
+
         }
-        
         return cell
     }
     

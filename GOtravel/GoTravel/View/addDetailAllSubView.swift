@@ -54,21 +54,23 @@ class addDetailView : UIView {
         addSubview(countryLabel)
         addSubview(subLabel)
         addSubview(dateLabel)
+        // iphone 은 8 ipad 는 15
+        let lableConstant = CGFloat(8)
 
         NSLayoutConstraint.activate([
             countryLabel.topAnchor.constraint(equalTo: topAnchor),
-            countryLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:5),
+            countryLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
             countryLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             subLabel.topAnchor.constraint(equalTo: countryLabel.bottomAnchor),
-            subLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:5),
+            subLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
             subLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             dateLabel.topAnchor.constraint(equalTo: subLabel.bottomAnchor),
-            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:5),
+            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             // data size에 맞추기 위한 앵커
-            bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:5),
+            bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:lableConstant),
 
             ])
     }
