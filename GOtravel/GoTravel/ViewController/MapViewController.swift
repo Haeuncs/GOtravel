@@ -35,8 +35,8 @@ class MapViewController: UIViewController {
         
         let vc = calendarViewController()
         
-        vc.mapItem = mapItems?.first
-        vc.region = mapView.region
+//        vc.mapItem = mapItems?.first
+//        vc.region = mapView.region
         
         self.navigationController?.pushViewController(vc, animated: true)
 //        let uvc = self.storyboard!.instantiateViewController(withIdentifier: "mainViewController")

@@ -30,6 +30,7 @@ class searchTravelLocationViewController:UIViewController{
     }
     
     private var suggestionController: SuggestionsTableTableViewController!
+    
     private var searchController: UISearchController!
     
     @IBOutlet private var locationManager: LocationManager!

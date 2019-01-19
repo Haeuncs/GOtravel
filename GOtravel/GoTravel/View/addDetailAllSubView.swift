@@ -169,13 +169,24 @@ class addDetailViewCellButtonView : UIView {
         
         return button
     }()
+    let pathBtn : UIButton = {
+        let button = UIButton(type: .custom)
+        button.alpha = 0.0
+        let image = UIImage(named: "pathBtn")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+
     let view : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     func initView(){
-        
+        addSubview(pathBtn)
         addSubview(moneyBtn)
         addSubview(detailBtn)
         addSubview(addBtn)
@@ -183,7 +194,6 @@ class addDetailViewCellButtonView : UIView {
             addBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
             addBtn.heightAnchor.constraint(equalToConstant: 35),
             addBtn.widthAnchor.constraint(equalToConstant: 35),
-            addBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             moneyBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
             moneyBtn.heightAnchor.constraint(equalToConstant: 35),
@@ -192,10 +202,17 @@ class addDetailViewCellButtonView : UIView {
             detailBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
             detailBtn.heightAnchor.constraint(equalToConstant: 35),
             detailBtn.widthAnchor.constraint(equalToConstant: 35),
+
+            pathBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
+            pathBtn.heightAnchor.constraint(equalToConstant: 35),
+            pathBtn.widthAnchor.constraint(equalToConstant: 35),
+
             
+            addBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
             detailBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
             moneyBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
+            pathBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+
             ])
         
     }

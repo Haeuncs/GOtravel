@@ -12,6 +12,10 @@ import GooglePlaces
 import RealmSwift
 
 class placeSearchViewController : UIViewController {
+    // 앞 View 에서 전달 받는 데이터
+    var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
+    var categoryIndex = 0
+    
     var countryRealmDB : countryRealm?
     var dayRealmDB  = dayRealm()
     
@@ -51,7 +55,6 @@ class placeSearchViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.navigationItem.title = "장소 추가"
         //        self.view.backgroundColor = Style.bgColor
         self.navigationController?.view.backgroundColor = myBackgroundColor
         self.navigationController?.navigationBar.tintColor = .white
@@ -64,15 +67,18 @@ class placeSearchViewController : UIViewController {
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "추가 할 장소를 입력하세요."
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
         //        tableView = UITableView()
         tableView.register(placeSearchTableViewCell.self, forCellReuseIdentifier: "cell")
+        
         containerView.addSubview(tableView)
         view.addSubview(containerView)
         
+        self.navigationItem.title = category[categoryIndex][0]
+        searchController.searchBar.placeholder = category[categoryIndex][1]
+
         initView()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +113,13 @@ class placeSearchViewController : UIViewController {
         
         // Set up the autocomplete filter.
         let filter = GMSAutocompleteFilter()
-        filter.type = .establishment
+        if categoryIndex == 0 {
+            // 사업체 검색
+            filter.type = .establishment
+        }else{
+            // 지역 검색
+            filter.type = .city
+        }
         
         // Create the fetcher.
         fetcher = GMSAutocompleteFetcher(bounds: bounds, filter: filter)

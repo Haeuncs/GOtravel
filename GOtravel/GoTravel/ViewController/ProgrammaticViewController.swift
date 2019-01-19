@@ -22,10 +22,18 @@ class ProgrammaticViewController: UIViewController {
     let cellPercentWidth: CGFloat = 0.8
     var scrollToEdgeEnabled = false
     
+    var myBackgroundColor = UIColor()
     let realm = try? Realm()
     // 기본 저장 데이터
     var countryRealmDB : Results<countryRealm>?
     
+    @IBAction func addBtn(_ sender: Any) {
+        let placeVC = placeSearchViewController()
+        placeVC.myBackgroundColor = myBackgroundColor
+        placeVC.categoryIndex = 1
+        
+        self.navigationController?.pushViewController(placeVC, animated: true)
+    }
     
     //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     //        collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
@@ -177,7 +185,8 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
             cell.ddayLabel.text = "+\(dday)일"
         }
         // random color 를 cell의 background
-        cell.contentView.backgroundColor = HSBrandomColor()
+        myBackgroundColor = HSBrandomColor()
+        cell.contentView.backgroundColor = myBackgroundColor
         return cell
     }
     

@@ -10,10 +10,22 @@
 import Foundation
 import UIKit
 import RealmSwift
+protocol BinaryCellDelegate {
+    func addToSum(num: Int)
+}
+protocol SwiftyTableViewCellDelegate : class {
+    func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell)
+    func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
+}
 
 class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
+    var isEdit : Bool = false
 
-    var passDelegate: PassData?
+    let realm = try! Realm()
+    weak var mydelegate: SwiftyTableViewCellDelegate?
+
+    var delegate:BinaryCellDelegate!
+    
     var countryRealmDB : Results<countryRealm>?
     var nav = UINavigationController()
 //    var table_data = TableData()
@@ -22,14 +34,9 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
 
     var dayRealmDB : dayRealm?
     var count = 0
-    var selectIndex : Int?
-    weak var delegate : protocolTest?
-    deinit {
-        if let delegate = delegate {
-            delegate.userIsDone(str: "tesst")
-        }
+    var selectCountryIndex : Int?
+    var selectDayIndex : Int?
 
-    }
     lazy var dateView : addDetailViewCellView = {
         let view = addDetailViewCellView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +105,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     }
     
     func initView(){
+        self.delegate = addDetailViewController()
         contentView.addSubview(stackView)
         let stackViewMultiplerWidth = NSLayoutConstraint(item: dateView, attribute: .width, relatedBy: .equal, toItem: detailScheduleTableView, attribute: .width, multiplier: 0.25, constant: 0.0)
         contentView.addSubview(paddingViewBottom)
@@ -128,26 +136,24 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         detailScheduleTableView.separatorStyle = .none
         detailScheduleTableView.rowHeight = UITableView.automaticDimension
         detailScheduleTableView.estimatedRowHeight = 200
-        detailScheduleTableView.allowsSelection = true
-        
+        if count != 0{
+            detailScheduleTableView.allowsSelection = true
+            detailScheduleTableView.isEditing = isEdit
+        }else{
+            detailScheduleTableView.isEditing = false
+            detailScheduleTableView.allowsSelection = false
+        }
+        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)
     }
     
     
 }
-protocol PassData {
-    func callAction(with data: String) //Set argument type to Type that you want pass instead of String
-}
-
 extension addDetailTableViewCell {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select Cell")
-        delegate?.userIsDone(str: "test")
-        let destination = googleMapViewController() // Your destination
-        nav.pushViewController(destination, animated: true)
-
-
-        
+        mydelegate?.swiftyTableViewCellDidTapHeart(self)
+//        delegate?.addToSum(num: 1)
 //        let googleMapVC = googleMapViewController()
 //        googleMapVC.dayDetailRealm = dayRealmDB!.detailList
 //        googleMapVC.arrayMap = true
@@ -167,25 +173,65 @@ extension addDetailTableViewCell {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let more = UITableViewRowAction(style: .normal, title: "수정") { action, index in
-            print("more button tapped")
+    
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//
+//    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        var currentMove = dayRealmDB?.detailList[sourceIndexPath.row]
+        try! self.realm.write {
+            self.dayRealmDB?.detailList.remove(at: sourceIndexPath.row)
+            self.dayRealmDB?.detailList.insert(currentMove!, at: destinationIndexPath.row)
         }
-        more.backgroundColor = .myGreen
-        
-        let favorite = UITableViewRowAction(style: .normal, title: "이동") { action, index in
-            print("favorite button tapped")
-        }
-        favorite.backgroundColor = .myBlue
-        
-        let share = UITableViewRowAction(style: .normal, title: "삭제") { action, index in
-            print("share button tapped")
-        }
-        share.backgroundColor = .myRed
-        
-        return [share, favorite, more]
 
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            try! self.realm.write {
+                self.dayRealmDB?.detailList.remove(at: indexPath.row)
+            }
+            self.mydelegate?.tableViewDeleteEvent(self)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+    }
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        if count != 0{
+//            let more = UITableViewRowAction(style: .normal, title: "수정") { action, index in
+//                print("more button tapped")
+//
+//                //            tableView.reloadData()
+//            }
+//            more.backgroundColor = .myGreen
+//
+//            let favorite = UITableViewRowAction(style: .normal, title: "이동") { action, index in
+//                print("favorite button tapped")
+//                self.detailScheduleTableView.isEditing = !self.detailScheduleTableView.isEditing
+//            }
+//            favorite.backgroundColor = .myBlue
+//
+//            let share = UITableViewRowAction(style: .normal, title: "삭제") { action, index in
+//                try! self.realm.write {
+//                    self.dayRealmDB?.detailList.remove(at: indexPath.row)
+//                }
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//                self.mydelegate?.tableViewDeleteEvent(self)
+//
+//                print("삭제")
+//
+//
+//            }
+//            share.backgroundColor = .myRed
+//
+//            return [share, favorite, more]
+//
+//        }
+//        return []
+//    }
 }
 extension addDetailTableViewCell{
     
@@ -226,8 +272,8 @@ extension addDetailTableViewCell{
             dateFormatter.locale = Locale(identifier: "ko-KR")
             dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm:ss a")
             let day = dateFormatter.string(from: dayRealmDB!.detailList[indexPath.row].date ?? Date())
-            label.textColor = .black
-            label.font = UIFont.systemFont(ofSize: 16)
+            cell.titleLabel.textColor = .black
+            cell.titleLabel.font = UIFont.systemFont(ofSize: 16)
             cell.titleLabel.textAlignment = .natural
             cell.timeLabel.text = day
 

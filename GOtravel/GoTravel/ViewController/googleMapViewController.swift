@@ -12,13 +12,17 @@ import GoogleMaps
 import RealmSwift
 
 class googleMapViewController : UIViewController {
+    // 장소 검색 0, 지역 검색 1
+    var categoryIndex = 0
+    
     let realm = try! Realm()
     var selectPlaceInfo = PlaceInfo()
     var dayRealmDB = dayRealm()
-    var arrayMap = false
+    var arrayMap : Bool?
     var myColor : UIColor?
     var currentSelect = detailRealm()
     var dayDetailRealm = List<detailRealm>()
+    
     override func loadView() {
         
         
@@ -27,21 +31,23 @@ class googleMapViewController : UIViewController {
         // cell 에서 받은 placeInfo 위치
 
 //        marker.appearAnimation = .pop
-        // add save Btn
-        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
-
-        navigationItem.rightBarButtonItem = rightButton
-        if arrayMap == false{
-            map()
-        }else{
-            array_map()
+        if arrayMap != nil{
+            // add save Btn
+            let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
+            
+            navigationItem.rightBarButtonItem = rightButton
+            if arrayMap == false{
+                map()
+            }else{
+                array_map()
+            }
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         
     }
     func array_map(){
-        let camera = GMSCameraPosition.camera(withLatitude: currentSelect.latitude, longitude: currentSelect.longitude, zoom: 25)
+        let camera = GMSCameraPosition.camera(withLatitude: currentSelect.latitude, longitude: currentSelect.longitude, zoom: 11.5)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
         for i in dayDetailRealm{
@@ -73,16 +79,28 @@ class googleMapViewController : UIViewController {
     }
     @objc func selectSave(){
         print("select")
-        let detailRealmDB = detailRealm()
-        detailRealmDB.title = selectPlaceInfo.title
-        detailRealmDB.address = selectPlaceInfo.address
-        detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
-        detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
-        try! realm.write {
-            dayRealmDB.detailList.append(detailRealmDB)
-
+        if categoryIndex == 0{
+            let detailRealmDB = detailRealm()
+            detailRealmDB.title = selectPlaceInfo.title
+            detailRealmDB.address = selectPlaceInfo.address
+            detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
+            detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
+            try! realm.write {
+                dayRealmDB.detailList.append(detailRealmDB)
+                
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+        }else{
+            let countryRealmDB = countryRealm()
+            countryRealmDB.city = selectPlaceInfo.address
+            countryRealmDB.country = selectPlaceInfo.title
+            countryRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
+            countryRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
+            let calenderVC = calendarViewController()
+            calenderVC.saveCountryRealmData = countryRealmDB
+            self.navigationController?.pushViewController( calenderVC, animated: true)
+//            self.navigationController?.popToRootViewController(animated: true)
         }
-        self.navigationController?.popToRootViewController(animated: true)
 //        try! realm.write {
 //
 //        }

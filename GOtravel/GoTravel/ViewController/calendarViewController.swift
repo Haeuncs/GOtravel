@@ -24,13 +24,10 @@ class calendarViewController: UIViewController {
     
     let realm = try! Realm()
 
-    var mapItem: MKMapItem?
     var saveCountryRealmData = countryRealm()
-    var dayListDB = List<dayRealm>()
-    var region: MKCoordinateRegion?
     
+    var dayListDB = List<dayRealm>()
     var theme = MyTheme.dark
-    var cityName = ""
 //    let eventC = event()
 //    @IBAction func plusBtn(_ sender: Any) {
 //        eventC.sideMenu(selfV: self)
@@ -45,14 +42,14 @@ class calendarViewController: UIViewController {
     }
     func saveRealmData(){
         // realm location print
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
 
-        saveCountryRealmData.country = (mapItem?.placemark.country!)!
-        saveCountryRealmData.city = mapItem?.placemark.locality ?? mapItem?.placemark.administrativeArea ?? ""
+        saveCountryRealmData.country = saveCountryRealmData.country
+        saveCountryRealmData.city = saveCountryRealmData.city
         saveCountryRealmData.date = dayDate
         saveCountryRealmData.period = nightDB
-        saveCountryRealmData.longitude = (region?.center.longitude)!
-        saveCountryRealmData.latitude = (region?.center.latitude)!
+        saveCountryRealmData.longitude = saveCountryRealmData.longitude
+        saveCountryRealmData.latitude = saveCountryRealmData.latitude
         
         for i in 1...nightDB{
             let dayRealmDB = dayRealm()
