@@ -25,4 +25,12 @@ extension UIColor {
     static var myGreen : UIColor {
         return #colorLiteral(red: 0.6286184273, green: 0.8544613487, blue: 0.4680916344, alpha: 1)
     }
+    // hsb random color
+    func HSBrandomColor() -> UIColor{
+        let saturation : CGFloat =  0.45
+        let brigtness : CGFloat = 0.85
+        let randomHue = CGFloat.random(in: 0.0..<1.0)
+        //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
+        return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
+    }
 }

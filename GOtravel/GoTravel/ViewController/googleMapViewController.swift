@@ -89,8 +89,11 @@ class googleMapViewController : UIViewController {
                 dayRealmDB.detailList.append(detailRealmDB)
                 
             }
+        
+            
             self.navigationController?.popToRootViewController(animated: true)
         }else{
+            print("run")
             let countryRealmDB = countryRealm()
             countryRealmDB.city = selectPlaceInfo.address
             countryRealmDB.country = selectPlaceInfo.title

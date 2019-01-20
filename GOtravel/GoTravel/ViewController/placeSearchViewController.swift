@@ -156,6 +156,7 @@ extension placeSearchViewController : UITableViewDelegate,UITableViewDataSource{
         googleMapVC.myColor = myBackgroundColor
         googleMapVC.dayRealmDB = dayRealmDB
         googleMapVC.arrayMap = false
+        googleMapVC.categoryIndex = categoryIndex
         self.navigationController?.pushViewController(googleMapVC, animated: true)
     }
     

@@ -11,6 +11,8 @@
 		4A38F3D821EA6B070097914B /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BFC21E5A2F50016DB49 /* LaunchScreen.storyboard */; };
 		4A38F3DA21EA80820097914B /* mymain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A38F3D921EA80820097914B /* mymain.xib */; };
 		4A3A17E121F1C8B500313077 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3A17E021F1C8B500313077 /* DateExtensions.swift */; };
+		4A3BC29821F3B2A800995E28 /* changeDetailOfDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */; };
+		4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */; };
 		4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */; };
 		4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4F21E7C24B00CCE52F /* mainViewController.swift */; };
 		4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */; };
@@ -52,6 +54,8 @@
 		25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.release.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.release.xcconfig"; sourceTree = "<group>"; };
 		4A38F3D921EA80820097914B /* mymain.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = mymain.xib; sourceTree = "<group>"; };
 		4A3A17E021F1C8B500313077 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailOfDayViewController.swift; sourceTree = "<group>"; };
+		4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailView.swift; sourceTree = "<group>"; };
 		4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4A779F4F21E7C24B00CCE52F /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addTravelInfoViewController.swift; sourceTree = "<group>"; };
@@ -117,7 +121,6 @@
 				4AA331CB21ECA6EA004E2536 /* Extension */,
 				4A779F5321E7C24B00CCE52F /* LocationManager.swift */,
 				4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */,
-				4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */,
 			);
 			path = GoTravel;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 			children = (
 				4A38F3DB21EA80920097914B /* Resources */,
 				4A38F3D621EA618A0097914B /* GoTravel */,
+				4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */,
 				4A6EB2B021E64F0800A96C61 /* Model */,
 				4A969BFF21E5A2F50016DB49 /* Info.plist */,
 				4A779F4F21E7C24B00CCE52F /* mainViewController.swift */,
@@ -197,6 +201,7 @@
 				4AC7103B21EE10C600B20448 /* addDetailViewController.swift */,
 				4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */,
 				4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */,
+				4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 			children = (
 				4AC710B421F10F4100B20448 /* calendar */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
+				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AnimatedTextInput/AnimatedTextInput.framework",
 				"${BUILT_PRODUCTS_DIR}/CenteredCollectionView/CenteredCollectionView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FAPanels/FAPanels.framework",
@@ -373,6 +380,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedTextInput.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CenteredCollectionView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FAPanels.framework",
@@ -420,6 +428,7 @@
 				4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */,
 				4AA331B621EB3D92004E2536 /* ProgrammaticViewController.swift in Sources */,
 				4A779F5E21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift in Sources */,
+				4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+Extensions.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+Extensions.swift in Sources */,
@@ -437,6 +446,7 @@
 				4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */,
 				4A3A17E121F1C8B500313077 /* DateExtensions.swift in Sources */,
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
+				4A3BC29821F3B2A800995E28 /* changeDetailOfDayViewController.swift in Sources */,
 				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,
 				4AA331CE21ECA71A004E2536 /* Extension.swift in Sources */,
 				4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */,
@@ -598,10 +608,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -617,10 +624,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

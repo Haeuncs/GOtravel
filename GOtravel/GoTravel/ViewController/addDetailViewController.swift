@@ -72,6 +72,9 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         view.addSubview(mainView)
         view.addSubview(scheduleMainTableView)
         
+        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
+        deleteAndSaveStack.addArrangedSubview(addBtnS)
+        
         // constraint
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -104,15 +107,7 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         NotificationCenter.default.addObserver(self, selector: #selector(loadView), name: NSNotification.Name(rawValue: "load"), object: nil)
 
     }
-    func loadList(notification: NSNotification){
-        //load data here
-        self.scheduleMainTableView.reloadData()
-    }
-
-    @objc func dismissEvent() {
-        dismiss(animated: true, completion: nil)
-//        scheduleMainTableView.isEditing = !scheduleMainTableView.isEditing
-    }
+    
     @objc func editEvent(){
         isEdit = !isEdit!
         scheduleMainTableView.reloadData()
@@ -121,6 +116,43 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         }else{
             self.navigationItem.rightBarButtonItem?.title = "편집"
         }
+    }
+    let deleteBtnS : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.myRed
+        button.setTitle("삭제", for: .normal)
+        
+        button.translatesAutoresizingMaskIntoConstraints=false
+        return button
+    }()
+    let addBtnS : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.myBlue
+        button.setTitle("확인", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints=false
+        return button
+    }()
+    let deleteAndSaveStack : UIStackView = {
+        let stack = UIStackView()
+        stack.distribution = .fillEqually
+        stack.axis = .horizontal
+        stack.isHidden = true
+        
+        stack.translatesAutoresizingMaskIntoConstraints=false
+        
+        return stack
+    }()
+    
+
+
+    func loadList(notification: NSNotification){
+        //load data here
+        self.scheduleMainTableView.reloadData()
+    }
+
+    @objc func dismissEvent() {
+        dismiss(animated: true, completion: nil)
+//        scheduleMainTableView.isEditing = !scheduleMainTableView.isEditing
     }
     // title을 갖는 뷰
     lazy var mainView: addDetailView = {
@@ -136,6 +168,8 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.isScrollEnabled = false
+
         return tableView
     }()
     
@@ -179,6 +213,10 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
 //        let placeVC = googleMapViewController()
 //
 //        self.navigationController?.pushViewController(placeVC, animated: true)
+    }
+    @objc func exchangeButtonEvent(_ sender : UIButton){
+        let VC = noNibCollectionViewController()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
 
     // 버튼의 animate 정의
@@ -308,7 +346,9 @@ extension addDetailViewController: BinaryCellDelegate {
     func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
         print("Heart", sender, tappedIndexPath)
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        let changeVC = changeDetailOfViewContoller()
+        self.navigationController?.pushViewController(changeVC, animated: true)
 
 //
 //        // "Love" this item
@@ -372,9 +412,12 @@ extension addDetailViewController : UITableViewDataSource{
         //        print(countryRealmDB.dayList[indexPath.row].detailList
         //        )
         publicdayCount = countryRealmDB.dayList.count
+        
         cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
         cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
         cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
+        cell.paddingViewBottom.moneyBtn.addTarget(self, action: #selector(self.exchangeButtonEvent(_:)), for: .touchUpInside)
+        
         //        cell.dayOfTheWeek.text =
         
         cell.selectDayIndex = indexPath.row
