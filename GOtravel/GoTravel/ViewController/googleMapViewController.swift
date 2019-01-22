@@ -43,7 +43,6 @@ class googleMapViewController : UIViewController {
             }
         }
         self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
-
     }
     override func viewWillAppear(_ animated: Bool) {
         

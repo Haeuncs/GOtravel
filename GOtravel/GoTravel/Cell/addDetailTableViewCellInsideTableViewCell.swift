@@ -22,10 +22,18 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 
     func initView(){
         
-//        if timeLabelIsHidden == false{
-        mainView.addSubview(timeLabel)
-        mainView.addSubview(titleLabel)
-        contentView.addSubview(mainView)
+        
+        if timeLabelIsHidden == false{
+            stackView.addArrangedSubview(timeLabel)
+            stackView.addArrangedSubview(titleLabel)
+            }else{
+            //  hidden 이 true이면
+            stackView.addArrangedSubview(titleLabel)
+        }
+//        mainView.addSubview(timeLabel)
+//        mainView.addSubview(titleLabel)
+//        contentView.addSubview(mainView)
+        contentView.addSubview(stackView)
         contentView.addSubview(colorView)
         NSLayoutConstraint.activate([
             colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -33,25 +41,32 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
             colorView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:10),
             colorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:-5),
             
-            mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:25),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:25),
 //            mainView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 //            mainView.bottomAnchor.constraint(equalTo: contentView.topAnchor),
 //            mainView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
 //            mainView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            mainView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            timeLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-//            timeLabel.topAnchor.constraint(equalTo: mainView.topAnchor),
-            timeLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            timeLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
-
-            titleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+//            timeLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+////            timeLabel.topAnchor.constraint(equalTo: mainView.topAnchor),
+//            timeLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+//            timeLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
+//
+//            titleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+//            titleLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
+//            titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
 //            titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
             ])
     }
+    let stackView : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     lazy var colorView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
