@@ -11,8 +11,8 @@ import Foundation
 import UIKit
 import RealmSwift
 
-protocol SwiftyTableViewCellDelegate : class {
-    func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell,detailIndex : Int)
+protocol addDetailViewTableViewCellDelegate : class {
+    func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell,detailIndex : Int)
     func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
 }
 
@@ -20,7 +20,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
 
     let realm = try! Realm()
     
-    weak var mydelegate: SwiftyTableViewCellDelegate?
+    weak var mydelegate: addDetailViewTableViewCellDelegate?
     
     // MARK: VC로 부터 전달받는 데이터
     var count = 0
@@ -152,7 +152,7 @@ extension addDetailTableViewCell {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select Cell \(indexPath.row)")
         // delegate 로 데이터 전달
-        mydelegate?.swiftyTableViewCellDidTapHeart(self,detailIndex: indexPath.row)
+        mydelegate?.addDetailViewTableViewCellDidTapInTableView(self,detailIndex: indexPath.row)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80

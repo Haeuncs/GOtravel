@@ -19,7 +19,7 @@ protocol changeDetailVCVDelegate : class {
     func inputData()->(title:String,startTime:Date,endTime:Date,color:String,memo:String)
 }
 
-class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
+class addDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
     
     var isEdit : Bool? = false
     let realm = try! Realm()
@@ -336,7 +336,7 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
 // MARK: delegate 정의 (cell 에서 사용한다.)
 extension addDetailViewController {
     // The cell calls this method when the user taps the heart button
-    func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell, detailIndex : Int) {
+    func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell, detailIndex : Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
 //        print("Heart", sender, tappedIndexPath)
 //        print(detailIndex)

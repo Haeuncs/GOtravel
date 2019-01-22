@@ -21,8 +21,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     }
 
     func initView(){
-        
-        
+        // stack 으로 time과 title 관리함.
         if timeLabelIsHidden == false{
             stackView.addArrangedSubview(timeLabel)
             stackView.addArrangedSubview(titleLabel)
