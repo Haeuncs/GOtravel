@@ -17,7 +17,7 @@ class placeSearchViewController : UIViewController {
     var categoryIndex = 0
     
     var countryRealmDB : countryRealm?
-    var dayRealmDB  = dayRealm()
+    var dayRealmDB  : dayRealm?
     
     private var searchController: UISearchController!
     private var tableView: UITableView = {
@@ -51,13 +51,13 @@ class placeSearchViewController : UIViewController {
     //    var secData = [String]()
     //    var Images = [UIImage]()
     var fetcher: GMSAutocompleteFetcher?
-    var myBackgroundColor = UIColor()
+//    var myBackgroundColor : UIColor?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         //        self.view.backgroundColor = Style.bgColor
-        self.navigationController?.view.backgroundColor = myBackgroundColor
-        self.navigationController?.navigationBar.tintColor = .white
+//        self.navigationController?.view.backgroundColor = myBackgroundColor ?? #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
         self.navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.isTranslucent=false
@@ -150,13 +150,25 @@ extension placeSearchViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(tablePlaceInfo[indexPath.row])
+        print(dayRealmDB)
+        print(categoryIndex)
+        
         let googleMapVC = googleMapViewController()
         print(tablePlaceInfo[indexPath.row])
         googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
-        googleMapVC.myColor = myBackgroundColor
-        googleMapVC.dayRealmDB = dayRealmDB
+        googleMapVC.myColor = #colorLiteral(red: 0.8209087171, green: 0.454993382, blue: 0.461091971, alpha: 1)
+        if categoryIndex == 0{
+            googleMapVC.dayRealmDB = dayRealmDB!
+        }
         googleMapVC.arrayMap = false
         googleMapVC.categoryIndex = categoryIndex
+        
+        //            googleVC.arrayMap = true
+        //            googleVC.currentSelect = countryRealmDB.dayList[indexPath.row].detailList.first!
+        //            googleVC.dayDetailRealm = countryRealmDB.dayList[indexPath.row].detailList
+        //            googleVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
+
         self.navigationController?.pushViewController(googleMapVC, animated: true)
     }
     

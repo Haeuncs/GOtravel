@@ -15,6 +15,9 @@ public enum sizeConstant {
     public static let paddingSize = 50
 }
 //let paddingSize = 10
+protocol changeDetailVCVDelegate : class {
+    func inputData()->(title:String,startTime:Date,endTime:Date,color:String,memo:String)
+}
 
 class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
     
@@ -39,28 +42,25 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        for sub in scheduleMainTableView.subviews{
-            sub.removeFromSuperview()
-        }
         initView()
+        scheduleMainTableView.reloadData()
     }
+    
     func initView(){
-        
         // 뷰 겹치는거 방지
         self.navigationController!.navigationBar.isTranslucent = false
         // 아래 그림자 생기는거 지우기
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.barTintColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-        self.scheduleMainTableView.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        self.navigationController?.navigationBar.barTintColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        self.scheduleMainTableView.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.dismissEvent))
         self.navigationItem.leftBarButtonItem = leftButton
         
         let rightButton = UIBarButtonItem(title: "편집", style: .done, target: self, action: #selector(self.editEvent))
         self.navigationItem.rightBarButtonItem = rightButton
         
-        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+        self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         
         scheduleMainTableView.register(addDetailTableViewCell.self, forCellReuseIdentifier: "cell")
         
@@ -72,42 +72,53 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         view.addSubview(mainView)
         view.addSubview(scheduleMainTableView)
         
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+//        customView.backgroundColor = UIColor.red
+        customView.addSubview(deleteAndSaveStack)
+        
+        scheduleMainTableView.tableFooterView = customView
+        
         deleteAndSaveStack.addArrangedSubview(deleteBtnS)
         deleteAndSaveStack.addArrangedSubview(addBtnS)
+//        view.addSubview(deleteAndSaveStack)
         
+        initLayout()
+        getRealmData()
+    }
+    func initLayout(){
         // constraint
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: view.topAnchor),
             mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
+
             scheduleMainTableView.topAnchor.constraint(equalTo: mainView.bottomAnchor),
             scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
+            
             ])
+
+    }
+    func getRealmData(){
         countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
         
-        print("\(countryRealmDB), here")
         mainView.countryLabel.text = countryRealmDB.country
         mainView.subLabel.text = countryRealmDB.city
+        
         let dateFormatter = DateFormatter()
-        
         let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period, to: countryRealmDB.date!)
-        
         dateFormatter.dateFormat = "yyyy.MM.dd"
         let startDay = dateFormatter.string(from: countryRealmDB.date!)
         let endDay = dateFormatter.string(from: DBDate!)
         
         
         mainView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
-        scheduleMainTableView.reloadData()
-        //        self.scheduleMainTableView.reloadData()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(loadView), name: NSNotification.Name(rawValue: "load"), object: nil)
-
+//        scheduleMainTableView.reloadData()
     }
-    
+    // MARK: 버튼 이벤트
     @objc func editEvent(){
         isEdit = !isEdit!
         scheduleMainTableView.reloadData()
@@ -117,62 +128,10 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
             self.navigationItem.rightBarButtonItem?.title = "편집"
         }
     }
-    let deleteBtnS : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.myRed
-        button.setTitle("삭제", for: .normal)
-        
-        button.translatesAutoresizingMaskIntoConstraints=false
-        return button
-    }()
-    let addBtnS : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.myBlue
-        button.setTitle("확인", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints=false
-        return button
-    }()
-    let deleteAndSaveStack : UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fillEqually
-        stack.axis = .horizontal
-        stack.isHidden = true
-        
-        stack.translatesAutoresizingMaskIntoConstraints=false
-        
-        return stack
-    }()
-    
-
-
-    func loadList(notification: NSNotification){
-        //load data here
-        self.scheduleMainTableView.reloadData()
-    }
-
     @objc func dismissEvent() {
         dismiss(animated: true, completion: nil)
-//        scheduleMainTableView.isEditing = !scheduleMainTableView.isEditing
+    //        scheduleMainTableView.isEditing = !scheduleMainTableView.isEditing
     }
-    // title을 갖는 뷰
-    lazy var mainView: addDetailView = {
-        let view = addDetailView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-        return view
-    }()
-    
-    var scheduleMainTableView : UITableView = {
-        let tableView = UITableView()
-        tableView.tag = 0
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.isScrollEnabled = false
-
-        return tableView
-    }()
-    
     @objc func btnAction(_ sender: UIButton) {
         // 피드백 진동
         impact.impactOccurred()
@@ -187,7 +146,7 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
         let placeVC = placeSearchViewController()
-        placeVC.myBackgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        placeVC.myBackgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         placeVC.countryRealmDB = countryRealmDB
         placeVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
         placeVC.categoryIndex = 0
@@ -207,6 +166,7 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
             self.navigationController?.pushViewController(googleVC, animated: true)
 
         }
+        
 //
 //        let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
 //        let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
@@ -218,13 +178,64 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
         let VC = noNibCollectionViewController()
         self.navigationController?.pushViewController(VC, animated: true)
     }
+    
 
-    // 버튼의 animate 정의
+    func callAction(with data : String){
+        print("pushing view")
+        print(data)
+//        let view = googleMapViewController()
+//        self.navigationController?.pushViewController(view, animated: true)
+    }
+    var sum = 0
+    // MARK: VC에서 View 그릴 떄 사용하는 것들
+    let deleteBtnS : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.myRed
+        button.setTitle("삭제", for: .normal)
+        
+        button.translatesAutoresizingMaskIntoConstraints=false
+        return button
+    }()
+    let addBtnS : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.myBlue
+        button.setTitle("확인", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints=false
+        return button
+    }()
+    let deleteAndSaveStack : UIStackView = {
+        let stack = UIStackView()
+        stack.distribution = .fillEqually
+        stack.axis = .horizontal
+        stack.isHidden = false
+        stack.translatesAutoresizingMaskIntoConstraints=false
+        return stack
+    }()
+    // title을 갖는 뷰
+    lazy var mainView: addDetailView = {
+        let view = addDetailView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        return view
+    }()
+    
+    var scheduleMainTableView : UITableView = {
+        let tableView = UITableView()
+        tableView.tag = 0
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorColor = Defaull_style.subTitleColor
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        tableView.allowsSelection = false
+        return tableView
+    }()
+    
+    // MARK: 버튼의 animate 정의
     func buttonEvent(indexPath : IndexPath){
         
         // 이전 select가 없다면 실행
         let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? addDetailTableViewCell
-
+        
         //        sender.backgroundColor = .red
         // duration 작을 수록 느리게 애니메이션
         UIView.animate(withDuration: 0.5, animations: {
@@ -236,7 +247,7 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
                 let moveMoney = CGAffineTransform(translationX: -50, y: 0)
                 let movedetail = CGAffineTransform(translationX: 50, y: 0)
                 let movePath = CGAffineTransform(translationX: 100, y: 0)
-
+                
                 
                 currentCell?.paddingViewBottom.addBtn.transform = transformScaled
                 currentCell?.paddingViewBottom.moneyBtn.transform = moveMoney
@@ -249,13 +260,13 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
                 currentCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 // 이전 select가 있다면 원래 상태로 복귀
                 // beforeCell 이 currentCell 과 같지 않을 때 복귀
-                print(self.beforeSelectIndexPath)
+//                print(self.beforeSelectIndexPath)
                 if self.beforeSelectIndexPath {
                     let beforeCell = self.scheduleMainTableView.cellForRow(at: self.currentIndexPath!)! as? addDetailTableViewCell
-                    print("\(self.currentIndexPath!.row), \(indexPath.row)")
+//                    print("\(self.currentIndexPath!.row), \(indexPath.row)")
                     if beforeCell != currentCell
                     {
-                        print("currentIndexPath != nil 복귀 애니메이션 실행 \(indexPath.row)")
+//                        print("currentIndexPath != nil 복귀 애니메이션 실행 \(indexPath.row)")
                         
                         UIView.animate(withDuration: 0.5, animations: {
                             
@@ -279,11 +290,11 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
                             self.currentIndexPath = nil
                         })
                     }
-
+                    
                 }
                 self.beforeSelectIndexPath = true
                 self.currentIndexPath = indexPath
-                print("currentIndexPath = indexPath select 애니메이션 실행 \(indexPath.row) )")
+//                print("currentIndexPath = indexPath select 애니메이션 실행 \(indexPath.row) )")
             }else{
                 let transformScaled = CGAffineTransform
                     .identity
@@ -303,8 +314,8 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
                 currentCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
                 self.beforeSelectIndexPath = false
                 self.currentIndexPath = nil
-                print("currentIndexPath = nil deselect 애니메이션 실행 \(indexPath.row)")
-
+//                print("currentIndexPath = nil deselect 애니메이션 실행 \(indexPath.row)")
+                
             }
         }) { (finished) in
             if finished {
@@ -319,49 +330,26 @@ class addDetailViewController: UIViewController ,SwiftyTableViewCellDelegate{
             
         }
     }
-    func callAction(with data : String){
-        print("pushing view")
-        print(data)
-//        let view = googleMapViewController()
-//        self.navigationController?.pushViewController(view, animated: true)
-    }
-    var sum = 0
+
 
 }
-extension addDetailViewController: BinaryCellDelegate {
-    func addToSum(num: Int) {
-        sum += num
-        print(sum)
-        DispatchQueue.main.async {
-            self.scheduleMainTableView.reloadData()
-        }
-//        let placeVC = placeSearchViewController()
-//        placeVC.myBackgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-////        placeVC.countryRealmDB = countryRealmDB
-////        placeVC.dayRealmDB = countryRealmDB.dayList[0]
-//        self.navigationController?.pushViewController(placeVC, animated: true)
-
-    }
+// MARK: delegate 정의 (cell 에서 사용한다.)
+extension addDetailViewController {
     // The cell calls this method when the user taps the heart button
-    func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell) {
+    func swiftyTableViewCellDidTapHeart(_ sender: addDetailTableViewCell, detailIndex : Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
-        print("Heart", sender, tappedIndexPath)
+//        print("Heart", sender, tappedIndexPath)
+//        print(detailIndex)
 //        dismiss(animated: true, completion: nil)
         let changeVC = changeDetailOfViewContoller()
+        changeVC.detailRealmDB = countryRealmDB.dayList[tappedIndexPath.row].detailList[detailIndex]
+        changeVC.countryRealmDB = countryRealmDB
         self.navigationController?.pushViewController(changeVC, animated: true)
-
-//
-//        // "Love" this item
-//        items[tappedIndexPath.row].love()
     }
     func tableViewDeleteEvent(_ sender: addDetailTableViewCell) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
         print("Heart", sender, tappedIndexPath)
         self.scheduleMainTableView.reloadData()
-        
-        //
-        //        // "Love" this item
-        //        items[tappedIndexPath.row].love()
     }
 
 
@@ -371,19 +359,33 @@ extension addDetailViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select")
         // 지금은 select 이벤트 없음
-        
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let rowCount = countryRealmDB.dayList[indexPath.row].detailList.count
         if rowCount == 0 {
-            return 180
+            return CGFloat(80 * 1 + (sizeConstant.paddingSize))
         }
         else{
             return CGFloat(80 * rowCount + (sizeConstant.paddingSize))
         }
     }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        print("\(section) 섹션")
+//        guard section == 0 else { return nil }
+//
+//        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44.0))
+//        footerView.addSubview(deleteAndSaveStack)
+//        NSLayoutConstraint.activate([
+//            deleteAndSaveStack.topAnchor.constraint(equalTo: footerView.topAnchor),
+//            deleteAndSaveStack.leadingAnchor.constraint(equalTo: footerView.leadingAnchor),
+//            deleteAndSaveStack.trailingAnchor.constraint(equalTo: footerView.trailingAnchor),
+//            deleteAndSaveStack.bottomAnchor.constraint(equalTo: footerView.bottomAnchor),
+//            ])
+//        return footerView
+//    }
+
 }
-var publicdayCount = 0
 extension addDetailViewController : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryRealmDB.dayList.count
@@ -399,20 +401,17 @@ extension addDetailViewController : UITableViewDataSource{
         cell.detailScheduleTableView.tag = indexPath.row
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
-        print(countryRealmDB.dayList[indexPath.row].day - 1)
+//        print(countryRealmDB.dayList[indexPath.row].day - 1)
         let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.dayList[indexPath.row].day - 1, to: countryRealmDB.date!)
         
         dateFormatter.setLocalizedDateFormatFromTemplate("e")
         let day = dateFormatter.string(from: DBDate ?? Date())
         cell.dateView.dayOfTheWeek.text = day + "요일"
         cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일"
-        cell.delegate = self
         cell.count = countryRealmDB.dayList[indexPath.row].detailList.count
-        print(countryRealmDB.dayList[indexPath.row].detailList.count)
+//        print(countryRealmDB.dayList[indexPath.row].detailList.count)
         //        print(countryRealmDB.dayList[indexPath.row].detailList
         //        )
-        publicdayCount = countryRealmDB.dayList.count
-        
         cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
         cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
         cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
@@ -420,8 +419,6 @@ extension addDetailViewController : UITableViewDataSource{
         
         //        cell.dayOfTheWeek.text =
         
-        cell.selectDayIndex = indexPath.row
-        cell.selectCountryIndex = selectIndex
         cell.mydelegate = self
         cell.isEdit = isEdit!
 
@@ -437,3 +434,4 @@ extension addDetailViewController: UIScrollViewDelegate {
         }
     }
 }
+

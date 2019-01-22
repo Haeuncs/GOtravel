@@ -26,8 +26,8 @@ class addDetailView : UIView {
     var countryLabel : UILabel = {
         let label = UILabel()
         label.text = "일본 여행 🗺"
-        label.textColor = .white
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.textColor = Defaull_style.mainTitleColor
+        label.font = UIFont.systemFont(ofSize: 24, weight: .heavy)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,15 +35,15 @@ class addDetailView : UIView {
     var subLabel : UILabel = {
         let label = UILabel()
         label.text = "오사카 교토"
-        label.textColor = .white
-        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.textColor = Defaull_style.mainTitleColor
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     var dateLabel : UILabel = {
         let label = UILabel()
         label.text = "2019.02.10~2019.02.16 5박6일"
-        label.textColor = .white
+        label.textColor = Defaull_style.mainTitleColor
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -219,28 +219,3 @@ class addDetailViewCellButtonView : UIView {
     
 }
 
-class addDetailVCScrollView : UIView{
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
-    func initView(){
-        
-    }
-    func initLayout(){
-        
-    }
-    
-    let scrollView : UIScrollView = {
-        let scroll = UIScrollView()
-        return scroll
-    }()
-
-}

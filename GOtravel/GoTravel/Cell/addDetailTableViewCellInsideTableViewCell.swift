@@ -8,6 +8,7 @@
 
 import UIKit
 class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
+    var timeLabelIsHidden : Bool = true
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        print("sub test style")
@@ -21,6 +22,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 
     func initView(){
         
+//        if timeLabelIsHidden == false{
         mainView.addSubview(timeLabel)
         mainView.addSubview(titleLabel)
         contentView.addSubview(mainView)
@@ -52,7 +54,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     }
     lazy var colorView : UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.6705882353, blue: 0.2352941176, alpha: 1)
+        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

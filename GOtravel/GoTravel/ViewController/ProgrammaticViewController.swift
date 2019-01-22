@@ -22,14 +22,14 @@ class ProgrammaticViewController: UIViewController {
     let cellPercentWidth: CGFloat = 0.8
     var scrollToEdgeEnabled = false
     
-    var myBackgroundColor = UIColor()
+    var myBackgroundColor : UIColor?
     let realm = try? Realm()
     // 기본 저장 데이터
     var countryRealmDB : Results<countryRealm>?
     
     @IBAction func addBtn(_ sender: Any) {
         let placeVC = placeSearchViewController()
-        placeVC.myBackgroundColor = myBackgroundColor
+//        placeVC.myBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         placeVC.categoryIndex = 1
         
         self.navigationController?.pushViewController(placeVC, animated: true)
@@ -60,10 +60,10 @@ class ProgrammaticViewController: UIViewController {
     func initView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
-        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
+        self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+        self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         
         self.navigationItem.title = "일정"
         title = self.navigationItem.title

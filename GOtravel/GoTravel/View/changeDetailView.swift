@@ -10,11 +10,23 @@ import Foundation
 import UIKit
 import AnimatedTextInput
 
-class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
+    func inputData() -> (title: String, startTime: Date, endTime: Date, color: String, memo: String) {
+        return (titleTextInput.text!,startTime!,endTime!,colorPik,memoText)
+    }
+    var startTime : Date?
+    var endTime : Date?
+    var colorPik : String = ""
+    var memoText : String = ""
+
     var realViewWidth = CGFloat()
     var calcHeight = CGFloat()
+    
     let dateFormatter = DateFormatter()
+    
     var cellId = "Cell"
+    
     let collectionview: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -92,6 +104,7 @@ class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSou
         deleteAndSaveStack.addArrangedSubview(addBtn)
         
         myStackView.addArrangedSubview(timePickerStart)
+        myStackView.addArrangedSubview(timePickerEnd)
         myStackView.addArrangedSubview(deleteAndSaveStack)
         myStackView.addArrangedSubview(selection)
         selection.tapAction = {
@@ -103,31 +116,68 @@ class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSou
         myStackView.addArrangedSubview(memoTextInput)
 
         calcHeight = (realViewWidth - (5*5))/5
-        print(calcHeight)
+//        print(calcHeight)
+        deleteBtn.addTarget(self, action: #selector(self.deleteBtnSelect), for: .touchUpInside)
+        addBtn.addTarget(self, action: #selector(self.addBtnSelect), for: .touchUpInside)
         initLayout()
+    }
+    @objc func addBtnSelect(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        
+
+        if timePickerStart.isHidden{
+            // start가 숨겨져 있으면 end임
+            endTime = timePickerEnd.date
+            let date = dateFormatter.string(from: timePickerEnd.date)
+
+            print(date as Any)
+        }else{
+            startTime = timePickerStart.date
+            let date = dateFormatter.string(from: timePickerStart.date)
+
+            print(date as Any)
+
+        }
+    }
+    @objc func deleteBtnSelect(){
+        if timePickerStart.isHidden {
+            // 숨겨져있으면
+            timePickerEnd.isHidden = true
+            deleteAndSaveStack.isHidden = true
+        }
+        else{
+            timePickerStart.isHidden = true
+            deleteAndSaveStack.isHidden = true
+
+        }
     }
     func initState(selectIndex : Int) {
         print(selectIndex)
         if selectIndex == 0 {
             self.timeSelectionEnd.style = CustomTextInputStyle()
             timePickerStart.isHidden = !timePickerStart.isHidden
-            deleteAndSaveStack.isHidden = !deleteAndSaveStack.isHidden
+            deleteAndSaveStack.isHidden = timePickerStart.isHidden
 //            timeSelectionEnd.isHidden = true
             collectionview.isHidden = true
+            timePickerEnd.isHidden = true
             self.endEditing(true)
         }else if selectIndex == 1 {
             self.timeSelectionStart.style = CustomTextInputStyle()
-            timePickerStart.isHidden = !timePickerStart.isHidden
-            deleteAndSaveStack.isHidden = !deleteAndSaveStack.isHidden
-//            timeSelectionEnd.isHidden = !timeSelectionEnd.isHidden
+            timePickerEnd.isHidden = !timePickerEnd.isHidden
+            deleteAndSaveStack.isHidden = timePickerEnd.isHidden
+            timePickerStart.isHidden = true
             collectionview.isHidden = true
             self.endEditing(true)
         }else if selectIndex == 2{
             self.timeSelectionStart.style = CustomTextInputStyle()
             self.timeSelectionEnd.style = CustomTextInputStyle()
+            collectionview.isHidden = !collectionview.isHidden
+            deleteAndSaveStack.isHidden = true
             timePickerStart.isHidden = true
 //            timeSelectionEnd.isHidden = true
-            collectionview.isHidden = !collectionview.isHidden
+            timePickerEnd.isHidden = true
+            deleteAndSaveStack.isHidden = true
             collectionview.reloadData()
             self.endEditing(true)
         }
@@ -240,7 +290,7 @@ class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSou
     let deleteBtn : UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.myRed
-        button.setTitle("삭제", for: .normal)
+        button.setTitle("취소", for: .normal)
         
         button.translatesAutoresizingMaskIntoConstraints=false
         return button
@@ -314,7 +364,14 @@ class changeDetailView : UIView,UICollectionViewDelegate,UICollectionViewDataSou
     }()
 
     let timePickerStart : UIDatePicker = {
-       let picker = UIDatePicker()
+        let picker = UIDatePicker()
+        picker.isHidden = true
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.datePickerMode = .time
+        return picker
+    }()
+    let timePickerEnd : UIDatePicker = {
+        let picker = UIDatePicker()
         picker.isHidden = true
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.datePickerMode = .time
@@ -426,6 +483,8 @@ extension changeDetailView {
         let darkenedBase = UIColor(displayP3Red: color!.cgColor.components![0] / 2, green: color!.cgColor.components![1] / 2, blue: color!.cgColor.components![2] / 2, alpha: 1)
 
         cell.colorView.layer.borderColor = darkenedBase.cgColor
+        
+        colorPik = cell.colorView.backgroundColor!.toString()
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! colorCVCell
@@ -434,6 +493,8 @@ extension changeDetailView {
         cell.colorView.layer.borderWidth = 3
         
         cell.colorView.layer.borderColor = UIColor.clear.cgColor
+        
+        
 
     }
 }

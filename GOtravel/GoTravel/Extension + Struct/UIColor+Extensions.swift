@@ -33,4 +33,9 @@ extension UIColor {
         //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
         return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
+    func toString() -> String {
+        let colorRef = self.cgColor
+        return CIColor(cgColor: colorRef).stringRepresentation
+    }
+
 }

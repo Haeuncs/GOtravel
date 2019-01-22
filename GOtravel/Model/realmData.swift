@@ -32,5 +32,10 @@ class detailRealm : Object{
     @objc dynamic var address: String = ""
     @objc dynamic var longitude: Double = 0.0
     @objc dynamic var latitude: Double = 0.0
-    @objc dynamic var date: Date?
+    @objc dynamic var startTime: Date?
+    @objc dynamic var EndTime: Date?
+    @objc dynamic var color: String = ""
+    @objc dynamic var memo: String = ""
+
+
 }

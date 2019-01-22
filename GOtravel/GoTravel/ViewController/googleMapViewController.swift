@@ -42,11 +42,14 @@ class googleMapViewController : UIViewController {
                 array_map()
             }
         }
+        self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
+
     }
     override func viewWillAppear(_ animated: Bool) {
         
     }
     func array_map(){
+        self.navigationItem.title = currentSelect.title
         let camera = GMSCameraPosition.camera(withLatitude: currentSelect.latitude, longitude: currentSelect.longitude, zoom: 11.5)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
@@ -62,6 +65,8 @@ class googleMapViewController : UIViewController {
     }
     func map(){
         //        print(selectPlaceInfo)
+        self.navigationItem.title =  selectPlaceInfo.title
+
         let camera = GMSCameraPosition.camera(withLatitude:selectPlaceInfo.location!.latitude, longitude: selectPlaceInfo.location!.longitude, zoom: 15)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
@@ -85,6 +90,7 @@ class googleMapViewController : UIViewController {
             detailRealmDB.address = selectPlaceInfo.address
             detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
             detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
+            detailRealmDB.color = "default"
             try! realm.write {
                 dayRealmDB.detailList.append(detailRealmDB)
                 
