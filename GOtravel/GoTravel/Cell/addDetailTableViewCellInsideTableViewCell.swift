@@ -13,6 +13,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        print("sub test style")
         contentView.backgroundColor = .white
+        
         initView()
     }
     
@@ -34,6 +35,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 //        contentView.addSubview(mainView)
         contentView.addSubview(stackView)
         contentView.addSubview(colorView)
+        
         NSLayoutConstraint.activate([
             colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             colorView.topAnchor.constraint(equalTo: contentView.topAnchor,constant:5),

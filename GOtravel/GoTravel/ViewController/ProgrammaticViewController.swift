@@ -55,7 +55,6 @@ class ProgrammaticViewController: UIViewController {
         super.viewDidLoad()
         print("viewdidLoad")
         initView()
-        
     }
     func initView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true

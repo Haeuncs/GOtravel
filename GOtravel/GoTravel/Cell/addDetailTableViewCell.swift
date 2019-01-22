@@ -40,6 +40,8 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
             sub.removeFromSuperview()
         }
         
+        
+        
     }
     
     override func layoutSubviews() {
@@ -77,13 +79,16 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         detailScheduleTableView.separatorStyle = .none
         detailScheduleTableView.rowHeight = UITableView.automaticDimension
         detailScheduleTableView.estimatedRowHeight = 200
-        
+//        if isEdit == true{
+        detailScheduleTableView.isScrollEnabled = false
+//        }
         if count != 0{
             detailScheduleTableView.allowsSelection = true
             detailScheduleTableView.isEditing = isEdit
         }else{
             detailScheduleTableView.isEditing = false
             detailScheduleTableView.allowsSelection = false
+//            detailScheduleTableView.isScrollEnabled = true
         }
         initLayout()
     }
@@ -215,6 +220,8 @@ extension addDetailTableViewCell {
             if colorStr != "default" {
                 let colorArr = colorStr?.components(separatedBy: " ")
                 cell.colorView.backgroundColor = UIColor.init(red: characterToCgfloat(str: colorArr![0]), green: characterToCgfloat(str: colorArr![1]), blue: characterToCgfloat(str: colorArr![2]), alpha: characterToCgfloat(str: colorArr![3]))
+            }else{
+                cell.colorView.backgroundColor = UIColor.clear
             }
         }
         return cell

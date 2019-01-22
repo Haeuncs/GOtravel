@@ -21,6 +21,7 @@ protocol changeDetailVCVDelegate : class {
 
 class addDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
     
+    // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
     var isEdit : Bool? = false
     let realm = try! Realm()
     // push 로 데이터 전달됨
@@ -37,11 +38,13 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     // 첫 메인 페이지에서 선택한 cell 컬러가 여러 곳에서 쓰임
     var selectCellColor : UIColor?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         initView()
         scheduleMainTableView.reloadData()
     }
@@ -72,14 +75,17 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         view.addSubview(mainView)
         view.addSubview(scheduleMainTableView)
         
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
+        deleteAndSaveStack.addArrangedSubview(addBtnS)
+
+        let customView = UIStackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
+        customView.alignment = .center
+        customView.distribution = .fill
 //        customView.backgroundColor = UIColor.red
-        customView.addSubview(deleteAndSaveStack)
+        customView.addArrangedSubview(deleteAndSaveStack)
         
         scheduleMainTableView.tableFooterView = customView
         
-        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
-        deleteAndSaveStack.addArrangedSubview(addBtnS)
 //        view.addSubview(deleteAndSaveStack)
         
         initLayout()
@@ -96,9 +102,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
             scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
-            
             ])
 
     }
@@ -159,6 +163,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
         let googleVC = googleMapViewController()
         if countryRealmDB.dayList[indexPath.row].detailList.first != nil{
+            googleVC.navTitle = countryRealmDB.city
             googleVC.arrayMap = true
             googleVC.currentSelect = countryRealmDB.dayList[indexPath.row].detailList.first!
             googleVC.dayDetailRealm = countryRealmDB.dayList[indexPath.row].detailList
@@ -348,7 +353,7 @@ extension addDetailViewController {
     }
     func tableViewDeleteEvent(_ sender: addDetailTableViewCell) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
-        print("Heart", sender, tappedIndexPath)
+        print("tab", sender, tappedIndexPath)
         self.scheduleMainTableView.reloadData()
     }
 
@@ -421,6 +426,7 @@ extension addDetailViewController : UITableViewDataSource{
         
         cell.mydelegate = self
         cell.isEdit = isEdit!
+        
 
         return cell
     }
