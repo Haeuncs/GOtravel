@@ -75,22 +75,57 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         view.addSubview(mainView)
         view.addSubview(scheduleMainTableView)
         
-        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
-        deleteAndSaveStack.addArrangedSubview(addBtnS)
+//        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
+//        deleteAndSaveStack.addArrangedSubview(addBtnS)
 
         let customView = UIStackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
         customView.alignment = .center
         customView.distribution = .fill
 //        customView.backgroundColor = UIColor.red
-        customView.addArrangedSubview(deleteAndSaveStack)
+        customView.addArrangedSubview(deleteDataLabel)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(addDetailViewController.alldDleteLabelEvent))
+        deleteDataLabel.isUserInteractionEnabled = true
+        deleteDataLabel.addGestureRecognizer(tap)
+
         scheduleMainTableView.tableFooterView = customView
+        
         
 //        view.addSubview(deleteAndSaveStack)
         
         initLayout()
         getRealmData()
     }
+    
+    @objc func alldDleteLabelEvent(sender:UITapGestureRecognizer) {
+        let uiAlertControl = UIAlertController(title: "여행 데이터 삭제", message: "한번 삭제한 데이터는 복구 할 수 없습니다. 삭제하시겠습니까? ", preferredStyle: .actionSheet)
+        
+        
+//        uiAlertControl.addAction(UIAlertAction(title: "도서 검색 하기", style: .default, handler: { (_) in
+//            let uvc = self.storyboard!.instantiateViewController(withIdentifier: "book_search")
+//            
+//            self.navigationController?.pushViewController(uvc, animated: true)
+//        })
+//        )
+//        
+//        uiAlertControl.addAction(UIAlertAction(title: "직접 입력 하기", style: .default, handler: { (_) in
+//            let uvc = self.storyboard!.instantiateViewController(withIdentifier: "ReadingRecord_add_Data")
+//            
+//            self.navigationController?.pushViewController(uvc, animated: true)
+//        })
+//        )
+        
+        uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: nil))
+        // 아이패드에서도 작동하기 위해서 사용 popoverController
+        uiAlertControl.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        if let popoverController = uiAlertControl.popoverPresentationController {
+            popoverController.barButtonItem = sender as? UIBarButtonItem
+        }
+        
+        self.present(uiAlertControl, animated: true, completion: nil)
+
+    }
+
     func initLayout(){
         // constraint
         NSLayoutConstraint.activate([
@@ -102,7 +137,9 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
             scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
+//            deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
+            deleteDataLabel.widthAnchor.constraint(equalToConstant: view.frame.width)
+
             ])
 
     }
@@ -180,8 +217,8 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        self.navigationController?.pushViewController(placeVC, animated: true)
     }
     @objc func exchangeButtonEvent(_ sender : UIButton){
-        let VC = noNibCollectionViewController()
-        self.navigationController?.pushViewController(VC, animated: true)
+//        let VC = noNibCollectionViewController()
+//        self.navigationController?.pushViewController(VC, animated: true)
     }
     
 
@@ -192,6 +229,20 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        self.navigationController?.pushViewController(view, animated: true)
     }
     var sum = 0
+    // delete label footer view
+    let deleteDataLabel : UILabel = {
+        let label = UILabel()
+        label.text = "이 여행 데이터 전체 삭제"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = #colorLiteral(red: 0.802965343, green: 0.08342111856, blue: 0, alpha: 1)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+
+    
     // MARK: VC에서 View 그릴 떄 사용하는 것들
     let deleteBtnS : UIButton = {
         let button = UIButton()

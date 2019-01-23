@@ -90,7 +90,7 @@ class addDetailViewCellView: UIView {
     let dateLabel : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        label.textColor = Defaull_style.dateColor
         label.text = "test"
         label.numberOfLines = 0
         label.layer.cornerRadius = 8
@@ -102,7 +102,7 @@ class addDetailViewCellView: UIView {
     let dayOfTheWeek : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        label.textColor = Defaull_style.dateColor
         label.text = "월요일"
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.numberOfLines = 0

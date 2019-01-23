@@ -18,6 +18,8 @@ struct Defaull_style {
     static var bgColor = UIColor.white
     static var mainTitleColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     static var subTitleColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    static var dateColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    static var markerTextColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
 //    static var monthViewBtnLeftColor = UIColor.black
 //    static var activeCellLblColor = UIColor.black
 //    static var activeCellLblColorHighlighted = UIColor.white

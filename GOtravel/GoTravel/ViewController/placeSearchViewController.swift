@@ -55,6 +55,9 @@ class placeSearchViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        // 까만거 지우려고
+        self.navigationController!.view.backgroundColor = .white
+
         //        self.view.backgroundColor = Style.bgColor
 //        self.navigationController?.view.backgroundColor = myBackgroundColor ?? #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
         self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor

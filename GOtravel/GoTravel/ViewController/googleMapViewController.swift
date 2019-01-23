@@ -63,15 +63,52 @@ class googleMapViewController : UIViewController {
         self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
 
     }
-    func draw_marker(i : detailRealm ){
+    // 마커 안에 들어가는 라벨
+    let textLabelInMarker : UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        label.text = "1"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 25, weight: .medium)
+        label.textColor = Defaull_style.markerTextColor
+//        label.backgroundColor = .black
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+    func customMarker(color : UIColor) -> UIImage {
+        let customMarker = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        customMarker.layer.cornerRadius = 40/2
+        customMarker.layer.borderWidth = 1.5
+        customMarker.layer.borderColor = Defaull_style.markerTextColor.cgColor
+        customMarker.backgroundColor = color
+        customMarker.translatesAutoresizingMaskIntoConstraints = false
+        customMarker.addSubview(textLabelInMarker)
+        textLabelInMarker.centerXAnchor.constraint(equalTo: customMarker.centerXAnchor).isActive = true
+        textLabelInMarker.centerYAnchor.constraint(equalTo: customMarker.centerYAnchor).isActive = true
+        textLabelInMarker.widthAnchor.constraint(equalTo: customMarker.widthAnchor).isActive = true
+        textLabelInMarker.heightAnchor.constraint(equalTo: customMarker.heightAnchor).isActive = true
+        
+        return customMarker.asImage()
+    }
+    func draw_marker(i : detailRealm,index:Int){
         let marker = GMSMarker()
-        marker.icon = GMSMarker.markerImage(with: myColor ?? #colorLiteral(red: 0.8544613487, green: 0.4699537418, blue: 0.4763622019, alpha: 1))
+        let colorStr = i.color
+        let colorArr = colorStr.components(separatedBy: " ")
+        let colorUIColor = UIColor.init(red: characterToCgfloat(str: colorArr[0]), green: characterToCgfloat(str: colorArr[1]), blue: characterToCgfloat(str: colorArr[2]), alpha: characterToCgfloat(str: colorArr[3]))
+        textLabelInMarker.text = String(index)
+        marker.icon = customMarker(color: colorUIColor)
         marker.position = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
         marker.title = i.title
         marker.snippet = i.address
         marker.map = self.mapView
         location_coordi.append(marker.position)
     }
+    func characterToCgfloat(str : String) -> CGFloat {
+        let n = NumberFormatter().number(from: str)
+        return n as! CGFloat
+    }
+
     // path 선택 시
     func array_map(){
         self.navigationItem.title = navTitle
@@ -79,7 +116,7 @@ class googleMapViewController : UIViewController {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
         if dayDetailRealm.count == 1 {
-            draw_marker(i: dayDetailRealm.first!)
+            draw_marker(i: dayDetailRealm.first!,index : 1)
         }else{
             // 데이터 다 계산한 후에 화면 업데이트 하도록 디스패치 그룹 만들어줌
             let dispatchGroup = DispatchGroup()
@@ -88,9 +125,9 @@ class googleMapViewController : UIViewController {
                 dispatchGroup.enter()
                 //0,1,2
                 let origin = "\(dayDetailRealm[i].latitude),\(dayDetailRealm[i].longitude)"
-                draw_marker(i: dayDetailRealm[i])
+                draw_marker(i: dayDetailRealm[i],index : i+1)
                 let destination = "\(dayDetailRealm[i+1].latitude),\(dayDetailRealm[i+1].longitude)"
-                draw_marker(i: dayDetailRealm[i+1])
+                draw_marker(i: dayDetailRealm[i+1],index : i+2)
                 let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=" + myRouteAPIKey
                 
                 print(urlString)

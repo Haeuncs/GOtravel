@@ -5,8 +5,6 @@
 
 현재 개발 진행 중
 
-
-
 # 소개
 
 ## 메인
@@ -48,4 +46,13 @@ D- day 남은 순으로 다시 정렬하여 메인에 표시함
 
 ## cell 클릭 시 디테일 수정
 <img src="githubImage/IMG_0215.PNG" aligned="center" width="200"/>
+
+## 여행 장소 중요도 표시
+<img src="githubImage/IMG_0222.PNG" aligned="center" width="200"/>
+
+## 여행 path 보기
+선택한 날짜에 일정 path를 보여준다
+<img src="githubImage/IMG_0223.PNG" aligned="center" width="200"/>
+
+
 

@@ -33,34 +33,49 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 //        mainView.addSubview(timeLabel)
 //        mainView.addSubview(titleLabel)
 //        contentView.addSubview(mainView)
-        contentView.addSubview(stackView)
-        contentView.addSubview(colorView)
+        
+        colorParentView.addSubview(colorView)
+
+        detailInfoWithcolorView.addArrangedSubview(colorParentView)
+        detailInfoWithcolorView.addArrangedSubview(stackView)
+        
+        contentView.addSubview(detailInfoWithcolorView)
+        
+        let stackMultiplerWidth = NSLayoutConstraint(item: colorParentView, attribute: .width, relatedBy: .equal, toItem: stackView, attribute: .width, multiplier: 0.1, constant: 0.0)
         
         NSLayoutConstraint.activate([
-            colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            colorView.topAnchor.constraint(equalTo: contentView.topAnchor,constant:5),
-            colorView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:10),
-            colorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:-5),
+            stackMultiplerWidth,
             
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:25),
-//            mainView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            mainView.bottomAnchor.constraint(equalTo: contentView.topAnchor),
-//            mainView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-//            mainView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            // main stack
+            detailInfoWithcolorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            detailInfoWithcolorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            detailInfoWithcolorView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            detailInfoWithcolorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-//            timeLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-////            timeLabel.topAnchor.constraint(equalTo: mainView.topAnchor),
-//            timeLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-//            timeLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
-//
-//            titleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-//            titleLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
-//            titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-//            titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
+            colorParentView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
+            colorParentView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
+            
+            stackView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
+
+            colorView.centerXAnchor.constraint(equalTo: colorParentView.centerXAnchor),
+            colorView.centerYAnchor.constraint(equalTo: colorParentView.centerYAnchor),
+            colorView.widthAnchor.constraint(equalToConstant: 10),
+            colorView.heightAnchor.constraint(equalToConstant: 10),
+            
+            
+
             ])
     }
+    let detailInfoWithcolorView : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .fill
+//        stack.backgroundColor = UIColor.clear
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     let stackView : UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -68,9 +83,16 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    var colorParentView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     lazy var colorView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.red
+        view.layer.cornerRadius = 10/2
+        // 타원 그리기
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
