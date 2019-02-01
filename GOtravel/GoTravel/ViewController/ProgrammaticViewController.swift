@@ -177,11 +177,12 @@ extension ProgrammaticViewController: UICollectionViewDataSource {
         cell.cityLabel.text = countryRealmDB?[indexPath.row].city
         let inervalToday = countryRealmDB?[indexPath.row].date!.timeIntervalSince(Date())
         var dday = Int(inervalToday! / 86400)
-        if dday >= 0{
-            cell.ddayLabel.text = "D-\(dday)"
+        print(dday)
+        if dday > 0{
+            cell.ddayLabel.text = "D-\(dday+1)"
         }else{
             dday = dday * -1
-            cell.ddayLabel.text = "+\(dday)일"
+            cell.ddayLabel.text = "+\(dday+1)일"
         }
         // random color 를 cell의 background
         myBackgroundColor = HSBrandomColor()

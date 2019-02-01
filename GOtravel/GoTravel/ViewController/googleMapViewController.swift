@@ -94,8 +94,11 @@ class googleMapViewController : UIViewController {
     func draw_marker(i : detailRealm,index:Int){
         let marker = GMSMarker()
         let colorStr = i.color
-        let colorArr = colorStr.components(separatedBy: " ")
-        let colorUIColor = UIColor.init(red: characterToCgfloat(str: colorArr[0]), green: characterToCgfloat(str: colorArr[1]), blue: characterToCgfloat(str: colorArr[2]), alpha: characterToCgfloat(str: colorArr[3]))
+        var colorUIColor = #colorLiteral(red: 0.5372078419, green: 0.5372861624, blue: 0.5371831059, alpha: 1)
+        if colorStr != "default"{
+            let colorArr = colorStr.components(separatedBy: " ")
+            colorUIColor = UIColor.init(red: characterToCgfloat(str: colorArr[0]), green: characterToCgfloat(str: colorArr[1]), blue: characterToCgfloat(str: colorArr[2]), alpha: characterToCgfloat(str: colorArr[3]))
+        }
         textLabelInMarker.text = String(index)
         marker.icon = customMarker(color: colorUIColor)
         marker.position = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)

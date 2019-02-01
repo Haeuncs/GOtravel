@@ -25,8 +25,11 @@ class changeDetailOfViewContoller : UIViewController {
         initView()
         if detailRealmDB != nil {
             let setData = mainView as? changeDetailView;
+            // 기존 데이터 입력
             setData?.titleTextInput.text = detailRealmDB?.title
-            setData?.mainTitle.text = (countryRealmDB?.country)! + " " + (countryRealmDB?.city)! + " " + "여행"
+            setData?.mainTitle.text = (countryRealmDB?.city)! + " " + "여행"
+            setData?.miniMemoTextInput.text = detailRealmDB?.oneLineMemo
+            setData?.memoTextInput.text = detailRealmDB?.memo
         }
     }
 
@@ -78,6 +81,7 @@ class changeDetailOfViewContoller : UIViewController {
             detailRealmDB?.startTime = setData!.startTime
             detailRealmDB?.EndTime = setData!.endTime
             detailRealmDB?.memo = setData!.memoTextInput.text!
+            detailRealmDB?.oneLineMemo = setData!.miniMemoTextInput.text!
         }
         
         self.navigationController?.popViewController(animated: true)

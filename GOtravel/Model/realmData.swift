@@ -36,6 +36,7 @@ class detailRealm : Object{
     @objc dynamic var EndTime: Date?
     @objc dynamic var color: String = ""
     @objc dynamic var memo: String = ""
+    @objc dynamic var oneLineMemo: String = ""
 
 
 }

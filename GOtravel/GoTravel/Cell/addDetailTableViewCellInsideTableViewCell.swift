@@ -9,6 +9,7 @@
 import UIKit
 class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     var timeLabelIsHidden : Bool = true
+    var memoLabelIsHidden : Bool = true
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        print("sub test style")
@@ -23,13 +24,10 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
 
     func initView(){
         // stack 으로 time과 title 관리함.
-        if timeLabelIsHidden == false{
-            stackView.addArrangedSubview(timeLabel)
-            stackView.addArrangedSubview(titleLabel)
-            }else{
-            //  hidden 이 true이면
-            stackView.addArrangedSubview(titleLabel)
-        }
+        stackView.addArrangedSubview(timeLabel)
+        stackView.addArrangedSubview(oneLineMemo)
+        stackView.addArrangedSubview(titleLabel)
+        
 //        mainView.addSubview(timeLabel)
 //        mainView.addSubview(titleLabel)
 //        contentView.addSubview(mainView)
@@ -52,11 +50,11 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
             detailInfoWithcolorView.topAnchor.constraint(equalTo: contentView.topAnchor),
             detailInfoWithcolorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            colorParentView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
-            colorParentView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
+//            colorParentView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
+//            colorParentView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
+//
+//            stackView.topAnchor.constraint(equalTo: detailInfoWithcolorView.topAnchor),
+//            stackView.bottomAnchor.constraint(equalTo: detailInfoWithcolorView.bottomAnchor),
 
             colorView.centerXAnchor.constraint(equalTo: colorParentView.centerXAnchor),
             colorView.centerYAnchor.constraint(equalTo: colorParentView.centerYAnchor),
@@ -114,13 +112,27 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
     }()
     lazy var timeLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = Defaull_style.subTitleColor
         label.numberOfLines = 0
+        label.isHidden = true
+
 //        label.backgroundColor = .red
 
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    lazy var oneLineMemo : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = Defaull_style.subTitleColor
+        label.numberOfLines = 0
+        label.isHidden = true
+        //        label.backgroundColor = .red
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
 
 }

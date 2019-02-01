@@ -44,9 +44,11 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         
         initView()
         scheduleMainTableView.reloadData()
+        
     }
     
     func initView(){
@@ -217,8 +219,8 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        self.navigationController?.pushViewController(placeVC, animated: true)
     }
     @objc func exchangeButtonEvent(_ sender : UIButton){
-//        let VC = noNibCollectionViewController()
-//        self.navigationController?.pushViewController(VC, animated: true)
+        let exchangeVC = exchangeViewController()
+        self.navigationController?.pushViewController(exchangeVC, animated: true)
     }
     
 
@@ -268,13 +270,14 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         return stack
     }()
     // title을 갖는 뷰
+    // 여행지랑 몇박 몇일인지 등등
     lazy var mainView: addDetailView = {
         let view = addDetailView()
         view.translatesAutoresizingMaskIntoConstraints = false
 //        view.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         return view
     }()
-    
+    // 날짜별 테이블뷰
     var scheduleMainTableView : UITableView = {
         let tableView = UITableView()
         tableView.tag = 0

@@ -10,12 +10,50 @@ import UIKit
 
 class exchangeViewController : UIViewController {
     override func viewDidLoad() {
+        super.viewDidLoad()
 
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
+        self.navigationItem.title = "가계부"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
+        self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+        self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+        // 뷰 겹치는거 방지
+        self.navigationController!.navigationBar.isTranslucent = false
+        // 까만거 지우려고
+        self.navigationController!.view.backgroundColor = .white
+        
+
+        initView()
     }
+    
+    func initView(){
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.view.addSubview(mainView)
+        let mainViewPadding = CGFloat(20)
+
+        NSLayoutConstraint.activate([
+            mainView.topAnchor.constraint(equalTo: view.topAnchor, constant: mainViewPadding),
+            mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -mainViewPadding),
+            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainViewPadding),
+            mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainViewPadding),
+            ])
+    }
+    let mainView : UIView = {
+        let view = UIView()
+        view.backgroundColor = Defaull_style.backgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+//    let mainTableView : UITableView = {
+//       let table = UITableView()
+//        return UITableView
+//    }()
 }
+
 //import UIKit
 //
 //

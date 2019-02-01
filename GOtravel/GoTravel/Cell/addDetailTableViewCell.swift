@@ -76,7 +76,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         
         detailScheduleTableView.delegate = self
         detailScheduleTableView.dataSource = self
-        detailScheduleTableView.separatorStyle = .none
+//        detailScheduleTableView.separatorStyle = .none
         detailScheduleTableView.rowHeight = UITableView.automaticDimension
         detailScheduleTableView.estimatedRowHeight = 200
 //        if isEdit == true{
@@ -122,6 +122,9 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         let tableView = UITableView()
         tableView.tag = 1
         tableView.backgroundColor = .white
+        tableView.separatorColor = Defaull_style.subTitleColor
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -222,6 +225,13 @@ extension addDetailTableViewCell {
                 cell.colorView.backgroundColor = UIColor.init(red: characterToCgfloat(str: colorArr![0]), green: characterToCgfloat(str: colorArr![1]), blue: characterToCgfloat(str: colorArr![2]), alpha: characterToCgfloat(str: colorArr![3]))
             }else{
                 cell.colorView.backgroundColor = UIColor.clear
+            }
+            let oneLineMemo = dayRealmDB?.detailList[indexPath.row].oneLineMemo
+            
+            if oneLineMemo != "" {
+                print(oneLineMemo!)
+                cell.oneLineMemo.isHidden = false
+                cell.oneLineMemo.text = oneLineMemo!
             }
         }
         return cell

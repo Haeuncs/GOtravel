@@ -14,6 +14,8 @@
 		4A3BC29821F3B2A800995E28 /* changeDetailOfDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */; };
 		4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */; };
 		4A5B322721F6913E0007AB21 /* defaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5B322621F6913E0007AB21 /* defaultStyle.swift */; };
+		4A5F9CAD21FA100A0097C5C1 /* Enum_exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */; };
+		4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */; };
 		4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */; };
 		4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4F21E7C24B00CCE52F /* mainViewController.swift */; };
 		4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */; };
@@ -57,6 +59,8 @@
 		4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailOfDayViewController.swift; sourceTree = "<group>"; };
 		4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailView.swift; sourceTree = "<group>"; };
 		4A5B322621F6913E0007AB21 /* defaultStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultStyle.swift; sourceTree = "<group>"; };
+		4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum_exchange.swift; sourceTree = "<group>"; };
+		4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchagneView.swift; sourceTree = "<group>"; };
 		4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4A779F4F21E7C24B00CCE52F /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addTravelInfoViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */,
 				4A3A17E021F1C8B500313077 /* DateExtensions.swift */,
 				4A5B322621F6913E0007AB21 /* defaultStyle.swift */,
+				4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */,
 			);
 			path = "Extension + Struct";
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				4AC710B421F10F4100B20448 /* calendar */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
 				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
+				4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				4A5B322721F6913E0007AB21 /* defaultStyle.swift in Sources */,
 				4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */,
 				4AC7103C21EE10C600B20448 /* addDetailViewController.swift in Sources */,
+				4A5F9CAD21FA100A0097C5C1 /* Enum_exchange.swift in Sources */,
 				4A969BF421E5A2F00016DB49 /* AppDelegate.swift in Sources */,
 				4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */,
 				4A3A17E121F1C8B500313077 /* DateExtensions.swift in Sources */,
@@ -458,6 +465,7 @@
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
+				4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */,
 				4AC710A821F0B6D100B20448 /* exchangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,6 +613,7 @@
 			baseConfigurationReference = 8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
@@ -614,6 +623,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -624,6 +634,7 @@
 			baseConfigurationReference = 25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
@@ -633,6 +644,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

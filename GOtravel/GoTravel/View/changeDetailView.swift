@@ -77,6 +77,7 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         myStackView.addArrangedSubview(mainTitle)
 //        myStackView.addArrangedSubview(categoryLabel1)
         myStackView.addArrangedSubview(titleTextInput)
+        myStackView.addArrangedSubview(miniMemoTextInput)
 //        myStackView.addArrangedSubview(categoryLabel2)
         myStackView.addArrangedSubview(timeStack)
         timeStack.addArrangedSubview(timeSelectionStart)
@@ -327,6 +328,15 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         //        text.type = .numeric
         return text
     }()
+    let  miniMemoTextInput : AnimatedTextInput = {
+        let text = AnimatedTextInput()
+        text.placeHolderText = "한줄 메모"
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.style = CustomTextInputStyle()
+        //        text.type = .numeric
+        return text
+    }()
+
 
     let timeStack : UIStackView = {
         let stack = UIStackView()
