@@ -43,7 +43,7 @@ class exchangeViewController : UIViewController {
             ])
     }
     let mainView : UIView = {
-        let view = UIView()
+        let view = exchangeView()
         view.backgroundColor = Defaull_style.backgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
