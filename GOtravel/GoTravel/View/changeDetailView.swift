@@ -452,10 +452,10 @@ extension changeDetailView {
         return 10
     }
     // hsb random color
-    func HSBrandomColor() -> UIColor{
+    func HSBrandomColor(num : CGFloat) -> UIColor{
         let saturation : CGFloat =  0.45
         let brigtness : CGFloat = 0.85
-        let randomHue = CGFloat.random(in: 0.0..<1.0)
+        let randomHue = num
         //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
         return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
@@ -463,7 +463,7 @@ extension changeDetailView {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! colorCVCell
-        cell.colorView.backgroundColor =  HSBrandomColor()
+        cell.colorView.backgroundColor =  HSBrandomColor(num : CGFloat(Double((indexPath.row + 1) * 10) / Double(100)))
         cell.colorView.layer.borderColor = UIColor.clear.cgColor
 //        cell.colorView.layer.borderWidth = 1
         return cell
@@ -540,7 +540,7 @@ class colorCVCell : UICollectionViewCell {
 }
 struct selectColorChange: AnimatedTextInputStyle {
     let placeholderInactiveColor = UIColor.red
-    let activeColor = #colorLiteral(red: 0.4588235294, green: 0.7176470588, blue: 0.1803921569, alpha: 1)
+    let activeColor = Defaull_style.mainTitleColor
     let inactiveColor = UIColor.gray.withAlphaComponent(0.3)
     let lineInactiveColor = UIColor.gray.withAlphaComponent(0.3)
     let lineActiveColor = UIColor.gray.withAlphaComponent(0.3)
@@ -561,7 +561,7 @@ struct selectColorChange: AnimatedTextInputStyle {
 }
 struct CustomTextInputStyle: AnimatedTextInputStyle {
     let placeholderInactiveColor = UIColor.gray
-    let activeColor = #colorLiteral(red: 0.4588235294, green: 0.7176470588, blue: 0.1803921569, alpha: 1)
+    let activeColor = Defaull_style.mainTitleColor
     let inactiveColor = UIColor.gray.withAlphaComponent(0.3)
     let lineInactiveColor = UIColor.gray.withAlphaComponent(0.3)
     let lineActiveColor = UIColor.gray.withAlphaComponent(0.3)

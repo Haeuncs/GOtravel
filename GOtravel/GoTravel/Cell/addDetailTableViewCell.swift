@@ -11,11 +11,6 @@ import Foundation
 import UIKit
 import RealmSwift
 
-protocol addDetailViewTableViewCellDelegate : class {
-    func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell,detailIndex : Int)
-    func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
-}
-
 class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
 
     let realm = try! Realm()
@@ -40,8 +35,6 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
             sub.removeFromSuperview()
         }
         
-        
-        
     }
     
     override func layoutSubviews() {
@@ -56,6 +49,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -232,6 +226,8 @@ extension addDetailTableViewCell {
                 print(oneLineMemo!)
                 cell.oneLineMemo.isHidden = false
                 cell.oneLineMemo.text = oneLineMemo!
+            }else if oneLineMemo == "" {
+                cell.oneLineMemo.isHidden = true
             }
         }
         return cell

@@ -9,6 +9,7 @@
 import Foundation
 
 struct exchange_country {
+    static var 대한민국_원 = "KRW"
     static var 아랍에미레이트_디르함 = "AED"
     static var 오스트리아_실링 = "ATS"
     static var 벨기에_프랑 = "BEF"

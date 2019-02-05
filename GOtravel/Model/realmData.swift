@@ -10,6 +10,9 @@ import Foundation
 import RealmSwift
 import MapKit
 
+//class categoryRealm : Object {
+//    var categoryList = List<categoryDetailRealm>()
+//}
 class countryRealm : Object{
     @objc dynamic var country: String = ""
     @objc dynamic var city: String = ""
@@ -19,12 +22,29 @@ class countryRealm : Object{
     @objc dynamic var longitude: Double = 0.0
     @objc dynamic var latitude: Double = 0.0
     var dayList = List<dayRealm>()
+    var moneyList = List<moneyRealm>()
+    var categoryList = List<categoryDetailRealm>()
+}
+// 경비 카테고리
+class categoryDetailRealm : Object {
+    @objc dynamic var title: String = ""
+}
+// 0 은 여행 전 돈 쓴거
+class moneyRealm : Object {
+    @objc dynamic var day: Int = 0
+    var detailList = List<moneyDetailRealm>()
+}
+
+class moneyDetailRealm : Object {
+    @objc dynamic var title: String = ""
+    @objc dynamic var subTitle: String = ""
+    @objc dynamic var exchange: String = ""
+    @objc dynamic var money: Double = 0.0
 }
 
 class dayRealm : Object {
     @objc dynamic var day: Int = 0
     var detailList = List<detailRealm>()
-
 }
 
 class detailRealm : Object{

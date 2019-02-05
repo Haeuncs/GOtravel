@@ -18,6 +18,12 @@ public enum sizeConstant {
 protocol changeDetailVCVDelegate : class {
     func inputData()->(title:String,startTime:Date,endTime:Date,color:String,memo:String)
 }
+protocol addDetailViewTableViewCellDelegate : class {
+    func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell,detailIndex : Int)
+    func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
+}
+
+
 
 class addDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
     
@@ -117,7 +123,13 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        })
 //        )
         
-        uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: nil))
+        uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: { (_) in
+            try! self.realm.write {
+                self.realm.delete(self.countryRealmDB)
+            }
+            self.dismiss(animated: true, completion: nil)
+        })
+        )
         // 아이패드에서도 작동하기 위해서 사용 popoverController
         uiAlertControl.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         if let popoverController = uiAlertControl.popoverPresentationController {
@@ -140,8 +152,9 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
             scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 //            deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
-            deleteDataLabel.widthAnchor.constraint(equalToConstant: view.frame.width)
-
+//            deleteDataLabel.widthAnchor.constraint(equalToConstant: view.frame.width)
+            deleteDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            deleteDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
 
     }
@@ -219,7 +232,14 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        self.navigationController?.pushViewController(placeVC, animated: true)
     }
     @objc func exchangeButtonEvent(_ sender : UIButton){
+        impact.impactOccurred()
+        let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
+        let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
+
         let exchangeVC = exchangeViewController()
+        exchangeVC.countryRealmDB = self.countryRealmDB
+        // 여행 전 경비가 있음으로 + 1
+        exchangeVC.selectDay = indexPath.row + 1
         self.navigationController?.pushViewController(exchangeVC, animated: true)
     }
     
@@ -397,7 +417,7 @@ extension addDetailViewController {
     // The cell calls this method when the user taps the heart button
     func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell, detailIndex : Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
-//        print("Heart", sender, tappedIndexPath)
+        print("Heart", sender, detailIndex)
 //        print(detailIndex)
 //        dismiss(animated: true, completion: nil)
         let changeVC = changeDetailOfViewContoller()

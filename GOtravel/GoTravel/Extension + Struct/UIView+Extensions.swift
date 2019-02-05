@@ -21,21 +21,21 @@ extension UIView {
 		layer.insertSublayer(gradient, at: 0)
 	}
 }
-extension UIView {
-    
-    func setCardView(view : UIView){
-        
-        view.layer.cornerRadius = 5.0
-//        view.layer.borderColor  =  UIColor.clear.cgColor
-//        view.layer.borderWidth = 5.0
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowColor =  UIColor.lightGray.cgColor
-        view.layer.shadowRadius = 5.0
-        view.layer.shadowOffset = CGSize(width:3, height: 3)
-        view.layer.masksToBounds = true
-        
-    }
-}
+//extension UIView {
+//    
+//    func setCardView(view : UIView){
+//        
+//        view.layer.cornerRadius = 5.0
+////        view.layer.borderColor  =  UIColor.clear.cgColor
+////        view.layer.borderWidth = 5.0
+//        view.layer.shadowOpacity = 0.2
+//        view.layer.shadowColor =  UIColor.lightGray.cgColor
+//        view.layer.shadowRadius = 5.0
+//        view.layer.shadowOffset = CGSize(width:3, height: 3)
+//        view.layer.masksToBounds = true
+//        
+//    }
+//}
 extension UIView {
     
     // Using a function since `var image` might conflict with an existing variable
@@ -53,5 +53,20 @@ extension UIView {
             UIGraphicsEndImageContext()
             return UIImage(cgImage: image!.cgImage!)
         }
+    }
+}
+extension UIView {
+    
+    func setCardView(view : UIView){
+        
+        view.layer.cornerRadius = 5.0
+        view.layer.borderColor  =  UIColor.clear.cgColor
+        view.layer.borderWidth = 5.0
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowColor =  UIColor.lightGray.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOffset = CGSize(width:5, height: 5)
+        view.layer.masksToBounds = true
+        
     }
 }

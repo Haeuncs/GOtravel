@@ -30,6 +30,7 @@ class changeDetailOfViewContoller : UIViewController {
             setData?.mainTitle.text = (countryRealmDB?.city)! + " " + "여행"
             setData?.miniMemoTextInput.text = detailRealmDB?.oneLineMemo
             setData?.memoTextInput.text = detailRealmDB?.memo
+            setData?.colorPik = detailRealmDB?.color ?? "default"
         }
     }
 

@@ -8,19 +8,46 @@
 
 import UIKit
 
-class exchangeViewController : UIViewController {
+// collectionView Cell 클릭한 index알기
+protocol exchangeCVCDelegate : class {
+    func exchangeCVCDelegateDidTap(_ sender : exchangeCVCell ,index : Int)
+}
+
+class exchangeViewController : UIViewController, exchangeCVCDelegate{
+    
+    func exchangeCVCDelegateDidTap(_ sender: exchangeCVCell,index: Int) {
+        guard let tappedIndexPath = mainView.mainCV.indexPath(for: sender) else { return }
+
+//        print(sender)
+        print("\(tappedIndexPath.row) 이거는 addDataVC")
+        selectDay = tappedIndexPath.row
+        
+    }
+   
+    
+    // addDetailVC 에서 전달 받는 데이터
+    var countryRealmDB = countryRealm()
+    var selectDay = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        mainView.delegate = self
+        
         self.navigationItem.title = "가계부"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
+        self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
+
         self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+        
+        let rightButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: #selector(self.addEvent))
+        self.navigationItem.rightBarButtonItem = rightButton
+        
         // 뷰 겹치는거 방지
         self.navigationController!.navigationBar.isTranslucent = false
         // 까만거 지우려고
@@ -28,6 +55,9 @@ class exchangeViewController : UIViewController {
         
 
         initView()
+        
+        mainView.countryRealmDB = self.countryRealmDB
+        mainView.selectDay = self.selectDay
     }
     
     func initView(){
@@ -42,12 +72,20 @@ class exchangeViewController : UIViewController {
             mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainViewPadding),
             ])
     }
-    let mainView : UIView = {
+    let mainView : exchangeView = {
         let view = exchangeView()
         view.backgroundColor = Defaull_style.backgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    @objc func addEvent(){
+        let vc = exchangeAddDataVC()
+        
+        vc.countryRealmDB = self.countryRealmDB
+        vc.selectDay = self.selectDay
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 //    let mainTableView : UITableView = {
 //       let table = UITableView()
 //        return UITableView

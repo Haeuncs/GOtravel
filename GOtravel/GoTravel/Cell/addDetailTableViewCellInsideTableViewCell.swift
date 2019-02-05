@@ -14,6 +14,9 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        print("sub test style")
         contentView.backgroundColor = .white
+        timeLabel.text = ""
+        oneLineMemo.text = ""
+        titleLabel.text = ""
         
         initView()
     }

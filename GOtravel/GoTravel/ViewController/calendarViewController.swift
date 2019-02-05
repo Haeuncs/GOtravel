@@ -19,6 +19,7 @@ enum MyTheme {
 var ddayDB = 0
 var nightDB = 0
 var dayDate = Date()
+var categoryArr = ["항공","숙박","쇼핑","식사","교통비","기타"]
 
 class calendarViewController: UIViewController {
     
@@ -52,15 +53,32 @@ class calendarViewController: UIViewController {
         saveCountryRealmData.latitude = saveCountryRealmData.latitude
         
         for i in 1...nightDB{
+            // 디테일 기록 데이
             let dayRealmDB = dayRealm()
             dayRealmDB.day = i
             dayListDB.append(dayRealmDB)
+            // 가계부 기록 데이
+            let moneyRealmDB = moneyRealm()
+            moneyRealmDB.day = i-1
+            saveCountryRealmData.moneyList.append(moneyRealmDB)
         }
         
+        let moneyRealmDB = moneyRealm()
+        moneyRealmDB.day = nightDB
+        saveCountryRealmData.moneyList.append(moneyRealmDB)
+        
         saveCountryRealmData.dayList = dayListDB
+        
+        for i in 0..<categoryArr.count{
+            let catecoryDB = categoryDetailRealm()
+            catecoryDB.title = categoryArr[i]
+            saveCountryRealmData.categoryList.append(catecoryDB)
+
+        }
         try! realm.write {
             realm.add(saveCountryRealmData)
         }
+        
 
     }
     func initializeView(){

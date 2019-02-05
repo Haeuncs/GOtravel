@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import GooglePlaces
 import RealmSwift
+import IQKeyboardManagerSwift
 
 class placeSearchViewController : UIViewController {
     // 앞 View 에서 전달 받는 데이터
@@ -54,6 +55,8 @@ class placeSearchViewController : UIViewController {
 //    var myBackgroundColor : UIColor?
     override func viewDidLoad() {
         super.viewDidLoad()
+        IQKeyboardManager.shared.enable = false
+
         self.view.backgroundColor = .white
         // 까만거 지우려고
         self.navigationController!.view.backgroundColor = .white

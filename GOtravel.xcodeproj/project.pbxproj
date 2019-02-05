@@ -17,6 +17,7 @@
 		4A5F9CAD21FA100A0097C5C1 /* Enum_exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */; };
 		4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */; };
 		4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CB0220495F50097C5C1 /* exchangeCell.swift */; };
+		4A5F9CB322087D070097C5C1 /* exchangeAddDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9CB222087D070097C5C1 /* exchangeAddDataVC.swift */; };
 		4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */; };
 		4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F4F21E7C24B00CCE52F /* mainViewController.swift */; };
 		4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */; };
@@ -63,6 +64,7 @@
 		4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum_exchange.swift; sourceTree = "<group>"; };
 		4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchagneView.swift; sourceTree = "<group>"; };
 		4A5F9CB0220495F50097C5C1 /* exchangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeCell.swift; sourceTree = "<group>"; };
+		4A5F9CB222087D070097C5C1 /* exchangeAddDataVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeAddDataVC.swift; sourceTree = "<group>"; };
 		4A779F4E21E7C24B00CCE52F /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4A779F4F21E7C24B00CCE52F /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		4A779F5021E7C24B00CCE52F /* addTravelInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addTravelInfoViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */,
 				4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */,
 				4AC710A721F0B6D000B20448 /* exchangeViewController.swift */,
+				4A5F9CB222087D070097C5C1 /* exchangeAddDataVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FAPanels/FAPanels.framework",
 				"${BUILT_PRODUCTS_DIR}/FanMenu/FanMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Macaw/Macaw.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -394,6 +398,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FAPanels.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FanMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Macaw.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -443,6 +448,7 @@
 				4AA331BD21EB3EF8004E2536 /* UIColor+Extensions.swift in Sources */,
 				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
 				4AA331C721EB8EB0004E2536 /* calendarViewController.swift in Sources */,
+				4A5F9CB322087D070097C5C1 /* exchangeAddDataVC.swift in Sources */,
 				4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
 				4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */,
@@ -621,10 +627,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -642,10 +645,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
