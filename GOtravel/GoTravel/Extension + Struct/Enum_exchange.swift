@@ -8,6 +8,40 @@
 
 import Foundation
 
+
+let exchange_country_dic : [String:String] = 
+[     "대한민국_원" :  "KRW",
+    "아랍에미레이트_디르함" :  "AED",
+    "오스트리아_실링" :  "ATS",
+    "벨기에_프랑" :  "BEF",
+    "바레인_디나르" :  "BHD",
+    "캐나다_달러" :  "CAD",
+    "스위스_프랑" :  "CHF",
+    "중국_위안화" :  "CNH",
+    "독일_마르크" :  "DEM",
+    "덴마아크_크로네" :  "DKK",
+    "스페인_페세타" :  "ESP",
+    "유로" :  "EUR",
+    "필란드_마르카" :  "FIM",
+    "프랑스_프랑" :  "FPF",
+    "영국_파운드" :  "GBP",
+    "홍콩_달러" :  "HKD",
+    "인도네시아_루피아" :  "IDR",
+    "이태리_리라" :  "ITL",
+    "일본_엔" :  "JPY",
+    "쿠웨이트_디나르" :  "KWD",
+    "말레이지아_링기트" :  "MYR",
+    "네덜란드_길더" :  "NLG",
+    "노르웨르_크로네" :  "NOK",
+    "뉴질랜드_달러" :  "NZD",
+    "사우디_리얄" :  "SAR",
+    "스웨덴_크로나" :  "SEK",
+    "싱카포르_달러" :  "SGD",
+    "태국_바트" :  "THB",
+    "미국_달러" :  "USD",
+    "씨에프에이_프랑" :  "XOF"
+    
+]
 struct exchange_country {
     static var 대한민국_원 = "KRW"
     static var 아랍에미레이트_디르함 = "AED"
@@ -16,6 +50,7 @@ struct exchange_country {
     static var 바레인_디나르 = "BHD"
     static var 캐나다_달러 = "CAD"
     static var 스위스_프랑 = "CHF"
+    
     static var 중국_위안화 = "CNH"
     static var 독일_마르크 = "DEM"
     static var 덴마아크_크로네 = "DKK"

@@ -11,6 +11,8 @@ import UIKit
 // collectionView Cell 클릭한 index알기
 protocol exchangeCVCDelegate : class {
     func exchangeCVCDelegateDidTap(_ sender : exchangeCVCell ,index : Int)
+    
+    
 }
 
 class exchangeViewController : UIViewController, exchangeCVCDelegate{

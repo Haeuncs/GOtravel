@@ -51,6 +51,7 @@
 		4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */; };
 		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
 		4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */; };
+		4AD2D4D3220B040B00F7BE6F /* exchangeSelectForeignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = googleMapViewController.swift; sourceTree = "<group>"; };
 		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailAllSubView.swift; sourceTree = "<group>"; };
+		4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeSelectForeignVC.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,6 +214,7 @@
 				4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */,
 				4AC710A721F0B6D000B20448 /* exchangeViewController.swift */,
 				4A5F9CB222087D070097C5C1 /* exchangeAddDataVC.swift */,
+				4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				4A3BC29821F3B2A800995E28 /* changeDetailOfDayViewController.swift in Sources */,
 				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,
 				4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */,
+				4AD2D4D3220B040B00F7BE6F /* exchangeSelectForeignVC.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
 				4AC710AA21F0C6C900B20448 /* placeSearchViewController.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift in Sources */,
@@ -627,7 +631,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -645,7 +652,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

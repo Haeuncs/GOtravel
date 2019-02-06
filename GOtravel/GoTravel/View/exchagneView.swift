@@ -87,7 +87,7 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         return view
     }()
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return countryRealmDB.moneyList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

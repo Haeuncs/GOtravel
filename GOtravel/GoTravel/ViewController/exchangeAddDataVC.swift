@@ -14,19 +14,30 @@ import IQKeyboardManagerSwift
 
 
 // exchangeVC 에서 추가 시 나타나는 뷰
-class exchangeAddDataVC : UIViewController {
+class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     
     // addDetailVC 에서 전달 받는 데이터
     var countryRealmDB = countryRealm()
     var selectDay = 0
-
+    
+    // 저장 시 사용되는 변수
+    var subTitle = "기타"
+    var exchange = "KRW"
+    var money : Double?
+    var titleStr : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
-    
+    @objc func saveAction(){
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        mountView.delegate = self
+        catecoryCVV.delegate = self
         
         let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: nil)
         self.navigationItem.rightBarButtonItem = rightButton
@@ -47,11 +58,11 @@ class exchangeAddDataVC : UIViewController {
         view.backgroundColor = .white
         stack.addArrangedSubview(catecoryLabel)
         stack.addArrangedSubview(catecoryCVV)
-        stack.addArrangedSubview(mountOfMoney)
-        stack.addArrangedSubview(mountView)
         stack.addArrangedSubview(memoLabel)
         stack.addArrangedSubview(memoTextField)
         self.addLineToView(view: memoTextField, position:.LINE_POSITION_BOTTOM, color: UIColor.darkGray, width: 0.5)
+        stack.addArrangedSubview(mountOfMoney)
+        stack.addArrangedSubview(mountView)
         
 //        stack.addArrangedSubview(miniMemoTextInput)
         view.addSubview(stack)
@@ -116,10 +127,6 @@ class exchangeAddDataVC : UIViewController {
         return text
     }()
     // 텍스트 필드 아래에 줄 추가
-    enum LINE_POSITION {
-        case LINE_POSITION_TOP
-        case LINE_POSITION_BOTTOM
-    }
     
     func addLineToView(view : UIView, position : LINE_POSITION, color: UIColor, width: Double) {
         let lineView = UIView()
@@ -156,40 +163,134 @@ class exchangeAddDataVC : UIViewController {
     // 화면 터치 시 키보드 없앰
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         view.endEditing(true)
-        
     }
 
     func initView(){
         
     }
-    
+    // delegate moneyExchangeView 에서 뷰 이동
+    func exchangeDidTapInView(_ sender : moneyExchangeView,selectIndex : Int){
+        print("view select")
+//        print(sender)
+        let cv = exchangeSelectForeignVC()
+        cv.delegate = self
+        cv.selectIndex = selectIndex
+        self.navigationController?.pushViewController(cv, animated: true)
+    }
+    func exchangeSelectForeignDidTapCell(selectIndex : Int ,label : String,belowLabel:String){
+        if selectIndex == 0 {
+            self.mountView.leftLabel.text = label
+            self.mountView.leftBelowLabel.text = belowLabel
+        }else{
+            self.mountView.rightLabel.text = label
+            self.mountView.rightBelowLabel.text = belowLabel
+        }
+    }
+    func collectionViewDidTapCell(subTitle : String){
+        self.subTitle = subTitle
+    }
 }
-class moneyExchangeView : UIView {
+protocol exchangeDidTapInViewDelegate : class {
+    // 뷰 선택 시 이동하는 delegate
+    func exchangeDidTapInView(_ sender : moneyExchangeView,selectIndex : Int)
+    // 선택한 테이블 셀에서 선택한 데이터
+    func exchangeSelectForeignDidTapCell(selectIndex : Int,label : String,belowLabel:String)
+    // 카테고리 collectionView Cell 클릭 시 이벤트
+    func collectionViewDidTapCell(subTitle : String)
+}
+
+enum LINE_POSITION {
+    case LINE_POSITION_TOP
+    case LINE_POSITION_BOTTOM
+}
+
+class moneyExchangeView : UIView ,UITextFieldDelegate{
+    weak var delegate : exchangeDidTapInViewDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
         print("init")
     }
-    
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    @objc func koreaMoneyAction(){
+        self.leftTextFieldView.isHidden = true
+        self.moneyTextFieldStack.isHidden = false
+        self.selectStackCountry.isHidden = true
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.moneyTextFieldStack.alpha = 1
+        }, completion:  nil)
+        koreaMoneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        foreignMoneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+
+    }
+    @objc func foreignMoneyAction(){
+        self.leftTextFieldView.isHidden = false
+        self.moneyTextFieldStack.isHidden = false
+        self.selectStackCountry.isHidden = false
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.selectStackCountry.alpha = 1
+            self.moneyTextFieldStack.alpha = 1
+        }, completion:  nil)
+
+        koreaMoneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        foreignMoneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+
+    }
     
+    var selectView = UIView()
+    
+    @objc func leftAction(sender : UITapGestureRecognizer) {
+        selectView = leftView
+        delegate?.exchangeDidTapInView(self, selectIndex: 0)
+    }
+    @objc func rightAction(sender : UITapGestureRecognizer) {
+        selectView = rightView
+        delegate?.exchangeDidTapInView(self, selectIndex: 1)
+
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        koreaMoneyButton.addTarget(self, action: #selector(koreaMoneyAction), for: .touchUpInside)
+        foreignMoneyButton.addTarget(self, action: #selector(foreignMoneyAction), for: .touchUpInside)
+        
+        leftTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        leftTextField.addTarget(self, action: #selector(textFieldDidStart(_:)), for: .touchDown)
+        
+        rightTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        rightTextField.addTarget(self, action: #selector(textFieldDidStart(_:)), for: .touchDown)
+        
+        // 뷰 선택 시 사용되는 거
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.leftAction))
+        let gesture2 = UITapGestureRecognizer(target: self, action:  #selector(self.rightAction))
+
+        self.leftView.addGestureRecognizer(gesture)
+        self.rightView.addGestureRecognizer(gesture2)
+        
+        // 이거 뭔지 기억 안남;ㅜㅜㅜㅜ
+//        leftTextField.delegate = self
         
         selectStackView.addArrangedSubview(koreaMoneyButton)
         selectStackView.addArrangedSubview(foreignMoneyButton)
     
         leftView.addSubview(leftLabel)
         leftView.addSubview(leftBelowLabel)
+        
+        leftView.addSubview(arrowHead)
+        rightView.addSubview(arrowHead2)
+        
         rightView.addSubview(rightLabel)
         rightView.addSubview(rightBelowLabel)
         
         selectStackCountry.addArrangedSubview(leftView)
         selectStackCountry.addArrangedSubview(rightView)
-
+//
         leftTextFieldView.addSubview(uiviewLine)
+        
         leftTextFieldView.addSubview(leftTextField)
         rightTextFieldView.addSubview(rightTextField)
         
@@ -200,8 +301,27 @@ class moneyExchangeView : UIView {
         stack.addArrangedSubview(selectStackCountry)
         stack.addArrangedSubview(moneyTextFieldStack)
         
+        self.selectStackCountry.alpha = 0
+        self.moneyTextFieldStack.alpha = 0
+        selectStackCountry.isHidden = true
+        moneyTextFieldStack.isHidden = true
+        
 //        uiviewLine.frame = CGRect(x: 0, y: 0, width: 10, height: 3)
         
+        let lineView = UIView()
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        //        lineView.layer.borderWidth = 1.0
+        lineView.layer.cornerRadius = 5
+        lineView.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        //        lineView.layer.borderColor = UIColor.black.cgColor
+        self.leftTextFieldView.addSubview(lineView)
+        
+        let rightLineView = UIView()
+        rightLineView.translatesAutoresizingMaskIntoConstraints = false
+        rightLineView.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        rightLineView.layer.cornerRadius = 5
+
+        self.rightTextFieldView.addSubview(rightLineView)
         
         self.addSubview(stack)
 
@@ -217,21 +337,91 @@ class moneyExchangeView : UIView {
             leftBelowLabel.topAnchor.constraint(equalTo: leftLabel.bottomAnchor, constant: 0),
             leftBelowLabel.centerXAnchor.constraint(equalTo: leftView.centerXAnchor, constant: 0),
             
+            arrowHead.centerYAnchor.constraint(equalTo: leftView.centerYAnchor, constant: 0),
+            arrowHead.trailingAnchor.constraint(equalTo: leftView.trailingAnchor, constant: -10),
+            arrowHead.heightAnchor.constraint(equalToConstant: 10),
+            arrowHead.widthAnchor.constraint(equalToConstant: 8),
             
+            arrowHead2.centerYAnchor.constraint(equalTo: rightView.centerYAnchor, constant: 0),
+            arrowHead2.trailingAnchor.constraint(equalTo: rightView.trailingAnchor, constant: -10),
+            arrowHead2.heightAnchor.constraint(equalToConstant: 10),
+            arrowHead2.widthAnchor.constraint(equalToConstant: 8),
+
             rightLabel.bottomAnchor.constraint(equalTo: rightView.centerYAnchor, constant: 0),
             rightLabel.centerXAnchor.constraint(equalTo: rightView.centerXAnchor, constant: 0),
             
             rightBelowLabel.topAnchor.constraint(equalTo: rightLabel.bottomAnchor, constant: 0),
             rightBelowLabel.centerXAnchor.constraint(equalTo: rightView.centerXAnchor, constant: 0),
 
-//            uiviewLine.centerXAnchor.constraint(equalTo: leftTextFieldView.centerXAnchor, constant: 0),
-//            uiviewLine.centerYAnchor.constraint(equalTo: leftTextFieldView.centerYAnchor, constant: 0),
-//            uiviewLine.widthAnchor.constraint(equalToConstant: 10),
-//            uiviewLine.heightAnchor.constraint(equalToConstant: 3),
+            leftTextField.centerYAnchor.constraint(equalTo: leftTextFieldView.centerYAnchor, constant: 0),
+            leftTextField.leadingAnchor.constraint(equalTo: leftTextFieldView.leadingAnchor, constant: 10),
+            leftTextField.trailingAnchor.constraint(equalTo: leftTextFieldView.trailingAnchor, constant: -10),
             
+            rightTextField.centerYAnchor.constraint(equalTo: rightTextFieldView.centerYAnchor, constant: 0),
+            rightTextField.leadingAnchor.constraint(equalTo: rightTextFieldView.leadingAnchor, constant: 10),
+            rightTextField.trailingAnchor.constraint(equalTo: rightTextFieldView.trailingAnchor, constant: -10),
+            
+            lineView.centerXAnchor.constraint(equalTo: leftTextFieldView.centerXAnchor),
+            lineView.topAnchor.constraint(equalTo: leftTextField.bottomAnchor),
+            lineView.widthAnchor.constraint(equalToConstant: 60),
+            lineView.heightAnchor.constraint(equalToConstant: 3),
+            
+            rightLineView.centerXAnchor.constraint(equalTo: rightTextFieldView.centerXAnchor),
+            rightLineView.topAnchor.constraint(equalTo: rightTextField.bottomAnchor),
+            rightLineView.widthAnchor.constraint(equalToConstant: 60),
+            rightLineView.heightAnchor.constraint(equalToConstant: 3)
+
             ])
         
+
     }
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        //        print(textField.text?.count)
+//        print(textField.text)
+        if textField.text?.count != 0 {
+            if (textField.text?.contains("."))!{
+                if let range = textField.text!.range(of: ".") {
+                    let dotBefore = textField.text![..<range.lowerBound]
+                    let dotAfter = textField.text![range.lowerBound...] // or str[str.startIndex..<range.lowerBound]
+                    print(dotBefore)  // Prints ab
+                    
+                    let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.numberStyle = NumberFormatter.Style.decimal
+                    var formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot)!))
+                    
+                    formattedNumber?.append(String(dotAfter))
+                    textField.text = formattedNumber
+
+                }
+            }else{
+                let subtractionDot = textField.text?.replacingOccurrences(of: ",", with: "")
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = NumberFormatter.Style.decimal
+                let formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot!)!))
+                
+                textField.text = formattedNumber
+            }
+        }
+    }
+    @objc func textFieldDidStart(_ textField: UITextField) {
+//        print("start \(textField.text)")
+        if textField.text == "0" {
+            textField.text = ""
+        }
+    }
+    
+    let arrowHead : UIImageView = {
+        let image = UIImageView(image: UIImage(named: "arrowHead"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    let arrowHead2 : UIImageView = {
+        let image = UIImageView(image: UIImage(named: "arrowHead"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
     let stack : UIStackView = {
       let stack = UIStackView()
         stack.axis = .vertical
@@ -289,7 +479,7 @@ class moneyExchangeView : UIView {
 
     let leftLabel : UILabel = {
         let label = UILabel()
-        label.text = "한국-원"
+        label.text = "대한민국-원"
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = Defaull_style.mainTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -306,7 +496,7 @@ class moneyExchangeView : UIView {
     
     let rightLabel : UILabel = {
         let label = UILabel()
-        label.text = "한국-원"
+        label.text = "대한민국-원"
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = Defaull_style.mainTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -330,17 +520,32 @@ class moneyExchangeView : UIView {
     }()
     let leftTextFieldView : UIView = {
         let view = UIView()
-//        view.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     let leftTextField : UITextField = {
         let text = UITextField()
+        text.text = "0"
+        text.minimumFontSize = 12
+        text.adjustsFontSizeToFitWidth = true
+        text.clearButtonMode = .whileEditing
+        text.backgroundColor = .blue
+        text.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        text.textAlignment = .center
+        text.keyboardType = .decimalPad
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
     let rightTextField : UITextField = {
         let text = UITextField()
+        text.text = "0"
+        text.minimumFontSize = 12
+        text.adjustsFontSizeToFitWidth = true
+        text.clearButtonMode = .whileEditing
+        text.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        text.textAlignment = .center
+        text.keyboardType = .decimalPad
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
@@ -361,6 +566,8 @@ class moneyExchangeView : UIView {
 }
 class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout , UICollectionViewDelegate{
     
+    weak var delegate : exchangeDidTapInViewDelegate?
+
     var catecoryCV     : UICollectionView!
     // addDetailVC 에서 전달 받는 데이터
     var categoryListRealmDB = List<categoryDetailRealm>()
@@ -460,17 +667,17 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
 //////    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
-//        // 선택된 셀 보더 바꾸기
-//        let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell
-//        cell.layer.borderWidth = 2
-//        print(indexPath.row)
-//        //        belowView.backgroundColor = HSBrandomColor()
+        // 선택된 셀 보더 바꾸기
+        let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell2
+        cell.layer.borderWidth = 2
+        print(indexPath.row)
+        delegate?.collectionViewDidTapCell(subTitle: categoryListRealmDB[indexPath.row].title)
+        //        belowView.backgroundColor = HSBrandomColor()
     }
-////    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-////        let cell=collectionView.cellForItem(at: indexPath)
-////        cell?.layer.borderWidth = 1
-////
-////    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell=collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 1
+    }
 //
 //    let CV : UICollectionView = {
 //        let view = UICollectionView()
