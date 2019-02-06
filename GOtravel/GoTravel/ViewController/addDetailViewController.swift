@@ -58,6 +58,9 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     }
     
     func initView(){
+        beforeSelectIndexPath = false
+        isEdit = false
+        
         // 뷰 겹치는거 방지
         self.navigationController!.navigationBar.isTranslucent = false
         // 아래 그림자 생기는거 지우기
@@ -308,108 +311,163 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         tableView.allowsSelection = false
         return tableView
     }()
-    
+    func openViewEvent(currentCell : addDetailTableViewCell){
+        // duration 작을 수록 느리게 애니메이션
+
+        UIView.animate(withDuration: 0.5, animations: {
+            let transformScaled = CGAffineTransform
+                .identity
+                .scaledBy(x: 0.8, y: 0.8)
+            
+            let moveMoney = CGAffineTransform(translationX: -50, y: 0)
+            let movedetail = CGAffineTransform(translationX: 50, y: 0)
+            let movePath = CGAffineTransform(translationX: 100, y: 0)
+            
+            currentCell.paddingViewBottom.addBtn.transform = transformScaled
+            currentCell.paddingViewBottom.moneyBtn.transform = moveMoney
+            currentCell.paddingViewBottom.detailBtn.transform = movedetail
+            currentCell.paddingViewBottom.pathBtn.transform = movePath
+            currentCell.paddingViewBottom.moneyBtn.alpha = 1
+            currentCell.paddingViewBottom.detailBtn.alpha = 1
+            currentCell.paddingViewBottom.pathBtn.alpha = 1
+            
+            
+            
+        })
+    }
+    func colseViewEvent(beforeCell : addDetailTableViewCell){
+        // duration 작을 수록 느리게 애니메이션
+
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            let transformScaled = CGAffineTransform
+                .identity
+                .scaledBy(x: 1.0, y: 1.0)
+            
+            let moveMoney = CGAffineTransform(translationX: 0, y: 0)
+            let movedetail = CGAffineTransform(translationX: 0, y: 0)
+            let movePath = CGAffineTransform(translationX: 0, y: 0)
+            beforeCell.paddingViewBottom.addBtn.transform = transformScaled
+            beforeCell.paddingViewBottom.moneyBtn.transform = moveMoney
+            beforeCell.paddingViewBottom.detailBtn.transform = movedetail
+            beforeCell.paddingViewBottom.pathBtn.transform = movePath
+            beforeCell.paddingViewBottom.moneyBtn.alpha = 0.0
+            beforeCell.paddingViewBottom.detailBtn.alpha = 0.0
+            beforeCell.paddingViewBottom.pathBtn.alpha = 0.0
+        })
+
+    }
     // MARK: 버튼의 animate 정의
     func buttonEvent(indexPath : IndexPath){
-        
-        // 이전 select가 없다면 실행
         let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? addDetailTableViewCell
-        
-        //        sender.backgroundColor = .red
-        // duration 작을 수록 느리게 애니메이션
-        UIView.animate(withDuration: 0.5, animations: {
-            if currentCell?.buttonSelect == false {
-                let transformScaled = CGAffineTransform
-                    .identity
-                    .scaledBy(x: 0.8, y: 0.8)
-                
-                let moveMoney = CGAffineTransform(translationX: -50, y: 0)
-                let movedetail = CGAffineTransform(translationX: 50, y: 0)
-                let movePath = CGAffineTransform(translationX: 100, y: 0)
-                
-                
-                currentCell?.paddingViewBottom.addBtn.transform = transformScaled
-                currentCell?.paddingViewBottom.moneyBtn.transform = moveMoney
-                currentCell?.paddingViewBottom.detailBtn.transform = movedetail
-                currentCell?.paddingViewBottom.pathBtn.transform = movePath
-                currentCell?.paddingViewBottom.moneyBtn.alpha = 1
-                currentCell?.paddingViewBottom.detailBtn.alpha = 1
-                currentCell?.paddingViewBottom.pathBtn.alpha = 1
-                currentCell?.buttonSelect = true
-                currentCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                // 이전 select가 있다면 원래 상태로 복귀
-                // beforeCell 이 currentCell 과 같지 않을 때 복귀
-//                print(self.beforeSelectIndexPath)
-                if self.beforeSelectIndexPath {
-                    let beforeCell = self.scheduleMainTableView.cellForRow(at: self.currentIndexPath!)! as? addDetailTableViewCell
-//                    print("\(self.currentIndexPath!.row), \(indexPath.row)")
-                    if beforeCell != currentCell
-                    {
-//                        print("currentIndexPath != nil 복귀 애니메이션 실행 \(indexPath.row)")
-                        
-                        UIView.animate(withDuration: 0.5, animations: {
-                            
-                            let transformScaled = CGAffineTransform
-                                .identity
-                                .scaledBy(x: 1.0, y: 1.0)
-                            
-                            let moveMoney = CGAffineTransform(translationX: 0, y: 0)
-                            let movedetail = CGAffineTransform(translationX: 0, y: 0)
-                            let movePath = CGAffineTransform(translationX: 0, y: 0)
-                            beforeCell?.paddingViewBottom.addBtn.transform = transformScaled
-                            beforeCell?.paddingViewBottom.moneyBtn.transform = moveMoney
-                            beforeCell?.paddingViewBottom.detailBtn.transform = movedetail
-                            beforeCell?.paddingViewBottom.pathBtn.transform = movePath
-                            beforeCell?.paddingViewBottom.moneyBtn.alpha = 0.0
-                            beforeCell?.paddingViewBottom.detailBtn.alpha = 0.0
-                            beforeCell?.paddingViewBottom.pathBtn.alpha = 0.0
-                            beforeCell?.buttonSelect = false
-                            beforeCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-                            // 다시 초기화
-                            self.currentIndexPath = nil
-                        })
-                    }
-                    
-                }
-                self.beforeSelectIndexPath = true
-                self.currentIndexPath = indexPath
-//                print("currentIndexPath = indexPath select 애니메이션 실행 \(indexPath.row) )")
-            }else{
-                let transformScaled = CGAffineTransform
-                    .identity
-                    .scaledBy(x: 1.0, y: 1.0)
-                
-                let moveMoney = CGAffineTransform(translationX: 0, y: 0)
-                let movedetail = CGAffineTransform(translationX: 0, y: 0)
-                let movePath = CGAffineTransform(translationX: 0, y: 0)
-                currentCell?.paddingViewBottom.addBtn.transform = transformScaled
-                currentCell?.paddingViewBottom.moneyBtn.transform = moveMoney
-                currentCell?.paddingViewBottom.detailBtn.transform = movedetail
-                currentCell?.paddingViewBottom.pathBtn.transform = movePath
-                currentCell?.paddingViewBottom.moneyBtn.alpha = 0.0
-                currentCell?.paddingViewBottom.detailBtn.alpha = 0.0
-                currentCell?.paddingViewBottom.pathBtn.alpha = 0.0
-                currentCell?.buttonSelect = false
-                currentCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-                self.beforeSelectIndexPath = false
-                self.currentIndexPath = nil
-//                print("currentIndexPath = nil deselect 애니메이션 실행 \(indexPath.row)")
-                
-            }
-        }) { (finished) in
-            if finished {
-                UIView.animate(withDuration: 0.5, animations: {
-                    let transformScaled = CGAffineTransform
-                        .identity
-                        .scaledBy(x: 1.0, y: 1.0)
-                    
-                    //                    sender.transform = transformScaled
-                })
-            }
-            
+        // 머니 버튼이 가려져 있다면 보이기
+        if currentCell?.paddingViewBottom.moneyBtn.alpha == 0.0 {
+            openViewEvent(currentCell: currentCell!)
+        }else{
+            colseViewEvent(beforeCell: currentCell!)
         }
-    }
 
+    }
+        // 현재 선택된 cell
+        
+//        // 이전 select가 없다면 실행
+//        let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? addDetailTableViewCell
+//
+//        //        sender.backgroundColor = .red
+//        UIView.animate(withDuration: 0.5, animations: {
+//            if currentCell?.buttonSelect == false {
+//                let transformScaled = CGAffineTransform
+//                    .identity
+//                    .scaledBy(x: 0.8, y: 0.8)
+//
+//                let moveMoney = CGAffineTransform(translationX: -50, y: 0)
+//                let movedetail = CGAffineTransform(translationX: 50, y: 0)
+//                let movePath = CGAffineTransform(translationX: 100, y: 0)
+//
+//
+//                currentCell?.paddingViewBottom.addBtn.transform = transformScaled
+//                currentCell?.paddingViewBottom.moneyBtn.transform = moveMoney
+//                currentCell?.paddingViewBottom.detailBtn.transform = movedetail
+//                currentCell?.paddingViewBottom.pathBtn.transform = movePath
+//                currentCell?.paddingViewBottom.moneyBtn.alpha = 1
+//                currentCell?.paddingViewBottom.detailBtn.alpha = 1
+//                currentCell?.paddingViewBottom.pathBtn.alpha = 1
+//                currentCell?.buttonSelect = true
+//
+//                // 이전 select가 있다면 원래 상태로 복귀
+//                // beforeCell 이 currentCell 과 같지 않을 때 복귀
+//
+//                if self.beforeSelectIndexPath == true {
+//                    let beforeCell = self.scheduleMainTableView.cellForRow(at: (self.currentIndexPath ?? indexPath)!)! as? addDetailTableViewCell
+////                    print("\(self.currentIndexPath!.row), \(indexPath.row)")
+//                    if beforeCell != currentCell
+//                    {
+////                        print("currentIndexPath != nil 복귀 애니메이션 실행 \(indexPath.row)")
+//
+//                        UIView.animate(withDuration: 0.5, animations: {
+//
+//                            let transformScaled = CGAffineTransform
+//                                .identity
+//                                .scaledBy(x: 1.0, y: 1.0)
+//
+//                            let moveMoney = CGAffineTransform(translationX: 0, y: 0)
+//                            let movedetail = CGAffineTransform(translationX: 0, y: 0)
+//                            let movePath = CGAffineTransform(translationX: 0, y: 0)
+//                            beforeCell?.paddingViewBottom.addBtn.transform = transformScaled
+//                            beforeCell?.paddingViewBottom.moneyBtn.transform = moveMoney
+//                            beforeCell?.paddingViewBottom.detailBtn.transform = movedetail
+//                            beforeCell?.paddingViewBottom.pathBtn.transform = movePath
+//                            beforeCell?.paddingViewBottom.moneyBtn.alpha = 0.0
+//                            beforeCell?.paddingViewBottom.detailBtn.alpha = 0.0
+//                            beforeCell?.paddingViewBottom.pathBtn.alpha = 0.0
+//                            beforeCell?.buttonSelect = false
+//                            beforeCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+//                            // 다시 초기화
+//                            self.currentIndexPath = nil
+//                            self.beforeSelectIndexPath = false
+//                        })
+//                    }
+//
+//                }
+//                self.beforeSelectIndexPath = true
+//                self.currentIndexPath = indexPath
+////                print("currentIndexPath = indexPath select 애니메이션 실행 \(indexPath.row) )")
+//            }else{
+//                let transformScaled = CGAffineTransform
+//                    .identity
+//                    .scaledBy(x: 1.0, y: 1.0)
+//
+//                let moveMoney = CGAffineTransform(translationX: 0, y: 0)
+//                let movedetail = CGAffineTransform(translationX: 0, y: 0)
+//                let movePath = CGAffineTransform(translationX: 0, y: 0)
+//                currentCell?.paddingViewBottom.addBtn.transform = transformScaled
+//                currentCell?.paddingViewBottom.moneyBtn.transform = moveMoney
+//                currentCell?.paddingViewBottom.detailBtn.transform = movedetail
+//                currentCell?.paddingViewBottom.pathBtn.transform = movePath
+//                currentCell?.paddingViewBottom.moneyBtn.alpha = 0.0
+//                currentCell?.paddingViewBottom.detailBtn.alpha = 0.0
+//                currentCell?.paddingViewBottom.pathBtn.alpha = 0.0
+//                currentCell?.buttonSelect = false
+//                currentCell?.paddingViewBottom.addBtn.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+//                self.beforeSelectIndexPath = false
+//                self.currentIndexPath = nil
+////                print("currentIndexPath = nil deselect 애니메이션 실행 \(indexPath.row)")
+//
+//            }
+//        }) { (finished) in
+//            if finished {
+//                UIView.animate(withDuration: 0.5, animations: {
+//                    _ = CGAffineTransform
+//                        .identity
+//                        .scaledBy(x: 1.0, y: 1.0)
+//
+//                    //                    sender.transform = transformScaled
+//                })
+//            }
+//
+//        }
+//    }
+//
 
 }
 // MARK: delegate 정의 (cell 에서 사용한다.)
@@ -496,6 +554,21 @@ extension addDetailViewController : UITableViewDataSource{
         cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
         cell.paddingViewBottom.moneyBtn.addTarget(self, action: #selector(self.exchangeButtonEvent(_:)), for: .touchUpInside)
         
+        let transformScaled = CGAffineTransform
+            .identity
+            .scaledBy(x: 1.0, y: 1.0)
+        
+        let moveMoney = CGAffineTransform(translationX: 0, y: 0)
+        let movedetail = CGAffineTransform(translationX: 0, y: 0)
+        let movePath = CGAffineTransform(translationX: 0, y: 0)
+        cell.paddingViewBottom.addBtn.transform = transformScaled
+        cell.paddingViewBottom.moneyBtn.transform = moveMoney
+        cell.paddingViewBottom.detailBtn.transform = movedetail
+        cell.paddingViewBottom.pathBtn.transform = movePath
+        cell.paddingViewBottom.moneyBtn.alpha = 0.0
+        cell.paddingViewBottom.detailBtn.alpha = 0.0
+        cell.paddingViewBottom.pathBtn.alpha = 0.0
+
         //        cell.dayOfTheWeek.text =
         
         cell.mydelegate = self
@@ -509,9 +582,9 @@ extension addDetailViewController : UITableViewDataSource{
 extension addDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // 버튼 animate 원상복구
-        if currentIndexPath != nil{
-            buttonEvent(indexPath: currentIndexPath!)
-        }
+//        if currentIndexPath != nil{
+//            buttonEvent(indexPath: currentIndexPath!)
+//        }
     }
 }
 

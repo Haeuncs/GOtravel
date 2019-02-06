@@ -10,8 +10,39 @@ import Foundation
 import UIKit
 import RealmSwift
 
+protocol changeDelegate : class {
+    func showAlert(longitude : Double, latitude : Double, title : String)
+}
+
 // detailVC 에서 cell 선택 시 이동하는 수정 뷰
-class changeDetailOfViewContoller : UIViewController {
+class changeDetailOfViewContoller : UIViewController ,changeDelegate{
+    func showAlert(longitude : Double, latitude : Double, title : String) {
+        let titleAddSub = title.replacingOccurrences(of: " ", with: "+")
+        let alertController = UIAlertController(title: "길찾기", message: "길찾기에 사용할 어플을 선택하세요.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "애플 지도", style: .default, handler: {(_) in
+            let text = "http://maps.apple.com/?q=\(titleAddSub)&sll=\(latitude),\(longitude)&z=10&t=s"
+            let encoded = text.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+
+            UIApplication.shared.open(URL(string: encoded!)!, options: [:], completionHandler: nil)
+        }))
+        alertController.addAction(UIAlertAction(title: "구글 지도", style: .default, handler:{(_) in
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                let text = "comgooglemaps://?q=\(titleAddSub)&center=\(latitude),\(longitude)&zoom=15&views=transit"
+                let encoded = text.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+                //한글 검색어도 사용할 수 있도록 함
+
+                UIApplication.shared.openURL(URL(string:
+                    encoded!)!)
+            } else {
+                print("Can't use comgooglemaps://");
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+
+    }
+    
     //detailVC에서 받는 데이터
     var detailRealmDB : detailRealm?
     var countryRealmDB : countryRealm?
@@ -26,6 +57,7 @@ class changeDetailOfViewContoller : UIViewController {
         if detailRealmDB != nil {
             let setData = mainView as? changeDetailView;
             // 기존 데이터 입력
+            setData?.detailRealmDB = detailRealmDB
             setData?.titleTextInput.text = detailRealmDB?.title
             setData?.mainTitle.text = (countryRealmDB?.city)! + " " + "여행"
             setData?.miniMemoTextInput.text = detailRealmDB?.oneLineMemo
@@ -38,6 +70,7 @@ class changeDetailOfViewContoller : UIViewController {
         self.view.addSubview(mainView)
         view.backgroundColor = .white
         
+        mainView.delegate = self
         let leftButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(self.cancelBtn))
         self.navigationItem.leftBarButtonItem = leftButton
         
@@ -59,7 +92,7 @@ class changeDetailOfViewContoller : UIViewController {
             mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainViewPadding),
             ])
     }
-    let mainView : UIView = {
+    let mainView : changeDetailView = {
         let view = changeDetailView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 1

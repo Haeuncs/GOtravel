@@ -28,9 +28,8 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     override func prepareForReuse()
     {
         super.prepareForReuse()
-        print("재사용")
 //        initView()
-        
+//        buttonSelect = false
         for sub in detailScheduleTableView.subviews{
             sub.removeFromSuperview()
         }
@@ -40,7 +39,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     override func layoutSubviews() {
         super.layoutSubviews()
         initView()
-        
+        buttonSelect = false
         if detailScheduleTableView.subviews.isEmpty {
             detailScheduleTableView.reloadData()
         }
@@ -117,7 +116,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         tableView.tag = 1
         tableView.backgroundColor = .white
         tableView.separatorColor = Defaull_style.subTitleColor
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -140,7 +139,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    lazy var paddingViewBottom : addDetailViewCellButtonView = {
+    var paddingViewBottom : addDetailViewCellButtonView = {
         let view = addDetailViewCellButtonView()
         //        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -163,22 +162,30 @@ extension addDetailTableViewCell {
         return 200
     }
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if dayRealmDB?.detailList.count == 0 {
+            return .none
+        }
         return .delete
+
     }
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let currentMove = dayRealmDB?.detailList[sourceIndexPath.row]
-        try! self.realm.write {
-            self.dayRealmDB?.detailList.remove(at: sourceIndexPath.row)
-            self.dayRealmDB?.detailList.insert(currentMove!, at: destinationIndexPath.row)
+        if dayRealmDB?.detailList.count != 0 {
+            let currentMove = dayRealmDB?.detailList[sourceIndexPath.row]
+            try! self.realm.write {
+                self.dayRealmDB?.detailList.remove(at: sourceIndexPath.row)
+                self.dayRealmDB?.detailList.insert(currentMove!, at: destinationIndexPath.row)
+            }
+
         }
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete{
             try! self.realm.write {
                 self.dayRealmDB?.detailList.remove(at: indexPath.row)
             }
             self.mydelegate?.tableViewDeleteEvent(self)
-            
+
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -199,6 +206,7 @@ extension addDetailTableViewCell {
             cell.timeLabel.text = ""
             cell.colorView.backgroundColor = UIColor.clear
             cell.timeLabel.isHidden = true
+            cell.oneLineMemo.isHidden = true
 
         }else{
             cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title

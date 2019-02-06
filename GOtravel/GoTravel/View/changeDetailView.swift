@@ -15,6 +15,10 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
     func inputData() -> (title: String, startTime: Date, endTime: Date, color: String, memo: String) {
         return (titleTextInput.text!,startTime!,endTime!,colorPik,memoText)
     }
+    var detailRealmDB : detailRealm?
+
+    weak var delegate : changeDelegate?
+
     var startTime : Date?
     var endTime : Date?
     var colorPik : String = ""
@@ -80,27 +84,27 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         myStackView.addArrangedSubview(miniMemoTextInput)
 //        myStackView.addArrangedSubview(categoryLabel2)
         myStackView.addArrangedSubview(timeStack)
-        timeStack.addArrangedSubview(timeSelectionStart)
-        timeSelectionStart.tapAction = {
-            let style = self.timeSelectionStart.style
-            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
-                self.timeSelectionStart.style = CustomTextInputStyle()
-            }else{
-                self.timeSelectionStart.style = selectColorChange()
-            }
-            self.initState(selectIndex: 0)
-        }
-        timeStack.addArrangedSubview(timeSelectionEnd)
-        timeSelectionEnd.tapAction = {
-            let style = self.timeSelectionEnd.style
-            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
-                self.timeSelectionEnd.style = CustomTextInputStyle()
-            }else{
-                self.timeSelectionEnd.style = selectColorChange()
-            }
-
-            self.initState(selectIndex: 1)
-        }
+//        timeStack.addArrangedSubview(timeSelectionStart)
+//        timeSelectionStart.tapAction = {
+//            let style = self.timeSelectionStart.style
+//            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
+//                self.timeSelectionStart.style = CustomTextInputStyle()
+//            }else{
+//                self.timeSelectionStart.style = selectColorChange()
+//            }
+//            self.initState(selectIndex: 0)
+//        }
+//        timeStack.addArrangedSubview(timeSelectionEnd)
+//        timeSelectionEnd.tapAction = {
+//            let style = self.timeSelectionEnd.style
+//            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
+//                self.timeSelectionEnd.style = CustomTextInputStyle()
+//            }else{
+//                self.timeSelectionEnd.style = selectColorChange()
+//            }
+//
+//            self.initState(selectIndex: 1)
+//        }
         deleteAndSaveStack.addArrangedSubview(deleteBtn)
         deleteAndSaveStack.addArrangedSubview(addBtn)
         
@@ -116,6 +120,8 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
 //        myStackView.addArrangedSubview(categoryLabel4)
         myStackView.addArrangedSubview(memoTextInput)
 
+        addSubview(showMap)
+        
         calcHeight = (realViewWidth - (5*5))/5
 //        print(calcHeight)
         deleteBtn.addTarget(self, action: #selector(self.deleteBtnSelect), for: .touchUpInside)
@@ -192,6 +198,23 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         stackView.translatesAutoresizingMaskIntoConstraints=false
         return stackView
     }()
+    let showMap : UIButton = {
+        let b = UIButton()
+        b.translatesAutoresizingMaskIntoConstraints=false
+        b.layer.cornerRadius = 5
+        b.puls()
+        b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+//        b.isHidden = true
+        b.setTitle("길찾기", for: .normal)
+        b.setTitleColor(.white, for: .normal)
+//        b.tag = 0
+//        b.isSelected = true
+        b.addTarget(self, action: #selector(mapSearch), for: .touchUpInside)
+        return b
+    }()
+    @objc func mapSearch(){
+        delegate?.showAlert(longitude : (detailRealmDB?.longitude)!, latitude : (detailRealmDB?.latitude)!, title : detailRealmDB?.title ?? "")
+    }
     let spacingView : UIView = {
         let view = UIView()
         view.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
@@ -204,6 +227,10 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
             myStackView.leftAnchor.constraint(equalTo: leftAnchor),
             myStackView.rightAnchor.constraint(equalTo: rightAnchor),
             collectionview.heightAnchor.constraint(equalToConstant: calcHeight*2),
+            showMap.heightAnchor.constraint(equalToConstant: 50),
+            showMap.widthAnchor.constraint(equalToConstant: self.frame.width - 10),
+            showMap.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            showMap.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50)
 //            memoTextInput.topAnchor.constraint(equalTo: collectionview.bottomAnchor)
 //            myStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             ])

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
@@ -44,7 +45,7 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         self.addSubview(mainCV)
         self.addSubview(moneyLabel)
         self.addSubview(belowView)
-        
+
         NSLayoutConstraint.activate([
             
             moneyLabel.topAnchor.constraint(equalTo: mainCV.bottomAnchor, constant: 5),
@@ -63,9 +64,12 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         // 이전 뷰에서 선택된 셀 표시
         let indexPathForFirstRow = NSIndexPath(item: selectDay, section: 0)
         mainCV.selectItem(at: indexPathForFirstRow as IndexPath, animated: true, scrollPosition: .centeredHorizontally)
+        
+        belowView.countryRealmDB = self.countryRealmDB
+        belowView.selectDay = self.selectDay
 
     }
-    let moneyLabel : UIView = {
+    let moneyLabel : exchangeSubView = {
         let label = exchangeSubView()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -81,8 +85,11 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
 //        return label
 //    }()
 
-    let belowView : UIView = {
+    // 테이블뷰
+    let belowView : exchangeTV = {
        let view = exchangeTV()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -93,12 +100,14 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exchangeCVCell", for: indexPath) as! exchangeCVCell
         cell.dayLabel.text = "\(indexPath.row) 일"
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.red.cgColor
+//        cell.layer.borderWidth = 1
+//        cell.layer.borderColor = UIColor.red.cgColor
         cell.layer.cornerRadius = 5
+        cell.backgroundColor = .white
         if cell.isSelected {
             cell.layer.borderWidth = 2
             belowView.backgroundColor = HSBrandomColor()
+            
             
         }
         // 여행 전 가계부
@@ -132,7 +141,7 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 0
 
     }
     func HSBrandomColor() -> UIColor{
@@ -239,6 +248,11 @@ class exchangeSubView : UIView {
 }
 
 class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
+    
+    let realm = try! Realm()
+    var countryRealmDB = countryRealm()
+    var selectDay = 0
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -246,7 +260,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     override func layoutSubviews() {
-        
+        print(countryRealmDB)
         moneyTV.register(exchangeTVC.self, forCellReuseIdentifier: "cell")
         moneyTV.delegate = self
         moneyTV.dataSource = self
@@ -261,6 +275,8 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     }
     let moneyTV : UITableView = {
        let table = UITableView()
+        table.separatorStyle = .none
+        table.backgroundColor = Defaull_style.topTableView
         table.translatesAutoresizingMaskIntoConstraints  = false
         return table
     }()
@@ -273,20 +289,54 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! exchangeTVC
-        cell.contentView.layer.borderColor = UIColor.black.cgColor
-        cell.contentView.layer.borderWidth = 1
-        cell.contentView.layer.cornerRadius = 8
+//        cell.contentView.layer.borderColor = UIColor.black.cgColor
+//        cell.contentView.layer.borderWidth = 1
+        cell.backgroundColor = UIColor.clear
+        cell.contentView.layer.cornerRadius = CGFloat(Defaull_style.insideTableViewCorner)
+        cell.contentView.backgroundColor = Defaull_style.insideTableView
+        cell.contentView.layer.shadowColor = UIColor.black.cgColor
+        cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cell.contentView.layer.shadowOpacity = 0.2
+        cell.contentView.layer.shadowRadius = 4.0
+
         cell.contentView.clipsToBounds = true
+        let data = countryRealmDB.moneyList[selectDay].detailList[indexPath.row]
+        print(indexPath.row)
+        print(data)
+        cell.label1.text = data.subTitle
+        cell.label2.text = data.title
+        // money numberFormat
+        let strDouble = String(data.money)
+        if let range = strDouble.range(of: ".0") {
+            let dotBefore = strDouble[..<range.lowerBound]
+//            let dotAfter = strDouble[range.lowerBound...]
+            
+            let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = NumberFormatter.Style.decimal
+            let formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot)!))
+            
+//            formattedNumber?.append(String(dotAfter))
+            cell.label3.text = "￦ \(formattedNumber!)"
+            
+        }
+//        cell.label3.text = "￦ \(data.money)"
         return cell
     }
-    // 각 셀마다 space
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 20
-    }
-    
+//    // 각 셀마다 space
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return countryRealmDB.moneyList[selectDay].detailList.count
+//    }
+//
     // There is just one row in every section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if countryRealmDB.moneyList[selectDay].detailList.count == 0 {
+            moneyTV.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
+        } else {
+            moneyTV.restore()
+        }
+
+        return countryRealmDB.moneyList[selectDay].detailList.count
     }
     
 
@@ -301,6 +351,16 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
         headerView.backgroundColor = UIColor.clear
         return headerView
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            try! self.realm.write {
+                self.countryRealmDB.moneyList[selectDay].detailList.remove(at: indexPath.row)
+            }
+            self.moneyTV.reloadData()
+            
+        }
+    }
+
     
 }
 class exchangeTVC : UITableViewCell {
@@ -333,18 +393,21 @@ class exchangeTVC : UITableViewCell {
             label1.topAnchor.constraint(equalTo: insideView.topAnchor),
 //            label1.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 //            label1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            label3.trailingAnchor.constraint(equalTo: insideView.trailingAnchor, constant: 0),
+
             
             label2.topAnchor.constraint(equalTo: label1.bottomAnchor),
+            label2.leadingAnchor.constraint(equalTo: insideView.leadingAnchor, constant: 0),
+            label2.trailingAnchor.constraint(equalTo: label3.leadingAnchor, constant: -5),
 //            insideView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 //            label2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            label3.trailingAnchor.constraint(equalTo: insideView.trailingAnchor, constant: 0),
 //            label3.leadingAnchor.constraint(equalTo: insideView.trailingAnchor),
 ////            label3.leadingAnchor.constraint(greaterThanOrEqualTo: insideView.trailingAnchor),
 //
             label3.centerYAnchor.constraint(equalTo: insideView.centerYAnchor),
             ])
-        insideView.backgroundColor = .red
+//        insideView.backgroundColor = .red
 
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -368,6 +431,7 @@ class exchangeTVC : UITableViewCell {
     }()
     let label2 : UILabel = {
         let label = UILabel()
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "도쿄 호텔 비용"
         return label

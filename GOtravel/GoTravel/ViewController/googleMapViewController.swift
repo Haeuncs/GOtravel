@@ -131,7 +131,7 @@ class googleMapViewController : UIViewController {
                 draw_marker(i: dayDetailRealm[i],index : i+1)
                 let destination = "\(dayDetailRealm[i+1].latitude),\(dayDetailRealm[i+1].longitude)"
                 draw_marker(i: dayDetailRealm[i+1],index : i+2)
-                let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=" + myRouteAPIKey
+                let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=transit&key=" + myRouteAPIKey
                 
                 print(urlString)
                 let url = URL(string: urlString)
@@ -144,23 +144,42 @@ class googleMapViewController : UIViewController {
                         do{
                             let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                             let routes = json["routes"] as! NSArray
-                            //                        self.mapView!.clear()
-                            
-                            OperationQueue.main.addOperation({
-                                for route in routes
-                                {
-                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-                                    let points = routeOverviewPolyline.object(forKey: "points")
-                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-                                    self.pathArr.append(path!)
+                            let state = json["status"]
+                            if state! as! String == "OK"{
+                                //                            print(String(describing: state.va))
+                                //                        self.mapView!.clear()
+                                
+                                OperationQueue.main.addOperation({
+                                    for route in routes
+                                    {
+                                        let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+                                        let points = routeOverviewPolyline.object(forKey: "points")
+                                        let path = GMSPath.init(fromEncodedPath: points! as! String)
+                                        self.pathArr.append(path!)
+                                        let polyline = GMSPolyline.init(path: path)
+                                        polyline.strokeWidth = 4
+                                        polyline.strokeColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                                        polyline.map = self.mapView
+                                        print("끝")
+                                        dispatchGroup.leave()
+                                    }
+                                })
+                            }else if state! as! String == "ZERO_RESULTS" {
+                                print("ZERO_RESULTS")
+                                OperationQueue.main.addOperation({
+                                    let path = GMSMutablePath()
+                                    path.add(CLLocationCoordinate2D(latitude: self.dayDetailRealm[i].latitude, longitude: self.dayDetailRealm[i].longitude))
+                                    path.add(CLLocationCoordinate2D(latitude: self.dayDetailRealm[i+1].latitude, longitude: self.dayDetailRealm[i+1].longitude))
+                                    self.pathArr.append(path)
                                     let polyline = GMSPolyline.init(path: path)
                                     polyline.strokeWidth = 4
                                     polyline.strokeColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
                                     polyline.map = self.mapView
                                     print("끝")
                                     dispatchGroup.leave()
-                                }
-                            })
+                                })
+                            }
+
                         }catch let error as NSError{
                             print("error:\(error)")
                             dispatchGroup.leave()

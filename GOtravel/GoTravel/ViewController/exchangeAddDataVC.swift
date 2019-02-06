@@ -16,6 +16,8 @@ import IQKeyboardManagerSwift
 // exchangeVC 에서 추가 시 나타나는 뷰
 class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     
+    let realm = try! Realm()
+    
     // addDetailVC 에서 전달 받는 데이터
     var countryRealmDB = countryRealm()
     var selectDay = 0
@@ -31,7 +33,43 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
 
     }
     @objc func saveAction(){
+        if exchange == "KRW" {
+            money = mountView.leftTextField.text?.replacingOccurrences(of: ",", with: "").toDouble()
+        }else{
+            money = mountView.rightTextField.text?.replacingOccurrences(of: ",", with: "").toDouble()
+        }
+        titleStr = memoTextField.text
         
+        let moneyDetailRealmDB = moneyDetailRealm()
+        moneyDetailRealmDB.exchange = self.exchange
+        moneyDetailRealmDB.subTitle = self.subTitle
+        // optional 데이터 체크
+        if self.titleStr != "" {
+            moneyDetailRealmDB.title = self.titleStr!
+        }else{
+            showAlert(str: "한줄 메모")
+        }
+        if self.money != 0.0 {
+            moneyDetailRealmDB.money = self.money!
+        }else{
+            showAlert(str: "금액")
+        }
+//
+        if self.titleStr != "" {
+            if self.money != 0.0{
+                try! self.realm.write {
+                    countryRealmDB.moneyList[selectDay].detailList.append(moneyDetailRealmDB)
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+    }
+    func showAlert(str : String){
+        let alertController = UIAlertController(title: "알림", message: "\(str) 을/를 채워주세요 !", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+
+        self.present(alertController, animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,7 +77,7 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         mountView.delegate = self
         catecoryCVV.delegate = self
         
-        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: nil)
+        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.saveAction))
         self.navigationItem.rightBarButtonItem = rightButton
 
 //        IQKeyboardManager.shared.enable = true
@@ -69,12 +107,12 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         
         
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
 //            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
             
             catecoryCVV.heightAnchor.constraint(equalToConstant: 100),
-            mountView.heightAnchor.constraint(equalToConstant: 200)
+            mountView.heightAnchor.constraint(equalToConstant: 200),
             ])
     }
     let stack  : UIStackView = {
@@ -87,12 +125,15 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     let catecoryLabel : UILabel = {
        let label = UILabel()
         label.text = "카테고리"
+        label.padding = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         label.textColor = Defaull_style.mainTitleColor
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     let catecoryCVV : catecoryCVView = {
         let cv = catecoryCVView()
+        cv.layer.cornerRadius = CGFloat(Defaull_style.topTableViewCorner)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .yellow
         return cv
@@ -102,27 +143,32 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         let cv = moneyExchangeView()
         cv.translatesAutoresizingMaskIntoConstraints = false
 
-        cv.backgroundColor = #colorLiteral(red: 0.9349880424, green: 0.9349917763, blue: 0.9349917763, alpha: 1)
+        cv.backgroundColor = Defaull_style.topTableView
         cv.layer.cornerRadius = 8
         return cv
     }()
 
     let mountOfMoney : UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "금액"
+        label.padding = UIEdgeInsets(top: 20, left: 0, bottom: 5, right: 0)
         label.textColor = Defaull_style.mainTitleColor
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     let memoLabel : UILabel = {
         let label = UILabel()
         label.text = "한줄 메모"
+        label.padding = UIEdgeInsets(top: 20, left: 0, bottom: 5, right: 0)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Defaull_style.mainTitleColor
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     let memoTextField : UITextField = {
         let text = UITextField()
+        text.clearButtonMode = .whileEditing
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
@@ -177,7 +223,13 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         cv.selectIndex = selectIndex
         self.navigationController?.pushViewController(cv, animated: true)
     }
+    func exchangeKWR(){
+        exchange = "KRW"
+        view.endEditing(true)
+    }
     func exchangeSelectForeignDidTapCell(selectIndex : Int ,label : String,belowLabel:String){
+        exchange = belowLabel
+        view.endEditing(true)
         if selectIndex == 0 {
             self.mountView.leftLabel.text = label
             self.mountView.leftBelowLabel.text = belowLabel
@@ -197,6 +249,8 @@ protocol exchangeDidTapInViewDelegate : class {
     func exchangeSelectForeignDidTapCell(selectIndex : Int,label : String,belowLabel:String)
     // 카테고리 collectionView Cell 클릭 시 이벤트
     func collectionViewDidTapCell(subTitle : String)
+    // 한화
+    func exchangeKWR()
 }
 
 enum LINE_POSITION {
@@ -214,7 +268,11 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     @objc func koreaMoneyAction(){
-        self.leftTextFieldView.isHidden = true
+        delegate?.exchangeKWR()
+//        leftTextField.text = ""
+        rightTextField.text = ""
+        
+        self.rightTextFieldView.isHidden = true
         self.moneyTextFieldStack.isHidden = false
         self.selectStackCountry.isHidden = true
         
@@ -226,7 +284,12 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
 
     }
     @objc func foreignMoneyAction(){
-        self.leftTextFieldView.isHidden = false
+//        leftTextField.text = ""
+        delegate?.exchangeKWR()
+
+        rightTextField.text = ""
+
+        self.rightTextFieldView.isHidden = false
         self.moneyTextFieldStack.isHidden = false
         self.selectStackCountry.isHidden = false
         
@@ -266,10 +329,10 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         
         // 뷰 선택 시 사용되는 거
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.leftAction))
-        let gesture2 = UITapGestureRecognizer(target: self, action:  #selector(self.rightAction))
+//        let gesture2 = UITapGestureRecognizer(target: self, action:  #selector(self.rightAction))
 
         self.leftView.addGestureRecognizer(gesture)
-        self.rightView.addGestureRecognizer(gesture2)
+//        self.rightView.addGestureRecognizer(gesture2)
         
         // 이거 뭔지 기억 안남;ㅜㅜㅜㅜ
 //        leftTextField.delegate = self
@@ -281,7 +344,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         leftView.addSubview(leftBelowLabel)
         
         leftView.addSubview(arrowHead)
-        rightView.addSubview(arrowHead2)
+//        rightView.addSubview(arrowHead2)
         
         rightView.addSubview(rightLabel)
         rightView.addSubview(rightBelowLabel)
@@ -342,10 +405,10 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
             arrowHead.heightAnchor.constraint(equalToConstant: 10),
             arrowHead.widthAnchor.constraint(equalToConstant: 8),
             
-            arrowHead2.centerYAnchor.constraint(equalTo: rightView.centerYAnchor, constant: 0),
-            arrowHead2.trailingAnchor.constraint(equalTo: rightView.trailingAnchor, constant: -10),
-            arrowHead2.heightAnchor.constraint(equalToConstant: 10),
-            arrowHead2.widthAnchor.constraint(equalToConstant: 8),
+//            arrowHead2.centerYAnchor.constraint(equalTo: rightView.centerYAnchor, constant: 0),
+//            arrowHead2.trailingAnchor.constraint(equalTo: rightView.trailingAnchor, constant: -10),
+//            arrowHead2.heightAnchor.constraint(equalToConstant: 10),
+//            arrowHead2.widthAnchor.constraint(equalToConstant: 8),
 
             rightLabel.bottomAnchor.constraint(equalTo: rightView.centerYAnchor, constant: 0),
             rightLabel.centerXAnchor.constraint(equalTo: rightView.centerXAnchor, constant: 0),
@@ -465,14 +528,14 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
     let leftView : UIView = {
        let view = UIView()
 //        view.layer.cornerRadius = 3
-        view.backgroundColor = #colorLiteral(red: 0.9349880424, green: 0.9349917763, blue: 0.9349917763, alpha: 1)
+//        view.backgroundColor = #colorLiteral(red: 0.9349880424, green: 0.9349917763, blue: 0.9349917763, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     let rightView : UIView = {
         let view = UIView()
 //        view.layer.cornerRadius = 3
-        view.backgroundColor = #colorLiteral(red: 0.9349880424, green: 0.9349917763, blue: 0.9349917763, alpha: 1)
+//        view.backgroundColor = #colorLiteral(red: 0.9349880424, green: 0.9349917763, blue: 0.9349917763, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -520,7 +583,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
     }()
     let leftTextFieldView : UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+//        view.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -530,7 +593,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         text.minimumFontSize = 12
         text.adjustsFontSizeToFitWidth = true
         text.clearButtonMode = .whileEditing
-        text.backgroundColor = .blue
+//        text.backgroundColor = .blue
         text.font = UIFont.systemFont(ofSize: 30, weight: .medium)
         text.textAlignment = .center
         text.keyboardType = .decimalPad
@@ -540,6 +603,8 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
     let rightTextField : UITextField = {
         let text = UITextField()
         text.text = "0"
+        // read Only
+        text.isUserInteractionEnabled = false
         text.minimumFontSize = 12
         text.adjustsFontSizeToFitWidth = true
         text.clearButtonMode = .whileEditing
@@ -592,16 +657,16 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.itemSize = CGSize(width: 80, height: 50)
         
         
         catecoryCV = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), collectionViewLayout: layout)
         catecoryCV.register(exchangeCVCell2.self, forCellWithReuseIdentifier: "Cell")
 
-        catecoryCV.backgroundColor = .red
+        catecoryCV.backgroundColor = Defaull_style.topTableView
         catecoryCV.delegate = self
         catecoryCV.dataSource = self
-        catecoryCV.showsHorizontalScrollIndicator = false
+        catecoryCV.showsHorizontalScrollIndicator = true
         
         self.addSubview(catecoryCV)
         
@@ -670,13 +735,13 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
         // 선택된 셀 보더 바꾸기
         let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell2
         cell.layer.borderWidth = 2
-        print(indexPath.row)
+//        print(indexPath.row)
         delegate?.collectionViewDidTapCell(subTitle: categoryListRealmDB[indexPath.row].title)
         //        belowView.backgroundColor = HSBrandomColor()
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell=collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 1
+        cell?.layer.borderWidth = 0
     }
 //
 //    let CV : UICollectionView = {
@@ -706,7 +771,8 @@ class exchangeCVCell2 : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func layoutInit(){
-        self.backgroundColor = .green
+        self.backgroundColor = Defaull_style.insideTableView
+        self.layer.cornerRadius = CGFloat(Defaull_style.insideTableViewCorner)
         self.addSubview(dayLabel)
         
         NSLayoutConstraint.activate([
