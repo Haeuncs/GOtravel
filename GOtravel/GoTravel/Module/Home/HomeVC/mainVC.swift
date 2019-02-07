@@ -29,7 +29,7 @@ class mainVC: UIViewController {
     
     @IBAction func addBtn(_ sender: Any) {
         let placeVC = placeSearchViewController()
-//        placeVC.myBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //        placeVC.myBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         placeVC.categoryIndex = 1
         
         self.navigationController?.pushViewController(placeVC, animated: true)
@@ -59,7 +59,7 @@ class mainVC: UIViewController {
     func initView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
-//        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+        //        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
         self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
@@ -113,7 +113,7 @@ class mainVC: UIViewController {
         
         countryRealmDB = realm?.objects(countryRealm.self)
         countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-//        print(countryRealmDB?.count)
+        //        print(countryRealmDB?.count)
         //        self.collectionView.reloadData()
         
     }
@@ -145,7 +145,7 @@ extension mainVC: UICollectionViewDelegate {
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
         detailView.selectCellColor = cell?.contentView.backgroundColor
-//        detailView.countryRealmDB = data
+        //        detailView.countryRealmDB = data
         detailView.selectIndex = indexPath.row
         
         self.present(nav1, animated: true, completion: nil)
@@ -172,24 +172,15 @@ extension mainVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
-        //        cell.titleLabel.text = "Cell #\(indexPath.row)"
-        cell.countryLabel.text = countryRealmDB?[indexPath.row].country
-        cell.cityLabel.text = countryRealmDB?[indexPath.row].city
-        let inervalToday = countryRealmDB?[indexPath.row].date!.timeIntervalSince(Date())
-        var dday = Int(inervalToday! / 86400)
-        print(dday)
-        if dday > 0{
-            cell.ddayLabel.text = "D-\(dday+1)"
-        }else{
-            dday = dday * -1
-            cell.ddayLabel.text = "+\(dday+1)일"
-        }
+        
+        cell.configure(withDelegate: mainVC_CVC_ViewModel(countryRealmDB![indexPath.row]))
         // random color 를 cell의 background
         myBackgroundColor = HSBrandomColor()
         cell.contentView.backgroundColor = myBackgroundColor
+        
         return cell
     }
-    
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("Current centered index1: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
     }
@@ -205,5 +196,4 @@ extension mainVC: UICollectionViewDataSource {
         //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
         return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
-    
 }

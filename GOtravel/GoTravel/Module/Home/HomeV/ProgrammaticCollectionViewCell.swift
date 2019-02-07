@@ -1,10 +1,3 @@
-//
-//  ProgrammaticCollectionViewCell.swift
-//  Example
-//
-//  Created by Benjamin Emdon on 2016-12-28.
-//  Copyright © 2016 Benjamin Emdon.
-//
 
 import UIKit
 
@@ -21,6 +14,12 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         super.init(coder: aDecoder)
         initView()
     }
+    func configure(withDelegate delegate: mainVC_protocol){
+        countryLabel.text = delegate.countryTitle
+        cityLabel.text = delegate.cityTitle
+        ddayLabel.text = delegate.ddayTitle
+    }
+
     func initView(){
         
         contentView.layer.cornerRadius = 10
@@ -37,17 +36,17 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         countryLabel.textAlignment = .left
         countryLabel.text = "일본 여행"
         countryLabel.textColor = .white
-//        countryLabel.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        //        countryLabel.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
         
         cityLabel.textAlignment = .left
         cityLabel.text = "오사카"
         cityLabel.textColor = .white
-//        cityLabel.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        //        cityLabel.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         
         ddayLabel.textAlignment = .right
         ddayLabel.text = "D-100"
         ddayLabel.textColor = .white
-//        ddayLabel.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        //        ddayLabel.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         
         ddayLabel.adjustsFontSizeToFitWidth = true
         ddayLabel.numberOfLines = 1
@@ -64,7 +63,7 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cityLabel.font = ddayLabel.font.withSize (25)
-
+        
         countryLabel.adjustsFontSizeToFitWidth = true
         countryLabel.numberOfLines = 1
         countryLabel.minimumScaleFactor = 0.1
@@ -73,8 +72,8 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         
         countryLabel.font = ddayLabel.font.withSize (30)
         
-
-
+        
+        
         contentView.addSubview(mainStackView)
         
         mainStackView.addArrangedSubview(subStackView)
@@ -101,7 +100,7 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
             mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             ])
-
+        
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
