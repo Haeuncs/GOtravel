@@ -43,6 +43,11 @@ extension String {
     func toDouble() -> Double? {
         return NumberFormatter().number(from: self)?.doubleValue
     }
+    func characterToCgfloat() -> CGFloat {
+        let n = NumberFormatter().number(from: self)
+        return n as! CGFloat
+    }
+
 }
 
 extension Int {
@@ -97,28 +102,33 @@ extension UILabel {
         }
     }
     
-    override open var intrinsicContentSize: CGSize {
-        guard let text = self.text else { return super.intrinsicContentSize }
-        
-        var contentSize = super.intrinsicContentSize
-        var textWidth: CGFloat = frame.size.width
-        var insetsHeight: CGFloat = 0.0
-        var insetsWidth: CGFloat = 0.0
-        
-        if let insets = padding {
-            insetsWidth += insets.left + insets.right
-            insetsHeight += insets.top + insets.bottom
-            textWidth -= insetsWidth
-        }
-        
-        let newSize = text.boundingRect(with: CGSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude),
-                                        options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                        attributes: [NSAttributedString.Key.font: self.font], context: nil)
-        
-        contentSize.height = ceil(newSize.size.height) + insetsHeight
-        contentSize.width = ceil(newSize.size.width) + insetsWidth
-        
-        return contentSize
-    }
+//    override open var intrinsicContentSize: CGSize {
+//        guard let text = self.text else { return super.intrinsicContentSize }
+//        
+//        var contentSize = super.intrinsicContentSize
+//        var textWidth: CGFloat = frame.size.width
+//        var insetsHeight: CGFloat = 0.0
+//        var insetsWidth: CGFloat = 0.0
+//        
+//        if let insets = padding {
+//            insetsWidth += insets.left + insets.right
+//            insetsHeight += insets.top + insets.bottom
+//            textWidth -= insetsWidth
+//        }
+//        
+//        let newSize = text.boundingRect(with: CGSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude),
+//                                        options: NSStringDrawingOptions.usesLineFragmentOrigin,
+//                                        attributes: [NSAttributedString.Key.font: self.font], context: nil)
+//        
+//        contentSize.height = ceil(newSize.size.height) + insetsHeight
+//        contentSize.width = ceil(newSize.size.width) + insetsWidth
+//        
+//        return contentSize
+//    }
 }
 
+extension Dictionary where Value: Equatable {
+    func someKey(forValue val: Value) -> Key? {
+        return first(where: { $1 == val })?.key
+    }
+}

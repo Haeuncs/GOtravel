@@ -26,9 +26,9 @@ let exchange_country_dic : [String:String] =
     "프랑스_프랑" :  "FPF",
     "영국_파운드" :  "GBP",
     "홍콩_달러" :  "HKD",
-    "인도네시아_루피아" :  "IDR",
+//    "인도네시아_루피아" :  "IDR",
     "이태리_리라" :  "ITL",
-    "일본_엔" :  "JPY",
+    "일본_엔" :  "JPY(100)",
     "쿠웨이트_디나르" :  "KWD",
     "말레이지아_링기트" :  "MYR",
     "네덜란드_길더" :  "NLG",
@@ -39,7 +39,10 @@ let exchange_country_dic : [String:String] =
     "싱카포르_달러" :  "SGD",
     "태국_바트" :  "THB",
     "미국_달러" :  "USD",
-    "씨에프에이_프랑" :  "XOF"
+    "씨에프에이_프랑" :  "XOF",
+    "호주_달러" : "AUD",
+    "인도네시아_루피아" : "IDR(100)",
+    
     
 ]
 struct exchange_country {

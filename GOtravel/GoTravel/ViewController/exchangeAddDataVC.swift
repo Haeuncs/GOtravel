@@ -28,6 +28,10 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     var money : Double?
     var titleStr : String?
     
+    // 계산 시 사용 변수
+    var selectForeignMoneyDouble : Double? = nil
+    var belowLabel = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -227,7 +231,12 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         exchange = "KRW"
         view.endEditing(true)
     }
-    func exchangeSelectForeignDidTapCell(selectIndex : Int ,label : String,belowLabel:String){
+    func exchangeSelectForeignDidTapCell(selectIndex : Int ,label : String,belowLabel:String, doubleMoney : Double){
+        
+        selectForeignMoneyDouble = doubleMoney
+        print(label)
+        print(belowLabel)
+        self.belowLabel = belowLabel
         exchange = belowLabel
         view.endEditing(true)
         if selectIndex == 0 {
@@ -238,6 +247,27 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
             self.mountView.rightBelowLabel.text = belowLabel
         }
     }
+    func calculatorKoreaMoney(textFieldDouble : Double){
+        if selectForeignMoneyDouble != nil {
+            if belowLabel != "" {
+                if belowLabel == "JPY(100)" || belowLabel == "IDR(100)"{
+                    print(selectForeignMoneyDouble)
+                    print(textFieldDouble)
+                    let divide =  selectForeignMoneyDouble! / Double(100)
+                    print(divide)
+                    let calculatorText = divide * textFieldDouble
+                    print(calculatorText)
+                    self.mountView.rightTextField.text =                         String(format: "%.2f", calculatorText)
+
+                }else{
+                    print(textFieldDouble * selectForeignMoneyDouble!)
+                    self.mountView.rightTextField.text =
+                        String(format: "%.2f", textFieldDouble * selectForeignMoneyDouble!)
+                }
+            }
+        }
+        
+    }
     func collectionViewDidTapCell(subTitle : String){
         self.subTitle = subTitle
     }
@@ -246,11 +276,13 @@ protocol exchangeDidTapInViewDelegate : class {
     // 뷰 선택 시 이동하는 delegate
     func exchangeDidTapInView(_ sender : moneyExchangeView,selectIndex : Int)
     // 선택한 테이블 셀에서 선택한 데이터
-    func exchangeSelectForeignDidTapCell(selectIndex : Int,label : String,belowLabel:String)
+    func exchangeSelectForeignDidTapCell(selectIndex : Int,label : String,belowLabel:String, doubleMoney : Double)
     // 카테고리 collectionView Cell 클릭 시 이벤트
     func collectionViewDidTapCell(subTitle : String)
     // 한화
     func exchangeKWR()
+    // 한화로 계산
+    func calculatorKoreaMoney(textFieldDouble : Double)
 }
 
 enum LINE_POSITION {
@@ -451,14 +483,15 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
                     let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
                     let numberFormatter = NumberFormatter()
                     numberFormatter.numberStyle = NumberFormatter.Style.decimal
-                    var formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot)!))
+                    var formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
                     
                     formattedNumber?.append(String(dotAfter))
                     textField.text = formattedNumber
 
                 }
-            }else{
+        }else{
                 let subtractionDot = textField.text?.replacingOccurrences(of: ",", with: "")
+                delegate?.calculatorKoreaMoney(textFieldDouble: Double(subtractionDot!) ?? 0)
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = NumberFormatter.Style.decimal
                 let formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot!)!))
@@ -542,6 +575,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
 
     let leftLabel : UILabel = {
         let label = UILabel()
+        label.adjustsFontSizeToFitWidth = true
         label.text = "대한민국-원"
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = Defaull_style.mainTitleColor
@@ -551,6 +585,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
     let leftBelowLabel : UILabel = {
         let label = UILabel()
         label.text = "KRW"
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = Defaull_style.mainTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -600,7 +635,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
-    let rightTextField : UITextField = {
+    var rightTextField : UITextField = {
         let text = UITextField()
         text.text = "0"
         // read Only

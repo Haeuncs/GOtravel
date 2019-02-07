@@ -61,6 +61,29 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         print("layout")
         realViewWidth = self.frame.width
         initView()
+        
+        var stylee = CustomTextInputStyle()
+        if detailRealmDB?.color != "default"{
+            if colorPik != "" {
+                let colorArr = colorPik.components(separatedBy: " ")
+                let colorText = UIColor.init(red: colorArr[0].characterToCgfloat() , green: colorArr[1].characterToCgfloat(), blue: colorArr[2].characterToCgfloat(), alpha: colorArr[3].characterToCgfloat())
+                
+                stylee.setPlace(color: colorText)
+                selection.style = stylee
+
+            }else{
+                let colorArr = detailRealmDB?.color.components(separatedBy: " ")
+                let colorText = UIColor.init(red: colorArr![0].characterToCgfloat() , green: colorArr![1].characterToCgfloat(), blue: colorArr![2].characterToCgfloat(), alpha: colorArr![3].characterToCgfloat())
+                
+                stylee.setPlace(color: colorText)
+                selection.style = stylee
+            }
+        }else{
+            let colorText = UIColor.gray
+            
+            stylee.setPlace(color: colorText)
+            selection.style = stylee
+        }
     }
 
     func initView(){
@@ -266,7 +289,6 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         select.translatesAutoresizingMaskIntoConstraints = false
         select.placeHolderText = "중요도 컬러 선택"
         select.type = .selection
-        select.style = CustomTextInputStyle()
         select.tapAction = {
             print("tap")
         }
@@ -522,6 +544,11 @@ extension changeDetailView {
         cell.colorView.layer.borderColor = darkenedBase.cgColor
         
         colorPik = cell.colorView.backgroundColor!.toString()
+        
+        var stylee = CustomTextInputStyle()
+        stylee.setPlace(color: color ?? UIColor.gray)
+        selection.style = stylee
+        
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! colorCVCell
@@ -587,7 +614,7 @@ struct selectColorChange: AnimatedTextInputStyle {
 
 }
 struct CustomTextInputStyle: AnimatedTextInputStyle {
-    let placeholderInactiveColor = UIColor.gray
+    var placeholderInactiveColor = UIColor.gray
     let activeColor = Defaull_style.mainTitleColor
     let inactiveColor = UIColor.gray.withAlphaComponent(0.3)
     let lineInactiveColor = UIColor.gray.withAlphaComponent(0.3)
@@ -605,6 +632,10 @@ struct CustomTextInputStyle: AnimatedTextInputStyle {
     let yHintPositionOffset: CGFloat = 7
     let yPlaceholderPositionOffset: CGFloat = 0
     public let textAttributes: [String: Any]? = nil
+    
+    mutating func setPlace(color : UIColor) {
+        placeholderInactiveColor = color
+    }
 }
 
 //import UIKit

@@ -29,7 +29,7 @@
 		4A969BF421E5A2F00016DB49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BF321E5A2F00016DB49 /* AppDelegate.swift */; };
 		4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BF521E5A2F00016DB49 /* ViewController.swift */; };
 		4A969BFB21E5A2F50016DB49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A969BFA21E5A2F50016DB49 /* Assets.xcassets */; };
-		4AA331B621EB3D92004E2536 /* ProgrammaticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331B321EB3D92004E2536 /* ProgrammaticViewController.swift */; };
+		4AA331B621EB3D92004E2536 /* mainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331B321EB3D92004E2536 /* mainVC.swift */; };
 		4AA331B721EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331B421EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift */; };
 		4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331B821EB3EB1004E2536 /* ControlCenterView.swift */; };
 		4AA331BC21EB3EF8004E2536 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331BA21EB3EF8004E2536 /* UIView+Extensions.swift */; };
@@ -81,7 +81,7 @@
 		4A969BFA21E5A2F50016DB49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A969BFD21E5A2F50016DB49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A969BFF21E5A2F50016DB49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4AA331B321EB3D92004E2536 /* ProgrammaticViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgrammaticViewController.swift; sourceTree = "<group>"; };
+		4AA331B321EB3D92004E2536 /* mainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainVC.swift; sourceTree = "<group>"; };
 		4AA331B421EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgrammaticCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA331B821EB3EB1004E2536 /* ControlCenterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlCenterView.swift; sourceTree = "<group>"; };
 		4AA331BA21EB3EF8004E2536 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 		4AA331CF21ECA823004E2536 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				4AA331B321EB3D92004E2536 /* ProgrammaticViewController.swift */,
+				4AA331B321EB3D92004E2536 /* mainVC.swift */,
 				4AC7103B21EE10C600B20448 /* addDetailViewController.swift */,
 				4AA331C621EB8EB0004E2536 /* calendarViewController.swift */,
 				4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */,
@@ -443,7 +443,7 @@
 				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
 				4A38F3D721EA6B030097914B /* Main.storyboard in Sources */,
 				4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */,
-				4AA331B621EB3D92004E2536 /* ProgrammaticViewController.swift in Sources */,
+				4AA331B621EB3D92004E2536 /* mainVC.swift in Sources */,
 				4A779F5E21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift in Sources */,
 				4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
