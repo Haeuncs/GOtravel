@@ -10,6 +10,25 @@ import Foundation
 import UIKit
 import RealmSwift
 
+protocol exchangeTableCellProtocol {
+    var subTitle : String {get}
+    var mainTitle : String {get}
+    var numberTitle : String {get}
+}
+struct exchangeTableCellViewModel : exchangeTableCellProtocol{
+    var subTitle: String
+    
+    var mainTitle: String
+    
+    var numberTitle: String
+    
+    init(_ data : moneyDetailRealm) {
+        self.mainTitle = data.title
+        self.subTitle = data.subTitle
+        self.numberTitle = ""
+        
+    }
+}
 class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     // addDetailVC -> exchangeVC 에서 전달 받는 데이터
@@ -20,9 +39,9 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     weak var delegate : exchangeCVCDelegate?
     
     var mainCV     : UICollectionView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("init")
     }
     
     
@@ -32,7 +51,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("layout")
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
 
@@ -75,16 +93,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         return label
     }()
 
-//    let moneyLabel : UILabel = {
-//        let label = UILabel()
-//        label.text = "￦ 100.000"
-//        label.textAlignment = .center
-//        label.textColor = Defaull_style.subTitleColor
-//        label.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-
     // 테이블뷰
     let belowView : exchangeTV = {
        let view = exchangeTV()
@@ -98,18 +106,12 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exchangeCVCell", for: indexPath) as! exchangeCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exchangeCVCell", for: indexPath) as!
+        exchangeCVCell
         cell.dayLabel.text = "\(indexPath.row) 일"
-//        cell.layer.borderWidth = 1
-//        cell.layer.borderColor = UIColor.red.cgColor
+        cell.delegate = self.delegate
         cell.layer.cornerRadius = 5
         cell.backgroundColor = .white
-        if cell.isSelected {
-            cell.layer.borderWidth = 2
-            belowView.backgroundColor = HSBrandomColor()
-            
-            
-        }
         // 여행 전 가계부
         if indexPath.row == 0 {
             cell.dayLabel.text = "여행 전"
@@ -130,19 +132,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print(indexPath)
-        // 선택된 셀 보더 바꾸기
-        let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell
-        cell.layer.borderWidth = 2
-//        print(indexPath.row)
-        delegate?.exchangeCVCDelegateDidTap(cell, index: indexPath.row)
-
-//        belowView.backgroundColor = HSBrandomColor()
-    }
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell
-        cell.layer.borderWidth = 0
-
     }
     func HSBrandomColor() -> UIColor{
         let saturation : CGFloat =  0.45
@@ -152,17 +141,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
 
-}
-class exchangeMoneyView : UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override func layoutSubviews() {
-        
-    }
 }
 
 class exchangeSubView : UIView {
@@ -289,8 +267,12 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! exchangeTVC
-//        cell.contentView.layer.borderColor = UIColor.black.cgColor
-//        cell.contentView.layer.borderWidth = 1
+
+        let data = countryRealmDB.moneyList[selectDay].detailList[indexPath.row]
+
+        cell.label1.text = data.subTitle
+        cell.label2.text = data.title
+        
         cell.backgroundColor = UIColor.clear
         cell.contentView.layer.cornerRadius = CGFloat(Defaull_style.insideTableViewCorner)
         cell.contentView.backgroundColor = Defaull_style.insideTableView
@@ -298,13 +280,9 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
         cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
         cell.contentView.layer.shadowOpacity = 0.2
         cell.contentView.layer.shadowRadius = 4.0
-
+        
         cell.contentView.clipsToBounds = true
-        let data = countryRealmDB.moneyList[selectDay].detailList[indexPath.row]
-        print(indexPath.row)
-        print(data)
-        cell.label1.text = data.subTitle
-        cell.label2.text = data.title
+
         // money numberFormat
         let strDouble = String(data.money)
         if let range = strDouble.range(of: ".0") {
@@ -369,46 +347,7 @@ class exchangeTVC : UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-
-
-        insideView.addSubview(label1)
-        insideView.addSubview(label2)
-        insideView.addSubview(label3)
-        contentView.addSubview(insideView)
-//        addSubview(label3)
-        
-//        print(label1.frame.height)
-//        let viewHeight = Int(label1.frame.height + label2.frame.height)
-        
-        NSLayoutConstraint.activate([
-            insideView.heightAnchor.constraint(equalToConstant: 40),
-//            insideView.widthAnchor.constraint(equalToConstant: contentView.frame.width),
-//            insideView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            insideView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            insideView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            
-            insideView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
-            label1.topAnchor.constraint(equalTo: insideView.topAnchor),
-//            label1.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//            label1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            label3.trailingAnchor.constraint(equalTo: insideView.trailingAnchor, constant: 0),
-
-            
-            label2.topAnchor.constraint(equalTo: label1.bottomAnchor),
-            label2.leadingAnchor.constraint(equalTo: insideView.leadingAnchor, constant: 0),
-            label2.trailingAnchor.constraint(equalTo: label3.leadingAnchor, constant: -5),
-//            insideView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//            label2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            
-//            label3.leadingAnchor.constraint(equalTo: insideView.trailingAnchor),
-////            label3.leadingAnchor.constraint(greaterThanOrEqualTo: insideView.trailingAnchor),
-//
-            label3.centerYAnchor.constraint(equalTo: insideView.centerYAnchor),
-            ])
-//        insideView.backgroundColor = .red
-
+        setLayout()
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -416,6 +355,40 @@ class exchangeTVC : UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func setLayout() {
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+//        contentView.backgroundColor = Defaull_style.insideTableView
+//        contentView.layer.cornerRadius = CGFloat(Defaull_style.insideTableViewCorner)
+//        contentView.layer.shadowColor = UIColor.black.cgColor
+//        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        contentView.layer.shadowOpacity = 0.2
+//        contentView.layer.shadowRadius = 4.0
+//        contentView.clipsToBounds = true
+
+        insideView.addSubview(label1)
+        insideView.addSubview(label2)
+        insideView.addSubview(label3)
+        contentView.addSubview(insideView)
+        
+        NSLayoutConstraint.activate([
+            insideView.heightAnchor.constraint(equalToConstant: 40),
+            insideView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            insideView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
+            insideView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            label1.topAnchor.constraint(equalTo: insideView.topAnchor),
+            label3.trailingAnchor.constraint(equalTo: insideView.trailingAnchor, constant: 0),
+            
+            
+            label2.topAnchor.constraint(equalTo: label1.bottomAnchor),
+            label2.leadingAnchor.constraint(equalTo: insideView.leadingAnchor, constant: 0),
+            label2.trailingAnchor.constraint(equalTo: label3.leadingAnchor, constant: -5),
+            label3.centerYAnchor.constraint(equalTo: insideView.centerYAnchor),
+            ])
+
     }
     let insideView : UIView = {
         let view = UIView()

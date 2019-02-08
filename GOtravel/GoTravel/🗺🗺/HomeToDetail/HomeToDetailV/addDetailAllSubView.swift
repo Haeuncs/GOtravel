@@ -80,11 +80,14 @@ class addDetailViewCellView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        initView()
     }
 
     let dateLabel : UILabel = {
@@ -93,7 +96,7 @@ class addDetailViewCellView: UIView {
         label.textColor = Defaull_style.dateColor
         label.text = "test"
         label.numberOfLines = 0
-        label.layer.cornerRadius = 8
+//        label.layer.cornerRadius = 8
         label.layer.borderWidth = 1
         label.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -115,18 +118,23 @@ class addDetailViewCellView: UIView {
         addSubview(dayOfTheWeek)
 
         NSLayoutConstraint.activate([
-            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:5),
-            dateLabel.topAnchor.constraint(equalTo: topAnchor,constant:5),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5),
+            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:10),
+            dateLabel.topAnchor.constraint(equalTo: topAnchor,constant:10),
+            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-10),
             // 정사각형으로 만들기!
             dateLabel.heightAnchor.constraint(equalTo: widthAnchor, constant: -10),
             
             dayOfTheWeek.leadingAnchor.constraint(equalTo: leadingAnchor),
             dayOfTheWeek.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:5),
             dayOfTheWeek.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-
             ])
+        // get dateLabel real size
+        dateLabel.setNeedsLayout()
+        dateLabel.layoutIfNeeded()
+        let dateLabelCircle = dateLabel.frame.width / 2
+        dateLabel.layer.cornerRadius = dateLabelCircle
+        
+        
     }
 }
 class addDetailViewCellButtonView : UIView {

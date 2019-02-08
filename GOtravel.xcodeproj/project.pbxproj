@@ -46,12 +46,12 @@
 		4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */; };
 		4AC7107421EFD5B200B20448 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */; };
 		4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */; };
-		4AC710A821F0B6D100B20448 /* exchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710A721F0B6D000B20448 /* exchangeViewController.swift */; };
 		4AC710AA21F0C6C900B20448 /* placeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */; };
 		4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */; };
 		4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */; };
 		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
 		4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */; };
+		4ACD9670220DC3D50032D2C2 /* exchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */; };
 		4AD2D4D3220B040B00F7BE6F /* exchangeSelectForeignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
@@ -99,12 +99,12 @@
 		4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7107321EFD5B200B20448 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		4AC7107521F03CA900B20448 /* addDetailViewTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailViewTableViewDelegate.swift; sourceTree = "<group>"; };
-		4AC710A721F0B6D000B20448 /* exchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = exchangeViewController.swift; path = GOtravel/GoTravel/Module/DetailToExchange/DetailToExchangeVC/exchangeViewController.swift; sourceTree = SOURCE_ROOT; };
 		4AC710A921F0C6C900B20448 /* placeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeSearchViewController.swift; sourceTree = "<group>"; };
 		4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeSearchTableViewCell.swift; sourceTree = "<group>"; };
 		4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = googleMapViewController.swift; sourceTree = "<group>"; };
 		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailAllSubView.swift; sourceTree = "<group>"; };
+		4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeViewController.swift; sourceTree = "<group>"; };
 		4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeSelectForeignVC.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			children = (
 				4A5F61F6220C9F0100531239 /* trash */,
 				4A6EB2B021E64F0800A96C61 /* Data */,
-				4A5F61E0220C9BA800531239 /* Module */,
+				4A5F61E0220C9BA800531239 /* 🗺🗺 */,
 				4AA331CB21ECA6EA004E2536 /* Extension + Struct */,
 			);
 			path = GoTravel;
@@ -143,7 +143,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		4A5F61E0220C9BA800531239 /* Module */ = {
+		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
 				4A5F61F5220C9EB900531239 /* GoogleMapPlaceSearch */,
@@ -152,15 +152,15 @@
 				4A5F61E9220C9CC700531239 /* HomeToAdd */,
 				4A5F61E2220C9BC100531239 /* Home */,
 			);
-			path = Module;
+			path = "🗺🗺";
 			sourceTree = "<group>";
 		};
 		4A5F61E2220C9BC100531239 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				4A5F61E3220C9BD100531239 /* HomeVC */,
 				4A5F61E5220C9BE800531239 /* HomeVM */,
 				4A5F61E4220C9BDF00531239 /* HomeV */,
-				4A5F61E3220C9BD100531239 /* HomeVC */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -279,8 +279,8 @@
 		4A5F61F3220C9DEF00531239 /* DetailToExchangeV */ = {
 			isa = PBXGroup;
 			children = (
-				4A5F9CB0220495F50097C5C1 /* exchangeCell.swift */,
 				4A5F9CAE21FE00C40097C5C1 /* exchagneView.swift */,
+				4A5F9CB0220495F50097C5C1 /* exchangeCell.swift */,
 			);
 			path = DetailToExchangeV;
 			sourceTree = "<group>";
@@ -288,7 +288,7 @@
 		4A5F61F4220C9DF600531239 /* DetailToExchangeVC */ = {
 			isa = PBXGroup;
 			children = (
-				4AC710A721F0B6D000B20448 /* exchangeViewController.swift */,
+				4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */,
 				4A5F9CB222087D070097C5C1 /* exchangeAddDataVC.swift */,
 				4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */,
 			);
@@ -571,6 +571,7 @@
 				4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+Extensions.swift in Sources */,
+				4ACD9670220DC3D50032D2C2 /* exchangeViewController.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+Extensions.swift in Sources */,
 				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
 				4AA331C721EB8EB0004E2536 /* calendarViewController.swift in Sources */,
@@ -604,7 +605,6 @@
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
 				4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */,
-				4AC710A821F0B6D100B20448 /* exchangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

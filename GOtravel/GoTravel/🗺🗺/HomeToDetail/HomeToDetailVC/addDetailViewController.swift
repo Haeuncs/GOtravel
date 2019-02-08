@@ -41,10 +41,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     // 각 셀의 버튼은 테이블 당 한개만 나타날 수 있도록 하는 변수
     var beforeSelectIndexPath = false
     
-    // 첫 메인 페이지에서 선택한 cell 컬러가 여러 곳에서 쓰임
-    var selectCellColor : UIColor?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -57,7 +53,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
             let indexPath = IndexPath(row: self.selectRow, section: 0)
             self.scheduleMainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }
-
         self.navigationController?.navigationBar.prefersLargeTitles = false
         
         initView()
@@ -72,8 +67,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         self.navigationController!.navigationBar.isTranslucent = false
         // 아래 그림자 생기는거 지우기
         self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.barTintColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-//        self.scheduleMainTableView.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.dismissEvent))
         self.navigationItem.leftBarButtonItem = leftButton
         
@@ -93,8 +86,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         view.addSubview(mainView)
         view.addSubview(scheduleMainTableView)
         
-//        deleteAndSaveStack.addArrangedSubview(deleteBtnS)
-//        deleteAndSaveStack.addArrangedSubview(addBtnS)
 
         let customView = UIStackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
         customView.alignment = .center
@@ -109,29 +100,12 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         scheduleMainTableView.tableFooterView = customView
         
         
-//        view.addSubview(deleteAndSaveStack)
-        
         initLayout()
         getRealmData()
     }
     
     @objc func alldDleteLabelEvent(sender:UITapGestureRecognizer) {
         let uiAlertControl = UIAlertController(title: "여행 데이터 삭제", message: "한번 삭제한 데이터는 복구 할 수 없습니다. 삭제하시겠습니까? ", preferredStyle: .actionSheet)
-        
-        
-//        uiAlertControl.addAction(UIAlertAction(title: "도서 검색 하기", style: .default, handler: { (_) in
-//            let uvc = self.storyboard!.instantiateViewController(withIdentifier: "book_search")
-//            
-//            self.navigationController?.pushViewController(uvc, animated: true)
-//        })
-//        )
-//        
-//        uiAlertControl.addAction(UIAlertAction(title: "직접 입력 하기", style: .default, handler: { (_) in
-//            let uvc = self.storyboard!.instantiateViewController(withIdentifier: "ReadingRecord_add_Data")
-//            
-//            self.navigationController?.pushViewController(uvc, animated: true)
-//        })
-//        )
         
         uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: { (_) in
             try! self.realm.write {
@@ -161,8 +135,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
             scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            deleteAndSaveStack.widthAnchor.constraint(equalToConstant: view.frame.width)
-//            deleteDataLabel.widthAnchor.constraint(equalToConstant: view.frame.width)
+
             deleteDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             deleteDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
@@ -196,7 +169,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     }
     @objc func dismissEvent() {
         dismiss(animated: true, completion: nil)
-    //        scheduleMainTableView.isEditing = !scheduleMainTableView.isEditing
     }
     @objc func btnAction(_ sender: UIButton) {
         // 피드백 진동
@@ -212,7 +184,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
         let placeVC = placeSearchViewController()
-//        placeVC.myBackgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         placeVC.countryRealmDB = countryRealmDB
         placeVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
         placeVC.categoryIndex = 0
@@ -235,11 +206,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         }
         
 //
-//        let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
-//        let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-//        let placeVC = googleMapViewController()
-//
-//        self.navigationController?.pushViewController(placeVC, animated: true)
     }
     @objc func exchangeButtonEvent(_ sender : UIButton){
         impact.impactOccurred()
@@ -257,8 +223,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     func callAction(with data : String){
         print("pushing view")
         print(data)
-//        let view = googleMapViewController()
-//        self.navigationController?.pushViewController(view, animated: true)
     }
     var sum = 0
     // delete label footer view
@@ -304,7 +268,6 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
     lazy var mainView: addDetailView = {
         let view = addDetailView()
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = selectCellColor ?? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         return view
     }()
     // 날짜별 테이블뷰
@@ -425,23 +388,18 @@ extension addDetailViewController : UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCell
 
         cell.dayRealmDB = countryRealmDB.dayList[indexPath.row]
-        cell.initView()
-        
-        //            cell.contentView.setCardView(view: cell.contentView)
-        cell.detailScheduleTableView.tag = indexPath.row
+
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
-//        print(countryRealmDB.dayList[indexPath.row].day - 1)
         let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.dayList[indexPath.row].day - 1, to: countryRealmDB.date!)
         
         dateFormatter.setLocalizedDateFormatFromTemplate("e")
+        
         let day = dateFormatter.string(from: DBDate ?? Date())
         cell.dateView.dayOfTheWeek.text = day + "요일"
         cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일"
         cell.count = countryRealmDB.dayList[indexPath.row].detailList.count
-//        print(countryRealmDB.dayList[indexPath.row].detailList.count)
-        //        print(countryRealmDB.dayList[indexPath.row].detailList
-        //        )
+
         cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
         cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
         cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
@@ -461,8 +419,6 @@ extension addDetailViewController : UITableViewDataSource{
         cell.paddingViewBottom.moneyBtn.alpha = 0.0
         cell.paddingViewBottom.detailBtn.alpha = 0.0
         cell.paddingViewBottom.pathBtn.alpha = 0.0
-
-        //        cell.dayOfTheWeek.text =
         
         cell.mydelegate = self
         cell.isEdit = isEdit!
@@ -475,9 +431,6 @@ extension addDetailViewController : UITableViewDataSource{
 extension addDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // 버튼 animate 원상복구
-//        if currentIndexPath != nil{
-//            buttonEvent(indexPath: currentIndexPath!)
-//        }
     }
 }
 

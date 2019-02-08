@@ -52,7 +52,5 @@ D- day 남은 순으로 다시 정렬하여 메인에 표시함
 
 ## 여행 path 보기
 선택한 날짜에 일정 path를 보여준다
+
 <img src="githubImage/IMG_0223.PNG" aligned="center" width="200"/>
-
-
-

@@ -38,6 +38,8 @@ class calendarViewController: UIViewController {
 //    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
+        
         self.title = "여행 기간 설정 🗓"
         initializeView()
     }

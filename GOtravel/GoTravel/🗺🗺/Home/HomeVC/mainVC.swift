@@ -29,22 +29,14 @@ class mainVC: UIViewController {
     
     @IBAction func addBtn(_ sender: Any) {
         let placeVC = placeSearchViewController()
-        //        placeVC.myBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         placeVC.categoryIndex = 1
-        
         self.navigationController?.pushViewController(placeVC, animated: true)
     }
     
-    //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    //        collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
-    //        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    //    }
-    //
-    //    required init?(coder aDecoder: NSCoder) {
-    //        fatalError("init(coder:) has not been implemented")
-    //    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+
         print("viewWillAppear")
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -59,7 +51,6 @@ class mainVC: UIViewController {
     func initView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
-        //        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
         self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
@@ -70,7 +61,6 @@ class mainVC: UIViewController {
         collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
         // Just to make the example pretty ✨
         collectionView.backgroundColor = UIColor.clear
-        //        subView.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         // delegate & data source
         controlCenter.delegate = self
         collectionView.delegate = self
@@ -80,7 +70,6 @@ class mainVC: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.addArrangedSubview(collectionView)
-        //        stackView.addArrangedSubview(controlCenter)
         subView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -113,9 +102,6 @@ class mainVC: UIViewController {
         
         countryRealmDB = realm?.objects(countryRealm.self)
         countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-        //        print(countryRealmDB?.count)
-        //        self.collectionView.reloadData()
-        
     }
 }
 
@@ -132,8 +118,7 @@ extension mainVC: ControlCenterViewDelegate {
 
 extension mainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(countryRealmDB![indexPath.row])
-        let data    = countryRealmDB![indexPath.row]
+
         let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
         UIView.animate(withDuration: 0.3) {
             if (cell != nil) {
@@ -144,8 +129,6 @@ extension mainVC: UICollectionViewDelegate {
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
-        detailView.selectCellColor = cell?.contentView.backgroundColor
-        //        detailView.countryRealmDB = data
         detailView.selectIndex = indexPath.row
         
         self.present(nav1, animated: true, completion: nil)
@@ -161,19 +144,13 @@ extension mainVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        //        let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
-        //        UIView.animate(withDuration: 0.3) {
-        //            if (cell != nil) {
-        //                cell!.contentView.transform = .init(scaleX: 0.95, y: 0.95)
-        //            }
-        //        }
-        //        notification.notificationOccurred(.success)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
         
         cell.configure(withDelegate: mainVC_CVC_ViewModel(countryRealmDB![indexPath.row]))
+        cell.contentView.transform = .identity
         // random color 를 cell의 background
         myBackgroundColor = HSBrandomColor()
         cell.contentView.backgroundColor = myBackgroundColor
