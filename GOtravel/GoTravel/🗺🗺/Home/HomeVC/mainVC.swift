@@ -118,14 +118,13 @@ extension mainVC: ControlCenterViewDelegate {
 
 extension mainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell
+        notification.notificationOccurred(.success)
         UIView.animate(withDuration: 0.3) {
-            if (cell != nil) {
-                cell!.contentView.transform = .init(scaleX: 0.95, y: 0.95)
+            if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
+                cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }
-        notification.notificationOccurred(.success)
+
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
@@ -141,10 +140,21 @@ extension mainVC: UICollectionViewDataSource {
         return countryRealmDB?.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.3) {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
+                cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.3) {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
+                cell.contentView.transform = .identity
+            }
+        }
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell

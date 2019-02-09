@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
 struct exchangeData: Codable {
     var cur_unit : String
@@ -15,7 +16,7 @@ struct exchangeData: Codable {
 
 }
 
-class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableViewDataSource {
+class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableViewDataSource,NVActivityIndicatorViewable {
     
     
     var exchangeArr : [exchangeData] = []
@@ -25,47 +26,35 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
     let values = Array(exchange_country_dic.values)
     
     weak var delegate : exchangeDidTapInViewDelegate?
-
+    
+    let size = CGSize(width: 30, height: 30)
+    
+    var DateData = ""
+    
     override func viewDidLoad() {
         
     }
     override func viewWillAppear(_ animated: Bool) {
-
+        navigationController?.navigationBar.prefersLargeTitles = false
         findURL()
         
         selectCountryTV.delegate = self
         selectCountryTV.dataSource = self
         
+        self.view.addSubview(timeLabel)
         self.view.addSubview(selectCountryTV)
         
         NSLayoutConstraint.activate([
-            selectCountryTV.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            timeLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 5),
+            timeLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            timeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+        
+            
+            selectCountryTV.topAnchor.constraint(equalTo: self.timeLabel.bottomAnchor, constant: 0),
             selectCountryTV.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0),
             selectCountryTV.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
             selectCountryTV.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
             ])
-    }
-
-    // 파싱
-    func get_Data(){
-//        while self.exchangeArr.count == 0 {
-//            let dispatchGroup = DispatchGroup()
-//            dispatchGroup.enter()
-//
-//            findURL()
-//            dispatchGroup.leave()
-//
-//            self.count = self.count - 1
-//        }
-
-//
-//        while exchangeArr.count == 0 {
-////            print("start")
-//            findURL()
-//            print(exchangeArr.count)
-////            count = count - 1
-////            print(count)
-//        }
     }
     func findURL(){
         var count = 0
@@ -74,9 +63,8 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
         let dispatchQueue = DispatchQueue(label: "taskQueue")
         let dispatchSemaphore = DispatchSemaphore(value: 0)
 
-        var basicURL = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=fmmSohmV4M3z8jeqtUZiYmPXrUnjp1bs&data=AP01&searchdate="
+        let basicURL = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=fmmSohmV4M3z8jeqtUZiYmPXrUnjp1bs&data=AP01&searchdate="
         dispatchQueue.async {
-
         while self.exchangeArr.count == 0{
             // 오늘날짜부터 시작해서 데이터가 있는 날짜까지 뺌
             let dateFormatter = DateFormatter()
@@ -103,6 +91,7 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
                         let todo = try decoder.decode([exchangeData].self, from: data)
                             self.exchangeArr = todo
                             count = count - 1
+                        self.DateData = day
                     } catch {
                         print("error trying to convert data to JSON")
                         print(error)
@@ -117,16 +106,22 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
         }
         dispatchGroup.notify(queue: dispatchQueue) {
             
-//            print(self.exchangeArr.count)
-            self.selectCountryTV.reloadData()
+            DispatchQueue.main.async {
+                self.selectCountryTV.reloadData()
+                self.timeLabel.text = "환율 기준 : " + self.DateData
+            }
         }
 
-//        dispatchGroup.notify(queue:.main) {
-//            print(self.exchangeArr.count)
-////            count = count - 1
-//        }
-////
     }
+    let timeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "dd"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = Defaull_style.subTitleColor
+        return label
+    }()
     let selectCountryTV : UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false

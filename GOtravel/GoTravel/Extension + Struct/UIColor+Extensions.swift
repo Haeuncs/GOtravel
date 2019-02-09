@@ -47,6 +47,35 @@ extension String {
         let n = NumberFormatter().number(from: self)
         return n as! CGFloat
     }
+    func addDotInNumber() -> String{
+        if self.count != 0 {
+            let subtractionDot = self.replacingOccurrences(of: ",", with: "")
+
+            if (subtractionDot.contains(".")){
+                if let range = subtractionDot.range(of: ".") {
+                    let dotBefore = subtractionDot[..<range.lowerBound]
+                    let dotAfter = subtractionDot[range.lowerBound...] // or str[str.startIndex..<range.lowerBound]
+                    print(dotBefore)  // Prints ab
+                    
+                    let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.numberStyle = NumberFormatter.Style.decimal
+                    var formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
+                    
+                    formattedNumber?.append(String(dotAfter))
+                    return formattedNumber ?? ""
+                    
+                }
+            }else{
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = NumberFormatter.Style.decimal
+                let formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
+                
+                return formattedNumber ?? ""
+            }
+        }
+        return ""
+    }
 
 }
 

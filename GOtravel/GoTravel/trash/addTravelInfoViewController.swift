@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Eureka
 
-class addTravelInfoViewController : FormViewController {
+class addTravelInfoViewController  {
     
 }

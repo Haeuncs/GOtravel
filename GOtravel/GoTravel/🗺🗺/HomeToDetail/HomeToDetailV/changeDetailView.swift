@@ -35,13 +35,12 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        let myCollectionView=UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
+        let myCollectionView=UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout : layout)
         myCollectionView.showsHorizontalScrollIndicator = false
         myCollectionView.translatesAutoresizingMaskIntoConstraints=false
         myCollectionView.backgroundColor=UIColor.clear
         myCollectionView.allowsMultipleSelection=false
         myCollectionView.isHidden = true
-//        myCollectionView.backgroundColor = UIColor.red
         
         return myCollectionView
     }()
@@ -102,32 +101,9 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         myStackView.backgroundColor = .blue
         
         myStackView.addArrangedSubview(mainTitle)
-//        myStackView.addArrangedSubview(categoryLabel1)
         myStackView.addArrangedSubview(titleTextInput)
         myStackView.addArrangedSubview(miniMemoTextInput)
-//        myStackView.addArrangedSubview(categoryLabel2)
         myStackView.addArrangedSubview(timeStack)
-//        timeStack.addArrangedSubview(timeSelectionStart)
-//        timeSelectionStart.tapAction = {
-//            let style = self.timeSelectionStart.style
-//            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
-//                self.timeSelectionStart.style = CustomTextInputStyle()
-//            }else{
-//                self.timeSelectionStart.style = selectColorChange()
-//            }
-//            self.initState(selectIndex: 0)
-//        }
-//        timeStack.addArrangedSubview(timeSelectionEnd)
-//        timeSelectionEnd.tapAction = {
-//            let style = self.timeSelectionEnd.style
-//            if style.placeholderInactiveColor == selectColorChange().placeholderInactiveColor{
-//                self.timeSelectionEnd.style = CustomTextInputStyle()
-//            }else{
-//                self.timeSelectionEnd.style = selectColorChange()
-//            }
-//
-//            self.initState(selectIndex: 1)
-//        }
         deleteAndSaveStack.addArrangedSubview(deleteBtn)
         deleteAndSaveStack.addArrangedSubview(addBtn)
         
@@ -227,11 +203,8 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
         b.layer.cornerRadius = 5
         b.puls()
         b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
-//        b.isHidden = true
         b.setTitle("길찾기", for: .normal)
         b.setTitleColor(.white, for: .normal)
-//        b.tag = 0
-//        b.isSelected = true
         b.addTarget(self, action: #selector(mapSearch), for: .touchUpInside)
         return b
     }()

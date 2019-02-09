@@ -177,6 +177,9 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
         
+        // 스크롤 변수 설정! viewWillAppear 에서 사용함
+        selectRow = indexPath.row
+        
         buttonEvent(indexPath: indexPath)
     }
     @objc func placeButtonEvent(_ sender : UIButton){

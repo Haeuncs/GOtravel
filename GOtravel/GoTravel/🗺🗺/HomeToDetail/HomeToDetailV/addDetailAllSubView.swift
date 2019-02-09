@@ -69,6 +69,7 @@ class addDetailView : UIView {
             dateLabel.topAnchor.constraint(equalTo: subLabel.bottomAnchor),
             dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
             // data size에 맞추기 위한 앵커
             bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:lableConstant),
 
@@ -96,9 +97,9 @@ class addDetailViewCellView: UIView {
         label.textColor = Defaull_style.dateColor
         label.text = "test"
         label.numberOfLines = 0
-//        label.layer.cornerRadius = 8
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+////        label.layer.cornerRadius = 8
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -122,18 +123,18 @@ class addDetailViewCellView: UIView {
             dateLabel.topAnchor.constraint(equalTo: topAnchor,constant:10),
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-10),
             // 정사각형으로 만들기!
-            dateLabel.heightAnchor.constraint(equalTo: widthAnchor, constant: -10),
+            dateLabel.heightAnchor.constraint(equalTo: widthAnchor, constant: -20),
             
             dayOfTheWeek.leadingAnchor.constraint(equalTo: leadingAnchor),
             dayOfTheWeek.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:5),
             dayOfTheWeek.trailingAnchor.constraint(equalTo: trailingAnchor),
             ])
-        // get dateLabel real size
-        dateLabel.setNeedsLayout()
-        dateLabel.layoutIfNeeded()
-        let dateLabelCircle = dateLabel.frame.width / 2
-        dateLabel.layer.cornerRadius = dateLabelCircle
-        
+//        // get dateLabel real size
+//        dateLabel.setNeedsLayout()
+//        dateLabel.layoutIfNeeded()
+//        let dateLabelCircle = dateLabel.frame.width / 2
+//        dateLabel.layer.cornerRadius = dateLabelCircle
+//
         
     }
 }

@@ -12,6 +12,9 @@ import GooglePlaces
 import RealmSwift
 import IQKeyboardManagerSwift
 
+
+// FIXIT : 검색 취소 시 nil 값 되는거랑 검색이 끝났을 때 클릭 할 수 있도록 고쳐야함.
+
 class placeSearchViewController : UIViewController {
     // 앞 View 에서 전달 받는 데이터
     var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
@@ -214,7 +217,7 @@ extension placeSearchViewController: GMSAutocompleteFetcherDelegate {
                 print(place.coordinate)
                 
                 new_data.location = place.coordinate
-                new_data.placeID = place.placeID
+                new_data.placeID = place.placeID ?? ""
                 self.tablePlaceInfo.append(new_data)
                 dispatchGroup.leave()
             })

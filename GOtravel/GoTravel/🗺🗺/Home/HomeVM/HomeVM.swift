@@ -30,7 +30,7 @@ struct  mainVC_CVC_ViewModel: mainVC_protocol{
         // optional check
         if let intervalToday = intervalToday {
             var dday = Int(intervalToday / 86400)
-            if dday > 0 {
+            if dday >= 0 {
                 self.ddayTitle = "D-\(dday+1)"
             }else{
                 dday = dday * -1

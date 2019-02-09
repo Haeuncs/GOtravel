@@ -12,7 +12,6 @@ import RealmSwift
 import AnimatedTextInput
 import IQKeyboardManagerSwift
 
-
 // exchangeVC 에서 추가 시 나타나는 뷰
 class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     
@@ -78,13 +77,16 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         mountView.delegate = self
         catecoryCVV.delegate = self
         
         let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.saveAction))
         self.navigationItem.rightBarButtonItem = rightButton
 
-//        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enable = true
+        
         if selectDay != 0 {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "M월 dd일"
@@ -106,30 +108,29 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
         stack.addArrangedSubview(mountOfMoney)
         stack.addArrangedSubview(mountView)
         
-//        stack.addArrangedSubview(miniMemoTextInput)
         view.addSubview(stack)
         
         
         NSLayoutConstraint.activate([
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-//            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
-            
             catecoryCVV.heightAnchor.constraint(equalToConstant: 100),
             mountView.heightAnchor.constraint(equalToConstant: 200),
+            catecoryLabel.heightAnchor.constraint(equalToConstant: 50),
+            memoLabel.heightAnchor.constraint(equalToConstant: 50),
+            mountOfMoney.heightAnchor.constraint(equalToConstant: 50),
             ])
     }
     let stack  : UIStackView = {
        let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fill
+//        stack.distribution = .fill
         stack.axis = .vertical
         return stack
     }()
     let catecoryLabel : UILabel = {
        let label = UILabel()
-        label.text = "카테고리"
-        label.padding = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        label.text = " 카테고리"
         label.textColor = Defaull_style.mainTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
@@ -137,34 +138,29 @@ class exchangeAddDataVC : UIViewController,exchangeDidTapInViewDelegate {
     }()
     let catecoryCVV : catecoryCVView = {
         let cv = catecoryCVView()
-        cv.layer.cornerRadius = CGFloat(Defaull_style.topTableViewCorner)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .yellow
         return cv
     }()
     // 환율, 한화
     let mountView : moneyExchangeView = {
         let cv = moneyExchangeView()
         cv.translatesAutoresizingMaskIntoConstraints = false
-
         cv.backgroundColor = Defaull_style.topTableView
-        cv.layer.cornerRadius = 8
+        cv.layer.cornerRadius = CGFloat(Defaull_style.topTableViewCorner)
         return cv
     }()
 
     let mountOfMoney : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "금액"
-        label.padding = UIEdgeInsets(top: 20, left: 0, bottom: 5, right: 0)
+        label.text = " 금액"
         label.textColor = Defaull_style.mainTitleColor
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     let memoLabel : UILabel = {
         let label = UILabel()
-        label.text = "한줄 메모"
-        label.padding = UIEdgeInsets(top: 20, left: 0, bottom: 5, right: 0)
+        label.text = " 한줄 메모"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Defaull_style.mainTitleColor
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
@@ -481,6 +477,7 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
                     print(dotBefore)  // Prints ab
                     
                     let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
+                    delegate?.calculatorKoreaMoney(textFieldDouble: Double(textField.text!) ?? 0)
                     let numberFormatter = NumberFormatter()
                     numberFormatter.numberStyle = NumberFormatter.Style.decimal
                     var formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
@@ -554,7 +551,6 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         view.axis = .horizontal
         view.distribution = .fillEqually
 //        view.spacing = 5
-        view.backgroundColor = .yellow
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -612,7 +608,6 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
         let view = UIStackView()
         view.axis = .horizontal
         view.distribution = .fillEqually
-        view.backgroundColor = .yellow
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -687,7 +682,6 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
         print("layout")
         
         print(self.frame)
-        self.backgroundColor = .yellow
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -698,6 +692,7 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
         catecoryCV = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), collectionViewLayout: layout)
         catecoryCV.register(exchangeCVCell2.self, forCellWithReuseIdentifier: "Cell")
 
+        catecoryCV.layer.cornerRadius = CGFloat(Defaull_style.topTableViewCorner)
         catecoryCV.backgroundColor = Defaull_style.topTableView
         catecoryCV.delegate = self
         catecoryCV.dataSource = self
@@ -705,88 +700,43 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
         
         self.addSubview(catecoryCV)
         
-//        NSLayoutConstraint.activate([
-//            catecoryCV.topAnchor.constraint(equalTo: self.topAnchor),
-//            catecoryCV.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//            catecoryCV.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            catecoryCV.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            
-////            catecoryCV.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-////            catecoryCV.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-//            ])
-//        
 
     }
-//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        layout.itemSize = CGSize(width: 50, height: 50)
-//
-//        catecoryCV.register(exchangeCVCell2.self, forCellWithReuseIdentifier: "Cell")
-//
-//        catecoryCV = UICollectionView(frame: self.frame, collectionViewLayout: layout)
-//        catecoryCV.backgroundColor = UIColor.clear
-//        catecoryCV.delegate = self
-//        catecoryCV.dataSource = self
-//        catecoryCV.showsHorizontalScrollIndicator = false
-//
-//        self.addSubview(catecoryCV)
-//
-////        NSLayoutConstraint.activate([
-////            catecoryCV.topAnchor.constraint(equalTo: self.topAnchor),
-////            catecoryCV.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-////            catecoryCV.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-////            catecoryCV.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-////
-//////            catecoryCV.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-//////            catecoryCV.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-////            ])
-//    }
-//
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categoryListRealmDB.count
     }
 //
 //
+    var selectedIndexPath: NSIndexPath?
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! exchangeCVCell2
         cell.dayLabel.text = categoryListRealmDB[indexPath.row].title
         return cell
     }
-//////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-//////    {
-//////
-//////        return CGSize(width: 100, height: myCollectionViewHeight)
-//////
-//////    }
-//////
-//////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-////
-//////    {
-//////
-//////        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-//////    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
-        // 선택된 셀 보더 바꾸기
-        let cell = collectionView.cellForItem(at: indexPath) as! exchangeCVCell2
-        cell.layer.borderWidth = 2
-//        print(indexPath.row)
+
         delegate?.collectionViewDidTapCell(subTitle: categoryListRealmDB[indexPath.row].title)
-        //        belowView.backgroundColor = HSBrandomColor()
+        
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell=collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 0
     }
 //
-//    let CV : UICollectionView = {
-//        let view = UICollectionView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
     
 }
 class exchangeCVCell2 : UICollectionViewCell {
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                self.layer.borderWidth = 2
+            }else{
+                self.layer.borderWidth = 0
+            }
+        }
+    }
+
     let dayLabel : UILabel = {
         let label = UILabel()
         label.text = "1일"
