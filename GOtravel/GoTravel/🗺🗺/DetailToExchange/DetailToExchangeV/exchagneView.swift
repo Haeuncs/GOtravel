@@ -133,14 +133,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
-    func HSBrandomColor() -> UIColor{
-        let saturation : CGFloat =  0.45
-        let brigtness : CGFloat = 0.85
-        let randomHue = CGFloat.random(in: 0.0..<1.0)
-        //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
-        return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
-    }
-
 }
 
 class exchangeSubView : UIView {

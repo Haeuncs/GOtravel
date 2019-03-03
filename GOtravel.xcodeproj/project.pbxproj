@@ -51,6 +51,9 @@
 		4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */; };
 		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
 		4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */; };
+		4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7002222AC9DC004095DA /* pastVC.swift */; };
+		4ACC7005222AC9E5004095DA /* pastV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7004222AC9E5004095DA /* pastV.swift */; };
+		4ACC7007222ACA04004095DA /* pastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7006222ACA04004095DA /* pastVM.swift */; };
 		4ACD9670220DC3D50032D2C2 /* exchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */; };
 		4AD2D4D3220B040B00F7BE6F /* exchangeSelectForeignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
@@ -104,6 +107,9 @@
 		4AC710AE21F0EB3900B20448 /* googleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = googleMapViewController.swift; sourceTree = "<group>"; };
 		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailAllSubView.swift; sourceTree = "<group>"; };
+		4ACC7002222AC9DC004095DA /* pastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastVC.swift; sourceTree = "<group>"; };
+		4ACC7004222AC9E5004095DA /* pastV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastV.swift; sourceTree = "<group>"; };
+		4ACC7006222ACA04004095DA /* pastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastVM.swift; sourceTree = "<group>"; };
 		4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeViewController.swift; sourceTree = "<group>"; };
 		4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeSelectForeignVC.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +152,7 @@
 		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
+				4ACC7001222AC9A6004095DA /* PastTrip */,
 				4A5F61F5220C9EB900531239 /* GoogleMapPlaceSearch */,
 				4A5F61F1220C9DDE00531239 /* DetailToExchange */,
 				4A5F61ED220C9D7400531239 /* HomeToDetail */,
@@ -394,6 +401,16 @@
 			path = calendar;
 			sourceTree = "<group>";
 		};
+		4ACC7001222AC9A6004095DA /* PastTrip */ = {
+			isa = PBXGroup;
+			children = (
+				4ACC7002222AC9DC004095DA /* pastVC.swift */,
+				4ACC7004222AC9E5004095DA /* pastV.swift */,
+				4ACC7006222ACA04004095DA /* pastVM.swift */,
+			);
+			path = PastTrip;
+			sourceTree = "<group>";
+		};
 		7EE67DA17128548DFC6AA525 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,7 +579,9 @@
 				4A779F5E21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift in Sources */,
 				4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
+				4ACC7005222AC9E5004095DA /* pastV.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+Extensions.swift in Sources */,
+				4ACC7007222ACA04004095DA /* pastVM.swift in Sources */,
 				4ACD9670220DC3D50032D2C2 /* exchangeViewController.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+Extensions.swift in Sources */,
 				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
@@ -594,6 +613,7 @@
 				4A779F5A21E7C24C00CCE52F /* MapViewController.swift in Sources */,
 				4A779F5B21E7C24C00CCE52F /* LocationManager.swift in Sources */,
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
+				4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
 				4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */,
@@ -747,7 +767,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -765,7 +788,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9DJXYBHDAK;
 				INFOPLIST_FILE = GOtravel/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

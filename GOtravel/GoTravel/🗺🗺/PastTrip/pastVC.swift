@@ -1,17 +1,18 @@
 //
-//  ViewController.swift
-//  Example
+//  pastVC.swift
+//  GOtravel
 //
-//  Created by Benjamin Emdon on 2016-12-28.
-//  Copyright © 2016 Benjamin Emdon.
+//  Created by OOPSLA on 02/03/2019.
+//  Copyright © 2019 haeun. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import CenteredCollectionView
 import RealmSwift
 
-class mainVC: UIViewController {
-//    @IBOutlet weak var subView: UIView!
+class pastVC: UIViewController {
+    //    @IBOutlet weak var subView: UIView!
     let selection = UISelectionFeedbackGenerator()
     let notification = UINotificationFeedbackGenerator()
     
@@ -36,11 +37,11 @@ class mainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-
+        
         print("viewWillAppear")
         print(self.view.frame)
         print(self.view.bounds)
-
+        
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -53,14 +54,14 @@ class mainVC: UIViewController {
     }
     func initView(){
         print(self.view.frame.height)
-
+        
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
         self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
         
-        self.navigationItem.title = "여행일정"
+        self.navigationItem.title = "지난여행"
         title = self.navigationItem.title
         
         collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
@@ -126,7 +127,7 @@ class mainVC: UIViewController {
                 print(Date())
                 print(startDay)
                 print(endDate)
-                if endDate ?? Date() > Date() {
+                if endDate ?? Date() < Date() {
                     processedData.append(i)
                 }
             }
@@ -137,7 +138,7 @@ class mainVC: UIViewController {
 
 }
 
-extension mainVC: ControlCenterViewDelegate {
+extension pastVC: ControlCenterViewDelegate {
     func stateChanged(scrollDirection: UICollectionView.ScrollDirection) {
         centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
     }
@@ -148,7 +149,7 @@ extension mainVC: ControlCenterViewDelegate {
     }
 }
 
-extension mainVC: UICollectionViewDelegate {
+extension pastVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         notification.notificationOccurred(.success)
         UIView.animate(withDuration: 0.3) {
@@ -156,7 +157,7 @@ extension mainVC: UICollectionViewDelegate {
                 cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }
-
+        
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
@@ -167,7 +168,7 @@ extension mainVC: UICollectionViewDelegate {
     
 }
 
-extension mainVC: UICollectionViewDataSource {
+extension pastVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return countryRealmDB?.count ?? 0
     }
@@ -186,7 +187,7 @@ extension mainVC: UICollectionViewDataSource {
             }
         }
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
@@ -199,7 +200,7 @@ extension mainVC: UICollectionViewDataSource {
         
         return cell
     }
-
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("Current centered index1: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
     }
@@ -207,12 +208,4 @@ extension mainVC: UICollectionViewDataSource {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         print("Current centered index2: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
     }
-}
-// hsb random color
-func HSBrandomColor() -> UIColor{
-    let saturation : CGFloat =  0.45
-    let brigtness : CGFloat = 0.85
-    let randomHue = CGFloat.random(in: 0.0..<1.0)
-    //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
-    return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
 }

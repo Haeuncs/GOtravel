@@ -36,17 +36,14 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         countryLabel.textAlignment = .left
         countryLabel.text = "일본 여행"
         countryLabel.textColor = .white
-        //        countryLabel.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
         
         cityLabel.textAlignment = .left
         cityLabel.text = "오사카"
         cityLabel.textColor = .white
-        //        cityLabel.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         
         ddayLabel.textAlignment = .right
         ddayLabel.text = "D-100"
         ddayLabel.textColor = .white
-        //        ddayLabel.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         
         ddayLabel.adjustsFontSizeToFitWidth = true
         ddayLabel.numberOfLines = 1
@@ -83,15 +80,6 @@ class ProgrammaticCollectionViewCell: UICollectionViewCell {
         subStackView.addArrangedSubview(cityLabel)
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        //                subStackView.translatesAutoresizingMaskIntoConstraints = false
-        //                countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        //                cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        //                ddayLabel.translatesAutoresizingMaskIntoConstraints = false
-        //
-        //        mainStackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        //        countryLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        //        cityLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        //        ddayLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:10),

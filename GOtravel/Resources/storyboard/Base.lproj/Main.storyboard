@@ -27,19 +27,30 @@
             </objects>
             <point key="canvasLocation" x="-326" y="-1132"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="vk0-Pw-KVI">
+            <objects>
+                <navigationController id="Hsh-aO-AE9" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="M1S-AL-O1a"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Q8K-MP-gqE">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Ygd-tA-AeF" kind="relationship" relationship="rootViewController" id="7ln-2C-odB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tf5-Hg-xTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1504" y="112"/>
+        </scene>
         <!--Item 2-->
         <scene sceneID="N3b-Ve-FON">
             <objects>
-                <viewController id="Ygd-tA-AeF" sceneMemberID="viewController">
+                <viewController id="Ygd-tA-AeF" customClass="pastVC" customModule="GOtravel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7qC-Po-XOQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YhA-e7-CJo">
-                                <rect key="frame" x="67" y="216" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="vR2-z5-cFg"/>
                     </view>
@@ -55,21 +66,9 @@
             <objects>
                 <viewController storyboardIdentifier="mainViewController" id="5JX-mX-6zy" customClass="mainVC" customModule="GOtravel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ec2-op-lBd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LFU-Av-AAT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="k2R-1v-fV9" firstAttribute="bottom" secondItem="LFU-Av-AAT" secondAttribute="bottom" id="254-Ez-4PT"/>
-                            <constraint firstItem="LFU-Av-AAT" firstAttribute="top" secondItem="k2R-1v-fV9" secondAttribute="top" id="NDz-gj-nrG"/>
-                            <constraint firstItem="LFU-Av-AAT" firstAttribute="leading" secondItem="k2R-1v-fV9" secondAttribute="leading" id="cEj-se-SWp"/>
-                            <constraint firstItem="k2R-1v-fV9" firstAttribute="trailing" secondItem="LFU-Av-AAT" secondAttribute="trailing" id="gRz-Lb-LSr"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="k2R-1v-fV9"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="nGO-Bn-Dba"/>
@@ -81,9 +80,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="subView" destination="LFU-Av-AAT" id="1sn-xm-WtN"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ET0-Iz-xvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -176,7 +172,7 @@
             <objects>
                 <tabBarController id="8B9-aw-kSO" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="hhR-wb-6dI"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Sde-xX-sVI">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Sde-xX-sVI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -184,8 +180,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="Jw0-hJ-IQw" kind="relationship" relationship="viewControllers" id="4TC-1g-LhF"/>
-                        <segue destination="Ygd-tA-AeF" kind="relationship" relationship="viewControllers" id="Qku-AV-Y9H"/>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="9bJ-N0-Xrm"/>
+                        <segue destination="Hsh-aO-AE9" kind="relationship" relationship="viewControllers" id="wNg-eY-Sls"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s3R-vh-z3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -221,7 +216,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="768"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="resultCell" textLabel="24B-CL-dNI" detailTextLabel="LZ9-gS-yuW" style="IBUITableViewCellStyleSubtitle" id="0c7-Of-rU8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="resultCell" textLabel="24B-CL-dNI" detailTextLabel="LZ9-gS-yuW" style="IBUITableViewCellStyleSubtitle" id="0c7-Of-rU8">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0c7-Of-rU8" id="m7g-dQ-YC1">
