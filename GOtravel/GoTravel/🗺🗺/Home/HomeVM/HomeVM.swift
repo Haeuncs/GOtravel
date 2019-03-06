@@ -29,12 +29,24 @@ struct  mainVC_CVC_ViewModel: mainVC_protocol{
         let intervalToday = model.date?.timeIntervalSince(Date())
         // optional check
         if let intervalToday = intervalToday {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yy.M.dd"
+            dateFormatter.locale = Locale(identifier: "ko-KR")
+            // FIXIT  :  PEROID 계산해서 그 기간안이면 +day 일 , 이미 지난 여행이면 데이트 포맷터로 하기~!_!
             var dday = Int(intervalToday / 86400)
             if dday >= 0 {
-                self.ddayTitle = "D-\(dday+1)"
+                self.ddayTitle = "D-\(dday)"
             }else{
-                dday = dday * -1
-                self.ddayTitle = "+\(dday+1)일"
+                
+                let endDate = Calendar.current.date(byAdding: .day, value: model.period, to: model.date ?? Date())
+                if endDate! > Date() {
+                    dday = dday * -1
+                    self.ddayTitle = "+\(dday)일"
+                }else{
+                    self.ddayTitle = "\(                dateFormatter.string(from: model.date!)) ~ \(                dateFormatter.string(from: endDate!))"
+                }
+//                dday = dday * -1
+//                self.ddayTitle = "+\(dday)일"
             }
         }
     }

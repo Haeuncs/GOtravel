@@ -226,7 +226,9 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
             showMap.heightAnchor.constraint(equalToConstant: 50),
             showMap.widthAnchor.constraint(equalToConstant: self.frame.width - 10),
             showMap.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            showMap.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50)
+            showMap.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
+            // FIXIT : 메모 인풋 ㅠㅠ;;
+            memoTextInput.heightAnchor.constraint(equalToConstant: 50)
 //            memoTextInput.topAnchor.constraint(equalTo: collectionview.bottomAnchor)
 //            myStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             ])

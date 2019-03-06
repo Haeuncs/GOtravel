@@ -142,7 +142,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 
     }
     func getRealmData(){
-        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
+//        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
         
         mainView.countryLabel.text = countryRealmDB.country
         mainView.subLabel.text = countryRealmDB.city

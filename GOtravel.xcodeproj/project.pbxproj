@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0004AF222CF1AC003DEC20 /* settingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0004AE222CF1AC003DEC20 /* settingVC.swift */; };
+		4A0004B1222D319F003DEC20 /* settingV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0004B0222D319F003DEC20 /* settingV.swift */; };
 		4A38F3D721EA6B030097914B /* Main.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BF721E5A2F00016DB49 /* Main.storyboard */; };
 		4A38F3D821EA6B070097914B /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BFC21E5A2F50016DB49 /* LaunchScreen.storyboard */; };
 		4A38F3DA21EA80820097914B /* mymain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A38F3D921EA80820097914B /* mymain.xib */; };
@@ -61,6 +63,8 @@
 
 /* Begin PBXFileReference section */
 		25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.release.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.release.xcconfig"; sourceTree = "<group>"; };
+		4A0004AE222CF1AC003DEC20 /* settingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingVC.swift; sourceTree = "<group>"; };
+		4A0004B0222D319F003DEC20 /* settingV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingV.swift; sourceTree = "<group>"; };
 		4A38F3D921EA80820097914B /* mymain.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = mymain.xib; sourceTree = "<group>"; };
 		4A3A17E021F1C8B500313077 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		4A3BC29721F3B2A800995E28 /* changeDetailOfDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailOfDayViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A0004AD222CF183003DEC20 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				4A0004AE222CF1AC003DEC20 /* settingVC.swift */,
+				4A0004B0222D319F003DEC20 /* settingV.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		4A38F3D621EA618A0097914B /* GoTravel */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +165,7 @@
 		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
+				4A0004AD222CF183003DEC20 /* Setting */,
 				4ACC7001222AC9A6004095DA /* PastTrip */,
 				4A5F61F5220C9EB900531239 /* GoogleMapPlaceSearch */,
 				4A5F61F1220C9DDE00531239 /* DetailToExchange */,
@@ -600,7 +614,9 @@
 				4A969BF421E5A2F00016DB49 /* AppDelegate.swift in Sources */,
 				4AC710AF21F0EB3900B20448 /* googleMapViewController.swift in Sources */,
 				4A3A17E121F1C8B500313077 /* DateExtensions.swift in Sources */,
+				4A0004B1222D319F003DEC20 /* settingV.swift in Sources */,
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
+				4A0004AF222CF1AC003DEC20 /* settingVC.swift in Sources */,
 				4A3BC29821F3B2A800995E28 /* changeDetailOfDayViewController.swift in Sources */,
 				4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */,
 				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,

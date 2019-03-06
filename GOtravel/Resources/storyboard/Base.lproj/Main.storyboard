@@ -73,6 +73,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="nGO-Bn-Dba"/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="JkY-pc-ALS">
+                        <barButtonItem key="leftBarButtonItem" title="설정" id="6Cf-KS-mbh">
+                            <connections>
+                                <action selector="settingBtn:" destination="5JX-mX-6zy" id="GfA-bA-5fx"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="UwI-mp-O2Q">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -176,7 +181,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="Jw0-hJ-IQw" kind="relationship" relationship="viewControllers" id="4TC-1g-LhF"/>

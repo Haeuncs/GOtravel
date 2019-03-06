@@ -10,6 +10,8 @@ import UIKit
 import CenteredCollectionView
 import RealmSwift
 
+
+//FIXIT : 클릭하면 이동하는거 index row 기준 아니고 데이터 자체를 이동하기
 class mainVC: UIViewController {
 //    @IBOutlet weak var subView: UIView!
     let selection = UISelectionFeedbackGenerator()
@@ -27,6 +29,11 @@ class mainVC: UIViewController {
     // 기본 저장 데이터
     var countryRealmDB : List<countryRealm>?
     
+    @IBAction func settingBtn(_ sender: Any) {
+        let setting = settingVC()
+        self.navigationController?.pushViewController(setting, animated: true)
+        
+    }
     @IBAction func addBtn(_ sender: Any) {
         let placeVC = placeSearchViewController()
         placeVC.categoryIndex = 1
@@ -37,10 +44,6 @@ class mainVC: UIViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
 
-        print("viewWillAppear")
-        print(self.view.frame)
-        print(self.view.bounds)
-
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -48,12 +51,9 @@ class mainVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewdidLoad")
         initView()
     }
     func initView(){
-        print(self.view.frame.height)
-
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
@@ -160,7 +160,10 @@ extension mainVC: UICollectionViewDelegate {
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
-        detailView.selectIndex = indexPath.row
+        
+        if let countryRealmDB = countryRealmDB {
+            detailView.countryRealmDB = countryRealmDB[indexPath.row]
+        }
         
         self.present(nav1, animated: true, completion: nil)
     }

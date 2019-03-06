@@ -6,7 +6,7 @@
 //  Copyright © 2019 haeun. All rights reserved.
 //
 
-import Foundation
+import Foundation                              
 import UIKit
 import CenteredCollectionView
 import RealmSwift
@@ -161,7 +161,9 @@ extension pastVC: UICollectionViewDelegate {
         let nav1 = UINavigationController()
         let detailView = addDetailViewController()
         nav1.viewControllers = [detailView]
-        detailView.selectIndex = indexPath.row
+        if let countryRealmDB = countryRealmDB {
+            detailView.countryRealmDB = countryRealmDB[indexPath.row]
+        }
         
         self.present(nav1, animated: true, completion: nil)
     }
