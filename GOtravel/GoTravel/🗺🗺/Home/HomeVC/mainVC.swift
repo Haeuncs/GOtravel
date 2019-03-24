@@ -45,7 +45,11 @@ class mainVC: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
 
         DispatchQueue.main.async {
+            print("reload_Check")
             self.collectionView.reloadData()
+            self.collectionView!.collectionViewLayout.invalidateLayout()
+            self.collectionView!.layoutSubviews()
+
         }
         
     }

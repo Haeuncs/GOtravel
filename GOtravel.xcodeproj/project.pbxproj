@@ -42,6 +42,7 @@
 		4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C121EB8E74004E2536 /* MonthView.swift */; };
 		4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C221EB8E74004E2536 /* WeekdaysView.swift */; };
 		4AA331C721EB8EB0004E2536 /* calendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C621EB8EB0004E2536 /* calendarViewController.swift */; };
+		4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF96B0223BEA0E006FFD40 /* settingVM.swift */; };
 		4AC7103C21EE10C600B20448 /* addDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* addDetailViewController.swift */; };
 		4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7103D21EE110C00B20448 /* detailTest.xib */; };
 		4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */; };
@@ -100,6 +101,7 @@
 		4AA331C121EB8E74004E2536 /* MonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 		4AA331C221EB8E74004E2536 /* WeekdaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
 		4AA331C621EB8EB0004E2536 /* calendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarViewController.swift; sourceTree = "<group>"; };
+		4ABF96B0223BEA0E006FFD40 /* settingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingVM.swift; sourceTree = "<group>"; };
 		4AC7103B21EE10C600B20448 /* addDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailViewController.swift; sourceTree = "<group>"; };
 		4AC7103D21EE110C00B20448 /* detailTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailTest.xib; sourceTree = "<group>"; };
 		4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				4A0004AE222CF1AC003DEC20 /* settingVC.swift */,
 				4A0004B0222D319F003DEC20 /* settingV.swift */,
+				4ABF96B0223BEA0E006FFD40 /* settingVM.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
+				4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */,
 				4A5F9CAF21FE00C40097C5C1 /* exchagneView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -781,13 +785,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9DJXYBHDAK;
+				DEVELOPMENT_TEAM = 8Y79X2FVBT;
 				INFOPLIST_FILE = GOtravel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
+				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -802,13 +806,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9DJXYBHDAK;
+				DEVELOPMENT_TEAM = 8Y79X2FVBT;
 				INFOPLIST_FILE = GOtravel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel;
+				PRODUCT_BUNDLE_IDENTIFIER = haeun.GOtravel2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

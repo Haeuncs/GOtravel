@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--여행일정-->
         <scene sceneID="8Ll-b2-NT6">
             <objects>
                 <navigationController id="Jw0-hJ-IQw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="bYi-0G-ant"/>
+                    <tabBarItem key="tabBarItem" title="여행일정" id="bYi-0G-ant"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Vj2-BN-wKP">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="-326" y="-1132"/>
         </scene>
-        <!--Item-->
+        <!--지난여행-->
         <scene sceneID="vk0-Pw-KVI">
             <objects>
                 <navigationController id="Hsh-aO-AE9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="M1S-AL-O1a"/>
+                    <tabBarItem key="tabBarItem" title="지난여행" id="M1S-AL-O1a"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Q8K-MP-gqE">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -275,4 +275,5 @@
             <point key="canvasLocation" x="1172" y="-1523"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.25490197539999998" green="0.27450981740000002" blue="0.30196079609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

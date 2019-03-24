@@ -11,6 +11,8 @@ import UIKit
 
 class settingV : UIView {
     
+    // FIXIT : 테이블 뷰 셀에 추가할 배열
+    var tableCellArr = ["알림 설정","백업"]
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
