@@ -36,7 +36,7 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     var selectDay = 0
 
     // cell click delegate
-    weak var delegate : exchangeCVCDelegate?
+     var delegate : exchangeCVCDelegate?
     
     var mainCV     : UICollectionView!
     
@@ -53,7 +53,6 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         super.layoutSubviews()
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-
         mainCV = UICollectionView(frame: CGRect(x: 0, y: 5 , width: self.bounds.width , height: self.bounds.height / 12), collectionViewLayout: flowLayout)
         mainCV.register(exchangeCVCell.self, forCellWithReuseIdentifier: "exchangeCVCell")
         mainCV.backgroundColor = UIColor.clear
@@ -63,7 +62,7 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         self.addSubview(mainCV)
         self.addSubview(moneyLabel)
         self.addSubview(belowView)
-
+      belowView.delegate = self
         NSLayoutConstraint.activate([
             
             moneyLabel.topAnchor.constraint(equalTo: mainCV.bottomAnchor, constant: 5),
@@ -101,6 +100,23 @@ class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+  func reloadMoneyLabels(index: Int){
+    // 라벨 계산
+    var todayTotal = 0
+    print("selectDat = \(index)")
+    for i in countryRealmDB.moneyList[index].detailList {
+      todayTotal = Int(i.money) + todayTotal
+    }
+    var allTotal = 0
+    for i in countryRealmDB.moneyList{
+      for j in i.detailList{
+        allTotal = allTotal + Int(j.money)
+      }
+    }
+    moneyLabel.moneyDayLabel.text = "￦ \(todayTotal.toNumber())"
+    moneyLabel.moneyTotalLabel.text = "￦ \(allTotal.toNumber())"
+
+  }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return countryRealmDB.moneyList.count
     }
@@ -221,8 +237,13 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     
     let realm = try! Realm()
     var countryRealmDB = countryRealm()
-    var selectDay = 0
-
+  var selectDay = 0 {
+    didSet {
+      moneyTV.reloadData()
+    }
+  }
+  var delegate : exchangeView?
+//  var exchangeCell:exchangeCVCell?
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -327,7 +348,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
                 self.countryRealmDB.moneyList[selectDay].detailList.remove(at: indexPath.row)
             }
             self.moneyTV.reloadData()
-            
+          delegate?.reloadMoneyLabels(index: selectDay)
         }
     }
 

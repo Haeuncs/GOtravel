@@ -13,7 +13,6 @@ protocol mainVC_protocol {
     var countryTitle : String{get}
     var cityTitle : String{get}
     var ddayTitle : String{get}
-    
 }
 struct  mainVC_CVC_ViewModel: mainVC_protocol{
     var countryTitle : String

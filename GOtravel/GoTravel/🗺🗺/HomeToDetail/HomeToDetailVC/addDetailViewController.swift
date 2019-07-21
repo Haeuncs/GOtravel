@@ -128,7 +128,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         // constraint
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: view.topAnchor),
-            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             scheduleMainTableView.topAnchor.constraint(equalTo: mainView.bottomAnchor),

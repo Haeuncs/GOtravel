@@ -43,6 +43,7 @@ class exchangeViewController : UIViewController, exchangeCVCDelegate{
         mainView.moneyLabel.moneyTotalLabel.text = "￦ \(allTotal.toNumber())"
         
     }
+  
     
     
     // addDetailVC 에서 전달 받는 데이터

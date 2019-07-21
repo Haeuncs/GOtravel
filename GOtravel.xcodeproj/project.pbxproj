@@ -59,6 +59,7 @@
 		4ACC7007222ACA04004095DA /* pastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7006222ACA04004095DA /* pastVM.swift */; };
 		4ACD9670220DC3D50032D2C2 /* exchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */; };
 		4AD2D4D3220B040B00F7BE6F /* exchangeSelectForeignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */; };
+		7D72671022E33EB500589C82 /* settingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72670F22E33EB400589C82 /* settingModel.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,7 @@
 		4ACD966F220DC3D50032D2C2 /* exchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeViewController.swift; sourceTree = "<group>"; };
 		4AD2D4D2220B040B00F7BE6F /* exchangeSelectForeignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchangeSelectForeignVC.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D72670F22E33EB400589C82 /* settingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingModel.swift; sourceTree = "<group>"; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +142,7 @@
 				4A0004AE222CF1AC003DEC20 /* settingVC.swift */,
 				4A0004B0222D319F003DEC20 /* settingV.swift */,
 				4ABF96B0223BEA0E006FFD40 /* settingVM.swift */,
+				7D72670F22E33EB400589C82 /* settingModel.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D72671022E33EB500589C82 /* settingModel.swift in Sources */,
 				4A38F3D821EA6B070097914B /* LaunchScreen.storyboard in Sources */,
 				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
 				4A38F3D721EA6B030097914B /* Main.storyboard in Sources */,

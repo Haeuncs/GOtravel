@@ -1,0 +1,53 @@
+PODS:
+  - AnimatedTextInput (0.5.5)
+  - CenteredCollectionView (2.1.0)
+  - GoogleMaps (3.0.2):
+    - GoogleMaps/Maps (= 3.0.2)
+  - GoogleMaps/Base (3.0.2)
+  - GoogleMaps/Maps (3.0.2):
+    - GoogleMaps/Base
+  - GooglePlaces (3.0.2):
+    - GoogleMaps/Base (= 3.0.2)
+  - IQKeyboardManagerSwift (6.2.0)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
+  - Realm (3.13.1):
+    - Realm/Headers (= 3.13.1)
+  - Realm/Headers (3.13.1)
+  - RealmSwift (3.13.1):
+    - Realm (= 3.13.1)
+
+DEPENDENCIES:
+  - AnimatedTextInput
+  - CenteredCollectionView
+  - GoogleMaps
+  - GooglePlaces
+  - IQKeyboardManagerSwift
+  - NVActivityIndicatorView
+  - RealmSwift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AnimatedTextInput
+    - CenteredCollectionView
+    - GoogleMaps
+    - GooglePlaces
+    - IQKeyboardManagerSwift
+    - NVActivityIndicatorView
+    - Realm
+    - RealmSwift
+
+SPEC CHECKSUMS:
+  AnimatedTextInput: aadbdfa5a538a03cc9fbea700b43d2bb21a5d132
+  CenteredCollectionView: a32f1d57505be294ff6080251384a38ffd1e61f3
+  GoogleMaps: 941cd655e009b4d8e42df19a3d749bc3fccec973
+  GooglePlaces: c086e0055dc5f0177d7c9d65fc77a1734f9a4825
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
+  Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
+  RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
+
+PODFILE CHECKSUM: bc732a912bb7edcc4148bb57ab1b00f5064d9832
+
+COCOAPODS: 1.5.3
