@@ -13,5 +13,6 @@ pod 'IQKeyboardManagerSwift'
 pod 'CenteredCollectionView'
 pod 'AnimatedTextInput'
 pod 'NVActivityIndicatorView'
-
+pod 'EasyTipView'
+pod 'SnapKit'
 end

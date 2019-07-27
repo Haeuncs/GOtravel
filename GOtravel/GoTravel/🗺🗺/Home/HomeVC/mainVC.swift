@@ -9,10 +9,15 @@
 import UIKit
 import CenteredCollectionView
 import RealmSwift
+import EasyTipView
 
 
 //FIXIT : 클릭하면 이동하는거 index row 기준 아니고 데이터 자체를 이동하기
 class mainVC: UIViewController {
+  weak var tipView: EasyTipView?
+
+  @IBOutlet weak var testView: UINavigationItem!
+  @IBOutlet weak var navView: UIBarButtonItem!
   //    @IBOutlet weak var subView: UIView!
   let selection = UISelectionFeedbackGenerator()
   let notification = UINotificationFeedbackGenerator()
@@ -42,13 +47,18 @@ class mainVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+
     initView()
     attribute()
   }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.tabBarController?.tabBar.isHidden = false
-    
+    if let customTabBarController = self.tabBarController as? TabbarViewController {
+      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
+      customTabBarController.setSelectLine(index: 0)
+    }
+
     DispatchQueue.main.async {
       self.collectionView.reloadData()
       self.collectionView!.collectionViewLayout.invalidateLayout()
@@ -57,16 +67,40 @@ class mainVC: UIViewController {
     // realm 데이터 정렬 ascending 오름차순 정렬 (dday가 적게 남은 순으로 정렬한다.)
     
     countryRealmDB = processingDateData()
-
     
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    if realm?.objects(countryRealm.self).count == 0 ||
+      realm?.objects(countryRealm.self).count == nil{
+      var preferences = EasyTipView.Preferences()
+      preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
+      preferences.drawing.foregroundColor = UIColor.white
+      preferences.drawing.backgroundColor = UIColor.black
+      EasyTipView.globalPreferences = preferences
+      self.view.backgroundColor = UIColor(hue:0.75, saturation:0.01, brightness:0.96, alpha:1.00)
+      let text = "이 버튼을 눌러서 여행할 도시를\n입력하세요! 😆"
+      //    tipView.show(animated: true, forItem: self.navView, withinSuperView: nil)
+      let tip = EasyTipView(text: text, preferences: preferences, delegate: self)
+      tip.show(animated: true, forItem: self.navView, withinSuperView: self.navigationController?.view)
+      tipView = tip
+    }
+  }
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    if let tip = tipView {
+      tip.dismiss()
+    }
   }
   func attribute(){
     self.navigationController?.navigationBar.prefersLargeTitles = true
-    self.tabBarController?.tabBar.isHidden = false
     self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
     self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
     self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    
+//    navigationController?.navigationBar.barStyle = Defaull_style.mainTitleColor.cgColor
+    navigationController?.navigationBar.tintColor = Defaull_style.mainTitleColor
+
     self.navigationItem.title = "여행일정"
     title = self.navigationItem.title
   }
@@ -89,9 +123,17 @@ class mainVC: UIViewController {
     print(processedData.count)
     return processedData
   }
-  
+  lazy var guideView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
 }
-
+extension mainVC: EasyTipViewDelegate{
+  func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+    print("\(tipView) did dismiss!")
+  }
+}
 extension mainVC: ControlCenterViewDelegate {
   func stateChanged(scrollDirection: UICollectionView.ScrollDirection) {
     centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
@@ -176,7 +218,6 @@ func HSBrandomColor() -> UIColor{
 
 extension mainVC {
   func initView(){
-    
     collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
     collectionView.backgroundColor = .clear
     // delegate & data source
@@ -188,13 +229,20 @@ extension mainVC {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.addArrangedSubview(collectionView)
-    view.addSubview(stackView)
+//    view.addSubview(stackView)
+    view.addSubview(guideView)
+    guideView.addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      stackView.widthAnchor.constraint(equalToConstant: self.view.frame.width),
-      stackView.heightAnchor.constraint(equalToConstant: self.view.frame.height/2),
-      stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+      guideView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      guideView.leftAnchor.constraint(equalTo: view.leftAnchor),
+      guideView.rightAnchor.constraint(equalTo: view.rightAnchor),
+      guideView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      
+      stackView.widthAnchor.constraint(equalToConstant: view.frame.width),
+      stackView.heightAnchor.constraint(equalToConstant: view.frame.height/2),
+      stackView.centerXAnchor.constraint(equalTo: guideView.centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: guideView.centerYAnchor),
       
       ])
     // register collection cells

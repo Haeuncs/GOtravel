@@ -13,7 +13,6 @@ import NVActivityIndicatorView
 struct exchangeData: Codable {
     var cur_unit : String
     var deal_bas_r: String
-
 }
 
 class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableViewDataSource,NVActivityIndicatorViewable {

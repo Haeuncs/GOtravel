@@ -21,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyDBSHys4bm8G6gbt28UbY5Xa4Ni9Rpgjb0")
         GMSPlacesClient.provideAPIKey("AIzaSyDBSHys4bm8G6gbt28UbY5Xa4Ni9Rpgjb0")
         IQKeyboardManager.shared.enable = true
+      self.window = UIWindow(frame: UIScreen.main.bounds)
+      
+//      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//
+//      let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginSignupVC")
+      
+      self.window?.rootViewController = TabbarViewController()
+      self.window?.makeKeyAndVisible()
+      
+      return true
 
         return true
     }

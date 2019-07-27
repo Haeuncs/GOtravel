@@ -167,10 +167,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 cell.lbl.textColor = .white
                 if date == dateRange.first || date == dateRange.last{
                     print(dateRange)
-                    cell.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+                    cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
                 }
                 else{
-                    cell.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+                    cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
                     
                     
                 }
@@ -234,12 +234,14 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 // 몇 일 남았는지 계산
                 let interval = dateRange.last!.timeIntervalSince(dateRange.first!)
                 let days = Int(interval / 86400)
-                // D-day 계산
-                let inervalToday = dateRange.first!.timeIntervalSince(Date())
-                let dday = Int(inervalToday / 86400)
-                
+//                // D-day 계산
+//                let inervalToday = dateRange.first!.timeIntervalSince(Date())
+//                let dday = Int(inervalToday / 86400)
+              
+              let dday = (dateRange.first!.interval(ofComponent: .day, fromDate: Date()) + 1)
+
                 DispatchQueue.main.async {
-                    self.ddayLabel.text = "\(days)박 \(days+1)일, D-\(dday+1)"
+                    self.ddayLabel.text = "\(days)박 \(days+1)일, D-\(dday)"
                     self.addBtn.isHidden = false
                     ddayDB = dday + 1
                     nightDB = days + 1

@@ -47,7 +47,7 @@
         <!--Item 2-->
         <scene sceneID="N3b-Ve-FON">
             <objects>
-                <viewController id="Ygd-tA-AeF" customClass="pastVC" customModule="GOtravel" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pastViewController" id="Ygd-tA-AeF" customClass="pastVC" customModule="GOtravel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7qC-Po-XOQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,6 +85,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="navView" destination="UwI-mp-O2Q" id="va5-68-8Ra"/>
+                        <outlet property="testView" destination="JkY-pc-ALS" id="6th-xq-1XA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ET0-Iz-xvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
