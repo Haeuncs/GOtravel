@@ -1,10 +1,41 @@
-# GoTravel
-# 여행일정관리앱, ios 🗺
+# 여행기록
+##### 여행일정관리앱, ios 🗺
+
+
 
 구글 지도와 Realm을 사용하여 만듬
 쉽게 여행 일정과 여행 경비를 관리
 
-현재 개발 진행 중
+
+
+## ⚠️⚠️Caution⚠️⚠️
+
+You need your own AppDelegate.swift to run this program.
+
+AppDelegate.swift	
+
+~~~swift
+```
+import UIKit
+import GoogleMaps
+import GooglePlaces
+import IQKeyboardManagerSwift
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        GMSServices.provideAPIKey("your own GoogleMapAPI Key")
+        GMSPlacesClient.provideAPIKey("your own GoogleMapAPI Key")
+        IQKeyboardManager.shared.enable = true
+      self.window = UIWindow(frame: UIScreen.main.bounds)
+      self.window?.rootViewController = TabbarViewController()
+      self.window?.makeKeyAndVisible()
+      return true
+    }    
+}
+
+```
+~~~
 
 # 소개
 

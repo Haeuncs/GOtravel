@@ -65,8 +65,20 @@
 		7D72671022E33EB500589C82 /* settingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72670F22E33EB400589C82 /* settingModel.swift */; };
 		7D95E21122EC22D2008CEC0B /* OpenSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21022EC22D2008CEC0B /* OpenSourceViewController.swift */; };
 		7D95E21322EC2319008CEC0B /* OpenSourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21222EC2319008CEC0B /* OpenSourceCell.swift */; };
+		7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */; };
+		7D95E22322EC59C0008CEC0B /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7D95E21D22EC59B1008CEC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A969BE821E5A2F00016DB49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A969BEF21E5A2F00016DB49;
+			remoteInfo = GOtravel;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.release.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +143,10 @@
 		7D72670F22E33EB400589C82 /* settingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingModel.swift; sourceTree = "<group>"; };
 		7D95E21022EC22D2008CEC0B /* OpenSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/leehaeun/GOtravel/GOtravel/GoTravel/🗺🗺/Setting/OpenSourceViewController.swift"; sourceTree = "<group>"; };
 		7D95E21222EC2319008CEC0B /* OpenSourceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceCell.swift; path = "../../../../../../../../System/Volumes/Data/Users/leehaeun/GOtravel/GOtravel/GoTravel/🗺🗺/Cell/UITableViewCell/OpenSourceCell.swift"; sourceTree = "<group>"; };
+		7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GOtravelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOtravelUITests.swift; sourceTree = "<group>"; };
+		7D95E21C22EC59B1008CEC0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +156,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D95E21522EC59B1008CEC0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				4A969BF221E5A2F00016DB49 /* GOtravel */,
+				7D95E21922EC59B1008CEC0B /* GOtravelUITests */,
 				4A969BF121E5A2F00016DB49 /* Products */,
 				7EE67DA17128548DFC6AA525 /* Pods */,
 				AB1F4CA7AE0A1CC0F55EFF90 /* Frameworks */,
@@ -385,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				4A969BF021E5A2F00016DB49 /* GOtravel.app */,
+				7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -470,6 +495,16 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		7D95E21922EC59B1008CEC0B /* GOtravelUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */,
+				7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */,
+				7D95E21C22EC59B1008CEC0B /* Info.plist */,
+			);
+			path = GOtravelUITests;
+			sourceTree = "<group>";
+		};
 		7EE67DA17128548DFC6AA525 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,18 +545,41 @@
 			productReference = 4A969BF021E5A2F00016DB49 /* GOtravel.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7D95E21722EC59B1008CEC0B /* GOtravelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D95E21F22EC59B1008CEC0B /* Build configuration list for PBXNativeTarget "GOtravelUITests" */;
+			buildPhases = (
+				7D95E21422EC59B1008CEC0B /* Sources */,
+				7D95E21522EC59B1008CEC0B /* Frameworks */,
+				7D95E21622EC59B1008CEC0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7D95E21E22EC59B1008CEC0B /* PBXTargetDependency */,
+			);
+			name = GOtravelUITests;
+			productName = GOtravelUITests;
+			productReference = 7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4A969BE821E5A2F00016DB49 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				DefaultBuildSystemTypeForWorkspace = Original;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = haeun;
 				TargetAttributes = {
 					4A969BEF21E5A2F00016DB49 = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					7D95E21722EC59B1008CEC0B = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 4A969BEF21E5A2F00016DB49;
 					};
 				};
 			};
@@ -539,6 +597,7 @@
 			projectRoot = "";
 			targets = (
 				4A969BEF21E5A2F00016DB49 /* GOtravel */,
+				7D95E21722EC59B1008CEC0B /* GOtravelUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -551,6 +610,13 @@
 				4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */,
 				4A38F3DA21EA80820097914B /* mymain.xib in Resources */,
 				4A969BFB21E5A2F50016DB49 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D95E21622EC59B1008CEC0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,7 +740,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D95E21422EC59B1008CEC0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */,
+				7D95E22322EC59C0008CEC0B /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7D95E21E22EC59B1008CEC0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A969BEF21E5A2F00016DB49 /* GOtravel */;
+			targetProxy = 7D95E21D22EC59B1008CEC0B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4A969BF721E5A2F00016DB49 /* Main.storyboard */ = {
@@ -747,7 +830,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -802,7 +885,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -856,6 +939,46 @@
 			};
 			name = Release;
 		};
+		7D95E22022EC59B1008CEC0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9DJXYBHDAK;
+				INFOPLIST_FILE = GOtravelUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LEE-HAEUN.GOtravelUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GOtravel;
+			};
+			name = Debug;
+		};
+		7D95E22122EC59B1008CEC0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9DJXYBHDAK;
+				INFOPLIST_FILE = GOtravelUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LEE-HAEUN.GOtravelUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GOtravel;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -873,6 +996,15 @@
 			buildConfigurations = (
 				4A969C0321E5A2F50016DB49 /* Debug */,
 				4A969C0421E5A2F50016DB49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D95E21F22EC59B1008CEC0B /* Build configuration list for PBXNativeTarget "GOtravelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D95E22022EC59B1008CEC0B /* Debug */,
+				7D95E22122EC59B1008CEC0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
