@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class settingVC : UIViewController {
+class SettingViewController : UIViewController {
   override func viewDidLoad() {
     self.navigationItem.title = "설정"
     self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
@@ -47,7 +47,7 @@ class settingVC : UIViewController {
   
 }
 
-extension settingVC: ViewControllerDelegate {
+extension SettingViewController: ViewControllerDelegate {
   func presentView(viewContorller: UIViewController) {
     if let indexPath = belowView.table.indexPathForSelectedRow {
       belowView.table.deselectRow(at: indexPath, animated: true)

@@ -29,7 +29,7 @@ class pastVC: UIViewController {
   var countryRealmDB : List<countryRealm>?
   
   @IBAction func addBtn(_ sender: Any) {
-    let placeVC = placeSearchViewController()
+    let placeVC = AddTripViewController()
     placeVC.categoryIndex = 1
     self.navigationController?.pushViewController(placeVC, animated: true)
   }
@@ -167,7 +167,7 @@ extension pastVC: UICollectionViewDelegate {
     }
     
     let nav1 = UINavigationController()
-    let detailView = addDetailViewController()
+    let detailView = TripDetailViewController()
     nav1.viewControllers = [detailView]
     if let countryRealmDB = countryRealmDB {
       detailView.countryRealmDB = countryRealmDB[indexPath.row]

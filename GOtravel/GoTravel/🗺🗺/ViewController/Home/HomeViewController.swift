@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Example
-//
-//  Created by Benjamin Emdon on 2016-12-28.
-//  Copyright © 2016 Benjamin Emdon.
-//
 
 import UIKit
 import CenteredCollectionView
@@ -13,7 +6,7 @@ import EasyTipView
 
 
 //FIXIT : 클릭하면 이동하는거 index row 기준 아니고 데이터 자체를 이동하기
-class mainVC: UIViewController {
+class HomeViewController: UIViewController {
   weak var tipView: EasyTipView?
 
   @IBOutlet weak var testView: UINavigationItem!
@@ -35,12 +28,12 @@ class mainVC: UIViewController {
   var countryRealmDB : List<countryRealm>?
   
   @IBAction func settingBtn(_ sender: Any) {
-    let setting = settingVC()
+    let setting = SettingViewController()
     self.navigationController?.pushViewController(setting, animated: true)
     
   }
   @IBAction func addBtn(_ sender: Any) {
-    let placeVC = placeSearchViewController()
+    let placeVC = AddTripViewController()
     placeVC.categoryIndex = 1
     self.navigationController?.pushViewController(placeVC, animated: true)
   }
@@ -129,12 +122,12 @@ class mainVC: UIViewController {
     return view
   }()
 }
-extension mainVC: EasyTipViewDelegate{
+extension HomeViewController: EasyTipViewDelegate{
   func easyTipViewDidDismiss(_ tipView: EasyTipView) {
     print("\(tipView) did dismiss!")
   }
 }
-extension mainVC: ControlCenterViewDelegate {
+extension HomeViewController: ControlCenterViewDelegate {
   func stateChanged(scrollDirection: UICollectionView.ScrollDirection) {
     centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
   }
@@ -145,7 +138,7 @@ extension mainVC: ControlCenterViewDelegate {
   }
 }
 
-extension mainVC: UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     notification.notificationOccurred(.success)
     UIView.animate(withDuration: 0.3) {
@@ -155,7 +148,7 @@ extension mainVC: UICollectionViewDelegate {
     }
     
     let nav1 = UINavigationController()
-    let detailView = addDetailViewController()
+    let detailView = TripDetailViewController()
     nav1.viewControllers = [detailView]
     
     if let countryRealmDB = countryRealmDB {
@@ -167,7 +160,7 @@ extension mainVC: UICollectionViewDelegate {
   
 }
 
-extension mainVC: UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return countryRealmDB?.count ?? 0
   }
@@ -216,7 +209,7 @@ func HSBrandomColor() -> UIColor{
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
 }
 
-extension mainVC {
+extension HomeViewController {
   func initView(){
     collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
     collectionView.backgroundColor = .clear

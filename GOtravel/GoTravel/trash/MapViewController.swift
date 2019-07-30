@@ -33,7 +33,7 @@ class MapViewController: UIViewController {
 //        countryData.longitude = map?.coordinate.longitude ?? 0.0
 //        countryData.latitude = map?.coordinate.latitude ?? 0.0
         
-        let vc = calendarViewController()
+        let vc = AddTripDateViewController()
         
 //        vc.mapItem = mapItems?.first
 //        vc.region = mapView.region

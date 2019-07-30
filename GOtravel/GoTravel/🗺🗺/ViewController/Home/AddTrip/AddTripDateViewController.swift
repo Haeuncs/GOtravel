@@ -21,7 +21,7 @@ var nightDB = 0
 var dayDate = Date()
 var categoryArr = ["항공","숙박","쇼핑","식사","교통비","기타"]
 
-class calendarViewController: UIViewController {
+class AddTripDateViewController: UIViewController {
   
   let realm = try! Realm()
   
@@ -44,6 +44,7 @@ class calendarViewController: UIViewController {
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    self.extendedLayoutIncludesOpaqueBars = true
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: true, completion: nil)
       customTabBarController.setSelectLine(index: 0)

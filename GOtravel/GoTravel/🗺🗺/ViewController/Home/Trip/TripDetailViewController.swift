@@ -25,7 +25,7 @@ protocol addDetailViewTableViewCellDelegate : class {
 
 
 
-class addDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
+class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
     
     // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
     var isEdit : Bool? = false
@@ -93,7 +93,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        customView.backgroundColor = UIColor.red
         customView.addArrangedSubview(deleteDataLabel)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(addDetailViewController.alldDleteLabelEvent))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TripDetailViewController.alldDleteLabelEvent))
         deleteDataLabel.isUserInteractionEnabled = true
         deleteDataLabel.addGestureRecognizer(tap)
 
@@ -186,7 +186,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
         impact.impactOccurred()
         let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-        let placeVC = placeSearchViewController()
+        let placeVC = AddTripViewController()
         placeVC.countryRealmDB = countryRealmDB
         placeVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
         placeVC.categoryIndex = 0
@@ -197,7 +197,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 //        self.scheduleMainTableView.reloadData()
         let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
         let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-        let googleVC = googleMapViewController()
+        let googleVC = AddTripCheckMapViewController()
         if countryRealmDB.dayList[indexPath.row].detailList.first != nil{
             googleVC.navTitle = countryRealmDB.city
             googleVC.arrayMap = true
@@ -344,7 +344,7 @@ class addDetailViewController: UIViewController ,addDetailViewTableViewCellDeleg
 
 }
 // MARK: delegate 정의 (cell 에서 사용한다.)
-extension addDetailViewController {
+extension TripDetailViewController {
     // The cell calls this method when the user taps the heart button
     func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell, detailIndex : Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
@@ -366,7 +366,7 @@ extension addDetailViewController {
 
 }
 
-extension addDetailViewController : UITableViewDelegate{
+extension TripDetailViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select")
         // 지금은 select 이벤트 없음
@@ -382,7 +382,7 @@ extension addDetailViewController : UITableViewDelegate{
         }
     }
 }
-extension addDetailViewController : UITableViewDataSource{
+extension TripDetailViewController : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryRealmDB.dayList.count
     }
@@ -431,7 +431,7 @@ extension addDetailViewController : UITableViewDataSource{
     }
     
 }
-extension addDetailViewController: UIScrollViewDelegate {
+extension TripDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // 버튼 animate 원상복구
     }
