@@ -22,16 +22,25 @@ import GooglePlaces
 import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
     var window: UIWindow?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        GMSServices.provideAPIKey("your own GoogleMapAPI Key")
-        GMSPlacesClient.provideAPIKey("your own GoogleMapAPI Key")
+        // Override point for customization after application launch.
+      Singleton.shared.googleMapAPIKey = "⚠️Your own google API Key⚠️"
+      if let api = Singleton.shared.googleMapAPIKey {
+        GMSServices.provideAPIKey(api)
+        GMSPlacesClient.provideAPIKey(api)
+      }
         IQKeyboardManager.shared.enable = true
       self.window = UIWindow(frame: UIScreen.main.bounds)
+      
       self.window?.rootViewController = TabbarViewController()
       self.window?.makeKeyAndVisible()
+      
       return true
-    }    
+
+    }
 }
 
 ```
