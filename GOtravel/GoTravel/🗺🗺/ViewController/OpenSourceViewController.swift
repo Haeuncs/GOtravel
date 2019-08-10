@@ -17,7 +17,8 @@ class OpenSourceViewController: UIViewController {
     openSource(title: "SnapKit", license: License.SnapKit.rawValue),
     openSource(title: "Realm", license: License.RealmLicense.rawValue),
     openSource(title: "GoogleMaps", license: License.GoogleMapsLicense.rawValue),
-    openSource(title: "Icon Image", license: "Icon made by [https://www.flaticon.com/authors/smashicons] from www.flaticon.com")
+    openSource(title: "Icon Image", license: "Icon made by [https://www.flaticon.com/authors/smashicons] from www.flaticon.com"),
+    openSource(title: "App Icon Image", license: "Icon made by [https://www.flaticon.com/authors/photo3idea_studio] from www.flaticon.com")
   ]
   override func viewDidLoad() {
     self.navigationItem.title = "오픈소스 라이선스"
