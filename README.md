@@ -8,6 +8,12 @@
 
 
 
+```
+<a href="https://apps.apple.com/app/%ED%8A%B8%EB%A6%AC%EB%B9%84/id1474451502">
+<img src="https://linkmaker.itunes.apple.com/ko-kr/badge-lrg.svg?releaseDate=2019-07-30&kind=iossoftware&bubble=ios_apps"/>
+</a>
+```
+
 ## ⚠️⚠️Caution⚠️⚠️
 
 You need your own AppDelegate.swift to run this program.
@@ -45,6 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ```
 ~~~
+
+You need a pod install.
+Then run 'GOtravel.xcworkspace'.
+
+Done! 🥳
 
 # 소개
 
