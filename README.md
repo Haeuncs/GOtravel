@@ -6,13 +6,11 @@
 구글 지도와 Realm을 사용하여 만듬
 쉽게 여행 일정과 여행 경비를 관리
 
-
-
-```
 <a href="https://apps.apple.com/app/%ED%8A%B8%EB%A6%AC%EB%B9%84/id1474451502">
 <img src="https://linkmaker.itunes.apple.com/ko-kr/badge-lrg.svg?releaseDate=2019-07-30&kind=iossoftware&bubble=ios_apps"/>
 </a>
-```
+
+
 
 ## ⚠️⚠️Caution⚠️⚠️
 
