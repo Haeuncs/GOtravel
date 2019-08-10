@@ -71,6 +71,10 @@
 		7DFC580B22FEF186002BFD86 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC580A22FEF186002BFD86 /* CALayer+.swift */; };
 		7DFC580F22FEF402002BFD86 /* ExchangeRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC580E22FEF402002BFD86 /* ExchangeRateCell.swift */; };
 		7DFC581122FF05E5002BFD86 /* DirectExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC581022FF05E5002BFD86 /* DirectExchangeViewController.swift */; };
+		7DFC581422FF0D27002BFD86 /* CustomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC581322FF0D27002BFD86 /* CustomNavigationBarView.swift */; };
+		7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC581522FF0DEA002BFD86 /* UIFont+.swift */; };
+		7DFC581822FF120E002BFD86 /* LineAnimateTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC581722FF120E002BFD86 /* LineAnimateTextFieldView.swift */; };
+		7DFC581A22FF29BD002BFD86 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC581922FF29BD002BFD86 /* Toast.swift */; };
 		F5B6CF7378640077B7ED2E76 /* Pods_GOtravel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */; };
 /* End PBXBuildFile section */
 
@@ -155,6 +159,10 @@
 		7DFC580A22FEF186002BFD86 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		7DFC580E22FEF402002BFD86 /* ExchangeRateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCell.swift; sourceTree = "<group>"; };
 		7DFC581022FF05E5002BFD86 /* DirectExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectExchangeViewController.swift; sourceTree = "<group>"; };
+		7DFC581322FF0D27002BFD86 /* CustomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBarView.swift; sourceTree = "<group>"; };
+		7DFC581522FF0DEA002BFD86 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		7DFC581722FF120E002BFD86 /* LineAnimateTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineAnimateTextFieldView.swift; sourceTree = "<group>"; };
+		7DFC581922FF29BD002BFD86 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		8CB940FE2668A49D19250230 /* Pods-GOtravel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,6 +221,7 @@
 		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
+				7DFC581222FF0D09002BFD86 /* View */,
 				7DFC580922FE6E0F002BFD86 /* TabBar */,
 				4AC710B421F10F4100B20448 /* calendar */,
 				4ACC7004222AC9E5004095DA /* pastV.swift */,
@@ -324,6 +333,7 @@
 				4A3A17E021F1C8B500313077 /* Date+.swift */,
 				4A5B322621F6913E0007AB21 /* DefaultStyle.swift */,
 				4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */,
+				7DFC581522FF0DEA002BFD86 /* UIFont+.swift */,
 			);
 			path = "Extension + Struct";
 			sourceTree = "<group>";
@@ -467,6 +477,16 @@
 				4AA331B421EB3D92004E2536 /* ProgrammaticCollectionViewCell.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		7DFC581222FF0D09002BFD86 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7DFC581322FF0D27002BFD86 /* CustomNavigationBarView.swift */,
+				7DFC581722FF120E002BFD86 /* LineAnimateTextFieldView.swift */,
+				7DFC581922FF29BD002BFD86 /* Toast.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		7EE67DA17128548DFC6AA525 /* Pods */ = {
@@ -649,15 +669,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DE3E44622F6D51D0056311E /* AppDelegate.swift in Sources */,
+				7DFC581A22FF29BD002BFD86 /* Toast.swift in Sources */,
 				7D72671022E33EB500589C82 /* settingModel.swift in Sources */,
 				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
 				7D1F73A122F6B719000AA055 /* OpenSourceCell.swift in Sources */,
 				4AC7107621F03CA900B20448 /* addDetailViewTableViewDelegate.swift in Sources */,
+				7DFC581422FF0D27002BFD86 /* CustomNavigationBarView.swift in Sources */,
 				4AA331B621EB3D92004E2536 /* HomeViewController.swift in Sources */,
 				4A779F5E21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift in Sources */,
 				4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */,
 				7DFC580F22FEF402002BFD86 /* ExchangeRateCell.swift in Sources */,
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
+				7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */,
 				4ACC7005222AC9E5004095DA /* pastV.swift in Sources */,
 				7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,
@@ -671,6 +694,7 @@
 				4A5F9CB322087D070097C5C1 /* exchangeAddDataVC.swift in Sources */,
 				7DFC580B22FEF186002BFD86 /* CALayer+.swift in Sources */,
 				4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */,
+				7DFC581822FF120E002BFD86 /* LineAnimateTextFieldView.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
 				4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */,
 				4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */,

@@ -60,3 +60,8 @@ class detailRealm : Object{
 
 
 }
+class ExchangeRealm : Object{
+    @objc dynamic var name: String = ""
+    @objc dynamic var exchangeName: String = ""
+    @objc dynamic var krWon: Double = 0.0
+}

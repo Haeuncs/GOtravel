@@ -19,5 +19,6 @@ pod 'EasyTipView'
 pod 'SnapKit'
 pod 'RxSwift'
 pod 'RxCocoa'
+pod 'SwiftSimpleToast'
 
 end

@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 import SnapKit
+import RealmSwift
+import SwiftSimpleToast
 
 struct exchangeData: Codable {
   var cur_unit : String
@@ -20,7 +22,10 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
   
   var exchangeArr : [exchangeData] = []
   var selectIndex = 0
-  
+  /// realm
+  let realm = try? Realm()
+  var exchangeRealmData: Results<ExchangeRealm>?
+
 //  let keys = Array(exchange_country_dic.keys)
 //  let values = Array(exchange_country_dic.values)
   
@@ -32,11 +37,13 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
   
   override func viewDidLoad() {
     view.backgroundColor = .white
+    initView()
   }
   override func viewWillAppear(_ animated: Bool) {
     navigationController?.navigationBar.prefersLargeTitles = false
-    initView()
     findURL()
+    checkRealmData()
+    selectCountryTV.reloadData()
   }
   func initView(){
     selectCountryTV.delegate = self
@@ -85,7 +92,7 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
     return table
   }()
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return exchangeArr.count
+    return exchangeArr.count + (exchangeRealmData?.count ?? 0) + 1
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,23 +102,37 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
       cell.descriptionLabel.text = "직접 환율을 설정하시려면 눌러주세요 🧐"
       cell.moneyLabel.text = ""
       return cell
-    }else{
-      let value = ExchangeCountryDictionary[exchangeArr[indexPath.row].cur_unit]
+    }else if (1 + (exchangeRealmData?.count ?? 0)) <= indexPath.row{
+      let index = indexPath.row - (exchangeRealmData?.count ?? 0) - 1
+      let value = ExchangeCountryDictionary[exchangeArr[index].cur_unit]
       cell.titleLabel.text = value?.country
-      cell.descriptionLabel.text = "1 \(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))"
-      cell.moneyLabel.text = "\(String(exchangeArr[indexPath.row].deal_bas_r)) 원"
+      cell.descriptionLabel.text = "1 \(exchangeArr[index].cur_unit) (\(value?.korName ?? ""))"
+      cell.moneyLabel.text = "\(String(exchangeArr[index].deal_bas_r)) 원"
+      return cell
+    }else{
+      cell.titleLabel.text = exchangeRealmData?[indexPath.row - 1].name
+      cell.descriptionLabel.text = "1 \(exchangeRealmData?[indexPath.row - 1].exchangeName ?? "")"
+      cell.moneyLabel.text = "\(exchangeRealmData?[indexPath.row - 1].krWon ?? 0) 원"
       return cell
     }
   }
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row == 0 {
-      
-    }else{
-      let value = ExchangeCountryDictionary[exchangeArr[indexPath.row].cur_unit]
-      let StringToDouble = exchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble()
+      let vc = DirectExchangeViewController()
+      self.present(vc, animated: true, completion: nil)
+    }else if (1 + (exchangeRealmData?.count ?? 0)) <= indexPath.row {
+      let index = indexPath.row - (exchangeRealmData?.count ?? 0) - 1
+      let value = ExchangeCountryDictionary[exchangeArr[index].cur_unit]
+      let StringToDouble = exchangeArr[index].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble()
       delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: value?.country ?? "", belowLabel: "\(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))", doubleMoney: StringToDouble!)
-      
       self.navigationController?.popViewController(animated: true)
+    }else{
+      if let data = exchangeRealmData?[indexPath.row - 1] {
+        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
+        self.navigationController?.popViewController(animated: true)
+      }else{
+        Toast.show(message: "오류가 발생했어요!", isTabbar: false)
+      }
     }
   }
 }
@@ -177,4 +198,11 @@ extension exchangeSelectForeignVC {
     
   }
 
+}
+extension exchangeSelectForeignVC {
+  func checkRealmData(){
+    if let data = realm?.objects(ExchangeRealm.self) {
+      exchangeRealmData = data
+    }
+  }
 }
