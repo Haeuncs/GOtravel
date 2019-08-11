@@ -22,30 +22,30 @@ class ExchangeRateCell: UITableViewCell {
   }
 
   func initView() {
-    self.addSubview(titleLabel)
-    self.addSubview(descriptionLabel)
-    self.addSubview(bottomLineView)
-    self.addSubview(moneyLabel)
+    contentView.addSubview(titleLabel)
+    contentView.addSubview(descriptionLabel)
+    contentView.addSubview(bottomLineView)
+    contentView.addSubview(moneyLabel)
     
     titleLabel.snp.makeConstraints{ (make) -> Void in
-      make.top.equalTo(self.snp.top).offset(12)
-      make.left.equalTo(self.snp.left).offset(16)
-      make.right.equalTo(self.snp.right).offset(-16)
+      make.top.equalTo(contentView.snp.top).offset(12)
+      make.left.equalTo(contentView.snp.left).offset(16)
+      make.right.equalTo(contentView.snp.right).offset(-16)
     }
     moneyLabel.snp.makeConstraints{ (make) in
-      make.centerY.equalTo(self.snp.centerY)
-      make.right.equalTo(self.snp.right).offset(-16)
+      make.centerY.equalTo(contentView.snp.centerY)
+      make.right.equalTo(contentView.snp.right).offset(-16)
     }
     descriptionLabel.snp.makeConstraints{ (make) -> Void in
       make.top.equalTo(titleLabel.snp.bottom).offset(3)
-      make.left.equalTo(self.snp.left).offset(16)
-      make.right.equalTo(self.snp.right).offset(-16)
+      make.left.equalTo(contentView.snp.left).offset(16)
+      make.right.equalTo(contentView.snp.right).offset(-16)
     }
     bottomLineView.snp.makeConstraints{ (make) -> Void in
       make.top.equalTo(descriptionLabel.snp.bottom).offset(12)
-      make.left.equalTo(self.snp.left).offset(16)
-      make.right.equalTo(self.snp.right).offset(-16)
-      make.bottom.equalTo(self.snp.bottom).offset(0)
+      make.left.equalTo(contentView.snp.left).offset(16)
+      make.right.equalTo(contentView.snp.right).offset(-16)
+      make.bottom.equalTo(contentView.snp.bottom).offset(0)
       make.height.equalTo(1)
     }
 

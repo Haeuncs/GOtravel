@@ -18,7 +18,7 @@ struct exchangeData: Codable {
   var deal_bas_r: String
 }
 
-class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableViewDataSource,NVActivityIndicatorViewable {
+class exchangeSelectForeignVC : UIViewController,NVActivityIndicatorViewable {
   
   var exchangeArr : [exchangeData] = []
   var selectIndex = 0
@@ -44,11 +44,13 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
     findURL()
     checkRealmData()
     selectCountryTV.reloadData()
+    arrCountLabel.text = ""
   }
   func initView(){
     selectCountryTV.delegate = self
     selectCountryTV.dataSource = self
     view.addSubview(labelView)
+    labelView.addSubview(arrCountLabel)
     labelView.addSubview(timeLabel)
     self.view.addSubview(selectCountryTV)
     view.bringSubviewToFront(labelView)
@@ -58,8 +60,14 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
       make.right.equalTo(view.snp.right)
       make.height.equalTo(60)
     }
+    arrCountLabel.snp.makeConstraints{ (make) in
+      make.centerY.equalTo(labelView.snp.centerY)
+      make.left.equalTo(labelView.snp.left).offset(16)
+      make.right.lessThanOrEqualTo(timeLabel.snp.left)
+    }
     timeLabel.snp.makeConstraints{ (make) in
       make.centerY.equalTo(labelView.snp.centerY)
+//      make.left.greaterThanOrEqualTo(arrCountLabel.snp.right)
       make.right.equalTo(labelView.snp.right).offset(-16)
     }
     NSLayoutConstraint.activate([
@@ -77,6 +85,14 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
     view.clipsToBounds = false
     return view
   }()
+  lazy var arrCountLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = .sb14
+    label.backgroundColor = .red
+    label.textColor = Defaull_style.mainTitleColor
+    return label
+  }()
   let timeLabel : UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -87,47 +103,68 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
   }()
   let selectCountryTV : UITableView = {
     let table = UITableView()
+    table.separatorStyle = .none
+    table.allowsMultipleSelectionDuringEditing = false
     table.translatesAutoresizingMaskIntoConstraints = false
     table.register(ExchangeRateCell.self, forCellReuseIdentifier: "cell")
     return table
   }()
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return exchangeArr.count + (exchangeRealmData?.count ?? 0) + 1
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ExchangeRateCell
-    if indexPath.row == 0 {
-      cell.titleLabel.text = "환율 직접 설정하기"
-      cell.descriptionLabel.text = "직접 환율을 설정하시려면 눌러주세요 🧐"
-      cell.moneyLabel.text = ""
-      return cell
-    }else if (1 + (exchangeRealmData?.count ?? 0)) <= indexPath.row{
-      let index = indexPath.row - (exchangeRealmData?.count ?? 0) - 1
-      let value = ExchangeCountryDictionary[exchangeArr[index].cur_unit]
-      cell.titleLabel.text = value?.country
-      cell.descriptionLabel.text = "1 \(exchangeArr[index].cur_unit) (\(value?.korName ?? ""))"
-      cell.moneyLabel.text = "\(String(exchangeArr[index].deal_bas_r)) 원"
-      return cell
+}
+
+extension exchangeSelectForeignVC {
+  @objc func tableViewEdit(){
+    selectCountryTV.isEditing = !selectCountryTV.isEditing
+    selectCountryTV.reloadData()
+    if self.navigationItem.rightBarButtonItem?.title == "편집"{
+      self.navigationItem.rightBarButtonItem?.title = "완료"
     }else{
-      cell.titleLabel.text = exchangeRealmData?[indexPath.row - 1].name
-      cell.descriptionLabel.text = "1 \(exchangeRealmData?[indexPath.row - 1].exchangeName ?? "")"
-      cell.moneyLabel.text = "\(exchangeRealmData?[indexPath.row - 1].krWon ?? 0) 원"
-      return cell
+      self.navigationItem.rightBarButtonItem?.title = "편집"
+    }
+  }
+}
+extension exchangeSelectForeignVC: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      print(indexPath.row)
+      if let date = exchangeRealmData?[indexPath.row] {
+        try! realm?.write {
+          realm?.delete(date)
+        }
+      }
+      selectCountryTV.reloadData()
+    }
+  }
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    if indexPath.section == 1 {
+      if exchangeRealmData?.count ?? 0 > 0 {
+        return true
+      }else{
+        return false
+      }
+    }else{
+      return false
     }
   }
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row == 0 {
+    if indexPath.section == 0 {
       let vc = DirectExchangeViewController()
       self.present(vc, animated: true, completion: nil)
-    }else if (1 + (exchangeRealmData?.count ?? 0)) <= indexPath.row {
-      let index = indexPath.row - (exchangeRealmData?.count ?? 0) - 1
-      let value = ExchangeCountryDictionary[exchangeArr[index].cur_unit]
-      let StringToDouble = exchangeArr[index].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble()
-      delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: value?.country ?? "", belowLabel: "\(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))", doubleMoney: StringToDouble!)
-      self.navigationController?.popViewController(animated: true)
+    }else if indexPath.section == 1 {
+      if exchangeRealmData?.count ?? 0 > 0 {
+        let value = ExchangeCountryDictionary[exchangeArr[indexPath.row].cur_unit]
+        let StringToDouble = exchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble()
+        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: value?.country ?? "", belowLabel: "\(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))", doubleMoney: StringToDouble!)
+        self.navigationController?.popViewController(animated: true)
+      }else{
+        if let data = exchangeRealmData?[indexPath.row] {
+          delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
+          self.navigationController?.popViewController(animated: true)
+        }else{
+          Toast.show(message: "오류가 발생했어요!", isTabbar: false)
+        }
+      }
     }else{
-      if let data = exchangeRealmData?[indexPath.row - 1] {
+      if let data = exchangeRealmData?[indexPath.row] {
         delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
         self.navigationController?.popViewController(animated: true)
       }else{
@@ -136,7 +173,52 @@ class exchangeSelectForeignVC : UIViewController, UITableViewDelegate,UITableVie
     }
   }
 }
-
+extension exchangeSelectForeignVC: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    if exchangeRealmData?.count ?? 0 > 0 {
+      return 3
+  }else {
+    return 2
+    }
+  }
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if section == 0 {
+      return 1
+    }else if section == 1{
+      return exchangeRealmData?.count ?? exchangeArr.count
+    }else{
+      return exchangeArr.count
+    }
+  }
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ExchangeRateCell
+    if indexPath.section == 0 {
+      cell.titleLabel.text = "환율 직접 설정하기"
+      cell.descriptionLabel.text = "직접 환율을 설정하시려면 눌러주세요 🧐"
+      cell.moneyLabel.text = ""
+      return cell
+    }else if indexPath.section == 1 {
+      if exchangeRealmData?.count ?? 0 > 0 {
+        cell.titleLabel.text = exchangeRealmData?[indexPath.row].name
+        cell.descriptionLabel.text = "1 \(exchangeRealmData?[indexPath.row].exchangeName ?? "")"
+        cell.moneyLabel.text = "\(exchangeRealmData?[indexPath.row].krWon ?? 0) 원"
+        return cell
+      }else{
+        let value = ExchangeCountryDictionary[exchangeArr[indexPath.row].cur_unit]
+        cell.titleLabel.text = value?.country
+        cell.descriptionLabel.text = "1 \(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))"
+        cell.moneyLabel.text = "\(String(exchangeArr[indexPath.row].deal_bas_r)) 원"
+        return cell
+      }
+    }else{
+      let value = ExchangeCountryDictionary[exchangeArr[indexPath.row].cur_unit]
+      cell.titleLabel.text = value?.country
+      cell.descriptionLabel.text = "1 \(exchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))"
+      cell.moneyLabel.text = "\(String(exchangeArr[indexPath.row].deal_bas_r)) 원"
+      return cell
+    }
+  }
+}
 
 // MARK: network
 extension exchangeSelectForeignVC {
@@ -164,7 +246,11 @@ extension exchangeSelectForeignVC {
           dispatchGroup.enter()
           
           guard let data = data else {
-            //                    dispatchGroup.leave()
+            DispatchQueue.main.async {
+              self.timeLabel.text = "네트워크를 확인해 주세요."
+              Toast.show(message: "데이터를 받아오지 못했어요 :(", isTabbar: false)
+            }
+            dispatchGroup.leave()
             return
             
           }
@@ -203,6 +289,11 @@ extension exchangeSelectForeignVC {
   func checkRealmData(){
     if let data = realm?.objects(ExchangeRealm.self) {
       exchangeRealmData = data
+      arrCountLabel.text = "직접 압력: \(data.count)개"
+      let rightButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(tableViewEdit))
+      self.navigationItem.rightBarButtonItem = rightButton
+    }else{
+      arrCountLabel.text = ""
     }
   }
 }

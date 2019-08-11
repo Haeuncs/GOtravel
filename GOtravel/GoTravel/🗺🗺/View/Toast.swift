@@ -74,7 +74,7 @@ class Toast: UIView {
 
   lazy var popupView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.black.withAlphaComponent(0.20)
+    view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
     view.layer.cornerRadius = 4
     view.layer.masksToBounds = true
     view.clipsToBounds = true

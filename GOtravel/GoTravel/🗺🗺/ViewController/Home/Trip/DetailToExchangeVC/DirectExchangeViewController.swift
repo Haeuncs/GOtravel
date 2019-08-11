@@ -77,7 +77,7 @@ class DirectExchangeViewController: UIViewController {
     textStackView.addArrangedSubview(nameTextField)
     textStackView.addArrangedSubview(exchangeNameTextField)
     textStackView.addArrangedSubview(krWonTextField)
-    textStackView.addArrangedSubview(descriptionLabel)
+//    textStackView.addArrangedSubview(descriptionLabel)
     navView.snp.makeConstraints{ (make) -> Void in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.left.equalTo(view.snp.left)
@@ -130,15 +130,15 @@ class DirectExchangeViewController: UIViewController {
     text.translatesAutoresizingMaskIntoConstraints = false
     return text
   }()
-  lazy var descriptionLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .black
-    label.font = .r14
-    label.textAlignment = .center
-    label.text = "💡 저장된 환율 정보는 설정에서 지울 수 있어요 💡"
-    return label
-  }()
+//  lazy var descriptionLabel: UILabel = {
+//    let label = UILabel()
+//    label.translatesAutoresizingMaskIntoConstraints = false
+//    label.textColor = .black
+//    label.font = .r14
+//    label.textAlignment = .center
+//    label.text = "💡 저장된 환율 정보는 설정에서 지울 수 있어요 💡"
+//    return label
+//  }()
 }
 
 
@@ -151,7 +151,7 @@ extension DirectExchangeViewController {
       nameTextField.textField.text != "" {
       navView.setButtonEnabled(enabled: true)
     }else{
-      navView.setButtonEnabled(enabled: false)
+        navView.setButtonEnabled(enabled: false)
     }
   }
 }
