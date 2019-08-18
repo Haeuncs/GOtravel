@@ -8,7 +8,9 @@
 
 import Foundation                              
 import UIKit
-import CenteredCollectionView
+import RxCocoa
+import RxSwift
+import SnapKit
 import RealmSwift
 
 class pastVC: UIViewController {
@@ -16,112 +18,116 @@ class pastVC: UIViewController {
   let selection = UISelectionFeedbackGenerator()
   let notification = UINotificationFeedbackGenerator()
   
-  let centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
-  var collectionView: UICollectionView!
-  
-  let controlCenter = ControlCenterView()
-  let cellPercentWidth: CGFloat = 0.8
-  var scrollToEdgeEnabled = false
-  
-  var myBackgroundColor : UIColor?
+  var disposeBag = DisposeBag()
+  /// realm trip data
+  var tripData = BehaviorSubject(value: [countryRealm]())
   let realm = try? Realm()
   // 기본 저장 데이터
   var countryRealmDB : List<countryRealm>?
   
-  @IBAction func addBtn(_ sender: Any) {
-    let placeVC = AddTripViewController()
-    placeVC.categoryIndex = 1
-    self.navigationController?.pushViewController(placeVC, animated: true)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.tabBarController?.tabBar.isHidden = false
-    
-    print("viewWillAppear")
-    print(self.view.frame)
-    print(self.view.bounds)
-    
-    DispatchQueue.main.async {
-      self.collectionView.reloadData()
-    }
-    
-  }
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("viewdidLoad")
     initView()
   }
-  lazy var guideView: UIView = {
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = true
+    rx()
+    processingDateData()
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    disposeBag = DisposeBag()
+  }
+  func rx(){
+    tripData.asObservable()
+      .bind(to: tripCollectionView.rx.items(
+        cellIdentifier: String(describing: TripCell.self),
+        cellType: TripCell.self)) { row, model, cell in
+          cell.configure(withDelegate: mainVC_CVC_ViewModel(model))
+          cell.mainBackgroundView.backgroundColor = HSBrandomColor()
+          cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
+          
+      }.disposed(by: disposeBag)
+    
+    tripCollectionView.rx.modelSelected(countryRealm.self)
+      .subscribe(onNext: { (country) in
+        let tripViewController = TripDetailViewController()
+        tripViewController.countryRealmDB = country
+        let nav = UINavigationController(rootViewController: tripViewController)
+        nav.modalTransitionStyle = .coverVertical
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
+      }).disposed(by: disposeBag)
+    
+//    navView.dismissBtn.rx.tap
+//      .subscribe(onNext: { (_) in
+//        let setting = SettingViewController()
+//        self.navigationController?.pushViewController(setting, animated: true)
+//      }).disposed(by: disposeBag)
+//    
+//    navView.actionBtn.rx.tap
+//      .subscribe(onNext: { (_) in
+//        let placeVC = AddTripViewController()
+//        placeVC.categoryIndex = 1
+//        self.navigationController?.pushViewController(placeVC, animated: true)
+//      }).disposed(by: disposeBag)
+  }
+
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.isHidden = true
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "")
+    return view
+  }()
+  lazy var middleGuideView: UIView = {
     let view = UIView()
+    view.backgroundColor = .white
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
+  lazy var tripCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    let collect = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collect.isPagingEnabled = true
+    collect.backgroundColor = .white
+    collect.register(
+      TripCell.self,
+      forCellWithReuseIdentifier: String(describing: TripCell.self))
+    collect.translatesAutoresizingMaskIntoConstraints = false
+    return collect
+  }()
   func initView(){
-    print(self.view.frame.height)
+    view.backgroundColor = .white
+    tripCollectionView.delegate = self
     
-    self.navigationController?.navigationBar.prefersLargeTitles = true
-    self.tabBarController?.tabBar.isHidden = false
-    self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
-    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+    view.addSubview(navView)
+    view.addSubview(middleGuideView)
+    middleGuideView.addSubview(tripCollectionView)
     
-    self.navigationItem.title = "지난여행"
-    title = self.navigationItem.title
-    
-    collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
-    // Just to make the example pretty ✨
-    collectionView.backgroundColor = .clear
-    
-    // delegate & data source
-    controlCenter.delegate = self
-    collectionView.delegate = self
-    collectionView.dataSource = self
-    
-    // layout subviews
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.addArrangedSubview(collectionView)
-    view.addSubview(guideView)
-    guideView.addSubview(stackView)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      guideView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-      guideView.leftAnchor.constraint(equalTo: view.leftAnchor),
-      guideView.rightAnchor.constraint(equalTo: view.rightAnchor),
-      guideView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-      
-      stackView.widthAnchor.constraint(equalToConstant: view.frame.width),
-      stackView.heightAnchor.constraint(equalToConstant: view.frame.height/2),
-      stackView.centerXAnchor.constraint(equalTo: guideView.centerXAnchor),
-      stackView.centerYAnchor.constraint(equalTo: guideView.centerYAnchor),
-      
-      ])
-    // register collection cells
-    collectionView.register(
-      ProgrammaticCollectionViewCell.self,
-      forCellWithReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self)
-    )
-    
-    // configure layout
-    centeredCollectionViewFlowLayout.itemSize = CGSize(
-      width: self.view.bounds.width * cellPercentWidth,
-      height:self.view.bounds.height/2
-    )
-    centeredCollectionViewFlowLayout.minimumLineSpacing = 20
-    collectionView.showsVerticalScrollIndicator = false
-    collectionView.showsHorizontalScrollIndicator = false
-    
-    self.navigationController?.navigationBar.isHidden = false
-    self.tabBarController?.tabBar.isHidden = false
-    
-    // realm 데이터 정렬 ascending 오름차순 정렬 (dday가 적게 남은 순으로 정렬한다.)
-    
-    countryRealmDB = processingDateData()
-    //        countryRealmDB = realm?.objects(countryRealm.self)
-    //        countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
+    middleGuideView.snp.makeConstraints { (make) in
+      make.top.equalTo(navView.snp.bottom)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+    }
+    tripCollectionView.snp.makeConstraints { (make) in
+      make.centerX.equalTo(middleGuideView.snp.centerX)
+      make.centerY.equalTo(middleGuideView.snp.centerY)
+      make.height.equalTo(middleGuideView.snp.height)
+      make.width.equalTo(middleGuideView.snp.width)
+    }
   }
-  func processingDateData() -> List<countryRealm>{
+
+  func processingDateData(){
     let processedData = List<countryRealm>()
     
     // 1. load
@@ -132,90 +138,26 @@ class pastVC: UIViewController {
       for i in countryRealmDB {
         let startDay = i.date ?? Date()
         let endDate = Calendar.current.date(byAdding: .day, value: i.period, to: startDay)
-        print(Date())
-        print(startDay)
-        print(endDate)
         if endDate ?? Date() < Date() {
           processedData.append(i)
         }
       }
     }
     print(processedData.count)
-    return processedData
-  }
-  
-}
-
-extension pastVC: ControlCenterViewDelegate {
-  func stateChanged(scrollDirection: UICollectionView.ScrollDirection) {
-    centeredCollectionViewFlowLayout.scrollDirection = scrollDirection
-  }
-  
-  func stateChanged(scrollToEdgeEnabled: Bool) {
-    self.scrollToEdgeEnabled = scrollToEdgeEnabled
-    
+    tripData.onNext(Array(processedData))
   }
 }
 
 extension pastVC: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    notification.notificationOccurred(.success)
-    UIView.animate(withDuration: 0.3) {
-      if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
-        cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
-      }
-    }
-    
-    let nav1 = UINavigationController()
-    let detailView = TripDetailViewController()
-    nav1.viewControllers = [detailView]
-    if let countryRealmDB = countryRealmDB {
-      detailView.countryRealmDB = countryRealmDB[indexPath.row]
-    }
-    
-    self.present(nav1, animated: true, completion: nil)
-  }
   
 }
-
-extension pastVC: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return countryRealmDB?.count ?? 0
+extension pastVC: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return tripCollectionView.bounds.size
   }
-  func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-    UIView.animate(withDuration: 0.3) {
-      if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
-        cell.contentView.transform = .init(scaleX: 0.95, y: 0.95)
-      }
-    }
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-    UIView.animate(withDuration: 0.3) {
-      if let cell = collectionView.cellForItem(at: indexPath) as? ProgrammaticCollectionViewCell {
-        cell.contentView.transform = .identity
-      }
-    }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 0
   }
   
   
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgrammaticCollectionViewCell.self), for: indexPath) as! ProgrammaticCollectionViewCell
-    
-    cell.configure(withDelegate: mainVC_CVC_ViewModel(countryRealmDB![indexPath.row]))
-    print(countryRealmDB![indexPath.row])
-    cell.contentView.transform = .identity
-    // random color 를 cell의 background
-    cell.contentView.backgroundColor = HSBrandomColor()
-    
-    return cell
-  }
-  
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    print("Current centered index1: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
-  }
-  
-  func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    print("Current centered index2: \(String(describing: centeredCollectionViewFlowLayout.currentCenteredPage ?? nil))")
-  }
 }

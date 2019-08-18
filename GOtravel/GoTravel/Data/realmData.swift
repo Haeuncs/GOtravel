@@ -36,9 +36,13 @@ class moneyRealm : Object {
 }
 
 class moneyDetailRealm : Object {
+  /// 메모이름
     @objc dynamic var title: String = ""
+  /// 카테고리 이름
     @objc dynamic var subTitle: String = ""
+  /// 환전한거 이름 KRW같은거
     @objc dynamic var exchange: String = ""
+  /// 환전된 한화
     @objc dynamic var money: Double = 0.0
 }
 

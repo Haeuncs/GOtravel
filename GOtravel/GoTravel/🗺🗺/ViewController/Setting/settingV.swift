@@ -59,7 +59,7 @@ extension settingV : UITableViewDelegate {
     if indexPath.row == 0 {
       sendEmail()
     }else{
-      let vc = OpenSourceViewController()
+      let vc = OpenSourceLicenseViewController()
       delegate?.push(viewContorller: vc)
     }
   }

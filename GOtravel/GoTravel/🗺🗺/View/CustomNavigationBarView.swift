@@ -37,7 +37,7 @@ class CustomNavigationBarView: UIView {
       titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       
       dismissBtn.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-      dismissBtn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+      dismissBtn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 7),
       dismissBtn.widthAnchor.constraint(equalToConstant: 44),
       dismissBtn.heightAnchor.constraint(equalToConstant: 44),
       
@@ -46,6 +46,14 @@ class CustomNavigationBarView: UIView {
       actionBtn.widthAnchor.constraint(equalToConstant: 44),
       actionBtn.heightAnchor.constraint(equalToConstant: 44),
       ])
+  }
+  func setLeftIcon(image: UIImage) {
+    let imageProcessed = resizedImageWith(image: image, targetSize: CGSize(width: 24, height: 24))
+    dismissBtn.setImage(imageProcessed, for: .normal)
+  }
+  func setRightIcon(image: UIImage) {
+    let imageProcessed = resizedImageWith(image: image, targetSize: CGSize(width: 22, height: 22))
+    actionBtn.setImage(imageProcessed, for: .normal)
   }
   func setLeftForPop(){
     dismissBtn.setImage(UIImage(named: "icnBackIOs"), for: .normal)

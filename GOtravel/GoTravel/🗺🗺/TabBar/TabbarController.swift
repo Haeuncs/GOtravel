@@ -35,15 +35,13 @@ class TabbarViewController : UITabBarController, UITabBarControllerDelegate {
     self.tabBar.isTranslucent = false
     
     
-    let firstViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainViewController")
-    let tabOne = UINavigationController(rootViewController: firstViewController)
+    let tabOne = UINavigationController(rootViewController: HomeMainViewController())
     let image1 = resizedImageWith(image: UIImage(named: "record")!, targetSize: CGSize(width: 24, height: 24))
     let tabOneBarItem = UITabBarItem(title: "여행 일정", image: image1, selectedImage: image1)
     
     tabOne.tabBarItem = tabOneBarItem
     
-    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "pastViewController")
-    let tabTwo = UINavigationController(rootViewController: vc)
+    let tabTwo = UINavigationController(rootViewController: pastVC())
     
     let image2 = resizedImageWith(image: UIImage(named: "write-letter")!, targetSize: CGSize(width: 24, height: 24))
     let tabTwoBarItem2 = UITabBarItem(title: "지난 여행", image: image2, selectedImage: image2)

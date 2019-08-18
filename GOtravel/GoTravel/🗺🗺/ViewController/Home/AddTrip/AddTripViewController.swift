@@ -40,6 +40,7 @@ class AddTripViewController : UIViewController {
   var fetcher: GMSAutocompleteFetcher?
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationController?.navigationBar.isHidden = false
     IQKeyboardManager.shared.enable = false
     
     self.view.backgroundColor = .white
@@ -71,6 +72,7 @@ class AddTripViewController : UIViewController {
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = false
     tableView.reloadData()
   }
   func initView(){

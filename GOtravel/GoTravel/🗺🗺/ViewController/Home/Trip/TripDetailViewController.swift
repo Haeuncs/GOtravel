@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 import RealmSwift
-
+import RxCocoa
+import RxSwift
 
 public enum sizeConstant {
   public static let paddingSize = 50
@@ -43,22 +44,22 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    initView()
   }
   var selectRow = 0
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    self.navigationItem.largeTitleDisplayMode = .never
     scheduleMainTableView.reloadData()
     DispatchQueue.main.async {
       let indexPath = IndexPath(row: self.selectRow, section: 0)
       self.scheduleMainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
-    self.navigationController?.navigationBar.prefersLargeTitles = false
-    
-    initView()
-    
   }
-  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+  }
   func initView(){
     beforeSelectIndexPath = false
     isEdit = false
@@ -150,6 +151,8 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     let dateFormatter = DateFormatter()
     let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period, to: countryRealmDB.date!)
     dateFormatter.dateFormat = "yyyy.MM.dd"
+    dateFormatter.locale = Locale(identifier: "ko-KR")
+//    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
     let startDay = dateFormatter.string(from: countryRealmDB.date!)
     let endDay = dateFormatter.string(from: DBDate!)
     
@@ -214,12 +217,12 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-    
-    let exchangeVC = exchangeViewController()
-    exchangeVC.countryRealmDB = self.countryRealmDB
+    let vc = AccountMainViewControllerNew()
+    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
     // 여행 전 경비가 있음으로 + 1
-    exchangeVC.selectDay = indexPath.row + 1
-    self.navigationController?.pushViewController(exchangeVC, animated: true)
+    vc.selectedIndex = BehaviorSubject(value: indexPath.row + 1)
+    // 여행 전 경비가 있음으로 + 1
+    self.navigationController?.pushViewController(vc, animated: true)
   }
   
   
@@ -277,6 +280,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   // 날짜별 테이블뷰
   var scheduleMainTableView : UITableView = {
     let tableView = UITableView()
+    tableView.backgroundColor = .white
     tableView.tag = 0
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.separatorColor = Defaull_style.subTitleColor
@@ -352,7 +356,7 @@ extension TripDetailViewController {
     selectRow = tappedIndexPath.row
     //        print(detailIndex)
     //        dismiss(animated: true, completion: nil)
-    let changeVC = changeDetailOfViewContoller()
+    let changeVC = TripDetailDayDataChangeViewController()
     changeVC.detailRealmDB = countryRealmDB.dayList[tappedIndexPath.row].detailList[detailIndex]
     changeVC.countryRealmDB = countryRealmDB
     self.navigationController?.pushViewController(changeVC, animated: true)
@@ -439,8 +443,9 @@ extension TripDetailViewController: UIScrollViewDelegate {
 
 extension TripDetailViewController{
   @objc func pushExchangeViewController(){
-    let vc = exchangeViewController()
-    vc.countryRealmDB = self.countryRealmDB
+    let vc = AccountMainViewControllerNew()
+    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
+//    vc.countryRealmDB = self.countryRealmDB
     self.navigationController?.pushViewController(vc, animated: true)
   }
 }

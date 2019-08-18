@@ -9,6 +9,65 @@
 import UIKit
 
 extension UIColor {
+  @nonobjc class var dim: UIColor {
+    return UIColor(red: 4.0 / 255.0, green: 4.0 / 255.0, blue: 15.0 / 255.0, alpha: 0.4)
+  }
+
+  @nonobjc class var white: UIColor {
+    return UIColor(white: 1.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var whiteText: UIColor {
+    return UIColor(white: 250.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var grey01: UIColor {
+  return UIColor(white: 242.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var grey02: UIColor {
+  return UIColor(white: 239.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var grey03: UIColor {
+  return UIColor(white: 219.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var grey04: UIColor {
+  return UIColor(white: 183.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var grey05: UIColor {
+  return UIColor(white: 112.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var blackText: UIColor {
+    return UIColor(white: 15.0 / 255.0, alpha: 1.0)
+  }
+    
+  @nonobjc class var fitcoOrange: UIColor {
+  return UIColor(red: 241.0 / 255.0, green: 90.0 / 255.0, blue: 36.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var like: UIColor {
+    return UIColor(red: 1.0, green: 100.0 / 255.0, blue: 92.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var delete: UIColor {
+    return UIColor(red: 250.0 / 255.0, green: 39.0 / 255.0, blue: 27.0 / 255.0, alpha: 1.0)
+  }
+  
+  @nonobjc class var favorite: UIColor {
+    return UIColor(red: 1.0, green: 216.0 / 255.0, blue: 60.0 / 255.0, alpha: 1.0)
+  }
+  
+}
+
+
+extension UIColor {
+  @nonobjc class var butterscotch: UIColor {
+    return UIColor(red: 249.0 / 255.0, green: 186.0 / 255.0, blue: 72.0 / 255.0, alpha: 1.0)
+  }
   @nonobjc class var black: UIColor {
     return #colorLiteral(red: 0.07843137255, green: 0.07843137255, blue: 0.07843137255, alpha: 1)
   }
@@ -75,11 +134,18 @@ extension String {
 }
 
 extension Int {
-    func toNumber() -> String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        return numberFormatter.string(from: NSNumber(value: self)) ?? "0"
-    }
+  func toNumber() -> String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = NumberFormatter.Style.decimal
+    return numberFormatter.string(from: NSNumber(value: self)) ?? "0"
+  }
+}
+extension Double {
+  func toNumber() -> String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = NumberFormatter.Style.decimal
+    return numberFormatter.string(from: NSNumber(value: self)) ?? "0"
+  }
 }
 extension UITableView {
     

@@ -21,6 +21,7 @@ extension UIView {
 		layer.insertSublayer(gradient, at: 0)
 	}
 }
+
 //extension UIView {
 //    
 //    func setCardView(view : UIView){
