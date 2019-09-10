@@ -51,17 +51,22 @@ class AddTripCheckMapViewController : UIViewController {
       customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
       customTabBarController.setSelectLine(index: 0)
     }
-    if arrayMap != nil{
+//    if arrayMap != nil{
       // add save Btn
-      let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
-      
-      navigationItem.rightBarButtonItem = rightButton
+//      if categoryIndex == 0 {
+//        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
+//
+//        navigationItem.rightBarButtonItem = rightButton
+//      }
       if arrayMap == false{
+        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
+        
+        navigationItem.rightBarButtonItem = rightButton
         map()
       }else{
         array_map()
       }
-    }
+//    }
     self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
     
   }

@@ -72,6 +72,8 @@
 		7D72598023023AB80034FA8E /* ExchangeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72597F23023AB70034FA8E /* ExchangeSelectViewModel.swift */; };
 		7D72671022E33EB500589C82 /* settingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72670F22E33EB400589C82 /* settingModel.swift */; };
 		7D72931A2309252A00578A5F /* AccountMainViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7293192309252A00578A5F /* AccountMainViewControllerNew.swift */; };
+		7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931B23097CBA00578A5F /* UITableView+.swift */; };
+		7D72931E23097CF400578A5F /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931D23097CF400578A5F /* Reactive+.swift */; };
 		7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7394182308226E00FBA898 /* HomeMainViewController.swift */; };
 		7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */; };
 		7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */; };
@@ -173,6 +175,8 @@
 		7D72597F23023AB70034FA8E /* ExchangeSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeSelectViewModel.swift; sourceTree = "<group>"; };
 		7D72670F22E33EB400589C82 /* settingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingModel.swift; sourceTree = "<group>"; };
 		7D7293192309252A00578A5F /* AccountMainViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMainViewControllerNew.swift; sourceTree = "<group>"; };
+		7D72931B23097CBA00578A5F /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
+		7D72931D23097CF400578A5F /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		7D7394182308226E00FBA898 /* HomeMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewController.swift; sourceTree = "<group>"; };
 		7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceLicenseViewController.swift; path = ../OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GOtravelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -359,6 +363,8 @@
 				4A5F9CAC21FA100A0097C5C1 /* Enum_exchange.swift */,
 				7DFC581522FF0DEA002BFD86 /* UIFont+.swift */,
 				7DB3FF8723057EB4007A180B /* Formatter+.swift */,
+				7D72931B23097CBA00578A5F /* UITableView+.swift */,
+				7D72931D23097CF400578A5F /* Reactive+.swift */,
 			);
 			path = "Extension + Struct";
 			sourceTree = "<group>";
@@ -785,9 +791,11 @@
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
+				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,
 				4A779F5A21E7C24C00CCE52F /* MapViewController.swift in Sources */,
 				4A779F5B21E7C24C00CCE52F /* LocationManager.swift in Sources */,
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
+				7D72931E23097CF400578A5F /* Reactive+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
 				4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,

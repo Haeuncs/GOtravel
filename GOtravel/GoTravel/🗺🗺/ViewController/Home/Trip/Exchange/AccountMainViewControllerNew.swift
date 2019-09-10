@@ -65,15 +65,20 @@ class AccountMainViewControllerNew: UIViewController {
         self.setMoneyLabel(money: model)
         self.cellSelected.onNext(Array(model.detailList))
         self.selectedIndex.onNext(indexPath.row)
+        if model.detailList.count == 0 {
+          self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
+        }else{
+          self.accountDayTableView.restore()
+        }
       }.disposed(by: disposeBag)
-    
+
     cellSelected.asObservable()
       .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: exchangeTVC.self)) { row, model, cell in
         cell.label1.text = model.subTitle
         cell.label2.text = model.title
         cell.label3.text = "\(Formatter.decimal.string(from: NSNumber(value: model.money)) ?? "0") 원"
       }.disposed(by: disposeBag)
-    
+
     accountDayTableView.rx.modelSelected(moneyDetailRealm.self)
       .subscribe(onNext: { (moneyDetail) in
         do {

@@ -19,7 +19,8 @@ class OpenSourceLicenseViewModel {
     OpenSourceLicenseModel(title: "EasyTipView", author: URL(string: "https://github.com/teodorpatras/EasyTipView/blob/master/LICENSE")!, license: "MIT License"),
     OpenSourceLicenseModel(title: "Realm", author: URL(string: "https://github.com/realm/realm-cocoa/blob/master/LICENSE")!, license: "MIT License"),
     OpenSourceLicenseModel(title: "Icon Image", author: URL(string: "https://www.flaticon.com/authors/smashicons")!, license: "Icon made by [https://www.flaticon.com/authors/smashicons] from www.flaticon.com"),
-  OpenSourceLicenseModel(title: "Icon Image", author: URL(string: "https://www.flaticon.com/authors/freepik")!, license: "Icon made by [https://www.flaticon.com/authors/freepik] from www.flaticon.com"),
+    OpenSourceLicenseModel(title: "Icon Image", author: URL(string: "https://www.flaticon.com/authors/freepik")!, license: "Icon made by [https://www.flaticon.com/authors/freepik] from www.flaticon.com"),
+    OpenSourceLicenseModel(title: "Icon Image", author: URL(string: "https://www.flaticon.com/authors/eucalyp")!, license: "Icon made by [https://www.flaticon.com/authors/eucalyp] from www.flaticon.com"),
   OpenSourceLicenseModel(title: "App Icon Image", author: URL(string: "https://www.flaticon.com/authors/photo3idea-studio")!, license: "icon made by [https://www.flaticon.com/authors/photo3idea-studio] from www.flaticon.com"),
   ]
   lazy var data: Driver<[OpenSourceLicenseModel]> = {
