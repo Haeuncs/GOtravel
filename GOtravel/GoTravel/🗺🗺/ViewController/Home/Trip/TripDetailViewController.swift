@@ -11,6 +11,7 @@ import UIKit
 import RealmSwift
 import RxCocoa
 import RxSwift
+import SnapKit
 
 public enum sizeConstant {
   public static let paddingSize = 50
@@ -45,12 +46,12 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
+    self.navigationController?.navigationBar.isHidden = true
   }
   var selectRow = 0
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationItem.largeTitleDisplayMode = .never
     scheduleMainTableView.reloadData()
     DispatchQueue.main.async {
       let indexPath = IndexPath(row: self.selectRow, section: 0)
@@ -64,18 +65,18 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     beforeSelectIndexPath = false
     isEdit = false
     
-    // 뷰 겹치는거 방지
-    self.navigationController!.navigationBar.isTranslucent = false
-    // 아래 그림자 생기는거 지우기
-    self.navigationController?.navigationBar.shadowImage = UIImage()
-    let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.dismissEvent))
-    self.navigationItem.leftBarButtonItem = leftButton
-    
-    let rightButton = UIBarButtonItem(title: "편집", style: .done, target: self, action: #selector(self.editEvent))
-    self.navigationItem.rightBarButtonItem = rightButton
-    
-    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+//    // 뷰 겹치는거 방지
+//    self.navigationController!.navigationBar.isTranslucent = false
+//    // 아래 그림자 생기는거 지우기
+//    self.navigationController?.navigationBar.shadowImage = UIImage()
+//    let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.dismissEvent))
+//    self.navigationItem.leftBarButtonItem = leftButton
+//
+//    let rightButton = UIBarButtonItem(title: "편집", style: .done, target: self, action: #selector(self.editEvent))
+//    self.navigationItem.rightBarButtonItem = rightButton
+//
+//    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+//    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
     
     scheduleMainTableView.register(addDetailTableViewCell.self, forCellReuseIdentifier: "cell")
     
@@ -84,6 +85,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     
     view.backgroundColor = .white
     
+    view.addSubview(navView)
     view.addSubview(mainView)
     view.addSubview(scheduleMainTableView)
     
@@ -127,8 +129,14 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   
   func initLayout(){
     // constraint
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
     NSLayoutConstraint.activate([
-      mainView.topAnchor.constraint(equalTo: view.topAnchor),
+      mainView.topAnchor.constraint(equalTo: navView.bottomAnchor),
       mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
       mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       
@@ -152,7 +160,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period, to: countryRealmDB.date!)
     dateFormatter.dateFormat = "yyyy.MM.dd"
     dateFormatter.locale = Locale(identifier: "ko-KR")
-//    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    //    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
     let startDay = dateFormatter.string(from: countryRealmDB.date!)
     let endDay = dateFormatter.string(from: DBDate!)
     
@@ -268,6 +276,16 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     stack.isHidden = false
     stack.translatesAutoresizingMaskIntoConstraints=false
     return stack
+  }()
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "")
+    view.setLeftForPop()
+    view.setButtonTitle(title: "편집")
+    view.dismissBtn.addTarget(self, action: #selector(dismissEvent), for: .touchUpInside)
+    view.actionBtn.addTarget(self, action: #selector(editEvent), for: .touchUpInside)
+    return view
   }()
   // title을 갖는 뷰
   // 여행지랑 몇박 몇일인지 등등
@@ -445,7 +463,7 @@ extension TripDetailViewController{
   @objc func pushExchangeViewController(){
     let vc = AccountMainViewControllerNew()
     vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
-//    vc.countryRealmDB = self.countryRealmDB
+    //    vc.countryRealmDB = self.countryRealmDB
     self.navigationController?.pushViewController(vc, animated: true)
   }
 }

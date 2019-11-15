@@ -90,28 +90,35 @@ class AccountMainViewControllerNew: UIViewController {
           print(error)
         }
       }).disposed(by: disposeBag)
-    navigationItem.rightBarButtonItem?.rx.tap
-      .subscribe(onNext: { (_) in
-        let vc = DirectAddAccountViewController()
-        vc.realmMoneyList = try! self.viewModel.value()[try! self.selectedIndex.value()]
-        self.navigationController?.pushViewController(vc, animated: true)
-      }).disposed(by: disposeBag)
+//    navigationItem.rightBarButtonItem?.rx.tap
+//      .subscribe(onNext: { (_) in
+//        let vc = DirectAddAccountViewController()
+//        vc.realmMoneyList = try! self.viewModel.value()[try! self.selectedIndex.value()]
+//        self.navigationController?.pushViewController(vc, animated: true)
+//      }).disposed(by: disposeBag)
   }
   func initView(){
-    self.navigationItem.title = "여행 경비"
-    self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
-    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    let rightButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: nil)
-    self.navigationItem.rightBarButtonItem = rightButton
+//    self.navigationItem.title = "여행 경비"
+//    self.navigationController?.navigationBar.tintColor = .blackText
+//    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+//    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+//    let rightButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: nil)
+//    self.navigationItem.rightBarButtonItem = rightButton
 
     view.backgroundColor = .white
+    view.addSubview(navView)
     view.addSubview(dayCollectionView)
     view.addSubview(moneyView)
     view.addSubview(accountDayTableView)
     
-    dayCollectionView.snp.makeConstraints { (make) in
+    navView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
+    dayCollectionView.snp.makeConstraints { (make) in
+      make.top.equalTo(navView.snp.bottom)
       make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
       make.height.equalTo(100)
@@ -129,6 +136,17 @@ class AccountMainViewControllerNew: UIViewController {
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "여행 경비")
+    view.setButtonDoneText(title: "추가")
+    view.setLeftForBack()
+    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    view.actionBtn.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
+    return view
+  }()
+
   lazy var dayCollectionView: UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = .horizontal
@@ -155,6 +173,17 @@ class AccountMainViewControllerNew: UIViewController {
     return table
   }()
 
+}
+
+extension AccountMainViewControllerNew {
+  @objc func saveEvent(){
+    let vc = DirectAddAccountViewController()
+    vc.realmMoneyList = try! self.viewModel.value()[try! self.selectedIndex.value()]
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+  @objc func popEvent(){
+    self.navigationController?.popViewController(animated: true)
+  }
 }
 
 extension AccountMainViewControllerNew: UICollectionViewDelegateFlowLayout {

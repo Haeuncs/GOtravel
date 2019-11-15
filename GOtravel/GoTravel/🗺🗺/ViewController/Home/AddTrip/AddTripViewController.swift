@@ -11,87 +11,132 @@ import UIKit
 import GooglePlaces
 import RealmSwift
 import IQKeyboardManagerSwift
+import SnapKit
 
-
-// FIXIT : 검색 취소 시 nil 값 되는거랑 검색이 끝났을 때 클릭 할 수 있도록 고쳐야함.
+// 도시 검색 Search View Controller
 
 class AddTripViewController : UIViewController {
   // 앞 View 에서 전달 받는 데이터
   var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
+  /// categoryIndex == 0 이면 도시 검색, 1이면 장소 검색
   var categoryIndex = 0
   
   var countryRealmDB : countryRealm?
   var dayRealmDB  : dayRealm?
   
   private var searchController: UISearchController!
-  private var tableView: UITableView = {
-    let table = UITableView()
-    table.translatesAutoresizingMaskIntoConstraints = false
-    table.separatorStyle = .none
-    table.backgroundColor = UIColor.clear
-    return table
-  }()
-  private var containerView : UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
+  
   var tablePlaceInfo = Array<PlaceInfo>()
   var fetcher: GMSAutocompleteFetcher?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationController?.navigationBar.isHidden = false
     IQKeyboardManager.shared.enable = false
-    
-    self.view.backgroundColor = .white
-    // 까만거 지우려고
-    self.navigationController!.view.backgroundColor = .white
-    
-    self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
-    self.navigationItem.searchController = searchController
-    navigationItem.hidesSearchBarWhenScrolling = false
-    self.navigationController?.navigationBar.isTranslucent=false
-    
-    searchController = UISearchController(searchResultsController: nil)
-    // Setup the Search Controller
-    searchController.searchResultsUpdater = self
-    searchController.obscuresBackgroundDuringPresentation = false
-    navigationItem.searchController = searchController
-    definesPresentationContext = true
-    searchController.searchBar.delegate = self
-    //        tableView = UITableView()
-    tableView.register(placeSearchTableViewCell.self, forCellReuseIdentifier: "cell")
-    
-    containerView.addSubview(tableView)
-    view.addSubview(containerView)
-    
-    self.navigationItem.title = category[categoryIndex][0]
-    searchController.searchBar.placeholder = category[categoryIndex][1]
-    
+    if categoryIndex == 0 {
+      navView.setTitle(title: "여행 장소 검색")
+    }else{
+      navView.setTitle(title: "여행 도시 검색")
+    }
     initView()
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.navigationBar.isHidden = false
+    self.navigationController?.view.backgroundColor = UIColor.white
     tableView.reloadData()
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setLeftIcon(image: UIImage(named: "back")!)
+    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    return view
+  }()
+  lazy var searchView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.layer.cornerRadius = 12
+    view.layer.borderWidth = 2
+    view.layer.borderColor = UIColor.grey03.cgColor
+    view.layer.zeplinStyleShadows(color: .black, alpha: 0.1, x: 0, y: 3, blur: 20, spread: 0)
+    return view
+  }()
+  lazy var searchImg: UIImageView = {
+    let image = UIImageView()
+    image.contentMode = .scaleAspectFit
+    image.translatesAutoresizingMaskIntoConstraints = false
+    image.image = UIImage(named: "search")?.withRenderingMode(.alwaysTemplate)
+    image.tintColor = .grey03
+    return image
+  }()
+  lazy var textField: UITextField = {
+    let text = UITextField()
+    text.clearButtonMode = UITextField.ViewMode.whileEditing
+    text.addTarget(self, action: #selector(textEdit), for: .editingChanged)
+    text.addTarget(self, action: #selector(textEditBigin), for: .editingDidBegin)
+    text.addTarget(self, action: #selector(textEditEnd), for: .editingDidEnd)
+    text.tintColor = .blackText
+    text.textColor = .blackText
+    text.attributedPlaceholder = NSAttributedString(
+      string:"어디로 여행을 가시나요?",
+      attributes:[NSAttributedString.Key.foregroundColor:
+        UIColor.grey03])
+    text.translatesAutoresizingMaskIntoConstraints = false
+//    text.placeholder = "어디로 여행을 가시나요?"
+    return text
+  }()
+  lazy var tableView: UITableView = {
+    let table = UITableView()
+    table.translatesAutoresizingMaskIntoConstraints = false
+    table.separatorStyle = .none
+    table.backgroundColor = UIColor.white
+    table.register(placeSearchTableViewCell.self, forCellReuseIdentifier: "cell")
+    return table
+  }()
+  lazy var containerView : UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = UIColor.white
+    return view
+  }()
+
   func initView(){
-    let paddingSize = CGFloat(0)
-    
+    self.view.backgroundColor = .white
+    view.addSubview(navView)
+    view.addSubview(searchView)
+    searchView.addSubview(searchImg)
+    searchView.addSubview(textField)
+    view.addSubview(tableView)
+    view.bringSubviewToFront(searchView)
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
+    searchView.snp.makeConstraints{ make in
+      make.top.equalTo(navView.snp.bottom).offset(20)
+      make.left.equalTo(view.snp.left).offset(16)
+      make.right.equalTo(view.snp.right).offset(-16)
+      make.height.equalTo(38)
+    }
+    searchImg.snp.makeConstraints{ make in
+      make.centerY.equalTo(searchView.snp.centerY)
+      make.left.equalTo(searchView.snp.left).offset(16)
+      make.height.equalTo(24)
+      make.width.equalTo(24)
+    }
+    textField.snp.makeConstraints{ make in
+      make.centerY.equalTo(searchView.snp.centerY)
+      make.left.equalTo(searchImg.snp.right).offset(10)
+      make.height.equalTo(24)
+      make.right.equalTo(searchView.snp.right).offset(-16)
+    }
     NSLayoutConstraint.activate([
-      containerView.topAnchor.constraint(equalTo: view.topAnchor),
-      containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -paddingSize),
-      containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: paddingSize),
-      containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -paddingSize),
-      
-      tableView.topAnchor.constraint(equalTo: containerView.topAnchor),
-      tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-      tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-      tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-      
-      
-      
-      ])
+      tableView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
+      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    ])
     // Set bounds to inner-west Sydney Australia.
     let neBoundsCorner = CLLocationCoordinate2D(latitude: -33.843366,
                                                 longitude: 151.134002)
@@ -122,7 +167,41 @@ class AddTripViewController : UIViewController {
     
   }
 }
-extension AddTripViewController : UITableViewDelegate,UITableViewDataSource{
+
+extension AddTripViewController {
+  @objc func textEditBigin() {
+    textField.placeholder = ""
+    UIView.animate(withDuration: 0.6,
+                   delay: 0,
+                   options: [.curveEaseOut],
+                   animations: { [weak self] in
+                    self?.textField.tintColor = .blackText
+                    self?.textField.textColor = .blackText
+                    self?.searchView.layer.borderColor = UIColor.blackText.cgColor
+                    self?.searchImg.tintColor = .blackText
+      }, completion: nil)
+  }
+  @objc func textEditEnd(){
+    if textField.text == "" {
+      textField.placeholder = "어디로 여행을 가시나요?"
+      UIView.animate(withDuration: 0.6,
+                     delay: 0,
+                     options: [.curveEaseOut],
+                     animations: { [weak self] in
+                      self?.textField.tintColor = .grey03
+                      self?.textField.textColor = .blackText
+                      self?.searchView.layer.borderColor = UIColor.grey03.cgColor
+                      self?.searchImg.tintColor = .grey03
+        }, completion: nil)
+    }
+  }
+  @objc func textEdit(){
+    fetcher?.sourceTextHasChanged(textField.text)
+  }
+}
+
+
+extension AddTripViewController : UITableViewDelegate{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tablePlaceInfo.count
   }
@@ -152,11 +231,25 @@ extension AddTripViewController : UITableViewDelegate,UITableViewDataSource{
   }
   
 }
+
+extension AddTripViewController: UITableViewDataSource {
+  
+}
+
+extension AddTripViewController {
+  @objc func popEvent(){
+    self.navigationController?.popViewController(animated: true)
+
+  }
+}
+
 extension AddTripViewController : UISearchBarDelegate{
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     self.navigationController?.popViewController(animated: true)
   }
 }
+
+
 extension AddTripViewController: GMSAutocompleteFetcherDelegate {
   
   func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
@@ -169,7 +262,7 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
       new_data.title = prediction.attributedPrimaryText.string
       new_data.address = prediction.attributedSecondaryText?.string ?? ""
       
-      let placeID =  prediction.placeID ?? "ChIJV4k8_9UodTERU5KXbkYpSYs"
+      let placeID =  prediction.placeID
       let placeClient = GMSPlacesClient()
       dispatchGroup.enter()
       placeClient.lookUpPlaceID(placeID, callback: { (place, error) -> Void in
@@ -184,12 +277,12 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
           dispatchGroup.leave()
           return
         }
-        print(place.coordinate)
         
         new_data.location = place.coordinate
         new_data.placeID = place.placeID ?? ""
         self.tablePlaceInfo.append(new_data)
         dispatchGroup.leave()
+        print(self.tablePlaceInfo)
       })
     }
     dispatchGroup.notify(queue:.main) {
@@ -197,13 +290,11 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
     }
   }
   
-  
   func didFailAutocompleteWithError(_ error: Error) {
     //resultText?.text = error.localizedDescription
     print(error.localizedDescription)
   }
-  
-  
+
 }
 
 extension AddTripViewController: UISearchResultsUpdating {

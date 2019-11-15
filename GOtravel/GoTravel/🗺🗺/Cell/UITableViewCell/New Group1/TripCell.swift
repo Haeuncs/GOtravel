@@ -61,8 +61,6 @@ class TripCell: UICollectionViewCell {
   }
   
   func initView(){
-    
-
     mainStackView.distribution = .fillEqually
     mainStackView.alignment = .fill
     mainStackView.axis = .vertical
@@ -125,12 +123,11 @@ class TripCell: UICollectionViewCell {
     mainStackView.translatesAutoresizingMaskIntoConstraints = false
     
     mainBackgroundView.snp.makeConstraints { (make) in
-//      make.top.equalTo(contentView.snp.top).offset(20)
-      make.left.equalTo(contentView.snp.left).offset(30)
-      make.right.equalTo(contentView.snp.right).offset(-30)
-      make.height.equalTo(contentView.frame.height/1.5)
+      make.top.equalTo(contentView.snp.top).offset(50)
+      make.left.equalTo(contentView.snp.left).offset(20)
+      make.right.equalTo(contentView.snp.right).offset(-20)
       make.centerY.equalTo(contentView.snp.centerY)
-//      make.bottom.equalTo(contentView.snp.bottom).offset(-20)
+      make.bottom.equalTo(contentView.snp.bottom).offset(-50)
     }
     mainStackView.snp.makeConstraints { (make) in
       make.top.equalTo(mainBackgroundView.snp.top).offset(20)

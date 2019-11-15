@@ -51,7 +51,7 @@ class addDetailView : UIView {
   lazy var moneyBtn: UIButton = {
     let btn = UIButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
-    btn.setImage(UIImage(named: "dollar-coins"), for: .normal)
+    btn.setImage(UIImage(named: "invoice"), for: .normal)
     btn.imageView?.contentMode = .scaleAspectFit
     return btn
   }()

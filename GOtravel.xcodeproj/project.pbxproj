@@ -56,6 +56,8 @@
 		4ACD9670220DC3D50032D2C2 /* AccountMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD966F220DC3D50032D2C2 /* AccountMainViewController.swift */; };
 		7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C030E22EB5FA5001FD837 /* TabbarController.swift */; };
 		7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */; };
+		7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */; };
+		7D1D587E237A9BCA0007E2F3 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */; };
 		7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */; };
 		7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A422F6B75E000AA055 /* Singleton.swift */; };
 		7D72596622FFEF080034FA8E /* exchagneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596522FFEF080034FA8E /* exchagneView.swift */; };
@@ -159,6 +161,8 @@
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D0C030E22EB5FA5001FD837 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = "../New Group/SettingTableViewCell.swift"; sourceTree = "<group>"; };
+		7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
+		7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerDelegate.swift; sourceTree = "<group>"; };
 		7D1F73A422F6B75E000AA055 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		7D72596522FFEF080034FA8E /* exchagneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchagneView.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 				7DB3FF8723057EB4007A180B /* Formatter+.swift */,
 				7D72931B23097CBA00578A5F /* UITableView+.swift */,
 				7D72931D23097CF400578A5F /* Reactive+.swift */,
+				7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */,
 			);
 			path = "Extension + Struct";
 			sourceTree = "<group>";
@@ -409,6 +414,14 @@
 				4A5F61EF220C9D9C00531239 /* HomeToDetailV */,
 			);
 			path = UITableViewCell;
+			sourceTree = "<group>";
+		};
+		7D1D587C237A9BB60007E2F3 /* EmptyView */ = {
+			isa = PBXGroup;
+			children = (
+				7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */,
+			);
+			path = EmptyView;
 			sourceTree = "<group>";
 		};
 		7D4345BD22EC1AA50011AC7C /* Protocol */ = {
@@ -535,6 +548,7 @@
 		7DFC581222FF0D09002BFD86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7D1D587C237A9BB60007E2F3 /* EmptyView */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
 				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
 				4ACC7004222AC9E5004095DA /* pastV.swift */,
@@ -745,6 +759,7 @@
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */,
 				4ACC7005222AC9E5004095DA /* pastV.swift in Sources */,
+				7D1D587E237A9BCA0007E2F3 /* EmptyDataView.swift in Sources */,
 				7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,
 				4ACC7007222ACA04004095DA /* pastVM.swift in Sources */,
@@ -788,6 +803,7 @@
 				7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
 				4AC710AA21F0C6C900B20448 /* AddTripViewController.swift in Sources */,
+				7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,

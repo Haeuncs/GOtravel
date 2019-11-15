@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import GoogleMaps
 import RealmSwift
+import SnapKit
 
 class AddTripCheckMapViewController : UIViewController {
   // 장소 검색 0, 지역 검색 1
@@ -28,7 +29,11 @@ class AddTripCheckMapViewController : UIViewController {
   var dayDetailRealm = List<detailRealm>()
   
   // path 의 전체를 표한하기 위해서 사용된 변수들
-  var  mapView : GMSMapView?
+  lazy var  mapView : GMSMapView = {
+    let map = GMSMapView()
+    map.translatesAutoresizingMaskIntoConstraints = false
+    return map
+  }()
   // path loc 둘 중 하나 사용하여..
   var pathArr = [GMSPath]()
   var location_coordi = [CLLocationCoordinate2D]()
@@ -36,42 +41,51 @@ class AddTripCheckMapViewController : UIViewController {
   // path의 VC에서 받는 city 네임
   var navTitle = ""
   
-  override func loadView() {
-    
-    
-  }
   override func viewDidLoad() {
+    view.backgroundColor = .white
     // cell 에서 받은 placeInfo 위치
-    
-    //        marker.appearAnimation = .pop
-    view = mapView
+      view.addSubview(mapView)
+    view.addSubview(navView)
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
+    mapView.snp.makeConstraints{ make in
+      make.top.equalTo(navView.snp.bottom)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.bottom.equalTo(view.snp.bottom)
+    }
   }
   override func viewWillAppear(_ animated: Bool) {
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
       customTabBarController.setSelectLine(index: 0)
     }
-//    if arrayMap != nil{
-      // add save Btn
-//      if categoryIndex == 0 {
-//        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
-//
-//        navigationItem.rightBarButtonItem = rightButton
-//      }
-      if arrayMap == false{
-        let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.selectSave))
-        
-        navigationItem.rightBarButtonItem = rightButton
-        map()
-      }else{
-        array_map()
-      }
-//    }
-    self.navigationController?.navigationBar.tintColor = Defaull_style.subTitleColor
+    // 여행 도시 추가
+    if arrayMap == false{
+      navView.setButtonTitle(title: "다음")
+      navView.actionBtn.addTarget(self, action: #selector(nextEvent), for: .touchUpInside)
+      map()
+    }else{
+      navView.setButtonTitle(title: "")
+      array_map()
+    }
+    //    }
     
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setLeftIcon(image: UIImage(named: "back")!)
+    view.dismissBtn.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
+    //    view.backgroundColor = UIColor.clear
+    return view
+  }()
   // 마커 안에 들어가는 라벨
-  let textLabelInMarker : UILabel = {
+  lazy var textLabelInMarker : UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     label.text = "1"
     label.textAlignment = .center
@@ -121,10 +135,10 @@ class AddTripCheckMapViewController : UIViewController {
   
   // path 선택 시
   func array_map(){
-    self.navigationItem.title = navTitle
+    navView.setTitle(title: navTitle)
     let camera = GMSCameraPosition.camera(withLatitude: currentSelect.latitude, longitude: currentSelect.longitude, zoom: 11.5)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-    view = mapView
+    //    view = mapView
     if dayDetailRealm.count == 1 {
       draw_marker(i: dayDetailRealm.first!,index : 1)
     }else{
@@ -153,6 +167,10 @@ class AddTripCheckMapViewController : UIViewController {
               let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
               let routes = json["routes"] as! NSArray
               let state = json["status"]
+              let error = json["error_message"]
+              print(error)
+              print(state)
+              
               if state! as! String == "OK"{
                 //                            print(String(describing: state.va))
                 //                        self.mapView!.clear()
@@ -202,31 +220,45 @@ class AddTripCheckMapViewController : UIViewController {
         for loc in self.location_coordi{
           bounds = bounds.includingCoordinate(loc)
         }
-        self.mapView!.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
+        self.mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
       }
     }
   }
   func map(){
-    //        print(selectPlaceInfo)
-    self.navigationItem.title =  selectPlaceInfo.title
-    
-    let camera = GMSCameraPosition.camera(withLatitude:selectPlaceInfo.location!.latitude, longitude: selectPlaceInfo.location!.longitude, zoom: 15)
-    mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-    //        view = mapView
-    
-    // Creates a marker in the center of the map.
-    let marker = GMSMarker()
-    // set custom color
-    marker.icon = GMSMarker.markerImage(with: myColor ?? #colorLiteral(red: 0.8544613487, green: 0.4699537418, blue: 0.4763622019, alpha: 1))
-    marker.position = CLLocationCoordinate2D(latitude: (selectPlaceInfo.location?.latitude)! , longitude: (selectPlaceInfo.location?.longitude)!)
-    marker.title = selectPlaceInfo.title
-    marker.snippet = selectPlaceInfo.address
-    marker.map = mapView
-    mapView!.selectedMarker = marker
+    //    //        print(selectPlaceInfo)
+    ////    self.navigationItem.title =  selectPlaceInfo.title
+    navView.setTitle(title: selectPlaceInfo.title)
+    //    let camera = GMSCameraPosition.camera(withLatitude:selectPlaceInfo.location!.latitude, longitude: selectPlaceInfo.location!.longitude, zoom: 15)
+    //    mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    //    //        view = mapView
+    //
+    //    // Creates a marker in the center of the map.
+    //    let marker = GMSMarker()
+    //    // set custom color
+    //    marker.icon = GMSMarker.markerImage(with: myColor ?? #colorLiteral(red: 0.8544613487, green: 0.4699537418, blue: 0.4763622019, alpha: 1))
+    //    marker.position = CLLocationCoordinate2D(latitude: (selectPlaceInfo.location?.latitude)! , longitude: (selectPlaceInfo.location?.longitude)!)
+    //    marker.title = selectPlaceInfo.title
+    //    marker.snippet = selectPlaceInfo.address
+    //    marker.map = mapView
+    //    mapView.selectedMarker = marker
+    DispatchQueue.main.async {
+      let position = CLLocationCoordinate2D(latitude: (self.selectPlaceInfo.location?.latitude)! , longitude: (self.selectPlaceInfo.location?.longitude)!)
+      let marker = GMSMarker(position: position)
+      self.mapView.camera = GMSCameraPosition(target: position, zoom: 15, bearing: 0, viewingAngle: 0)
+      marker.title = self.selectPlaceInfo.title
+      marker.snippet = self.selectPlaceInfo.address
+      marker.map = self.mapView
+    }
     
   }
-  @objc func selectSave(){
-    print("select")
+  
+}
+
+extension AddTripCheckMapViewController {
+  @objc func popViewController() {
+    self.navigationController?.popViewController(animated: true)
+  }
+  @objc func nextEvent(){
     if categoryIndex == 0{
       let detailRealmDB = detailRealm()
       detailRealmDB.title = selectPlaceInfo.title
@@ -236,13 +268,9 @@ class AddTripCheckMapViewController : UIViewController {
       detailRealmDB.color = "default"
       try! realm.write {
         dayRealmDB.detailList.append(detailRealmDB)
-        
       }
-      
-      
       self.navigationController?.popToRootViewController(animated: true)
     }else{
-      print("run")
       let countryRealmDB = countryRealm()
       countryRealmDB.city = selectPlaceInfo.address
       countryRealmDB.country = selectPlaceInfo.title
@@ -251,11 +279,6 @@ class AddTripCheckMapViewController : UIViewController {
       let calenderVC = AddTripDateViewController()
       calenderVC.saveCountryRealmData = countryRealmDB
       self.navigationController?.pushViewController( calenderVC, animated: true)
-      //            self.navigationController?.popToRootViewController(animated: true)
     }
-    //        try! realm.write {
-    //
-    //        }
   }
-  
 }

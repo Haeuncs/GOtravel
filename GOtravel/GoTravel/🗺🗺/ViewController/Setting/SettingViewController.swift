@@ -12,9 +12,13 @@ import UIKit
 class SettingViewController : UIViewController {
   override func viewDidLoad() {
     self.navigationItem.title = "설정"
-    self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
-    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
+    view.backgroundColor = .white
+    // navigation bar color
+    self.navigationController?.navigationBar.barTintColor = .white
+    // navigation title color
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blackText]
+    // back button color
+    self.navigationController?.navigationBar.tintColor = .blackText
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -41,7 +45,7 @@ class SettingViewController : UIViewController {
   let belowView : settingV = {
     let view = settingV()
     view.layer.cornerRadius = 10
-    view.backgroundColor = UIColor.clear
+    view.backgroundColor = UIColor.white
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()

@@ -18,16 +18,19 @@
     
     override func viewDidLoad() {
       super.viewDidLoad()
-      self.extendedLayoutIncludesOpaqueBars = true
       title = "오픈소스 라이센스"
-      navigationController?.navigationBar.tintColor = .blackText
+//      navigationController?.navigationBar.tintColor = .blackText
       view.addSubview(tableView)
       view.backgroundColor = .white
+//      self.navigationItem.leftBarButtonItem?.tintColor = .blackDarkSupport
+//      self.navigationItem.rightBarButtonItem?.tintColor = .blackDarkSupport
+//      navigationController?.navigationBar.tintColor = .blackDarkSupport
+      
       tableView.separatorStyle = .none
       tableView.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+        tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0)
       ])

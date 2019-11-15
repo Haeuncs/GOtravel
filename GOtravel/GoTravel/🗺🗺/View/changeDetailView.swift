@@ -218,8 +218,9 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
     return view
   }()
   func initLayout(){
+    self.backgroundColor = .white
     NSLayoutConstraint.activate([
-      myStackView.topAnchor.constraint(equalTo: topAnchor),
+      myStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
       myStackView.leftAnchor.constraint(equalTo: leftAnchor),
       myStackView.rightAnchor.constraint(equalTo: rightAnchor),
       collectionview.heightAnchor.constraint(equalToConstant: calcHeight*2),
@@ -233,6 +234,14 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
       //            myStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
     ])
   }
+//  lazy var navView: CustomNavigationBarView = {
+//    let view = CustomNavigationBarView()
+//    view.translatesAutoresizingMaskIntoConstraints = false
+//    view.setTitle(title: "")
+//    view.setLeftIcon(image: UIImage(named: "back")!)
+//    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+//    return view
+//  }()
   lazy var mainTitle : UILabel = {
     let label = UILabel()
     label.textColor = .black

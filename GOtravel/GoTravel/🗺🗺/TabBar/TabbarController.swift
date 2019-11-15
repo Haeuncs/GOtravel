@@ -28,24 +28,25 @@ class TabbarViewController : UITabBarController, UITabBarControllerDelegate {
     super.viewDidLoad()
     self.delegate = self
     // tabbar indicator
-    self.view.addSubview(selectLine)
+//    self.view.addSubview(selectLine)
     // MARK: Tabbar Setting
-    self.tabBar.barTintColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+//    self.tabBar.barTintColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+    self.tabBar.barTintColor = .white
     self.tabBar.tintColor = UIColor.black
     self.tabBar.isTranslucent = false
     
     
     let tabOne = UINavigationController(rootViewController: HomeMainViewController())
-    let image1 = resizedImageWith(image: UIImage(named: "record")!, targetSize: CGSize(width: 24, height: 24))
-    let tabOneBarItem = UITabBarItem(title: "여행 일정", image: image1, selectedImage: image1)
-    
+    let image1 = resizedImageWith(image: UIImage(named: "home (1)")!, targetSize: CGSize(width: 24, height: 24))
+    let tabOneBarItem = UITabBarItem(title: nil, image: image1, selectedImage: image1)
+    tabOneBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     tabOne.tabBarItem = tabOneBarItem
     
     let tabTwo = UINavigationController(rootViewController: pastVC())
     
-    let image2 = resizedImageWith(image: UIImage(named: "write-letter")!, targetSize: CGSize(width: 24, height: 24))
-    let tabTwoBarItem2 = UITabBarItem(title: "지난 여행", image: image2, selectedImage: image2)
-    
+    let image2 = resizedImageWith(image: UIImage(named: "menu (1)")!, targetSize: CGSize(width: 24, height: 24))
+    let tabTwoBarItem2 = UITabBarItem(title: nil, image: image2, selectedImage: image2)
+    tabTwoBarItem2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     tabTwo.tabBarItem = tabTwoBarItem2
     
     

@@ -101,7 +101,7 @@ class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicator
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textAlignment = .right
     label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-    label.textColor = Defaull_style.subTitleColor
+    label.textColor = .blackText
     return label
   }()
   let selectCountryTV : UITableView = {

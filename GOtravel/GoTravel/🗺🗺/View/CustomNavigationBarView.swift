@@ -48,7 +48,7 @@ class CustomNavigationBarView: UIView {
       ])
   }
   func setLeftIcon(image: UIImage) {
-    let imageProcessed = resizedImageWith(image: image, targetSize: CGSize(width: 24, height: 24))
+    let imageProcessed = resizedImageWith(image: image, targetSize: CGSize(width: 22, height: 22))
     dismissBtn.setImage(imageProcessed, for: .normal)
   }
   func setRightIcon(image: UIImage) {
@@ -56,7 +56,10 @@ class CustomNavigationBarView: UIView {
     actionBtn.setImage(imageProcessed, for: .normal)
   }
   func setLeftForPop(){
-    dismissBtn.setImage(UIImage(named: "icnBackIOs"), for: .normal)
+    dismissBtn.setImage(resizedImageWith(image: UIImage(named: "x")!, targetSize: CGSize(width: 22, height: 22)), for: .normal)
+  }
+  func setLeftForBack(){
+    dismissBtn.setImage(resizedImageWith(image: UIImage(named: "back")!, targetSize: CGSize(width: 22, height: 22)), for: .normal)
   }
   func setTitle(title: String){
     titleLabel.text = title
@@ -67,6 +70,11 @@ class CustomNavigationBarView: UIView {
   func setButtonEnabled(enabled: Bool){
     actionBtn.isEnabled = enabled
   }
+  func setLeftText(title:String) {
+    dismissBtn.setTitle(title, for: .normal)
+    dismissBtn.setTitleColor(Defaull_style.mainTitleColor, for: .normal)
+  }
+
   func setButtonEditText(title: String){
     actionBtn.setTitle(title, for: .normal)
     actionBtn.setTitleColor(Defaull_style.lightGray, for: .normal)
@@ -82,7 +90,7 @@ class CustomNavigationBarView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "레이블"
-    label.font = UIFont.r17
+    label.font = UIFont.sb18
     label.textColor = .black
     return label
   }()
@@ -91,6 +99,7 @@ class CustomNavigationBarView: UIView {
     let btn = UIButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
     btn.setImage(UIImage(named: "icnXNew"), for: .normal)
+    btn.imageView?.contentMode = .scaleAspectFit
     return btn
   }()
   
@@ -99,7 +108,7 @@ class CustomNavigationBarView: UIView {
     btn.translatesAutoresizingMaskIntoConstraints = false
     btn.setTitle("", for: .normal)
     btn.titleLabel?.textAlignment = .center
-    btn.titleLabel?.font = UIFont.r17
+    btn.titleLabel?.font = UIFont.sb18
     btn.setTitleColor(Defaull_style.mainTitleColor, for: .normal)
     btn.setTitleColor(Defaull_style.lightGray, for: .disabled)
     return btn

@@ -150,6 +150,9 @@ class DirectAddAccountViewController: UIViewController {
     }
     checkSaveEnable()
   }
+  @objc func popEvent(){
+    self.navigationController?.popViewController(animated: true)
+  }
   @objc func saveEvent(){
     do {
       var money: Double?
@@ -208,6 +211,17 @@ class DirectAddAccountViewController: UIViewController {
       }).disposed(by: disposeBag)
     self.navigationController?.pushViewController(vc, animated: true)
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "경비 추가")
+    view.setLeftIcon(image: UIImage(named: "back")!)
+    view.setButtonDoneText(title: "저장")
+    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    view.actionBtn.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
+    return view
+  }()
+
   lazy var memoTextField: LineAnimateTextFieldView = {
     let text = LineAnimateTextFieldView()
     text.translatesAutoresizingMaskIntoConstraints = false
@@ -434,6 +448,8 @@ class DirectAddAccountViewController: UIViewController {
   func initView(){
     categoryCollectionView.delegate = self
     view.backgroundColor = .white
+    
+    view.addSubview(navView)
     // 메모
     view.addSubview(memoTextField)
     view.addSubview(categoryMoneyStack)
@@ -470,13 +486,19 @@ class DirectAddAccountViewController: UIViewController {
     //    leftTextFieldView.addSubview(leftTextField)
     //    rightTextFieldView.addSubview(rightTextField)
     
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
     exchangeImageView.snp.makeConstraints{ (make) in
       make.width.equalTo(37)
       make.height.equalTo(37)
       make.center.equalTo(moneyBackGroundView.snp.center)
     }
     memoTextField.snp.makeConstraints{ (make) in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
+      make.top.equalTo(navView.snp.bottom).offset(24)
       make.left.equalTo(view.snp.left).offset(16)
       make.right.equalTo(view.snp.right).offset(-16)
     }

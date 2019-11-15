@@ -17,7 +17,7 @@ struct Default_color {
 struct Defaull_style {
   
   static var bgColor = UIColor.white
-  static var mainTitleColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+  static var mainTitleColor = #colorLiteral(red: 0.1605227888, green: 0.1743844748, blue: 0.1929721534, alpha: 1)
   static var subTitleColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
   static var dateColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
   static var lightGray = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)

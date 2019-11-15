@@ -18,12 +18,16 @@ class pastVC: UIViewController {
   let selection = UISelectionFeedbackGenerator()
   let notification = UINotificationFeedbackGenerator()
   
+  let emptyView = EmptyDataView()
+  
   var disposeBag = DisposeBag()
   /// realm trip data
   var tripData = BehaviorSubject(value: [countryRealm]())
   let realm = try? Realm()
   // 기본 저장 데이터
   var countryRealmDB : List<countryRealm>?
+  /// for titleView Animation
+  var titleConstraint: NSLayoutConstraint?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,10 +39,26 @@ class pastVC: UIViewController {
     rx()
     processingDateData()
   }
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    emptyView.startAnimate()
+    titleConstraint?.constant = 0
+    UIView.animate(withDuration: 0.6,
+                   delay: 0,
+                   options: [.curveEaseOut],
+                   animations: { [weak self] in
+                    self?.view.layoutIfNeeded()
+      }, completion: nil)
+  }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     disposeBag = DisposeBag()
   }
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    titleConstraint?.constant -= view.bounds.width
+  }
+  
   func rx(){
     tripData.asObservable()
       .bind(to: tripCollectionView.rx.items(
@@ -48,7 +68,7 @@ class pastVC: UIViewController {
           cell.mainBackgroundView.backgroundColor = HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
           
-      }.disposed(by: disposeBag)
+    }.disposed(by: disposeBag)
     
     tripCollectionView.rx.modelSelected(countryRealm.self)
       .subscribe(onNext: { (country) in
@@ -60,26 +80,26 @@ class pastVC: UIViewController {
         self.present(nav, animated: true, completion: nil)
       }).disposed(by: disposeBag)
     
-//    navView.dismissBtn.rx.tap
-//      .subscribe(onNext: { (_) in
-//        let setting = SettingViewController()
-//        self.navigationController?.pushViewController(setting, animated: true)
-//      }).disposed(by: disposeBag)
-//    
-//    navView.actionBtn.rx.tap
-//      .subscribe(onNext: { (_) in
-//        let placeVC = AddTripViewController()
-//        placeVC.categoryIndex = 1
-//        self.navigationController?.pushViewController(placeVC, animated: true)
-//      }).disposed(by: disposeBag)
   }
-
   lazy var navView: CustomNavigationBarView = {
     let view = CustomNavigationBarView()
     view.isHidden = true
     view.translatesAutoresizingMaskIntoConstraints = false
     view.setTitle(title: "")
     return view
+  }()
+  lazy var titleView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  lazy var titleLabel: UILabel = {
+    let label = UILabel()
+    label.textColor = .blackText
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.text = "지난 여행"
+    label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
+    return label
   }()
   lazy var middleGuideView: UIView = {
     let view = UIView()
@@ -99,11 +119,14 @@ class pastVC: UIViewController {
     collect.translatesAutoresizingMaskIntoConstraints = false
     return collect
   }()
+  
   func initView(){
     view.backgroundColor = .white
     tripCollectionView.delegate = self
     
     view.addSubview(navView)
+    view.addSubview(titleView)
+    titleView.addSubview(titleLabel)
     view.addSubview(middleGuideView)
     middleGuideView.addSubview(tripCollectionView)
     
@@ -113,11 +136,27 @@ class pastVC: UIViewController {
       make.right.equalTo(view.snp.right)
       make.height.equalTo(44)
     }
+    titleView.snp.makeConstraints{ make in
+      make.top.greaterThanOrEqualTo(navView.snp.bottom)
+      //      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.bottom.equalTo(middleGuideView.snp.top)
+    }
+    titleConstraint = titleView.leftAnchor.constraint(equalTo: view.leftAnchor)
+    titleConstraint?.constant -= view.bounds.width
+    titleConstraint?.isActive = true
+    
+    titleLabel.snp.makeConstraints{ make in
+      make.top.greaterThanOrEqualTo(titleView.snp.top)
+      make.left.equalTo(titleView.snp.left).offset(16)
+      make.right.equalTo(titleView.snp.right)
+      make.bottom.equalTo(titleView.snp.bottom)
+    }
     middleGuideView.snp.makeConstraints { (make) in
-      make.top.equalTo(navView.snp.bottom)
+      make.top.equalTo(navView.snp.bottom).offset(60)
       make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
-      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
     }
     tripCollectionView.snp.makeConstraints { (make) in
       make.centerX.equalTo(middleGuideView.snp.centerX)
@@ -126,12 +165,13 @@ class pastVC: UIViewController {
       make.width.equalTo(middleGuideView.snp.width)
     }
   }
-
+  
   func processingDateData(){
     let processedData = List<countryRealm>()
     
     // 1. load
     var countryRealmDB = realm?.objects(countryRealm.self)
+    
     countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
     // 2. processing
     if let countryRealmDB = countryRealmDB {
@@ -143,7 +183,11 @@ class pastVC: UIViewController {
         }
       }
     }
-    print(processedData.count)
+    if processedData.count == 0 {
+      tripCollectionView.backgroundView = emptyView
+    }else{
+      tripCollectionView.backgroundView = .none
+    }
     tripData.onNext(Array(processedData))
   }
 }

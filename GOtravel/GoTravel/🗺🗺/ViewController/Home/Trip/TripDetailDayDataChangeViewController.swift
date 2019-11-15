@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RealmSwift
+import SnapKit
 
 protocol changeDelegate : class {
   func showAlert(longitude : Double, latitude : Double, title : String)
@@ -41,31 +42,41 @@ class TripDetailDayDataChangeViewController : UIViewController{
   }
   
   func initView(){
+    view.addSubview(navView)
     self.view.addSubview(mainView)
     view.backgroundColor = .white
     
     mainView.delegate = self
-    let leftButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(self.cancelBtn))
-    self.navigationItem.leftBarButtonItem = leftButton
-    
-    let rightButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(self.saveBtn))
-    self.navigationItem.rightBarButtonItem = rightButton
-    
-    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.subTitleColor
-    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.subTitleColor
     
     initLayoutConstraint()
   }
   func initLayoutConstraint(){
     
     let mainViewPadding = CGFloat(10)
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
     NSLayoutConstraint.activate([
-      mainView.topAnchor.constraint(equalTo: view.topAnchor, constant: mainViewPadding),
+      mainView.topAnchor.constraint(equalTo: navView.bottomAnchor, constant: mainViewPadding),
       mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -mainViewPadding),
       mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainViewPadding),
       mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainViewPadding),
     ])
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "")
+    view.setButtonDoneText(title: "저장")
+    view.setLeftForBack()
+    view.dismissBtn.addTarget(self, action: #selector(cancelBtn), for: .touchUpInside)
+    view.actionBtn.addTarget(self, action: #selector(saveBtn), for: .touchUpInside)
+    return view
+  }()
+
   let mainView : changeDetailView = {
     let view = changeDetailView()
     view.backgroundColor = .white

@@ -11,6 +11,7 @@ import RealmSwift
 
 import UIKit
 import MapKit
+import SnapKit
 
 enum MyTheme {
   case light
@@ -91,15 +92,18 @@ class AddTripDateViewController: UIViewController {
     
   }
   func initializeView(){
-    
-    self.navigationController?.navigationBar.isTranslucent=false
-    self.navigationController?.navigationBar.prefersLargeTitles = true
-    
-    self.view.backgroundColor = Style.bgColor
+        
+    self.view.backgroundColor = .white
     let availableWidth = view.frame.width - 7 - 10
     let widthPerItem = availableWidth / 7
-    
+    view.addSubview(navView)
     view.addSubview(calenderView)
+    navView.snp.makeConstraints { (make) in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
     //        calenderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive=true
     calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive=true
     calenderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive=true
@@ -122,6 +126,17 @@ class AddTripDateViewController: UIViewController {
     print("select")
     saveRealmData()
     self.navigationController?.popToRootViewController(animated: true)
+  }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "여행 기간 설정")
+    view.setLeftIcon(image: UIImage(named: "back")!)
+    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    return view
+  }()
+  @objc func popEvent(){
+    self.navigationController?.popViewController(animated: true)
   }
   let addBtn : UIButton = {
     let b = UIButton()

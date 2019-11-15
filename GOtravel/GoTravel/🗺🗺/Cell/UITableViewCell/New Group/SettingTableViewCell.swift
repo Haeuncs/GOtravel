@@ -20,6 +20,7 @@ class SettingTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   func initView(){
+    self.backgroundColor = .white
     self.addSubview(titleLabel)
     self.addSubview(descriptionLabel)
     self.addSubview(bottomLineView)
@@ -57,7 +58,7 @@ class SettingTableViewCell: UITableViewCell {
     label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
     label.text = "설명"
     label.numberOfLines = 0
-    label.textColor = Defaull_style.subTitleColor
+    label.textColor = .blackText
     return label
   }()
   lazy var bottomLineView: UIView = {
