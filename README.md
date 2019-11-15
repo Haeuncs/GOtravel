@@ -3,6 +3,8 @@
 
 
 
+<img src="githubImage/tribiGif.gif" aligned="center" width="250"/>
+
 구글 지도와 Realm을 사용하여 만듬
 쉽게 여행 일정과 여행 경비를 관리
 

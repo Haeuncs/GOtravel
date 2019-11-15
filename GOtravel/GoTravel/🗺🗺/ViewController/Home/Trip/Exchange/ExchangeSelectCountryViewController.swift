@@ -50,15 +50,24 @@ class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicator
     arrCountLabel.text = ""
   }
   func initView(){
+    view.backgroundColor = .white
     selectCountryTV.delegate = self
     selectCountryTV.dataSource = self
+    view.addSubview(navView)
     view.addSubview(labelView)
     labelView.addSubview(arrCountLabel)
     labelView.addSubview(timeLabel)
     self.view.addSubview(selectCountryTV)
     view.bringSubviewToFront(labelView)
-    labelView.snp.makeConstraints{ (make) in
+    navView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.height.equalTo(44)
+    }
+
+    labelView.snp.makeConstraints{ (make) in
+      make.top.equalTo(navView.snp.bottom)
       make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
       make.height.equalTo(60)
@@ -80,11 +89,22 @@ class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicator
       selectCountryTV.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
     ])
   }
+  lazy var navView: CustomNavigationBarView = {
+    let view = CustomNavigationBarView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.setTitle(title: "환율 적용")
+    view.setLeftIcon(image: UIImage(named: "back")!)
+    view.setButtonEditText(title: "편집")
+    view.actionBtn.addTarget(self, action: #selector(tableViewEdit), for: .touchUpInside)
+    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    return view
+  }()
+
   lazy var labelView: UIView = {
     let view = UIView()
     view.backgroundColor = .white
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer.zeplinStyleShadows(color: .black, alpha: 0.07, x: 0, y: 10, blur: 10, spread: 0)
+//    view.layer.zeplinStyleShadows(color: .black, alpha: 0.07, x: 0, y: 10, blur: 99, spread: 0)
     view.clipsToBounds = false
     return view
   }()
@@ -118,11 +138,14 @@ extension ExchangeSelectCountryViewController {
   @objc func tableViewEdit(){
     selectCountryTV.isEditing = !selectCountryTV.isEditing
     selectCountryTV.reloadData()
-    if self.navigationItem.rightBarButtonItem?.title == "편집"{
-      self.navigationItem.rightBarButtonItem?.title = "완료"
+    if navView.actionBtn.currentTitle == "편집"{
+      navView.setButtonDoneText(title: "완료")
     }else{
-      self.navigationItem.rightBarButtonItem?.title = "편집"
+      navView.setButtonEditText(title: "편집")
     }
+  }
+  @objc func popEvent() {
+    self.navigationController?.popViewController(animated: true)
   }
 }
 extension ExchangeSelectCountryViewController: UITableViewDelegate {
@@ -139,7 +162,7 @@ extension ExchangeSelectCountryViewController: UITableViewDelegate {
   }
   func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
     if indexPath.section == 1 {
-      if exchangeRealmData != nil {
+      if exchangeRealmData != nil && exchangeRealmData?.count ?? 0 > 0 {
         return true
       }else{
         return false
