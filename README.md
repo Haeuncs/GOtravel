@@ -4,9 +4,13 @@
 
 
 
+
+
 > 여행 일정과 여행 경비를 관리하는 iOS 앱
 >
 > iOS App to Manage Travel Schedules and Travel Expenses
+
+
 
 
 
@@ -14,7 +18,9 @@
 
 
 
-<img src="githubImage/tribiGif" aligned="center" width="250"/>
+<img src="githubImage/tribiGif.gif" aligned="center" width="250"/>
+
+
 
 
 
@@ -30,6 +36,10 @@ But you can download.
 <a href="https://apps.apple.com/app/%ED%8A%B8%EB%A6%AC%EB%B9%84/id1474451502">
 <img src="https://linkmaker.itunes.apple.com/ko-kr/badge-lrg.svg?releaseDate=2019-07-30&kind=iossoftware&bubble=ios_apps"/>
 </a>
+
+
+
+
 
 
 
@@ -80,10 +90,13 @@ Done! 🥳
 
 
 
+
+
+
+
 ## Preview
 
-<img src="githubImage/아트보드 – 2.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 3.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 4.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 5.png" aligned="center" width="250"/>
-
+<img src="githubImage/아트보드 – 2.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 3.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 4.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 5.png" aligned="center" width="250"/><img src="githubImage/아트보드 – 6.png" aligned="center" width="250"/>
 
 
 
@@ -129,9 +142,13 @@ Done! 🥳
 
 
 
+
+
 ## Any Question
 
 - Email: haeun.developer@gmail.com
+
+
 
 
 
