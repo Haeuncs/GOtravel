@@ -37,9 +37,8 @@ struct  mainVC_CVC_ViewModel: mainVC_protocol{
       print(dday)
       // 여행 시작 날이거나 여행 중인 날
       if dday! >= 0 {
-        let endDate = Calendar.current.date(byAdding: .day, value: model.period, to: model.date ?? Date())
-        if endDate!.isInSameDay(date: Date()) ||
-        endDate! > Date() {
+        let endDate = Calendar.current.date(byAdding: .day, value: model.period - 1, to: model.date ?? Date())
+        if endDate! > Date() {
           self.ddayTitle = "\(dday! + 1)일차"
         }else{
           self.ddayTitle = "\(dateFormatter.string(from: model.date!)) ~ \(dateFormatter.string(from: endDate!))"

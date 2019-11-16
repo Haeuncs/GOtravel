@@ -111,6 +111,7 @@ class pastVC: UIViewController {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     let collect = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collect.showsHorizontalScrollIndicator = false
     collect.isPagingEnabled = true
     collect.backgroundColor = .white
     collect.register(
@@ -119,51 +120,64 @@ class pastVC: UIViewController {
     collect.translatesAutoresizingMaskIntoConstraints = false
     return collect
   }()
+  lazy var pageControl: UIPageControl = {
+    let page = UIPageControl()
+    page.currentPageIndicatorTintColor = .black
+    page.pageIndicatorTintColor = .grey03
+    page.translatesAutoresizingMaskIntoConstraints = false
+    page.addTarget(self, action: #selector(changeCell), for: .touchUpInside)
+    return page
+  }()
   
   func initView(){
     view.backgroundColor = .white
     tripCollectionView.delegate = self
     
-    view.addSubview(navView)
-    view.addSubview(titleView)
-    titleView.addSubview(titleLabel)
-    view.addSubview(middleGuideView)
-    middleGuideView.addSubview(tripCollectionView)
-    
-    navView.snp.makeConstraints { (make) in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.height.equalTo(44)
-    }
-    titleView.snp.makeConstraints{ make in
-      make.top.greaterThanOrEqualTo(navView.snp.bottom)
-      //      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.bottom.equalTo(middleGuideView.snp.top)
-    }
-    titleConstraint = titleView.leftAnchor.constraint(equalTo: view.leftAnchor)
-    titleConstraint?.constant -= view.bounds.width
-    titleConstraint?.isActive = true
-    
-    titleLabel.snp.makeConstraints{ make in
-      make.top.greaterThanOrEqualTo(titleView.snp.top)
-      make.left.equalTo(titleView.snp.left).offset(16)
-      make.right.equalTo(titleView.snp.right)
-      make.bottom.equalTo(titleView.snp.bottom)
-    }
-    middleGuideView.snp.makeConstraints { (make) in
-      make.top.equalTo(navView.snp.bottom).offset(60)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
-    }
-    tripCollectionView.snp.makeConstraints { (make) in
-      make.centerX.equalTo(middleGuideView.snp.centerX)
-      make.centerY.equalTo(middleGuideView.snp.centerY)
-      make.height.equalTo(middleGuideView.snp.height)
-      make.width.equalTo(middleGuideView.snp.width)
-    }
+        view.addSubview(navView)
+        view.addSubview(titleView)
+        titleView.addSubview(titleLabel)
+        view.addSubview(middleGuideView)
+        middleGuideView.addSubview(tripCollectionView)
+        view.addSubview(pageControl)
+        navView.snp.makeConstraints { (make) in
+          make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+          make.left.equalTo(view.snp.left)
+          make.right.equalTo(view.snp.right)
+          make.height.equalTo(44)
+        }
+        titleView.snp.makeConstraints{ make in
+          make.top.greaterThanOrEqualTo(navView.snp.bottom)
+    //      make.left.equalTo(view.snp.left)
+          make.right.equalTo(view.snp.right)
+          make.bottom.equalTo(middleGuideView.snp.top)
+        }
+        titleConstraint = titleView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        titleConstraint?.constant -= view.bounds.width
+        titleConstraint?.isActive = true
+        
+        titleLabel.snp.makeConstraints{ make in
+          make.top.greaterThanOrEqualTo(titleView.snp.top)
+          make.left.equalTo(titleView.snp.left).offset(16)
+          make.right.equalTo(titleView.snp.right)
+          make.bottom.equalTo(titleView.snp.bottom)
+        }
+        middleGuideView.snp.makeConstraints { (make) in
+          make.top.equalTo(navView.snp.bottom).offset(60)
+          make.left.equalTo(view.snp.left)
+          make.right.equalTo(view.snp.right)
+          make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
+        }
+        tripCollectionView.snp.makeConstraints { (make) in
+          make.centerX.equalTo(middleGuideView.snp.centerX)
+          make.centerY.equalTo(middleGuideView.snp.centerY)
+          make.height.equalTo(middleGuideView.snp.height)
+          make.width.equalTo(middleGuideView.snp.width)
+        }
+        pageControl.snp.makeConstraints{make in
+          make.top.equalTo(middleGuideView.snp.bottom)
+          make.left.equalTo(view.snp.left)
+          make.right.equalTo(view.snp.right)
+        }
   }
   
   func processingDateData(){
@@ -188,8 +202,15 @@ class pastVC: UIViewController {
     }else{
       tripCollectionView.backgroundView = .none
     }
+    self.pageControl.numberOfPages = processedData.count
+    self.pageControl.currentPage = 0
     tripData.onNext(Array(processedData))
   }
+  @objc func changeCell(_ sender: UIPageControl) {
+    let page: Int? = sender.currentPage
+    self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+  }
+
 }
 
 extension pastVC: UICollectionViewDelegate {
@@ -205,3 +226,12 @@ extension pastVC: UICollectionViewDelegateFlowLayout {
   
   
 }
+extension pastVC: UIScrollViewDelegate {
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let x = targetContentOffset.pointee.x
+    let index = Int(x / tripCollectionView.frame.width)
+    self.pageControl.currentPage = index
+  }
+  
+}
+

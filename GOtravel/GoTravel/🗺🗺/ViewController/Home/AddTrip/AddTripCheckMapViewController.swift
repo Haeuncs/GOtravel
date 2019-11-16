@@ -43,8 +43,21 @@ class AddTripCheckMapViewController : UIViewController {
   
   override func viewDidLoad() {
     view.backgroundColor = .white
+    // 여행 도시 추가
+    if arrayMap == false{
+      navView.setButtonTitle(title: "다음")
+      navView.actionBtn.addTarget(self, action: #selector(nextEvent), for: .touchUpInside)
+      map()
+      initView()
+    }else{
+      navView.setButtonTitle(title: "")
+      array_map()
+      initView()
+    }
     // cell 에서 받은 placeInfo 위치
-      view.addSubview(mapView)
+  }
+  func initView(){
+    view.addSubview(mapView)
     view.addSubview(navView)
     navView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -63,15 +76,6 @@ class AddTripCheckMapViewController : UIViewController {
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
       customTabBarController.setSelectLine(index: 0)
-    }
-    // 여행 도시 추가
-    if arrayMap == false{
-      navView.setButtonTitle(title: "다음")
-      navView.actionBtn.addTarget(self, action: #selector(nextEvent), for: .touchUpInside)
-      map()
-    }else{
-      navView.setButtonTitle(title: "")
-      array_map()
     }
     //    }
     

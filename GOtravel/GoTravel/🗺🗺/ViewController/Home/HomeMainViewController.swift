@@ -15,7 +15,7 @@ import EasyTipView
 
 
 class HomeMainViewController: UIViewController {
-  weak var tipView: EasyTipView?
+//  weak var tipView: EasyTipView?
   
   var disposeBag = DisposeBag()
   /// realm trip data
@@ -29,6 +29,8 @@ class HomeMainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
+    print(Realm.Configuration.defaultConfiguration.fileURL!)
+
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -44,13 +46,13 @@ class HomeMainViewController: UIViewController {
       preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
       preferences.drawing.foregroundColor = UIColor.white
       preferences.drawing.backgroundColor = UIColor.black
-      EasyTipView.globalPreferences = preferences
-      self.view.backgroundColor = UIColor(hue:0.75, saturation:0.01, brightness:0.96, alpha:1.00)
-      let text = "이 버튼을 눌러서 여행할 도시를\n입력하세요! 😆"
-      //    tipView.show(animated: true, forItem: self.navView, withinSuperView: nil)
-      let tip = EasyTipView(text: text, preferences: preferences, delegate: self)
-      tip.show(forView: navView.actionBtn)
-      tipView = tip
+//      EasyTipView.globalPreferences = preferences
+//      self.view.backgroundColor = UIColor(hue:0.75, saturation:0.01, brightness:0.96, alpha:1.00)
+//      let text = "이 버튼을 눌러서 여행할 도시를\n입력하세요! 😆"
+//      //    tipView.show(animated: true, forItem: self.navView, withinSuperView: nil)
+//      let tip = EasyTipView(text: text, preferences: preferences, delegate: self)
+//      tip.show(forView: navView.actionBtn)
+//      tipView = tip
     }
     titleConstraint?.constant = 0
     UIView.animate(withDuration: 0.6,
@@ -63,9 +65,9 @@ class HomeMainViewController: UIViewController {
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    if let tip = tipView {
-      tip.dismiss()
-    }
+//    if let tip = tipView {
+//      tip.dismiss()
+//    }
     titleConstraint?.constant -= view.bounds.width
 
   }

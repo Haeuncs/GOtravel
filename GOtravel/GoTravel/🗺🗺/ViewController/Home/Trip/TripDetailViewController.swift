@@ -157,7 +157,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     mainView.subLabel.text = countryRealmDB.city
     
     let dateFormatter = DateFormatter()
-    let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period, to: countryRealmDB.date!)
+    let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period - 1, to: countryRealmDB.date!)
     dateFormatter.dateFormat = "yyyy.MM.dd"
     dateFormatter.locale = Locale(identifier: "ko-KR")
     //    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
