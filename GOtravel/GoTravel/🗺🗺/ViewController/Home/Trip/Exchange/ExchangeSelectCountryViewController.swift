@@ -11,7 +11,6 @@ import UIKit
 import NVActivityIndicatorView
 import SnapKit
 import RealmSwift
-import SwiftSimpleToast
 import RxSwift
 import RxCocoa
 

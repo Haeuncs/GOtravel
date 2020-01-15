@@ -77,11 +77,14 @@
 		7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931B23097CBA00578A5F /* UITableView+.swift */; };
 		7D72931E23097CF400578A5F /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931D23097CF400578A5F /* Reactive+.swift */; };
 		7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7394182308226E00FBA898 /* HomeMainViewController.swift */; };
+		7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4323CF3E67001AB3B6 /* Appdelegate.swift */; };
+		7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */; };
+		7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */; };
+		7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */; };
 		7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */; };
 		7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */; };
 		7D95E22322EC59C0008CEC0B /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */; };
 		7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3FF8723057EB4007A180B /* Formatter+.swift */; };
-		7DE3E44622F6D51D0056311E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A969BF321E5A2F00016DB49 /* AppDelegate.swift */; };
 		7DE3E44722F6D60E0056311E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A969BF721E5A2F00016DB49 /* Main.storyboard */; };
 		7DE3E44822F6D6120056311E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A969BFC21E5A2F50016DB49 /* LaunchScreen.storyboard */; };
 		7DFC580B22FEF186002BFD86 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFC580A22FEF186002BFD86 /* CALayer+.swift */; };
@@ -126,7 +129,6 @@
 		4A779F5421E7C24B00CCE52F /* searchTravelLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchTravelLocationViewController.swift; sourceTree = "<group>"; };
 		4A779F5D21E7C2DF00CCE52F /* SuggestionsTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionsTableTableViewController.swift; sourceTree = "<group>"; };
 		4A969BF021E5A2F00016DB49 /* GOtravel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GOtravel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A969BF321E5A2F00016DB49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A969BF521E5A2F00016DB49 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4A969BF821E5A2F00016DB49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A969BFA21E5A2F50016DB49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -182,6 +184,10 @@
 		7D72931B23097CBA00578A5F /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		7D72931D23097CF400578A5F /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		7D7394182308226E00FBA898 /* HomeMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewController.swift; sourceTree = "<group>"; };
+		7D895C4323CF3E67001AB3B6 /* Appdelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Appdelegate.swift; path = ../GoTravel/Appdelegate.swift; sourceTree = "<group>"; };
+		7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModelService.swift; sourceTree = "<group>"; };
+		7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTripEmptyView.swift; sourceTree = "<group>"; };
 		7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceLicenseViewController.swift; path = ../OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GOtravelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOtravelUITests.swift; sourceTree = "<group>"; };
@@ -243,8 +249,8 @@
 		4A38F3DB21EA80920097914B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D895C4323CF3E67001AB3B6 /* Appdelegate.swift */,
 				4AA331D121ECA8EA004E2536 /* storyboard */,
-				4A969BF321E5A2F00016DB49 /* AppDelegate.swift */,
 				4A969BFA21E5A2F50016DB49 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -253,12 +259,12 @@
 		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
+				7D0C031222EB7108001FD837 /* Cell */,
 				7DFC580922FE6E0F002BFD86 /* TabBar */,
 				7DFC581222FF0D09002BFD86 /* View */,
 				7D8DBB9122F0A18A008C20E9 /* ViewController */,
 				7D8DBB9322F0A1A9008C20E9 /* ViewModel */,
 				7D8DBB9222F0A19B008C20E9 /* Model */,
-				7D0C031222EB7108001FD837 /* Cell */,
 			);
 			path = "🗺🗺";
 			sourceTree = "<group>";
@@ -416,14 +422,6 @@
 			path = UITableViewCell;
 			sourceTree = "<group>";
 		};
-		7D1D587C237A9BB60007E2F3 /* EmptyView */ = {
-			isa = PBXGroup;
-			children = (
-				7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */,
-			);
-			path = EmptyView;
-			sourceTree = "<group>";
-		};
 		7D4345BD22EC1AA50011AC7C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +448,23 @@
 			path = UICollectionViewCell;
 			sourceTree = "<group>";
 		};
+		7D895C4523CF6765001AB3B6 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7D895C4A23CF6FD0001AB3B6 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */,
+				7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		7D8DBB9122F0A18A008C20E9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +480,7 @@
 			children = (
 				7D725970230062850034FA8E /* OpenSourceLicenseModel.swift */,
 				7D7259782301A7270034FA8E /* DirectAddAccountModel.swift */,
+				7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -472,6 +488,7 @@
 		7D8DBB9322F0A1A9008C20E9 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7D895C4523CF6765001AB3B6 /* Home */,
 				4ACC7006222ACA04004095DA /* pastVM.swift */,
 				4A5F61E6220C9C3800531239 /* HomeVM.swift */,
 				7D72596E230062530034FA8E /* OpenSourceLicenseViewModel.swift */,
@@ -548,7 +565,7 @@
 		7DFC581222FF0D09002BFD86 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7D1D587C237A9BB60007E2F3 /* EmptyView */,
+				7D895C4A23CF6FD0001AB3B6 /* Home */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
 				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
 				4ACC7004222AC9E5004095DA /* pastV.swift */,
@@ -740,10 +757,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DE3E44622F6D51D0056311E /* AppDelegate.swift in Sources */,
 				7D72931A2309252A00578A5F /* AccountMainViewControllerNew.swift in Sources */,
 				7DFC581A22FF29BD002BFD86 /* Toast.swift in Sources */,
 				7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */,
+				7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */,
 				7D72671022E33EB500589C82 /* settingModel.swift in Sources */,
 				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
 				7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */,
@@ -804,15 +821,18 @@
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
 				4AC710AA21F0C6C900B20448 /* AddTripViewController.swift in Sources */,
 				7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */,
+				7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
+				7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */,
 				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,
 				4A779F5A21E7C24C00CCE52F /* MapViewController.swift in Sources */,
 				4A779F5B21E7C24C00CCE52F /* LocationManager.swift in Sources */,
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
 				7D72931E23097CF400578A5F /* Reactive+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
+				7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */,
 				4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,

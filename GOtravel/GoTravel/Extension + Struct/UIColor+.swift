@@ -60,7 +60,11 @@ extension UIColor {
   @nonobjc class var favorite: UIColor {
     return UIColor(red: 1.0, green: 216.0 / 255.0, blue: 60.0 / 255.0, alpha: 1.0)
   }
-  
+  @nonobjc class var tealish: UIColor {
+    return UIColor(red: 48.0 / 255.0, green: 180.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0)
+  }
+
+
 }
 
 

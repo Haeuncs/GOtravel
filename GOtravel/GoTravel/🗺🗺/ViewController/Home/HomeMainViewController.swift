@@ -11,49 +11,34 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import RealmSwift
-import EasyTipView
-
 
 class HomeMainViewController: UIViewController {
-//  weak var tipView: EasyTipView?
+  
+  private var viewModel: HomeViewModel!
+  private var service: HomeModelService!
   
   var disposeBag = DisposeBag()
-  /// realm trip data
-  var tripData = BehaviorSubject(value: [countryRealm]())
-  let realm = try? Realm()
-  /// realm basic data
-  var countryRealmDB : List<countryRealm>?
+//  /// realm trip data
+//  var tripData = BehaviorSubject(value: [countryRealm]())
+//  let realm = try? Realm()
+//  /// realm basic data
+//  var countryRealmDB : List<countryRealm>?
   /// for titleView Animation
   var titleConstraint: NSLayoutConstraint?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
-    print(Realm.Configuration.defaultConfiguration.fileURL!)
+//    print(Realm.Configuration.defaultConfiguration.fileURL!)
 
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.isHidden = true
     rx()
-    processingDateData()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    if realm?.objects(countryRealm.self).count == 0 ||
-      realm?.objects(countryRealm.self).count == nil{
-      var preferences = EasyTipView.Preferences()
-      preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
-      preferences.drawing.foregroundColor = UIColor.white
-      preferences.drawing.backgroundColor = UIColor.black
-//      EasyTipView.globalPreferences = preferences
-//      self.view.backgroundColor = UIColor(hue:0.75, saturation:0.01, brightness:0.96, alpha:1.00)
-//      let text = "이 버튼을 눌러서 여행할 도시를\n입력하세요! 😆"
-//      //    tipView.show(animated: true, forItem: self.navView, withinSuperView: nil)
-//      let tip = EasyTipView(text: text, preferences: preferences, delegate: self)
-//      tip.show(forView: navView.actionBtn)
-//      tipView = tip
-    }
     titleConstraint?.constant = 0
     UIView.animate(withDuration: 0.6,
                    delay: 0,
@@ -65,9 +50,6 @@ class HomeMainViewController: UIViewController {
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-//    if let tip = tipView {
-//      tip.dismiss()
-//    }
     titleConstraint?.constant -= view.bounds.width
 
   }
@@ -77,8 +59,26 @@ class HomeMainViewController: UIViewController {
     disposeBag = DisposeBag()
   }
   
+  func setup(count: Int){
+    self.pageControl.numberOfPages = count
+    self.pageControl.currentPage = 0
+    if count == 0 {
+      emptyView.isHidden = false
+    }else{
+      emptyView.isHidden = true
+    }
+  }
+  
   func rx(){
-    tripData.asObservable()
+    service = HomeModelService()
+    viewModel = HomeViewModel(service: self.service)
+    
+    viewModel.tripData.subscribe(onNext: { (arr) in
+      self.setup(count: arr.count)
+      })
+    .disposed(by: disposeBag)
+    
+    viewModel.tripData.asObserver()
       .bind(to: tripCollectionView.rx.items(
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { row, model, cell in
@@ -86,8 +86,9 @@ class HomeMainViewController: UIViewController {
           cell.mainBackgroundView.backgroundColor = HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.6, x: 0, y: 0, blur: 20, spread: 0)
           
-    }.disposed(by: disposeBag)
-    
+    }
+    .disposed(by: disposeBag)
+
     tripCollectionView.rx.modelSelected(countryRealm.self)
       .subscribe(onNext: { (country) in
         let tripViewController = TripDetailViewController()
@@ -110,7 +111,15 @@ class HomeMainViewController: UIViewController {
         placeVC.categoryIndex = 1
         self.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
+    
+    emptyView.addButton.rx.tap
+      .subscribe(onNext: { (_) in
+        let placeVC = AddTripViewController()
+        placeVC.categoryIndex = 1
+        self.navigationController?.pushViewController(placeVC, animated: true)
+      }).disposed(by: disposeBag)
   }
+  
   lazy var navView: CustomNavigationBarView = {
     let view = CustomNavigationBarView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -160,6 +169,12 @@ class HomeMainViewController: UIViewController {
     page.addTarget(self, action: #selector(changeCell), for: .touchUpInside)
     return page
   }()
+  lazy var emptyView: HomeTripEmptyView = {
+    let view = HomeTripEmptyView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isHidden = true
+    return view
+  }()
   func initView(){
     view.backgroundColor = .white
     tripCollectionView.delegate = self
@@ -170,6 +185,9 @@ class HomeMainViewController: UIViewController {
     view.addSubview(middleGuideView)
     middleGuideView.addSubview(tripCollectionView)
     view.addSubview(pageControl)
+    
+    middleGuideView.addSubview(emptyView)
+    
     navView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.left.equalTo(view.snp.left)
@@ -209,32 +227,19 @@ class HomeMainViewController: UIViewController {
       make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
     }
+    emptyView.snp.makeConstraints { (make) in
+//      make.top.greaterThanOrEqualTo(middleGuideView.snp.top)
+//      make.bottom.lessThanOrEqualTo(middleGuideView.snp.bottom)
+//      make.height.equalTo(250)
+      make.left.equalTo(view.snp.left)
+      make.right.equalTo(view.snp.right)
+      make.center.equalTo(middleGuideView.snp.center)
+    }
   }
 }
 
 extension HomeMainViewController {
-  /// order by date
-  func processingDateData(){
-    let processedData = List<countryRealm>()
-    // 1. load
-    var countryRealmDB = realm?.objects(countryRealm.self)
-    countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-    // 2. processing
-    if let countryRealmDB = countryRealmDB {
-      for i in countryRealmDB {
-        let startDay = i.date ?? Date()
-        let endDate = Calendar.current.date(byAdding: .day, value: i.period, to: startDay)
-        if endDate ?? Date() > Date() {
-          processedData.append(i)
-        }
-      }
-    }
-    print(processedData.count)
-    self.pageControl.numberOfPages = processedData.count
-    self.pageControl.currentPage = 0
-    tripData.onNext(Array(processedData))
-    //    return processedData
-  }
+
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
     self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
@@ -281,9 +286,4 @@ extension HomeMainViewController: UIScrollViewDelegate {
     self.pageControl.currentPage = index
   }
   
-}
-extension HomeMainViewController: EasyTipViewDelegate{
-  func easyTipViewDidDismiss(_ tipView: EasyTipView) {
-    print("\(tipView) did dismiss!")
-  }
 }

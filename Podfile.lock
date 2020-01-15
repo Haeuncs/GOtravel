@@ -25,7 +25,6 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
   - SnapKit (5.0.0)
-  - SwiftSimpleToast (0.1.0)
 
 DEPENDENCIES:
   - AnimatedTextInput
@@ -40,10 +39,9 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SnapKit
-  - SwiftSimpleToast
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AnimatedTextInput
     - CenteredCollectionView
     - EasyTipView
@@ -55,7 +53,6 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
-    - SwiftSimpleToast
 
 EXTERNAL SOURCES:
   Realm:
@@ -91,8 +88,7 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
-  SwiftSimpleToast: 3db2ee4a2c84e80039450df8e4a8379faf1bce99
 
-PODFILE CHECKSUM: 7736ecb11951c4a97d503cdd688b1fdfdc1c7b1b
+PODFILE CHECKSUM: bcaa4106d1dee6292621d8052860560a8275d9b2
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

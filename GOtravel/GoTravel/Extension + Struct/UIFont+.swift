@@ -25,6 +25,9 @@ extension UIFont {
   class var sb27: UIFont {
     return UIFont.systemFont(ofSize: 27, weight: .semibold)
   }
+  class var sb24: UIFont {
+    return UIFont.systemFont(ofSize: 24, weight: .semibold)
+  }
   class var sb20: UIFont {
     return UIFont.systemFont(ofSize: 20, weight: .semibold)
   }
