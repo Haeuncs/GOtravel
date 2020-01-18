@@ -18,11 +18,6 @@ class HomeMainViewController: UIViewController {
   private var service: HomeModelService!
   
   var disposeBag = DisposeBag()
-//  /// realm trip data
-//  var tripData = BehaviorSubject(value: [countryRealm]())
-//  let realm = try? Realm()
-//  /// realm basic data
-//  var countryRealmDB : List<countryRealm>?
   /// for titleView Animation
   var titleConstraint: NSLayoutConstraint?
   
@@ -175,6 +170,7 @@ class HomeMainViewController: UIViewController {
     view.isHidden = true
     return view
   }()
+  
   func initView(){
     view.backgroundColor = .white
     tripCollectionView.delegate = self
@@ -196,7 +192,6 @@ class HomeMainViewController: UIViewController {
     }
     titleView.snp.makeConstraints{ make in
       make.top.greaterThanOrEqualTo(navView.snp.bottom)
-//      make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
       make.bottom.equalTo(middleGuideView.snp.top)
     }
@@ -228,9 +223,6 @@ class HomeMainViewController: UIViewController {
       make.right.equalTo(view.snp.right)
     }
     emptyView.snp.makeConstraints { (make) in
-//      make.top.greaterThanOrEqualTo(middleGuideView.snp.top)
-//      make.bottom.lessThanOrEqualTo(middleGuideView.snp.bottom)
-//      make.height.equalTo(250)
       make.left.equalTo(view.snp.left)
       make.right.equalTo(view.snp.right)
       make.center.equalTo(middleGuideView.snp.center)

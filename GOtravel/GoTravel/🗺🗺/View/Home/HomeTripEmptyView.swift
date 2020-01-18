@@ -58,6 +58,7 @@ class HomeTripEmptyView: UIView {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFit
     view.image = UIImage(named: "luggageFreepik")
+    view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 8, blur: 6, spread: 0)
     return view
   }()
   lazy var titleLabel: UILabel = {
@@ -74,7 +75,7 @@ class HomeTripEmptyView: UIView {
     button.titleLabel?.font = .b18
     button.backgroundColor = .tealish
     button.layer.cornerRadius = 18
-    button.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
+    button.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 8, blur: 6, spread: 0)
     return button
   }()
 }

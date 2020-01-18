@@ -18,7 +18,7 @@ class pastVC: UIViewController {
   let selection = UISelectionFeedbackGenerator()
   let notification = UINotificationFeedbackGenerator()
   
-  let emptyView = EmptyDataView()
+  let emptyView = PastTripEmptyView()
   
   var disposeBag = DisposeBag()
   /// realm trip data
@@ -41,7 +41,6 @@ class pastVC: UIViewController {
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    emptyView.startAnimate()
     titleConstraint?.constant = 0
     UIView.animate(withDuration: 0.6,
                    delay: 0,

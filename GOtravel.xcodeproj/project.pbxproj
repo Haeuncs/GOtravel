@@ -57,7 +57,7 @@
 		7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C030E22EB5FA5001FD837 /* TabbarController.swift */; };
 		7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */; };
 		7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */; };
-		7D1D587E237A9BCA0007E2F3 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */; };
+		7D1D587E237A9BCA0007E2F3 /* PastTripEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */; };
 		7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */; };
 		7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A422F6B75E000AA055 /* Singleton.swift */; };
 		7D72596622FFEF080034FA8E /* exchagneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596522FFEF080034FA8E /* exchagneView.swift */; };
@@ -164,7 +164,7 @@
 		7D0C030E22EB5FA5001FD837 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = "../New Group/SettingTableViewCell.swift"; sourceTree = "<group>"; };
 		7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
-		7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
+		7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastTripEmptyView.swift; sourceTree = "<group>"; };
 		7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerDelegate.swift; sourceTree = "<group>"; };
 		7D1F73A422F6B75E000AA055 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		7D72596522FFEF080034FA8E /* exchagneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchagneView.swift; sourceTree = "<group>"; };
@@ -460,9 +460,16 @@
 			isa = PBXGroup;
 			children = (
 				7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */,
-				7D1D587D237A9BCA0007E2F3 /* EmptyDataView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		7D895C6123D2DB86001AB3B6 /* PastTrip */ = {
+			isa = PBXGroup;
+			children = (
+				7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */,
+			);
+			path = PastTrip;
 			sourceTree = "<group>";
 		};
 		7D8DBB9122F0A18A008C20E9 /* ViewController */ = {
@@ -565,6 +572,7 @@
 		7DFC581222FF0D09002BFD86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7D895C6123D2DB86001AB3B6 /* PastTrip */,
 				7D895C4A23CF6FD0001AB3B6 /* Home */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
 				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
@@ -776,7 +784,7 @@
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */,
 				4ACC7005222AC9E5004095DA /* pastV.swift in Sources */,
-				7D1D587E237A9BCA0007E2F3 /* EmptyDataView.swift in Sources */,
+				7D1D587E237A9BCA0007E2F3 /* PastTripEmptyView.swift in Sources */,
 				7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,
 				4ACC7007222ACA04004095DA /* pastVM.swift in Sources */,
