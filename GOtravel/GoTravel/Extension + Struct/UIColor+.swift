@@ -40,11 +40,7 @@ extension UIColor {
   @nonobjc class var grey05: UIColor {
   return UIColor(white: 112.0 / 255.0, alpha: 1.0)
   }
-  
-  @nonobjc class var blackText: UIColor {
-    return UIColor(white: 15.0 / 255.0, alpha: 1.0)
-  }
-    
+
   @nonobjc class var fitcoOrange: UIColor {
   return UIColor(red: 241.0 / 255.0, green: 90.0 / 255.0, blue: 36.0 / 255.0, alpha: 1.0)
   }
@@ -63,6 +59,38 @@ extension UIColor {
   @nonobjc class var tealish: UIColor {
     return UIColor(red: 48.0 / 255.0, green: 180.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0)
   }
+  @nonobjc class var blush: UIColor {
+    return UIColor(red: 230.0 / 255.0, green: 154.0 / 255.0, blue: 154.0 / 255.0, alpha: 1.0)
+  }
+
+  @nonobjc class var lightPeriwinkle: UIColor {
+    return UIColor(red: 192.0 / 255.0, green: 186.0 / 255.0, blue: 1.0, alpha: 1.0)
+  }
+
+  @nonobjc class var greyishBrown: UIColor {
+    return UIColor(white: 69.0 / 255.0, alpha: 1.0)
+  }
+
+  @nonobjc class var veryLightPink: UIColor {
+    return UIColor(white: 204.0 / 255.0, alpha: 1.0)
+  }
+
+  @nonobjc class var whiteTwo: UIColor {
+    return UIColor(white: 245.0 / 255.0, alpha: 1.0)
+  }
+
+
+  @nonobjc class var brownGrey: UIColor {
+    return UIColor(white: 158.0 / 255.0, alpha: 1.0)
+  }
+
+  @nonobjc class var black: UIColor {
+    return UIColor(white: 33.0 / 255.0, alpha: 1.0)
+  }
+
+  @nonobjc class var turquoiseBlue: UIColor {
+    return UIColor(red: 0.0, green: 188.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)
+  }
 
 
 }
@@ -72,9 +100,9 @@ extension UIColor {
   @nonobjc class var butterscotch: UIColor {
     return UIColor(red: 249.0 / 255.0, green: 186.0 / 255.0, blue: 72.0 / 255.0, alpha: 1.0)
   }
-  @nonobjc class var black: UIColor {
-    return #colorLiteral(red: 0.07843137255, green: 0.07843137255, blue: 0.07843137255, alpha: 1)
-  }
+//  @nonobjc class var black: UIColor {
+//    return #colorLiteral(red: 0.07843137255, green: 0.07843137255, blue: 0.07843137255, alpha: 1)
+//  }
 	static var peach: UIColor {
 		return  UIColor(red: 1, green: 0.5764705882, blue: 0.5843137255, alpha: 1)
 	}

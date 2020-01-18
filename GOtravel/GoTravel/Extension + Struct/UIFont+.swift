@@ -12,6 +12,9 @@ extension UIFont {
   class var b27: UIFont {
     return UIFont.systemFont(ofSize: 27, weight: .bold)
   }
+  class var b26: UIFont {
+    return UIFont.systemFont(ofSize: 26, weight: .bold)
+  }
   class var b20: UIFont {
     return UIFont.systemFont(ofSize: 20, weight: .bold)
   }
@@ -24,6 +27,10 @@ extension UIFont {
   
   class var sb27: UIFont {
     return UIFont.systemFont(ofSize: 27, weight: .semibold)
+  }
+  
+  class var sb28: UIFont {
+    return UIFont.systemFont(ofSize: 28, weight: .semibold)
   }
   class var sb24: UIFont {
     return UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -89,6 +96,10 @@ extension UIFont {
   
   class var r10: UIFont {
   return UIFont(name: "AppleSDGothicNeo-Regular", size: 10.0)!
+  }
+  
+  class var r16: UIFont {
+  return UIFont(name: "AppleSDGothicNeo-Regular", size: 16.0)!
   }
   
 

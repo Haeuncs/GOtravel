@@ -102,15 +102,15 @@ class HomeMainViewController: UIViewController {
     
     navView.actionBtn.rx.tap
       .subscribe(onNext: { (_) in
-        let placeVC = AddTripViewController()
-        placeVC.categoryIndex = 1
+        let placeVC = AddTripViewController_new()
+//        placeVC.categoryIndex = 1
         self.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
     
     emptyView.addButton.rx.tap
       .subscribe(onNext: { (_) in
-        let placeVC = AddTripViewController()
-        placeVC.categoryIndex = 1
+        let placeVC = AddTripViewController_new()
+//        placeVC.categoryIndex = 1
         self.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
   }
@@ -132,7 +132,7 @@ class HomeMainViewController: UIViewController {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "여행 일정"
-    label.textColor = .blackText
+    label.textColor = .black
     label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
     return label
   }()

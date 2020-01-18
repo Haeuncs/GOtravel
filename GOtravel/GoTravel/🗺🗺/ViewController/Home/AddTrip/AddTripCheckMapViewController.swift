@@ -270,6 +270,8 @@ extension AddTripCheckMapViewController {
       detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
       detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
       detailRealmDB.color = "default"
+      debugPrint(detailRealmDB)
+      debugPrint(dayRealmDB.detailList)
       try! realm.write {
         dayRealmDB.detailList.append(detailRealmDB)
       }

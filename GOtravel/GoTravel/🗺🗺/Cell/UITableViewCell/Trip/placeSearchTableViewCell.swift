@@ -10,6 +10,20 @@ import Foundation
 import UIKit
 
 class placeSearchTableViewCell : UITableViewCell {
+  override var isSelected: Bool {
+    get {
+      return super.isSelected
+    }
+    set {
+      //do something
+      super.isSelected = newValue
+      if newValue {
+        self.imageView_.isHidden = false
+      }else{
+        self.imageView_.isHidden = true
+      }
+    }
+  }
   lazy var titleLabel : UILabel = {
     let label = UILabel()
     label.textColor = .black
@@ -29,8 +43,14 @@ class placeSearchTableViewCell : UITableViewCell {
     stack.distribution = .fill
     stack.axis = .vertical
     stack.translatesAutoresizingMaskIntoConstraints = false
-    
     return stack
+  }()
+  lazy var imageView_: UIImageView = {
+    let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.contentMode = .scaleAspectFit
+    view.image = UIImage(named: "check_Pixelperfect")
+    return view
   }()
   
   required init?(coder aDecoder: NSCoder) {
@@ -42,15 +62,23 @@ class placeSearchTableViewCell : UITableViewCell {
   }
   
   func initView(){
+    self.selectionStyle = .none
     self.backgroundColor = .white
     self.contentView.addSubview(stackView)
+    self.contentView.addSubview(imageView_)
     
     NSLayoutConstraint.activate([
       //            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
       //            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
       stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:20),
-      stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+      stackView.trailingAnchor.constraint(lessThanOrEqualTo: imageView_.leadingAnchor),
+      stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      
+      imageView_.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -14),
+      imageView_.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      imageView_.heightAnchor.constraint(equalToConstant: 24),
+      imageView_.widthAnchor.constraint(equalToConstant: 24)
+      
     ])
   }
 }

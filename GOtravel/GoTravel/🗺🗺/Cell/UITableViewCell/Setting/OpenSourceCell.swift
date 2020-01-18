@@ -62,7 +62,7 @@ class OpenSourceCell: UITableViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "타이틀"
     label.font = .sb17
-    label.textColor = .blackText
+    label.textColor = .black
     return label
   }()
   lazy var authorLabel: UILabel = {

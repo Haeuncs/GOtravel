@@ -116,7 +116,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
   lazy var timeLabel : UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-    label.textColor = .blackText
+    label.textColor = .black
     label.numberOfLines = 0
     label.isHidden = true
     
@@ -128,7 +128,7 @@ class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
   lazy var oneLineMemo : UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-    label.textColor = .blackText
+    label.textColor = .black
     label.numberOfLines = 0
     label.isHidden = true
     //        label.backgroundColor = .red

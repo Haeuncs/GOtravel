@@ -94,7 +94,7 @@ class pastVC: UIViewController {
   }()
   lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.textColor = .blackText
+    label.textColor = .black
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "지난 여행"
     label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)

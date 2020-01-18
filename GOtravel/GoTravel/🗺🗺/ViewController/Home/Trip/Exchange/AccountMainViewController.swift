@@ -31,7 +31,7 @@ class AccountMainViewController : UIViewController{
     self.view.backgroundColor = .white
     self.navigationController?.navigationBar.prefersLargeTitles = true
     self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Defaull_style.mainTitleColor]
-    self.navigationController?.navigationBar.tintColor = .blackText
+    self.navigationController?.navigationBar.tintColor = .black
     
     self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
     self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor

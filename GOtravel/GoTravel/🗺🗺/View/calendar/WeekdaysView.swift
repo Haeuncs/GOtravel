@@ -24,19 +24,20 @@ class WeekdaysView: UIView {
         myStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive=true
         myStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive=true
         
-        var daysArr = ["일", "월", "화", "수", "목", "금", "토"]
+      let daysArr = ["일", "월", "화", "수", "목", "금", "토"]
         for i in 0..<7 {
-            let lbl=UILabel()
-            lbl.font=UIFont.systemFont(ofSize: 12)
-            lbl.text=daysArr[i]
+            let lbl = UILabel()
+          lbl.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+            lbl.text = daysArr[i]
             lbl.textAlignment = .center
-            if i == 0{
-                lbl.textColor = UIColor.red
-            }else if i == 6{
-                lbl.textColor = UIColor.blue
-            }else{
-                lbl.textColor = Style.weekdaysLblColor
-            }
+//            if i == 0{
+//                lbl.textColor = UIColor.red
+//            }else if i == 6{
+//                lbl.textColor = UIColor.blue
+//            }else{
+//                lbl.textColor = Style.weekdaysLblColor
+//            }
+          lbl.textColor = Style.weekdaysLblColor
             myStackView.addArrangedSubview(lbl)
         }
     }

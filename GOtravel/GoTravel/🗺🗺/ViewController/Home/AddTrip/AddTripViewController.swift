@@ -43,6 +43,10 @@ class AddTripViewController : UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.view.backgroundColor = UIColor.white
     tableView.reloadData()
+    if let customTabBarController = self.tabBarController as? TabbarViewController {
+      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
+    }
+
   }
   lazy var navView: CustomNavigationBarView = {
     let view = CustomNavigationBarView()
@@ -74,8 +78,8 @@ class AddTripViewController : UIViewController {
     text.addTarget(self, action: #selector(textEdit), for: .editingChanged)
     text.addTarget(self, action: #selector(textEditBigin), for: .editingDidBegin)
     text.addTarget(self, action: #selector(textEditEnd), for: .editingDidEnd)
-    text.tintColor = .blackText
-    text.textColor = .blackText
+    text.tintColor = .black
+    text.textColor = .black
     text.attributedPlaceholder = NSAttributedString(
       string:"어디로 여행을 가시나요?",
       attributes:[NSAttributedString.Key.foregroundColor:
@@ -175,10 +179,10 @@ extension AddTripViewController {
                    delay: 0,
                    options: [.curveEaseOut],
                    animations: { [weak self] in
-                    self?.textField.tintColor = .blackText
-                    self?.textField.textColor = .blackText
-                    self?.searchView.layer.borderColor = UIColor.blackText.cgColor
-                    self?.searchImg.tintColor = .blackText
+                    self?.textField.tintColor = .black
+                    self?.textField.textColor = .black
+                    self?.searchView.layer.borderColor = UIColor.black.cgColor
+                    self?.searchImg.tintColor = .black
       }, completion: nil)
   }
   @objc func textEditEnd(){
@@ -189,7 +193,7 @@ extension AddTripViewController {
                      options: [.curveEaseOut],
                      animations: { [weak self] in
                       self?.textField.tintColor = .grey03
-                      self?.textField.textColor = .blackText
+                      self?.textField.textColor = .black
                       self?.searchView.layer.borderColor = UIColor.grey03.cgColor
                       self?.searchImg.tintColor = .grey03
         }, completion: nil)
@@ -296,12 +300,12 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
   }
 
 }
-
-extension AddTripViewController: UISearchResultsUpdating {
-  // MARK: - UISearchResultsUpdating Delegate
-  func updateSearchResults(for searchController: UISearchController) {
-    // TODO
-    print(searchController.searchBar.text!)
-    fetcher?.sourceTextHasChanged(searchController.searchBar.text!)
-  }
-}
+//
+//extension AddTripViewController: UISearchResultsUpdating {
+//  // MARK: - UISearchResultsUpdating Delegate
+//  func updateSearchResults(for searchController: UISearchController) {
+//    // TODO
+//    print(searchController.searchBar.text!)
+//    fetcher?.sourceTextHasChanged(searchController.searchBar.text!)
+//  }
+//}

@@ -58,7 +58,7 @@ class SettingTableViewCell: UITableViewCell {
     label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
     label.text = "설명"
     label.numberOfLines = 0
-    label.textColor = .blackText
+    label.textColor = .black
     return label
   }()
   lazy var bottomLineView: UIView = {

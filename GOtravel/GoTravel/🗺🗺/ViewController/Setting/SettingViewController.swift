@@ -16,9 +16,9 @@ class SettingViewController : UIViewController {
     // navigation bar color
     self.navigationController?.navigationBar.barTintColor = .white
     // navigation title color
-    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blackText]
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     // back button color
-    self.navigationController?.navigationBar.tintColor = .blackText
+    self.navigationController?.navigationBar.tintColor = .black
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

@@ -22,7 +22,7 @@ var nightDB = 0
 var dayDate = Date()
 var categoryArr = ["항공","숙박","쇼핑","식사","교통비","기타"]
 
-class AddTripDateViewController: UIViewController {
+class AddTripDateViewController: BaseUIViewController {
   
   let realm = try! Realm()
   
@@ -96,15 +96,18 @@ class AddTripDateViewController: UIViewController {
     self.view.backgroundColor = .white
     let availableWidth = view.frame.width - 7 - 10
     let widthPerItem = availableWidth / 7
-    view.addSubview(navView)
+//    view.addSubview(navView)
+    self.isDismiss = false
+    view.addSubview(textfield)
     view.addSubview(calenderView)
-    navView.snp.makeConstraints { (make) in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.height.equalTo(44)
+    view.addSubview(confirmButton)
+    textfield.snp.makeConstraints { (make) in
+      make.top.equalTo(baseView.snp.bottom).offset(6)
+      make.leading.equalTo(view.snp.leading).offset(16)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      //      make.bottom.equalTo(self.snp.bottom)
     }
-    //        calenderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive=true
+
     calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive=true
     calenderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive=true
     //        calenderView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 12).isActive=true
@@ -112,14 +115,21 @@ class AddTripDateViewController: UIViewController {
     calenderView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive=true
     calenderView.heightAnchor.constraint(equalToConstant: 70 + (widthPerItem * 6)).isActive=true
     
-    view.addSubview(addBtn)
-    addBtn.topAnchor.constraint(equalTo: calenderView.bottomAnchor,constant: 20).isActive=true
-    //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
-    addBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    addBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive=true
-    addBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive=true
-    addBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
-    
+//    view.addSubview(addBtn)
+//    addBtn.topAnchor.constraint(equalTo: calenderView.bottomAnchor,constant: 20).isActive=true
+//    //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
+//    addBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//    addBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive=true
+//    addBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive=true
+//    addBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
+    confirmButton.snp.makeConstraints { (make) in
+      make.height.equalTo(56)
+      make.leading.equalTo(view.snp.leading).offset(16)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45)
+      
+    }
+
     
   }
   @objc func buttonClicked(){
@@ -127,32 +137,39 @@ class AddTripDateViewController: UIViewController {
     saveRealmData()
     self.navigationController?.popToRootViewController(animated: true)
   }
-  lazy var navView: CustomNavigationBarView = {
-    let view = CustomNavigationBarView()
+  
+  lazy var textfield: TextFieldWithDescriptionView = {
+    let view = TextFieldWithDescriptionView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.setTitle(title: "여행 기간 설정")
-    view.setLeftIcon(image: UIImage(named: "back")!)
-    view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
+    view.textField.isEnabled = false
+    view.textField.text = "여행 일정을 설정하세요."
+    view.titleLabel.text = "여행 시작일, 종료일을 추가하세요."
     return view
   }()
-  @objc func popEvent(){
-    self.navigationController?.popViewController(animated: true)
-  }
-  let addBtn : UIButton = {
-    let b = UIButton()
-    b.translatesAutoresizingMaskIntoConstraints=false
-    b.layer.cornerRadius = 5
-    b.puls()
-    b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
-    b.isHidden = false
-    b.setTitle("일정 추가하기", for: .normal)
-    b.setTitleColor(.white, for: .normal)
-    b.tag = 0
-    b.isSelected = true
-    b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-    return b
-  }()
+
   
+//  let addBtn : UIButton = {
+//    let b = UIButton()
+//    b.translatesAutoresizingMaskIntoConstraints=false
+//    b.layer.cornerRadius = 5
+//    b.puls()
+//    b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+//    b.isHidden = false
+//    b.setTitle("일정 추가하기", for: .normal)
+//    b.setTitleColor(.white, for: .normal)
+//    b.tag = 0
+//    b.isSelected = true
+//    b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+//    return b
+//  }()
+  lazy var confirmButton: BottomButton = {
+    let button = BottomButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.title = "일정 추가하기"
+    button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+    return button
+  }()
+
   let ddayLabel : UILabel = {
     let label = UILabel()
     label.text = ""

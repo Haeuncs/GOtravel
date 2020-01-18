@@ -23,6 +23,7 @@ class HomeViewModel {
       tripData.onNext([])
       return
     }
+    debugPrint(readmData)
     let data = service.orderByDate(data: readmData)
     tripData.onNext(data)
   }

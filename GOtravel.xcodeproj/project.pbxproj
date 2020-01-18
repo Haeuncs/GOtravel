@@ -81,6 +81,14 @@
 		7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */; };
 		7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */; };
 		7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */; };
+		7D895C6423D2E235001AB3B6 /* CustomNavigationContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C6323D2E235001AB3B6 /* CustomNavigationContoller.swift */; };
+		7D895C6723D2E4C4001AB3B6 /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C6623D2E4C4001AB3B6 /* BaseUIViewController.swift */; };
+		7D895C6923D2E4ED001AB3B6 /* DismissNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C6823D2E4ED001AB3B6 /* DismissNavigationBar.swift */; };
+		7D895C6C23D2E509001AB3B6 /* PopNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C6B23D2E509001AB3B6 /* PopNavigationBar.swift */; };
+		7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C6D23D2F2F9001AB3B6 /* AddTripViewController_New.swift */; };
+		7D895C7123D32F72001AB3B6 /* TextFieldWithDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C7023D32F72001AB3B6 /* TextFieldWithDescriptionView.swift */; };
+		7D895C7423D342DF001AB3B6 /* AddTripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C7323D342DF001AB3B6 /* AddTripViewModel.swift */; };
+		7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C7523D3568A001AB3B6 /* BottomButton.swift */; };
 		7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */; };
 		7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */; };
 		7D95E22322EC59C0008CEC0B /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */; };
@@ -188,6 +196,14 @@
 		7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModelService.swift; sourceTree = "<group>"; };
 		7D895C4B23CF6FF2001AB3B6 /* HomeTripEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTripEmptyView.swift; sourceTree = "<group>"; };
+		7D895C6323D2E235001AB3B6 /* CustomNavigationContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationContoller.swift; sourceTree = "<group>"; };
+		7D895C6623D2E4C4001AB3B6 /* BaseUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
+		7D895C6823D2E4ED001AB3B6 /* DismissNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissNavigationBar.swift; sourceTree = "<group>"; };
+		7D895C6B23D2E509001AB3B6 /* PopNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopNavigationBar.swift; sourceTree = "<group>"; };
+		7D895C6D23D2F2F9001AB3B6 /* AddTripViewController_New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripViewController_New.swift; sourceTree = "<group>"; };
+		7D895C7023D32F72001AB3B6 /* TextFieldWithDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithDescriptionView.swift; sourceTree = "<group>"; };
+		7D895C7323D342DF001AB3B6 /* AddTripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripViewModel.swift; sourceTree = "<group>"; };
+		7D895C7523D3568A001AB3B6 /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceLicenseViewController.swift; path = ../OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		7D95E21822EC59B1008CEC0B /* GOtravelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GOtravelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOtravelUITests.swift; sourceTree = "<group>"; };
@@ -259,6 +275,8 @@
 		4A5F61E0220C9BA800531239 /* 🗺🗺 */ = {
 			isa = PBXGroup;
 			children = (
+				7D895C6523D2E4B6001AB3B6 /* UIViewController */,
+				7D895C6223D2E222001AB3B6 /* UINavigationController */,
 				7D0C031222EB7108001FD837 /* Cell */,
 				7DFC580922FE6E0F002BFD86 /* TabBar */,
 				7DFC581222FF0D09002BFD86 /* View */,
@@ -298,6 +316,7 @@
 				4AC710A921F0C6C900B20448 /* AddTripViewController.swift */,
 				4AC710AE21F0EB3900B20448 /* AddTripCheckMapViewController.swift */,
 				4AA331C621EB8EB0004E2536 /* AddTripDateViewController.swift */,
+				7D895C6D23D2F2F9001AB3B6 /* AddTripViewController_New.swift */,
 			);
 			path = AddTrip;
 			sourceTree = "<group>";
@@ -451,6 +470,7 @@
 		7D895C4523CF6765001AB3B6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				7D895C7223D342CE001AB3B6 /* AddTrip */,
 				7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */,
 			);
 			path = Home;
@@ -470,6 +490,48 @@
 				7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */,
 			);
 			path = PastTrip;
+			sourceTree = "<group>";
+		};
+		7D895C6223D2E222001AB3B6 /* UINavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C6323D2E235001AB3B6 /* CustomNavigationContoller.swift */,
+			);
+			path = UINavigationController;
+			sourceTree = "<group>";
+		};
+		7D895C6523D2E4B6001AB3B6 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C6623D2E4C4001AB3B6 /* BaseUIViewController.swift */,
+			);
+			path = UIViewController;
+			sourceTree = "<group>";
+		};
+		7D895C6A23D2E4F2001AB3B6 /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C6823D2E4ED001AB3B6 /* DismissNavigationBar.swift */,
+				7D895C6B23D2E509001AB3B6 /* PopNavigationBar.swift */,
+			);
+			path = NavigationBar;
+			sourceTree = "<group>";
+		};
+		7D895C6F23D32F56001AB3B6 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C7023D32F72001AB3B6 /* TextFieldWithDescriptionView.swift */,
+				7D895C7523D3568A001AB3B6 /* BottomButton.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		7D895C7223D342CE001AB3B6 /* AddTrip */ = {
+			isa = PBXGroup;
+			children = (
+				7D895C7323D342DF001AB3B6 /* AddTripViewModel.swift */,
+			);
+			path = AddTrip;
 			sourceTree = "<group>";
 		};
 		7D8DBB9122F0A18A008C20E9 /* ViewController */ = {
@@ -572,8 +634,10 @@
 		7DFC581222FF0D09002BFD86 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7D895C6123D2DB86001AB3B6 /* PastTrip */,
+				7D895C6F23D32F56001AB3B6 /* Custom */,
+				7D895C6A23D2E4F2001AB3B6 /* NavigationBar */,
 				7D895C4A23CF6FD0001AB3B6 /* Home */,
+				7D895C6123D2DB86001AB3B6 /* PastTrip */,
 				4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */,
 				4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */,
 				4ACC7004222AC9E5004095DA /* pastV.swift */,
@@ -801,13 +865,16 @@
 				4A969BF621E5A2F00016DB49 /* ViewController.swift in Sources */,
 				7DFC581822FF120E002BFD86 /* LineAnimateTextFieldView.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
+				7D895C6923D2E4ED001AB3B6 /* DismissNavigationBar.swift in Sources */,
 				4A779F5721E7C24C00CCE52F /* mainViewController.swift in Sources */,
 				4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */,
+				7D895C6423D2E235001AB3B6 /* CustomNavigationContoller.swift in Sources */,
 				4AC710B121F0EE1400B20448 /* struct.swift in Sources */,
 				4A779F5921E7C24C00CCE52F /* MKPlacemark+.swift in Sources */,
 				4A5B322721F6913E0007AB21 /* DefaultStyle.swift in Sources */,
 				4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */,
 				7D72597E2301AC800034FA8E /* DirectAddAccountCell.swift in Sources */,
+				7D895C7123D32F72001AB3B6 /* TextFieldWithDescriptionView.swift in Sources */,
 				4AC7103C21EE10C600B20448 /* TripDetailViewController.swift in Sources */,
 				4A5F9CAD21FA100A0097C5C1 /* Enum_exchange.swift in Sources */,
 				4AC710AF21F0EB3900B20448 /* AddTripCheckMapViewController.swift in Sources */,
@@ -816,6 +883,7 @@
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
 				4A0004AF222CF1AC003DEC20 /* SettingViewController.swift in Sources */,
 				7D7259792301A7270034FA8E /* DirectAddAccountModel.swift in Sources */,
+				7D895C6C23D2E509001AB3B6 /* PopNavigationBar.swift in Sources */,
 				7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */,
 				7D725971230062850034FA8E /* OpenSourceLicenseModel.swift in Sources */,
 				7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */,
@@ -823,20 +891,24 @@
 				4A3BC29821F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift in Sources */,
 				7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */,
 				4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */,
+				7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */,
 				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,
 				4A779F5821E7C24C00CCE52F /* addTravelInfoViewController.swift in Sources */,
 				7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
 				4AC710AA21F0C6C900B20448 /* AddTripViewController.swift in Sources */,
 				7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */,
+				7D895C7423D342DF001AB3B6 /* AddTripViewModel.swift in Sources */,
 				7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
+				7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
 				7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */,
 				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,
 				4A779F5A21E7C24C00CCE52F /* MapViewController.swift in Sources */,
 				4A779F5B21E7C24C00CCE52F /* LocationManager.swift in Sources */,
+				7D895C6723D2E4C4001AB3B6 /* BaseUIViewController.swift in Sources */,
 				4A779F5C21E7C24C00CCE52F /* searchTravelLocationViewController.swift in Sources */,
 				7D72931E23097CF400578A5F /* Reactive+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
