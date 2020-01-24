@@ -95,10 +95,10 @@ class BaseUIViewController: UIViewController {
 
 extension BaseUIViewController {
   @objc func event(){
-    if ((self.navigationController?.topViewController) != nil) {
-      self.navigationController?.popViewController(animated: true)
-    }else {
+    if isDismiss! {
       self.dismiss(animated: true, completion: nil)
+    }else {
+      self.navigationController?.popViewController(animated: true)
     }
   }
 }

@@ -6,9 +6,9 @@
 //  Copyright © 2019 haeun. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
+import SnapKit
 
 
 class addDetailView : UIView {
@@ -26,8 +26,8 @@ class addDetailView : UIView {
   var countryLabel : UILabel = {
     let label = UILabel()
     label.text = "일본 여행 🗺"
-    label.textColor = Defaull_style.mainTitleColor
-    label.font = UIFont.systemFont(ofSize: 24, weight: .heavy)
+    label.textColor = .black
+    label.font = .sb28
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -35,24 +35,29 @@ class addDetailView : UIView {
   var subLabel : UILabel = {
     let label = UILabel()
     label.text = "오사카 교토"
-    label.textColor = Defaull_style.mainTitleColor
-    label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+    label.textColor = .black
+    label.font = .sb17
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   var dateLabel : UILabel = {
     let label = UILabel()
     label.text = "2019.02.10~2019.02.16 5박6일"
-    label.textColor = Defaull_style.mainTitleColor
-    label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+    label.textColor = .black
+    label.font = .sb17
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   lazy var moneyBtn: UIButton = {
     let btn = UIButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
-    btn.setImage(UIImage(named: "invoice"), for: .normal)
+    btn.setImage(UIImage(named: "changeSmashicons"), for: .normal)
+    btn.imageView?.frame = CGRect(x: 0, y: 0, width: 21, height: 21)
     btn.imageView?.contentMode = .scaleAspectFit
+    btn.layer.cornerRadius = 38/2
+    btn.backgroundColor = .white
+    btn.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 0, blur: 4, spread: 0)
+    
     return btn
   }()
   
@@ -62,38 +67,33 @@ class addDetailView : UIView {
     addSubview(subLabel)
     addSubview(dateLabel)
     addSubview(moneyBtn)
-    // iphone 은 8 ipad 는 15
-    let lableConstant = CGFloat(8)
     
-    NSLayoutConstraint.activate([
-      countryLabel.topAnchor.constraint(equalTo: topAnchor),
-      countryLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
-      countryLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      
-      subLabel.topAnchor.constraint(equalTo: countryLabel.bottomAnchor),
-      subLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
-      subLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      
-      dateLabel.topAnchor.constraint(equalTo: subLabel.bottomAnchor),
-      dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:lableConstant),
-      dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      
-      moneyBtn.widthAnchor.constraint(equalToConstant: 28),
-      moneyBtn.heightAnchor.constraint(equalToConstant: 28),
-      moneyBtn.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-      moneyBtn.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 0),
-      
-      // data size에 맞추기 위한 앵커
-      bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:lableConstant),
-      
-    ])
+    countryLabel.snp.makeConstraints { (make) in
+      make.leading.trailing.equalTo(self)
+      make.top.equalTo(self.snp.top).offset(8)
+    }
+    subLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(countryLabel.snp.bottom).offset(8)
+      make.leading.trailing.equalTo(self)
+    }
+    dateLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(subLabel.snp.bottom).offset(8)
+      make.leading.trailing.equalTo(self)
+      make.bottom.equalTo(self.snp.bottom)
+    }
+    moneyBtn.snp.makeConstraints { (make) in
+      make.width.height.equalTo(38)
+      make.trailing.equalTo(self.snp.trailing)
+      make.centerY.equalTo(self.snp.centerY)
+    }
   }
   
 }
-class addDetailViewCellView: UIView {
+class TripDateView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    initView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -101,13 +101,42 @@ class addDetailViewCellView: UIView {
   }
   override func layoutSubviews() {
     super.layoutSubviews()
-    initView()
   }
-  
+  func initView(){
+    
+    self.addSubview(contentView)
+    contentView.addSubview(stackView)
+    stackView.addArrangedSubview(dateLabel)
+    stackView.addArrangedSubview(dayOfTheWeek)
+    
+    contentView.snp.makeConstraints { (make) in
+      make.top.leading.trailing.bottom.equalTo(self)
+    }
+    stackView.snp.makeConstraints { (make) in
+      make.center.equalTo(contentView)
+//      make.top.leading.trailing.bottom.equalTo(contentView)
+      
+    }
+  }
+  lazy var contentView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  lazy var stackView: UIStackView = {
+    let stack = UIStackView()
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    stack.axis = .vertical
+    stack.alignment = .center
+    stack.distribution =  .equalSpacing
+    stack.spacing = 8
+    return stack
+  }()
   let dateLabel : UILabel = {
     let label = UILabel()
     label.textAlignment = .center
-    label.textColor = Defaull_style.dateColor
+    label.font = .sb17
+    label.textColor = .black
     label.text = "test"
     label.numberOfLines = 0
     ////        label.layer.cornerRadius = 8
@@ -119,37 +148,13 @@ class addDetailViewCellView: UIView {
   let dayOfTheWeek : UILabel = {
     let label = UILabel()
     label.textAlignment = .center
-    label.textColor = Defaull_style.dateColor
-    label.text = "월요일"
-    label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+    label.font = .sb17
+    label.textColor = .black
     label.numberOfLines = 0
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  func initView(){
-    
-    addSubview(dateLabel)
-    addSubview(dayOfTheWeek)
-    
-    NSLayoutConstraint.activate([
-      dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant:10),
-      dateLabel.topAnchor.constraint(equalTo: topAnchor,constant:10),
-      dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-10),
-      // 정사각형으로 만들기!
-      dateLabel.heightAnchor.constraint(equalTo: widthAnchor, constant: -20),
-      
-      dayOfTheWeek.leadingAnchor.constraint(equalTo: leadingAnchor),
-      dayOfTheWeek.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant:5),
-      dayOfTheWeek.trailingAnchor.constraint(equalTo: trailingAnchor),
-    ])
-    //        // get dateLabel real size
-    //        dateLabel.setNeedsLayout()
-    //        dateLabel.layoutIfNeeded()
-    //        let dateLabelCircle = dateLabel.frame.width / 2
-    //        dateLabel.layer.cornerRadius = dateLabelCircle
-    //
-    
-  }
+  
 }
 class addDetailViewCellButtonView : UIView {
   
@@ -164,7 +169,15 @@ class addDetailViewCellButtonView : UIView {
     super.layoutSubviews()
     initView()
   }
-  
+  lazy var addButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setImage(UIImage(named: "morePixelPerfect"), for: .normal)
+    button.imageView?.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//    button.layer.zeplinStyleShadows(color: UIColor(red: 1.0, green: 250.0 / 255.0, blue: 221.0 / 255.0, alpha: 1.0), alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
+    return button
+  }()
+
   let addBtn : UIButton = {
     let button = UIButton(type: .custom)
     let image = UIImage(named: "addBtn")?.withRenderingMode(.alwaysTemplate)
@@ -211,34 +224,39 @@ class addDetailViewCellButtonView : UIView {
     return view
   }()
   func initView(){
-    addSubview(pathBtn)
-    addSubview(moneyBtn)
-    addSubview(detailBtn)
-    addSubview(addBtn)
-    NSLayoutConstraint.activate([
-      addBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-      addBtn.heightAnchor.constraint(equalToConstant: 35),
-      addBtn.widthAnchor.constraint(equalToConstant: 35),
-      
-      moneyBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-      moneyBtn.heightAnchor.constraint(equalToConstant: 35),
-      moneyBtn.widthAnchor.constraint(equalToConstant: 35),
-      
-      detailBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-      detailBtn.heightAnchor.constraint(equalToConstant: 35),
-      detailBtn.widthAnchor.constraint(equalToConstant: 35),
-      
-      pathBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-      pathBtn.heightAnchor.constraint(equalToConstant: 35),
-      pathBtn.widthAnchor.constraint(equalToConstant: 35),
-      
-      
-      addBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-      detailBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-      moneyBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-      pathBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-      
-    ])
+    self.addSubview(addButton)
+//    addSubview(pathBtn)
+//    addSubview(moneyBtn)
+//    addSubview(detailBtn)
+//    addSubview(addBtn)
+    addButton.snp.makeConstraints { (make) in
+      make.trailing.equalTo(self)
+      make.centerY.equalTo(self)
+    }
+//    NSLayoutConstraint.activate([
+//      addBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
+//      addBtn.heightAnchor.constraint(equalToConstant: 35),
+//      addBtn.widthAnchor.constraint(equalToConstant: 35),
+//      
+//      moneyBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
+//      moneyBtn.heightAnchor.constraint(equalToConstant: 35),
+//      moneyBtn.widthAnchor.constraint(equalToConstant: 35),
+//      
+//      detailBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
+//      detailBtn.heightAnchor.constraint(equalToConstant: 35),
+//      detailBtn.widthAnchor.constraint(equalToConstant: 35),
+//      
+//      pathBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
+//      pathBtn.heightAnchor.constraint(equalToConstant: 35),
+//      pathBtn.widthAnchor.constraint(equalToConstant: 35),
+//      
+//      
+//      addBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+//      detailBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+//      moneyBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+//      pathBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+//      
+//    ])
     
   }
   

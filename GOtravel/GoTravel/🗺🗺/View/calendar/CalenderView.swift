@@ -166,7 +166,9 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
       if (dateRange.contains(date)){
         cell.lbl.textColor = .white
         if date == dateRange.first || date == dateRange.last{
-          print(dateRange)
+          for i in dateRange {
+            print(i.localDateString())
+          }
           cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         }
         else{

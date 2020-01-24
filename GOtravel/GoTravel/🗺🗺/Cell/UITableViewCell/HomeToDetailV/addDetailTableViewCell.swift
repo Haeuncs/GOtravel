@@ -35,7 +35,6 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     }
     
   }
-  
   override func layoutSubviews() {
     super.layoutSubviews()
     initView()
@@ -45,10 +44,9 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     }
     
   }
-  
+
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -56,17 +54,10 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
   }
   
   func initView(){
-    contentView.backgroundColor = .white
-    
-    contentView.addSubview(stackView)
-    contentView.addSubview(paddingViewBottom)
-    
-    stackView.addArrangedSubview(dateView)
-    stackView.addArrangedSubview(detailScheduleTableView)
-    
     // programmatically 방식의 cell
     detailScheduleTableView.register(addDetailTableViewCellInsideTableViewCell.self, forCellReuseIdentifier: "cell")
-    
+    detailScheduleTableView.register(TripDetailEmptyTableViewCell.self, forCellReuseIdentifier: "TripDetailEmptyTableViewCell")
+
     detailScheduleTableView.delegate = self
     detailScheduleTableView.dataSource = self
     //        detailScheduleTableView.separatorStyle = .none
@@ -86,29 +77,41 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     initLayout()
   }
   func initLayout(){
-    let stackViewMultiplerWidth = NSLayoutConstraint(item: dateView, attribute: .width, relatedBy: .equal, toItem: detailScheduleTableView, attribute: .width, multiplier: 0.25, constant: 0.0)
+    contentView.backgroundColor = .white
     
+//    contentView.addSubview(stackView)
+    contentView.addSubview(detailScheduleTableView)
+    contentView.addSubview(paddingViewBottom)
+    contentView.addSubview(dateView)
+
+//    stackView.addArrangedSubview(dateView)
+//    stackView.addArrangedSubview(detailScheduleTableView)
+    
+    dateView.snp.makeConstraints { (make) in
+      make.top.leading.equalTo(contentView).offset(16)
+      make.width.height.equalTo(66)
+    }
+    detailScheduleTableView.snp.makeConstraints { (make) in
+      make.top.equalTo(contentView).offset(12)
+      make.trailing.equalTo(contentView)
+      make.leading.equalTo(dateView.snp.trailing)
+      make.bottom.equalTo(paddingViewBottom.snp.top)
+    }
     NSLayoutConstraint.activate([
-      paddingViewBottom.heightAnchor.constraint(equalToConstant: CGFloat(sizeConstant.paddingSize)),
+      paddingViewBottom.heightAnchor.constraint(equalToConstant: 42),
       paddingViewBottom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       paddingViewBottom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       paddingViewBottom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
       
-      stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-      stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-      stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      stackView.bottomAnchor.constraint(equalTo: paddingViewBottom.topAnchor),
-      
-      
-      stackViewMultiplerWidth
-      
     ])
-    
   }
   // MARK: Cell 에서 사용하는 것들
-  lazy var dateView : addDetailViewCellView = {
-    let view = addDetailViewCellView()
+  lazy var dateView : TripDateView = {
+    let view = TripDateView()
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .white
+    view.layer.cornerRadius = 8
+    view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
     return view
   }()
   lazy var detailScheduleTableView : UITableView = {
@@ -119,6 +122,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     tableView.separatorStyle = .none
     tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.register(TripDetailEmptyTableViewCell.self, forCellReuseIdentifier: "TripDetailEmptyTableViewCell")
     return tableView
   }()
   lazy var stackView : UIStackView = {
@@ -156,7 +160,7 @@ extension addDetailTableViewCell {
     mydelegate?.addDetailViewTableViewCellDidTapInTableView(self,detailIndex: indexPath.row)
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 80
+    return 78
   }
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     return 200
@@ -197,26 +201,19 @@ extension addDetailTableViewCell {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCellInsideTableViewCell
-    if count == 0{
-      cell.titleLabel.text = "저장된 일정이 없습니다."
-      cell.titleLabel.textAlignment = .center
-      cell.titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-      cell.titleLabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-      cell.timeLabel.text = ""
-      cell.colorView.backgroundColor = UIColor.clear
-      cell.timeLabel.isHidden = true
-      cell.oneLineMemo.isHidden = true
-      
+    if count == 0 {
+      let emptyCell = tableView.dequeueReusableCell(withIdentifier: "TripDetailEmptyTableViewCell", for: indexPath) as! TripDetailEmptyTableViewCell
+      return emptyCell
     }else{
+      let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCellInsideTableViewCell
       cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "ko-KR")
       dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm:ss a")
       //            let day = dateFormatter.string(from: dayRealmDB!.detailList[indexPath.row].date ?? Date())
       cell.titleLabel.textColor = .black
-      cell.titleLabel.font = UIFont.systemFont(ofSize: 16)
-      cell.titleLabel.textAlignment = .natural
+      cell.titleLabel.font = .sb17
+      cell.titleLabel.textAlignment = .left
       if dayRealmDB?.detailList[indexPath.row].startTime != nil {
         cell.timeLabel.isHidden = true
       }
@@ -237,8 +234,8 @@ extension addDetailTableViewCell {
       }else if oneLineMemo == "" {
         cell.oneLineMemo.isHidden = true
       }
+      return cell
     }
-    return cell
   }
   func characterToCgfloat(str : String) -> CGFloat {
     let n = NumberFormatter().number(from: str)

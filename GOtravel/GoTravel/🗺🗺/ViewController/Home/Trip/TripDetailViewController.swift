@@ -25,9 +25,13 @@ protocol addDetailViewTableViewCellDelegate : class {
   func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
 }
 
+protocol TripDetailDataPopupDelegate: class {
+  func TripDetailDataPopupMoney(day: Int)
+  func TripDetailDataPopupSchedule(day: Int)
+  func TripDetailDataPopupPath(day: Int)
+}
 
-
-class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDelegate{
+class TripDetailViewController: BaseUIViewController ,addDetailViewTableViewCellDelegate{
   
   // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
   var isEdit : Bool? = false
@@ -45,6 +49,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.isDismiss = true
     initView()
     self.navigationController?.navigationBar.isHidden = true
   }
@@ -64,20 +69,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   func initView(){
     beforeSelectIndexPath = false
     isEdit = false
-    
-//    // 뷰 겹치는거 방지
-//    self.navigationController!.navigationBar.isTranslucent = false
-//    // 아래 그림자 생기는거 지우기
-//    self.navigationController?.navigationBar.shadowImage = UIImage()
-//    let leftButton = UIBarButtonItem(title: "일정", style: .plain, target: self, action: #selector(self.dismissEvent))
-//    self.navigationItem.leftBarButtonItem = leftButton
-//
-//    let rightButton = UIBarButtonItem(title: "편집", style: .done, target: self, action: #selector(self.editEvent))
-//    self.navigationItem.rightBarButtonItem = rightButton
-//
-//    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-//    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-    
+        
     scheduleMainTableView.register(addDetailTableViewCell.self, forCellReuseIdentifier: "cell")
     
     scheduleMainTableView.dataSource = self
@@ -85,8 +77,8 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     
     view.backgroundColor = .white
     
-    view.addSubview(navView)
-    view.addSubview(mainView)
+//    view.addSubview(navView)
+    view.addSubview(TripDescriptionView)
     view.addSubview(scheduleMainTableView)
     
     
@@ -129,18 +121,18 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   
   func initLayout(){
     // constraint
-    navView.snp.makeConstraints { (make) in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.height.equalTo(44)
-    }
+//    navView.snp.makeConstraints { (make) in
+//      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//      make.left.equalTo(view.snp.left)
+//      make.right.equalTo(view.snp.right)
+//      make.height.equalTo(44)
+//    }
     NSLayoutConstraint.activate([
-      mainView.topAnchor.constraint(equalTo: navView.bottomAnchor),
-      mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-      mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      TripDescriptionView.topAnchor.constraint(equalTo: baseView.bottomAnchor),
+      TripDescriptionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      TripDescriptionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       
-      scheduleMainTableView.topAnchor.constraint(equalTo: mainView.bottomAnchor),
+      scheduleMainTableView.topAnchor.constraint(equalTo: TripDescriptionView.bottomAnchor),
       scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -153,8 +145,8 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   func getRealmData(){
     //        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
     
-    mainView.countryLabel.text = countryRealmDB.country
-    mainView.subLabel.text = countryRealmDB.city
+    TripDescriptionView.countryLabel.text = countryRealmDB.country
+    TripDescriptionView.subLabel.text = countryRealmDB.city
     
     let dateFormatter = DateFormatter()
     let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period - 1, to: countryRealmDB.date!)
@@ -165,10 +157,22 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     let endDay = dateFormatter.string(from: DBDate!)
     
     
-    mainView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
+    TripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
     //        scheduleMainTableView.reloadData()
   }
   // MARK: 버튼 이벤트
+  @objc func moreDidTap(_ sender: UIButton){
+    // 피드백 진동
+    impact.impactOccurred()
+    let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
+    let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
+    
+    let vc = TripDetailPopupViewController()
+    vc.setup(self.countryRealmDB, day: indexPath.row, delegate: self)
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overFullScreen
+    self.present(vc, animated: true, completion: nil)
+  }
   @objc func editEvent(){
     isEdit = !isEdit!
     scheduleMainTableView.reloadData()
@@ -190,7 +194,6 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     
     // 스크롤 변수 설정! viewWillAppear 에서 사용함
     selectRow = indexPath.row
-    
     buttonEvent(indexPath: indexPath)
   }
   @objc func placeButtonEvent(_ sender : UIButton){
@@ -289,7 +292,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
   }()
   // title을 갖는 뷰
   // 여행지랑 몇박 몇일인지 등등
-  lazy var mainView: addDetailView = {
+  lazy var TripDescriptionView: addDetailView = {
     let view = addDetailView()
     view.moneyBtn.addTarget(self, action: #selector(pushExchangeViewController), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -302,7 +305,7 @@ class TripDetailViewController: UIViewController ,addDetailViewTableViewCellDele
     tableView.tag = 0
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.separatorColor = Defaull_style.subTitleColor
-    tableView.separatorStyle = .singleLine
+    tableView.separatorStyle = .none
     tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     tableView.allowsSelection = false
     return tableView
@@ -422,9 +425,9 @@ extension TripDetailViewController : UITableViewDataSource{
     
     let day = dateFormatter.string(from: DBDate ?? Date())
     cell.dateView.dayOfTheWeek.text = day + "요일"
-    cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일"
+    cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일차"
     cell.count = countryRealmDB.dayList[indexPath.row].detailList.count
-    
+    cell.paddingViewBottom.addButton.addTarget(self, action: #selector(moreDidTap(_:)), for: .touchUpInside)
     cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
     cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
     cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
@@ -465,5 +468,36 @@ extension TripDetailViewController{
     vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
     //    vc.countryRealmDB = self.countryRealmDB
     self.navigationController?.pushViewController(vc, animated: true)
+  }
+}
+
+
+extension TripDetailViewController: TripDetailDataPopupDelegate {
+  func TripDetailDataPopupMoney(day: Int) {
+    let vc = AccountMainViewControllerNew()
+    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
+    // 여행 전 경비가 있음으로 + 1
+    vc.selectedIndex = BehaviorSubject(value: day + 1)
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+  
+  func TripDetailDataPopupSchedule(day: Int) {
+    let placeVC = AddTripViewController()
+    placeVC.countryRealmDB = countryRealmDB
+    placeVC.dayRealmDB = countryRealmDB.dayList[day]
+    placeVC.categoryIndex = 0
+    self.navigationController?.pushViewController(placeVC, animated: true)
+  }
+  
+  func TripDetailDataPopupPath(day: Int) {
+    let googleVC = AddTripCheckMapViewController()
+    if countryRealmDB.dayList[day].detailList.first != nil{
+      googleVC.navTitle = countryRealmDB.city
+      googleVC.arrayMap = true
+      googleVC.currentSelect = countryRealmDB.dayList[day].detailList.first!
+      googleVC.dayDetailRealm = countryRealmDB.dayList[day].detailList
+      googleVC.dayRealmDB = countryRealmDB.dayList[day]
+      self.navigationController?.pushViewController(googleVC, animated: true)
+    }
   }
 }

@@ -24,11 +24,16 @@ class HomeMainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
-//    print(Realm.Configuration.defaultConfiguration.fileURL!)
-
+    //    print(Realm.Configuration.defaultConfiguration.fileURL!)
+    
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    if let customTabBarController = self.tabBarController as? TabbarViewController {
+      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
+      customTabBarController.setSelectLine(index: 0)
+    }
+    
     navigationController?.navigationBar.isHidden = true
     rx()
   }
@@ -41,12 +46,12 @@ class HomeMainViewController: UIViewController {
                    animations: { [weak self] in
                     self?.view.layoutIfNeeded()
       }, completion: nil)
-
+    
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     titleConstraint?.constant -= view.bounds.width
-
+    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -70,8 +75,8 @@ class HomeMainViewController: UIViewController {
     
     viewModel.tripData.subscribe(onNext: { (arr) in
       self.setup(count: arr.count)
-      })
-    .disposed(by: disposeBag)
+    })
+      .disposed(by: disposeBag)
     
     viewModel.tripData.asObserver()
       .bind(to: tripCollectionView.rx.items(
@@ -83,7 +88,7 @@ class HomeMainViewController: UIViewController {
           
     }
     .disposed(by: disposeBag)
-
+    
     tripCollectionView.rx.modelSelected(countryRealm.self)
       .subscribe(onNext: { (country) in
         let tripViewController = TripDetailViewController()
@@ -103,14 +108,14 @@ class HomeMainViewController: UIViewController {
     navView.actionBtn.rx.tap
       .subscribe(onNext: { (_) in
         let placeVC = AddTripViewController_new()
-//        placeVC.categoryIndex = 1
+        //        placeVC.categoryIndex = 1
         self.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
     
     emptyView.addButton.rx.tap
       .subscribe(onNext: { (_) in
         let placeVC = AddTripViewController_new()
-//        placeVC.categoryIndex = 1
+        //        placeVC.categoryIndex = 1
         self.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
   }
@@ -231,7 +236,7 @@ class HomeMainViewController: UIViewController {
 }
 
 extension HomeMainViewController {
-
+  
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
     self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)

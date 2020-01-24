@@ -32,7 +32,7 @@ class MonthView: UIView {
   }
   
   @objc func btnLeftRightAction(sender: UIButton) {
-    if sender == btnRight {
+    if sender == btnLeft {
       currentMonthIndex += 1
       if currentMonthIndex > 11 {
         currentMonthIndex = 0
@@ -115,7 +115,7 @@ btnRight.snp.makeConstraints { (make) in
     let btn=UIButton()
 //    btn.setTitle(">", for: .normal)
 //    btn.setTitleColor(Style.monthViewBtnRightColor, for: .normal)
-    btn.setImage(UIImage(named: "arrowTop"), for: .normal)
+    btn.setImage(UIImage(named: "arrowLeft"), for: .normal)
     btn.imageView?.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
     btn.imageView?.contentMode = .scaleAspectFit
     btn.translatesAutoresizingMaskIntoConstraints=false
@@ -130,7 +130,7 @@ btnRight.snp.makeConstraints { (make) in
   let btnLeft: UIButton = {
     let btn=UIButton()
     //    btn.setTitleColor(Style.monthViewBtnRightColor, for: .normal)
-    btn.setImage(UIImage(named: "arrowBottom"), for: .normal)
+    btn.setImage(UIImage(named: "arrowRight"), for: .normal)
     btn.imageView?.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
     btn.imageView?.contentMode = .scaleAspectFit
     btn.translatesAutoresizingMaskIntoConstraints=false

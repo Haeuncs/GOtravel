@@ -30,13 +30,7 @@ class AddTripDateViewController: BaseUIViewController {
   
   var dayListDB = List<dayRealm>()
   var theme = MyTheme.dark
-  //    let eventC = event()
-  //    @IBAction func plusBtn(_ sender: Any) {
-  //        eventC.sideMenu(selfV: self)
-  //    }
-  //    @IBAction func sideBtn(_ sender: Any) {
-  //        panel?.openLeft(animated: true)
-  //    }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -51,10 +45,11 @@ class AddTripDateViewController: BaseUIViewController {
       customTabBarController.setSelectLine(index: 0)
     }
   }
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    calenderView.myCollectionView.collectionViewLayout.invalidateLayout()
+  }
   func saveRealmData(){
-    // realm location print
-    //        print(Realm.Configuration.defaultConfiguration.fileURL!)
-    
     saveCountryRealmData.country = saveCountryRealmData.country
     saveCountryRealmData.city = saveCountryRealmData.city
     saveCountryRealmData.date = dayDate
@@ -92,7 +87,6 @@ class AddTripDateViewController: BaseUIViewController {
     
   }
   func initializeView(){
-        
     self.view.backgroundColor = .white
     let availableWidth = view.frame.width - 7 - 10
     let widthPerItem = availableWidth / 7
@@ -105,23 +99,13 @@ class AddTripDateViewController: BaseUIViewController {
       make.top.equalTo(baseView.snp.bottom).offset(6)
       make.leading.equalTo(view.snp.leading).offset(16)
       make.trailing.equalTo(view.snp.trailing).offset(-16)
-      //      make.bottom.equalTo(self.snp.bottom)
     }
 
     calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive=true
     calenderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive=true
-    //        calenderView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 12).isActive=true
     calenderView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive=true
     calenderView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive=true
     calenderView.heightAnchor.constraint(equalToConstant: 70 + (widthPerItem * 6)).isActive=true
-    
-//    view.addSubview(addBtn)
-//    addBtn.topAnchor.constraint(equalTo: calenderView.bottomAnchor,constant: 20).isActive=true
-//    //        ddayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant:-5).isActive = true
-//    addBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//    addBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive=true
-//    addBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive=true
-//    addBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
     confirmButton.snp.makeConstraints { (make) in
       make.height.equalTo(56)
       make.leading.equalTo(view.snp.leading).offset(16)
@@ -133,7 +117,6 @@ class AddTripDateViewController: BaseUIViewController {
     
   }
   @objc func buttonClicked(){
-    print("select")
     saveRealmData()
     self.navigationController?.popToRootViewController(animated: true)
   }
@@ -147,21 +130,6 @@ class AddTripDateViewController: BaseUIViewController {
     return view
   }()
 
-  
-//  let addBtn : UIButton = {
-//    let b = UIButton()
-//    b.translatesAutoresizingMaskIntoConstraints=false
-//    b.layer.cornerRadius = 5
-//    b.puls()
-//    b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
-//    b.isHidden = false
-//    b.setTitle("일정 추가하기", for: .normal)
-//    b.setTitleColor(.white, for: .normal)
-//    b.tag = 0
-//    b.isSelected = true
-//    b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-//    return b
-//  }()
   lazy var confirmButton: BottomButton = {
     let button = BottomButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -179,12 +147,7 @@ class AddTripDateViewController: BaseUIViewController {
     label.translatesAutoresizingMaskIntoConstraints=false
     return label
   }()
-  
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-    calenderView.myCollectionView.collectionViewLayout.invalidateLayout()
-  }
-  
+    
   let calenderView: CalenderView = {
     let v=CalenderView(theme: MyTheme.dark)
     v.translatesAutoresizingMaskIntoConstraints=false

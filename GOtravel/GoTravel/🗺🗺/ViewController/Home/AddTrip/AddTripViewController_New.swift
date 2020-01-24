@@ -13,20 +13,26 @@ import RxSwift
 import RxCocoa
 
 class AddTripViewController_new: BaseUIViewController {
-  let disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
   var viewModel = AddTripViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.isDismiss = false
     initView()
-    setupRx()
+    self.setupHideKeyboardOnTap()
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    setupRx()
+    if let customTabBarController = self.tabBarController as? TabbarViewController {
+      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
+    }
+
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+    disposeBag = DisposeBag()
   }
   
   func initView(){
