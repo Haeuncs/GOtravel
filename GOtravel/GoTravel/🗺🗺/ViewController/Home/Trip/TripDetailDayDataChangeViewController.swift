@@ -24,10 +24,11 @@ class TripDetailDayDataChangeViewController : UIViewController{
   let realm = try! Realm()
   
   override func viewDidLoad() {
-    
+    super.viewDidLoad()
+    initView()
   }
   override func viewWillAppear(_ animated: Bool) {
-    initView()
+    super.viewWillAppear(animated)
     
     if detailRealmDB != nil {
       let setData = mainView as? changeDetailView;

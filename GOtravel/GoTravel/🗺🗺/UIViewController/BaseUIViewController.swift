@@ -39,6 +39,7 @@ class BaseUIViewController: UIViewController {
     view.backgroundColor = .white
     view.addSubview(dismissNav)
     view.addSubview(baseView)
+    view.addSubview(contentView)
     dismissNav.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.leading.equalTo(view.snp.leading)
@@ -52,12 +53,18 @@ class BaseUIViewController: UIViewController {
       //      make.bottom.equalTo(self.snp.bottom)
       make.height.equalTo(0)
     }
-    
+    contentView.snp.makeConstraints { (make) in
+      make.top.equalTo(dismissNav.snp.bottom)
+      make.leading.equalTo(view.snp.leading).offset(16)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      make.bottom.equalTo(view.snp.bottom)
+    }
   }
   func popInitView(){
     view.backgroundColor = .white
     view.addSubview(popNav)
     view.addSubview(baseView)
+    view.addSubview(contentView)
     popNav.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.leading.equalTo(view.snp.leading)
@@ -71,8 +78,20 @@ class BaseUIViewController: UIViewController {
       //      make.bottom.equalTo(self.snp.bottom)
       make.height.equalTo(0)
     }
+    contentView.snp.makeConstraints { (make) in
+      make.top.equalTo(popNav.snp.bottom)
+      make.leading.equalTo(view.snp.leading).offset(16)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      make.bottom.equalTo(view.snp.bottom)
+    }
     
   }
+  lazy var contentView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   lazy var baseView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false

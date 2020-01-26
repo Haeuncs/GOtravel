@@ -49,6 +49,8 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
     super.init(frame: frame)
     //        print(UIScreen.main.bounds.width)
     print("init")
+    initView()
+
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,7 +61,6 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
     //        print(self.frame)
     print("layout")
     realViewWidth = self.frame.width
-    initView()
     
     var stylee = CustomTextInputStyle()
     if detailRealmDB?.color != "default"{
@@ -187,8 +188,6 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
       collectionview.reloadData()
       self.endEditing(true)
     }
-    
-    
   }
   let myStackView: UIStackView = {
     let stackView=UIStackView()
@@ -229,7 +228,8 @@ UICollectionViewDelegateFlowLayout,changeDetailVCVDelegate {
       showMap.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
       showMap.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
       // FIXIT : 메모 인풋 ㅠㅠ;;
-      memoTextInput.heightAnchor.constraint(equalToConstant: 50)
+      memoTextInput.heightAnchor.constraint(equalToConstant: 50),
+      myStackView.bottomAnchor.constraint(lessThanOrEqualTo: showMap.topAnchor)
       //            memoTextInput.topAnchor.constraint(equalTo: collectionview.bottomAnchor)
       //            myStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
     ])
@@ -605,15 +605,15 @@ struct CustomTextInputStyle: AnimatedTextInputStyle {
   let lineActiveColor = UIColor.gray.withAlphaComponent(0.3)
   let lineHeight: CGFloat = 1
   let errorColor = UIColor.red
-  let textInputFont = UIFont.systemFont(ofSize: 14)
+  let textInputFont = UIFont.systemFont(ofSize: 18)
   let textInputFontColor = UIColor.black
-  let placeholderMinFontSize: CGFloat = 12
-  let counterLabelFont: UIFont? = UIFont.systemFont(ofSize: 12)
-  let leftMargin: CGFloat = 5
-  let topMargin: CGFloat = 20
-  let rightMargin: CGFloat = 5
-  let bottomMargin: CGFloat = 5
-  let yHintPositionOffset: CGFloat = 7
+  let placeholderMinFontSize: CGFloat = 16
+  let counterLabelFont: UIFont? = UIFont.systemFont(ofSize: 16)
+  let leftMargin: CGFloat = 0
+  let topMargin: CGFloat = 24
+  let rightMargin: CGFloat = 0
+  let bottomMargin: CGFloat = 2
+  let yHintPositionOffset: CGFloat = 0
   let yPlaceholderPositionOffset: CGFloat = 0
   public let textAttributes: [String: Any]? = nil
   

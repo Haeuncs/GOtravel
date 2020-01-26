@@ -377,7 +377,7 @@ extension TripDetailViewController {
     selectRow = tappedIndexPath.row
     //        print(detailIndex)
     //        dismiss(animated: true, completion: nil)
-    let changeVC = TripDetailDayDataChangeViewController()
+    let changeVC = TripDetailSpecificDayViewController()
     changeVC.detailRealmDB = countryRealmDB.dayList[tappedIndexPath.row].detailList[detailIndex]
     changeVC.countryRealmDB = countryRealmDB
     self.navigationController?.pushViewController(changeVC, animated: true)
