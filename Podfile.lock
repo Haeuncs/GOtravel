@@ -9,7 +9,7 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (3.3.0):
     - GoogleMaps/Base (= 3.3.0)
-  - IQKeyboardManagerSwift (6.5.4)
+  - IQKeyboardManagerSwift (6.5.5)
   - NVActivityIndicatorView (4.7.0):
     - NVActivityIndicatorView/Presenter (= 4.7.0)
   - NVActivityIndicatorView/Presenter (4.7.0)
@@ -80,7 +80,7 @@ SPEC CHECKSUMS:
   EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
   GoogleMaps: cfee83da305b9aaeccf92c24ac79df11c3003492
   GooglePlaces: 1e2a87bd9efee9623ee65d44ecc35ebfecd7b13c
-  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
   RealmSwift: 486f2e09d5a8ccff63ed66e48d0846b111deb5e5

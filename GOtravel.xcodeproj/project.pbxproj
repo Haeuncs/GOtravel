@@ -96,6 +96,7 @@
 		7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */; };
 		7D95E21B22EC59B1008CEC0B /* GOtravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */; };
 		7D95E22322EC59C0008CEC0B /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */; };
+		7D9E123A241689F00061E7BF /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9E1239241689EF0061E7BF /* TextField.swift */; };
 		7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3FF8723057EB4007A180B /* Formatter+.swift */; };
 		7DE3E44722F6D60E0056311E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A969BF721E5A2F00016DB49 /* Main.storyboard */; };
 		7DE3E44822F6D6120056311E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A969BFC21E5A2F50016DB49 /* LaunchScreen.storyboard */; };
@@ -217,6 +218,7 @@
 		7D95E21A22EC59B1008CEC0B /* GOtravelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOtravelUITests.swift; sourceTree = "<group>"; };
 		7D95E21C22EC59B1008CEC0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D95E22222EC59BF008CEC0B /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		7D9E1239241689EF0061E7BF /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		7DB3FF8723057EB4007A180B /* Formatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+.swift"; sourceTree = "<group>"; };
 		7DFC580A22FEF186002BFD86 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		7DFC580E22FEF402002BFD86 /* ExchangeRateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCell.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 			children = (
 				7D895C7023D32F72001AB3B6 /* TextFieldWithDescriptionView.swift */,
 				7D895C7523D3568A001AB3B6 /* BottomButton.swift */,
+				7D9E1239241689EF0061E7BF /* TextField.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				4A779F5621E7C24C00CCE52F /* PlaceAnnotation.swift in Sources */,
 				7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */,
 				4ACC7005222AC9E5004095DA /* pastV.swift in Sources */,
+				7D9E123A241689F00061E7BF /* TextField.swift in Sources */,
 				7D1D587E237A9BCA0007E2F3 /* PastTripEmptyView.swift in Sources */,
 				7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,

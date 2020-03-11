@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RealmSwift
+import IQKeyboardManagerSwift
 
 class DirectAddAccountViewController: UIViewController {
   var ViewModel = DirectAddAccountViewModel()
@@ -22,21 +23,19 @@ class DirectAddAccountViewController: UIViewController {
   var editMoneyDetailRealm: moneyDetailRealm?
   
   var disposeBag = DisposeBag()
-  deinit {
-    print("deinit")
-    disposeBag = DisposeBag()
-  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    IQKeyboardManager.shared.enable = false
     title = "경비 추가"
     bindRX()
     initView()
     setupGesture()
     
+    
     let rightButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(saveEvent))
     self.navigationItem.rightBarButtonItem = rightButton
     self.navigationItem.rightBarButtonItem?.isEnabled = false
-    
     
     if let data = editMoneyDetailRealm {
       memoTextField.textField.text = data.title
@@ -51,20 +50,21 @@ class DirectAddAccountViewController: UIViewController {
         }
       }
     }else{
-      categoryCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+      categoryCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
-
+    
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+    //    disposeBag = DisposeBag()
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
   }
-
+  
   func bindRX(){
     ViewModel.isKoreaMoneySelected.asObservable()
       .subscribe(onNext: { (bool) in
@@ -91,13 +91,7 @@ class DirectAddAccountViewController: UIViewController {
     ViewModel.data.asObservable()
       .bind(to: categoryCollectionView.rx.items(cellIdentifier: "cell", cellType: DirectAddAccountCell.self)){ row, model, cell in
         cell.directAddAccountModel = model
-      }.disposed(by: disposeBag)
-    
-    categoryCollectionView.rx.itemSelected
-      .subscribe(onNext: { (indexPath) in
-        self.ViewModel.isSelectedCategory.onNext(indexPath.row)
-        self.checkSaveEnable()
-      }).disposed(by: disposeBag)
+    }.disposed(by: disposeBag)
     
     leftTextField.rx.controlEvent(.editingChanged)
       .subscribe(onNext: { (_) in
@@ -116,9 +110,9 @@ class DirectAddAccountViewController: UIViewController {
     
     let leftGesture = UITapGestureRecognizer(target: self, action:  #selector(self.leftAction))
     self.leftView.addGestureRecognizer(leftGesture)
-
-//    leftTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-
+    
+    //    leftTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    
   }
   func textFieldDidChange(_ textField: UITextField) {
     if textField.text?.count != 0 {
@@ -126,17 +120,17 @@ class DirectAddAccountViewController: UIViewController {
         if let range = textField.text!.range(of: ".") {
           let dotBefore = textField.text![..<range.lowerBound]
           let dotAfter = textField.text![range.lowerBound...] // or str[str.startIndex..<range.lowerBound]
-
+          
           let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
           calculatorKoreaMoney(textFieldDouble: Double(textField.text!) ?? 0, selectedForeognMoney: self.selectForeignMoneyDouble ?? 0)
-
+          
           let numberFormatter = NumberFormatter()
           numberFormatter.numberStyle = NumberFormatter.Style.decimal
           var formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
-
+          
           formattedNumber?.append(String(dotAfter))
           textField.text = formattedNumber
-
+          
         }
       }else{
         let subtractionDot = textField.text?.replacingOccurrences(of: ",", with: "")
@@ -144,7 +138,7 @@ class DirectAddAccountViewController: UIViewController {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot!)!))
-
+        
         textField.text = formattedNumber
       }
     }
@@ -199,7 +193,7 @@ class DirectAddAccountViewController: UIViewController {
     vc.viewModel.selected.asObservable().subscribe(onNext: { (model) in
       self.leftTextField.text = ""
       self.rightTextField.text = ""
-//      self.leftTextField.becomeFirstResponder()
+      //      self.leftTextField.becomeFirstResponder()
       self.selectForeignMoneyDouble = model.calculateDouble
       if model.foreignName != nil {
         self.leftLabel.text = "\(model.value.country)-\(model.value.korName)"
@@ -208,7 +202,7 @@ class DirectAddAccountViewController: UIViewController {
         self.leftLabel.text = "\(model.value.country)"
         self.leftBelowLabel.text = model.value.korName
       }
-      }).disposed(by: disposeBag)
+    }).disposed(by: disposeBag)
     self.navigationController?.pushViewController(vc, animated: true)
   }
   lazy var navView: CustomNavigationBarView = {
@@ -221,9 +215,10 @@ class DirectAddAccountViewController: UIViewController {
     view.actionBtn.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
     return view
   }()
-
+  
   lazy var memoTextField: LineAnimateTextFieldView = {
     let text = LineAnimateTextFieldView()
+    text.textField.delegate = self
     text.translatesAutoresizingMaskIntoConstraints = false
     text.textFieldActiveLine.backgroundColor = UIColor.butterscotch
     text.textField.tintColor = .butterscotch
@@ -263,6 +258,7 @@ class DirectAddAccountViewController: UIViewController {
     //    layout.minimumInteritemSpacing = 100
     layout.minimumLineSpacing = 14
     let collect = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collect.showsHorizontalScrollIndicator = false
     collect.register(DirectAddAccountCell.self, forCellWithReuseIdentifier: "cell")
     collect.backgroundColor = .white
     collect.translatesAutoresizingMaskIntoConstraints = false
@@ -415,13 +411,13 @@ class DirectAddAccountViewController: UIViewController {
   }()
   let leftTextField : UITextField = {
     let text = UITextField()
-    text.text = "0"
-    text.minimumFontSize = 12
-    text.adjustsFontSizeToFitWidth = true
-    text.clearButtonMode = .whileEditing
-    text.font = UIFont.systemFont(ofSize: 30, weight: .medium)
-    text.textAlignment = .center
-    text.keyboardType = .decimalPad
+//    text.text = "0"
+//    text.minimumFontSize = 12
+//    text.adjustsFontSizeToFitWidth = true
+//    text.clearButtonMode = .whileEditing
+//    text.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+//    text.textAlignment = .center
+//    text.keyboardType = .decimalPad
     text.translatesAutoresizingMaskIntoConstraints = false
     return text
   }()
@@ -445,14 +441,22 @@ class DirectAddAccountViewController: UIViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
+  lazy var contentView: UIScrollView = {
+    let view = UIScrollView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
   func initView(){
     categoryCollectionView.delegate = self
+    leftTextField.delegate = self
+    rightTextField.delegate = self
     view.backgroundColor = .white
-    
+    contentView.backgroundColor = .white
     view.addSubview(navView)
+    view.addSubview(contentView)
     // 메모
-    view.addSubview(memoTextField)
-    view.addSubview(categoryMoneyStack)
+    contentView.addSubview(memoTextField)
+    contentView.addSubview(categoryMoneyStack)
     // 카테고리 + 금액 스택
     categoryMoneyStack.addArrangedSubview(categoryView)
     categoryMoneyStack.addArrangedSubview(moneyView)
@@ -486,6 +490,10 @@ class DirectAddAccountViewController: UIViewController {
     //    leftTextFieldView.addSubview(leftTextField)
     //    rightTextFieldView.addSubview(rightTextField)
     
+    contentView.snp.makeConstraints { (make) in
+      make.top.equalTo(navView.snp.bottom)
+      make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+    }
     navView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.left.equalTo(view.snp.left)
@@ -549,7 +557,12 @@ class DirectAddAccountViewController: UIViewController {
   }
 }
 
-
+extension DirectAddAccountViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    self.ViewModel.isSelectedCategory.onNext(indexPath.row)
+    self.checkSaveEnable()
+  }
+}
 
 extension DirectAddAccountViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -557,6 +570,17 @@ extension DirectAddAccountViewController: UICollectionViewDelegateFlowLayout {
   }
 }
 
+extension DirectAddAccountViewController: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    let scrollPoint : CGPoint = CGPoint.init(x:0, y:textField.frame.origin.y)
+    print(textField.frame)
+    print(textField.bounds)
+    self.contentView.setContentOffset(scrollPoint, animated: true)
+  }
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    self.contentView.setContentOffset(CGPoint.zero, animated: true)
+  }
+}
 // MARK: - Logic
 extension DirectAddAccountViewController {
   func calculatorKoreaMoney(textFieldDouble : Double, selectedForeognMoney: Double){
