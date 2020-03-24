@@ -484,15 +484,6 @@ extension changeDetailView {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 10
   }
-  // hsb random color
-  func HSBrandomColor(num : CGFloat) -> UIColor{
-    let saturation : CGFloat =  0.45
-    let brigtness : CGFloat = 0.85
-    let randomHue = num
-    //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
-    return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
-  }
-  
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! colorCVCell

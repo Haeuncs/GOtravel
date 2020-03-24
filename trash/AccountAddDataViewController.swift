@@ -63,10 +63,10 @@ class AccountAddDataViewController : UIViewController,exchangeDidTapInViewDelega
     initView()
     // 데이터 추가가 아닌 데이터 수정일 때
     if let index = tableViewIndex {
-        
+      
     }
   }
-
+  
   @objc func saveAction(){
     if exchange == "KRW" {
       money = mountView.leftTextField.text?.replacingOccurrences(of: ",", with: "").toDouble()
@@ -194,7 +194,7 @@ class AccountAddDataViewController : UIViewController,exchangeDidTapInViewDelega
       memoLabel.heightAnchor.constraint(equalToConstant: 50),
       mountOfMoney.heightAnchor.constraint(equalToConstant: 50),
     ])
-
+    
   }
   // delegate moneyExchangeView 에서 뷰 이동
   func exchangeDidTapInView(_ sender : moneyExchangeView,selectIndex : Int){
@@ -642,15 +642,16 @@ class moneyExchangeView : UIView ,UITextFieldDelegate{
 }
 class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout , UICollectionViewDelegate{
   
-  weak var delegate : exchangeDidTapInViewDelegate?
+  weak var delegate: exchangeDidTapInViewDelegate?
   
-  var catecoryCV     : UICollectionView!
+  var catecoryCV: UICollectionView!
   // addDetailVC 에서 전달 받는 데이터
   var categoryListRealmDB = List<categoryDetailRealm>()
-  
+  var selectedIndexPath: NSIndexPath?
+
   override init(frame: CGRect) {
     super.init(frame: frame)
-    print("init")
+    initView()
   }
   
   
@@ -658,12 +659,7 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
     fatalError("init(coder:) has not been implemented")
   }
   
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    print("layout")
-    
-    print(self.frame)
-    
+  func initView() {
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
@@ -680,16 +676,11 @@ class catecoryCVView : UIView ,UICollectionViewDataSource, UICollectionViewDeleg
     catecoryCV.showsHorizontalScrollIndicator = true
     
     self.addSubview(catecoryCV)
-    
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return categoryListRealmDB.count
   }
-  //
-  //
-  var selectedIndexPath: NSIndexPath?
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! exchangeCVCell2
@@ -733,7 +724,7 @@ class exchangeCVCell2 : UICollectionViewCell {
     layoutInit()
     self.layer.zeplinStyleShadows(color: .black, alpha: 0.07, x: 0, y: 10, blur: 10, spread: 0)
     self.clipsToBounds = false
-
+    
   }
   
   required init?(coder aDecoder: NSCoder) {

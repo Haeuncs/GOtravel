@@ -180,7 +180,7 @@ class pastVC: UIViewController {
   }
   
   func processingDateData(){
-    let processedData = List<countryRealm>()
+    var processedData = List<countryRealm>()
     
     // 1. load
     var countryRealmDB = realm?.objects(countryRealm.self)
@@ -196,6 +196,9 @@ class pastVC: UIViewController {
         }
       }
     }
+    // 3. order
+    processedData.sort { (($0.date)?.compare($1.date!))! == .orderedDescending }
+    
     if processedData.count == 0 {
       tripCollectionView.backgroundView = emptyView
     }else{

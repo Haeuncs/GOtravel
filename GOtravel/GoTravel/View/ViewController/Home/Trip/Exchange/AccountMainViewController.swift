@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 import RealmSwift
 
-class AccountMainViewControllerNew: UIViewController {
+class AccountMainViewController: UIViewController {
   var disposeBag = DisposeBag()
   let realm = try! Realm()
   
@@ -20,34 +20,38 @@ class AccountMainViewControllerNew: UIViewController {
   var tripMoneyRealmDB: List<moneyRealm>? {
     didSet {
       if let data = tripMoneyRealmDB {
-        viewModel.onNext(Array(data))
+        viewModel.accept(Array(data))
       }
     }
   }
   
   
-  var viewModel = BehaviorSubject(value: [moneyRealm]())
-  var cellSelected = BehaviorSubject(value: [moneyDetailRealm]())
+  var viewModel = BehaviorRelay(value: [moneyRealm]())
+  var cellSelected = BehaviorRelay(value: [moneyDetailRealm]())
   /// day 값이 있다면 이 값에 데이터 set됨 디폴트는 0임
-  var selectedIndex = BehaviorSubject(value: Int())
+  var selectedIndex = BehaviorRelay(value: Int())
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
+    rx()
+    
+
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    rx()
     do {
-      cellSelected.onNext(Array(try viewModel.value()[try selectedIndex.value()].detailList))
-      setMoneyLabel(money: try viewModel.value()[try selectedIndex.value()])
-      dayCollectionView.selectItem(at: IndexPath(row: try selectedIndex.value(), section: 0), animated: false, scrollPosition: .centeredHorizontally)
-    }catch{
+      cellSelected.accept(Array(viewModel.value[selectedIndex.value].detailList))
+      setMoneyLabel(money: viewModel.value[selectedIndex.value])
+      dayCollectionView.selectItem(at: IndexPath(row: selectedIndex.value, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+      self.collectionView(dayCollectionView, didSelectItemAt: IndexPath(row:  selectedIndex.value, section: 0))
+    } catch {
       print(error)
     }
+
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    disposeBag = DisposeBag()
+//    disposeBag = DisposeBag()
   }
   func rx(){
     viewModel.asObservable()
@@ -59,19 +63,6 @@ class AccountMainViewControllerNew: UIViewController {
         }
     }.disposed(by: disposeBag)
     
-    Observable
-      .zip(dayCollectionView.rx.itemSelected, dayCollectionView.rx.modelSelected(moneyRealm.self))
-      .bind { [unowned self] indexPath, model in
-        self.setMoneyLabel(money: model)
-        self.cellSelected.onNext(Array(model.detailList))
-        self.selectedIndex.onNext(indexPath.row)
-        if model.detailList.count == 0 {
-          self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
-        }else{
-          self.accountDayTableView.restore()
-        }
-      }.disposed(by: disposeBag)
-
     cellSelected.asObservable()
       .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: exchangeTVC.self)) { row, model, cell in
         cell.label1.text = model.subTitle
@@ -82,8 +73,9 @@ class AccountMainViewControllerNew: UIViewController {
     accountDayTableView.rx.modelSelected(moneyDetailRealm.self)
       .subscribe(onNext: { (moneyDetail) in
         do {
-          let vc = DirectAddAccountViewController()
-          vc.realmMoneyList = try self.viewModel.value()[try  self.selectedIndex.value()]
+//          let vc = DirectAddAccountViewController()
+          let vc = DirectAddReceiptViewController()
+          vc.realmMoneyList = try self.viewModel.value[self.selectedIndex.value]
           vc.editMoneyDetailRealm = moneyDetail
           self.navigationController?.pushViewController(vc, animated: true)
         }catch {
@@ -175,10 +167,11 @@ class AccountMainViewControllerNew: UIViewController {
 
 }
 
-extension AccountMainViewControllerNew {
+extension AccountMainViewController {
   @objc func saveEvent(){
-    let vc = DirectAddAccountViewController()
-    vc.realmMoneyList = try! self.viewModel.value()[try! self.selectedIndex.value()]
+//    let vc = DirectAddAccountViewController()
+    let vc = DirectAddReceiptViewController()
+    vc.realmMoneyList = try! self.viewModel.value[self.selectedIndex.value]
     self.navigationController?.pushViewController(vc, animated: true)
   }
   @objc func popEvent(){
@@ -186,7 +179,22 @@ extension AccountMainViewControllerNew {
   }
 }
 
-extension AccountMainViewControllerNew: UICollectionViewDelegateFlowLayout {
+extension AccountMainViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    let model = self.viewModel.value[indexPath.row]
+    self.setMoneyLabel(money: model)
+    self.cellSelected.accept(Array(model.detailList))
+    self.selectedIndex.accept(indexPath.row)
+    if model.detailList.count == 0 {
+      self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
+    }else{
+      self.accountDayTableView.restore()
+    }
+  }
+}
+
+extension AccountMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
   {
     return CGSize(width: 60, height: 60)
@@ -194,14 +202,14 @@ extension AccountMainViewControllerNew: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - logic
-extension AccountMainViewControllerNew {
+extension AccountMainViewController {
   func setMoneyLabel(money: moneyRealm){
     var dayTotal = 0
     var allTotal = 0
     for i in money.detailList {
       dayTotal = Int(i.money) + dayTotal
     }
-    for i in try! self.viewModel.value() {
+    for i in self.viewModel.value {
       for j in i.detailList {
         allTotal = Int(j.money) + allTotal
       }

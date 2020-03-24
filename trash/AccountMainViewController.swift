@@ -105,11 +105,15 @@ class AccountMainViewController : UIViewController{
   }()
   
   @objc func addEvent(){
-    let vc = DirectAddAccountViewController()
+    let vc = DirectAddReceiptViewController()
+    print(self.countryRealmDB)
     vc.realmMoneyList = self.countryRealmDB.moneyList[selectDay]
-//    vc.countryRealmDB = self.countryRealmDB
-//    vc.selectDay = self.selectDay
     self.navigationController?.pushViewController(vc, animated: true)
+//    let vc = DirectAddAccountViewController()
+//    vc.realmMoneyList = self.countryRealmDB.moneyList[selectDay]
+////    vc.countryRealmDB = self.countryRealmDB
+////    vc.selectDay = self.selectDay
+//    self.navigationController?.pushViewController(vc, animated: true)
   }
 }
 

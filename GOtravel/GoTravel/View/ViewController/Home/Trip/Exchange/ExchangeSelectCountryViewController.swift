@@ -14,12 +14,36 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
+// hsb random color
+func HSBrandomColor(num : CGFloat) -> UIColor{
+  let saturation : CGFloat =  0.45
+  let brigtness : CGFloat = 0.85
+  let randomHue = num
+  //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
+  return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
+}
+
+// hsb random color
+func HSBrandomColor() -> UIColor{
+  let saturation : CGFloat =  0.45
+  let brigtness : CGFloat = 0.85
+  let randomHue = CGFloat.random(in: 0.0..<1.0)
+  //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
+  return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
+}
+
+
 struct exchangeData: Codable {
   var cur_unit : String
   var deal_bas_r: String
 }
+
+/**
+ 환율 선택 테이블 화면
+ */
 class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicatorViewable {
-  
+  weak var directAddReceiptDelegate: DireactAddReceiptDelegate?
+
   var viewModel = ExchangeSelectViewModel()
   var disposeBag = DisposeBag()
   
@@ -29,9 +53,7 @@ class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicator
   /// realm
   let realm = try? Realm()
   var exchangeRealmData: Results<ExchangeRealm>?
-  
-  weak var delegate : exchangeDidTapInViewDelegate?
-  
+    
   let size = CGSize(width: 30, height: 30)
   
   var DateData = ""
@@ -210,28 +232,34 @@ extension ExchangeSelectCountryViewController: UITableViewDelegate {
         
         if let data = exchangeRealmData?[indexPath.row] {
           //          delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
-          viewModel.selectedPublish.onNext(ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: nil, calculateDouble: data.krWon))
-          viewModel.selectedPublish.onCompleted()
-          //        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: value?.country ?? "", belowLabel: "\(netWorkExchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))", doubleMoney: StringToDouble!)
-          self.navigationController?.popViewController(animated: true)
+//          viewModel.selectedPublish.onNext(ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: nil, calculateDouble: data.krWon))
+//          viewModel.selectedPublish.onCompleted()
+          let vc = DireactAddReceiptPriceViewController(type: .other, exchangeModel: ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: data.name, calculateDouble: data.krWon))
+          vc.directAddReceiptDelegate = self.directAddReceiptDelegate
+          self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            Toast.show(message: "오류가 발생했어요!", isTabbar: false)
+          Toast.show(message: "오류가 발생했어요!", isTabbar: false)
         }
-        }else{
-          let value = ExchangeCountryDictionary[netWorkExchangeArr[indexPath.row].cur_unit]
-          let StringToDouble = netWorkExchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble() ?? 0.0
-          
-          viewModel.selectedPublish.onNext(ExchangeSelectModel(value: value!, foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
-        viewModel.selectedPublish.onCompleted()
-          self.navigationController?.popViewController(animated: true)
-        }
+      }else{
+        let value = ExchangeCountryDictionary[netWorkExchangeArr[indexPath.row].cur_unit]
+        let StringToDouble = netWorkExchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble() ?? 0.0
+        let vc = DireactAddReceiptPriceViewController(type: .other, exchangeModel: ExchangeSelectModel(value: value ?? ExchangeCountry(country: netWorkExchangeArr[indexPath.row].cur_unit, korName: netWorkExchangeArr[indexPath.row].cur_unit), foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
+        vc.directAddReceiptDelegate = self.directAddReceiptDelegate
+
+        self.navigationController?.pushViewController(vc, animated: true)
+
+      }
     }else{
       let value = ExchangeCountryDictionary[netWorkExchangeArr[indexPath.row].cur_unit]
       let StringToDouble = netWorkExchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble() ?? 0.0
+//
+//      viewModel.selectedPublish.onNext(ExchangeSelectModel(value: value!, foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
+//      viewModel.selectedPublish.onCompleted()
+//      self.navigationController?.popViewController(animated: true)
       
-      viewModel.selectedPublish.onNext(ExchangeSelectModel(value: value!, foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
-      viewModel.selectedPublish.onCompleted()
-      self.navigationController?.popViewController(animated: true)
+      let vc = DireactAddReceiptPriceViewController(type: .other, exchangeModel: ExchangeSelectModel(value: value ?? ExchangeCountry(country: netWorkExchangeArr[indexPath.row].cur_unit, korName: netWorkExchangeArr[indexPath.row].cur_unit), foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
+      vc.directAddReceiptDelegate = self.directAddReceiptDelegate
+      self.navigationController?.pushViewController(vc, animated: true)
       
       //      if let data = exchangeRealmData?[indexPath.row] {
       //        viewModel.selectedPublish.onNext(ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: nil, calculateDouble: data.krWon))

@@ -12,6 +12,9 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
+/**
+ 환율 단위 직접 입력
+ */
 class DirectAddExchangeViewController: UIViewController {
   var disposeBag = DisposeBag()
   var exchangeName = BehaviorSubject(value: "환율 단위")
