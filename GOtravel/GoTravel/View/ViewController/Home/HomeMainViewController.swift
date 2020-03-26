@@ -23,6 +23,7 @@ class HomeMainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    rx()
     initView()
     //    print(Realm.Configuration.defaultConfiguration.fileURL!)
     
@@ -35,7 +36,6 @@ class HomeMainViewController: UIViewController {
     }
     
     navigationController?.navigationBar.isHidden = true
-    rx()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -56,7 +56,6 @@ class HomeMainViewController: UIViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    disposeBag = DisposeBag()
   }
   
   func setup(count: Int){
@@ -73,8 +72,8 @@ class HomeMainViewController: UIViewController {
     service = HomeModelService()
     viewModel = HomeViewModel(service: self.service)
     
-    viewModel.tripData.subscribe(onNext: { (arr) in
-      self.setup(count: arr.count)
+    viewModel.tripData.subscribe(onNext: { [weak self] (arr) in
+      self?.setup(count: arr.count)
     })
       .disposed(by: disposeBag)
     
@@ -90,33 +89,33 @@ class HomeMainViewController: UIViewController {
     .disposed(by: disposeBag)
     
     tripCollectionView.rx.modelSelected(countryRealm.self)
-      .subscribe(onNext: { (country) in
-        let tripViewController = TripDetailViewController()
+      .subscribe(onNext: { [weak self] (country) in
+        let tripViewController = TripDetailMainViewController()
         tripViewController.countryRealmDB = country
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true, completion: nil)
+        self?.present(nav, animated: true, completion: nil)
       }).disposed(by: disposeBag)
     
     navView.dismissBtn.rx.tap
-      .subscribe(onNext: { (_) in
+      .subscribe(onNext: { [weak self](_) in
         let setting = SettingViewController()
-        self.navigationController?.pushViewController(setting, animated: true)
+        self?.navigationController?.pushViewController(setting, animated: true)
       }).disposed(by: disposeBag)
     
     navView.actionBtn.rx.tap
-      .subscribe(onNext: { (_) in
+      .subscribe(onNext: { [weak self] (_) in
         let placeVC = AddTripViewController_new()
         //        placeVC.categoryIndex = 1
-        self.navigationController?.pushViewController(placeVC, animated: true)
+        self?.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
     
     emptyView.addButton.rx.tap
-      .subscribe(onNext: { (_) in
+      .subscribe(onNext: { [weak self] (_) in
         let placeVC = AddTripViewController_new()
         //        placeVC.categoryIndex = 1
-        self.navigationController?.pushViewController(placeVC, animated: true)
+        self?.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
   }
   

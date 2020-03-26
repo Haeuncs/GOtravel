@@ -42,8 +42,8 @@ class SettingViewController : UIViewController {
       ])
   }
   // 테이블뷰
-  let belowView : settingV = {
-    let view = settingV()
+  let belowView : SettingView = {
+    let view = SettingView()
     view.layer.cornerRadius = 10
     view.backgroundColor = UIColor.white
     view.translatesAutoresizingMaskIntoConstraints = false

@@ -31,7 +31,7 @@ protocol TripDetailDataPopupDelegate: class {
   func TripDetailDataPopupPath(day: Int)
 }
 
-class TripDetailViewController: BaseUIViewController ,addDetailViewTableViewCellDelegate{
+class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableViewCellDelegate{
   
   // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
   var isEdit : Bool? = false
@@ -88,7 +88,7 @@ class TripDetailViewController: BaseUIViewController ,addDetailViewTableViewCell
     //        customView.backgroundColor = UIColor.red
     customView.addArrangedSubview(deleteDataLabel)
     
-    let tap = UITapGestureRecognizer(target: self, action: #selector(TripDetailViewController.alldDleteLabelEvent))
+    let tap = UITapGestureRecognizer(target: self, action: #selector(TripDetailMainViewController.alldDleteLabelEvent))
     deleteDataLabel.isUserInteractionEnabled = true
     deleteDataLabel.addGestureRecognizer(tap)
     
@@ -370,7 +370,7 @@ class TripDetailViewController: BaseUIViewController ,addDetailViewTableViewCell
   
 }
 // MARK: delegate 정의 (cell 에서 사용한다.)
-extension TripDetailViewController {
+extension TripDetailMainViewController {
   // The cell calls this method when the user taps the heart button
   func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell, detailIndex : Int) {
     guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
@@ -391,7 +391,7 @@ extension TripDetailViewController {
   
 }
 
-extension TripDetailViewController : UITableViewDelegate{
+extension TripDetailMainViewController : UITableViewDelegate{
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("select")
     // 지금은 select 이벤트 없음
@@ -407,7 +407,7 @@ extension TripDetailViewController : UITableViewDelegate{
     }
   }
 }
-extension TripDetailViewController : UITableViewDataSource{
+extension TripDetailMainViewController : UITableViewDataSource{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return countryRealmDB.dayList.count
   }
@@ -456,13 +456,13 @@ extension TripDetailViewController : UITableViewDataSource{
   }
   
 }
-extension TripDetailViewController: UIScrollViewDelegate {
+extension TripDetailMainViewController: UIScrollViewDelegate {
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     // 버튼 animate 원상복구
   }
 }
 
-extension TripDetailViewController{
+extension TripDetailMainViewController{
   @objc func pushExchangeViewController(){
     let vc = AccountMainViewController()
     vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
@@ -472,7 +472,7 @@ extension TripDetailViewController{
 }
 
 
-extension TripDetailViewController: TripDetailDataPopupDelegate {
+extension TripDetailMainViewController: TripDetailDataPopupDelegate {
   func TripDetailDataPopupMoney(day: Int) {
     let vc = AccountMainViewController()
     vc.tripMoneyRealmDB = self.countryRealmDB.moneyList

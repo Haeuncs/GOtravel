@@ -117,7 +117,7 @@ class pastV : UIView , UICollectionViewDelegate , UICollectionViewDataSource{
         }
         
         let nav1 = UINavigationController()
-        let detailView = TripDetailViewController()
+        let detailView = TripDetailMainViewController()
         nav1.viewControllers = [detailView]
         detailView.selectIndex = indexPath.row
         

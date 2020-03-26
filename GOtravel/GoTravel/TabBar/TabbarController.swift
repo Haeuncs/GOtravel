@@ -43,7 +43,7 @@ class TabbarViewController : UITabBarController, UITabBarControllerDelegate {
     tabOneBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     tabOne.tabBarItem = tabOneBarItem
     
-    let tabTwo = UINavigationController(rootViewController: pastVC())
+    let tabTwo = UINavigationController(rootViewController: PastTripViewController())
     
     let image2 = resizedImageWith(image: UIImage(named: "menu (1)")!, targetSize: CGSize(width: 24, height: 24))
     let tabTwoBarItem2 = UITabBarItem(title: nil, image: image2, selectedImage: image2)

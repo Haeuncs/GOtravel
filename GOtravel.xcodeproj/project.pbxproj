@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4A0004AF222CF1AC003DEC20 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0004AE222CF1AC003DEC20 /* SettingViewController.swift */; };
-		4A0004B1222D319F003DEC20 /* settingV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0004B0222D319F003DEC20 /* settingV.swift */; };
+		4A0004B1222D319F003DEC20 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0004B0222D319F003DEC20 /* SettingView.swift */; };
 		4A38F3DA21EA80820097914B /* mymain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A38F3D921EA80820097914B /* mymain.xib */; };
 		4A3A17E121F1C8B500313077 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3A17E021F1C8B500313077 /* Date+.swift */; };
-		4A3BC29821F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29721F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift */; };
+		4A3BC29821F3B2A800995E28 /* TripDetailDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29721F3B2A800995E28 /* TripDetailDayViewController.swift */; };
 		4A3BC29D21F3C72A00995E28 /* changeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */; };
 		4A5B322721F6913E0007AB21 /* DefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5B322621F6913E0007AB21 /* DefaultStyle.swift */; };
 		4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F61E6220C9C3800531239 /* HomeVM.swift */; };
@@ -29,7 +29,7 @@
 		4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C221EB8E74004E2536 /* WeekdaysView.swift */; };
 		4AA331C721EB8EB0004E2536 /* AddTripDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA331C621EB8EB0004E2536 /* AddTripDateViewController.swift */; };
 		4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF96B0223BEA0E006FFD40 /* settingVM.swift */; };
-		4AC7103C21EE10C600B20448 /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* TripDetailViewController.swift */; };
+		4AC7103C21EE10C600B20448 /* TripDetailMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */; };
 		4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7103D21EE110C00B20448 /* detailTest.xib */; };
 		4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */; };
 		4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */; };
@@ -39,7 +39,7 @@
 		4AC710AF21F0EB3900B20448 /* AddTripCheckMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* AddTripCheckMapViewController.swift */; };
 		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
 		4AC710B321F103EF00B20448 /* addDetailAllSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */; };
-		4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7002222AC9DC004095DA /* pastVC.swift */; };
+		4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7002222AC9DC004095DA /* PastTripViewController.swift */; };
 		4ACC7005222AC9E5004095DA /* pastV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7004222AC9E5004095DA /* pastV.swift */; };
 		4ACC7007222ACA04004095DA /* pastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7006222ACA04004095DA /* pastVM.swift */; };
 		7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C030E22EB5FA5001FD837 /* TabbarController.swift */; };
@@ -114,10 +114,10 @@
 /* Begin PBXFileReference section */
 		25F8933C8B5A2D51A48C71DA /* Pods-GOtravel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOtravel.release.xcconfig"; path = "Pods/Target Support Files/Pods-GOtravel/Pods-GOtravel.release.xcconfig"; sourceTree = "<group>"; };
 		4A0004AE222CF1AC003DEC20 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		4A0004B0222D319F003DEC20 /* settingV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingV.swift; sourceTree = "<group>"; };
+		4A0004B0222D319F003DEC20 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		4A38F3D921EA80820097914B /* mymain.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = mymain.xib; sourceTree = "<group>"; };
 		4A3A17E021F1C8B500313077 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		4A3BC29721F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailDayDataChangeViewController.swift; sourceTree = "<group>"; };
+		4A3BC29721F3B2A800995E28 /* TripDetailDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailDayViewController.swift; sourceTree = "<group>"; };
 		4A3BC29C21F3C72A00995E28 /* changeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeDetailView.swift; sourceTree = "<group>"; };
 		4A5B322621F6913E0007AB21 /* DefaultStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStyle.swift; sourceTree = "<group>"; };
 		4A5F61E6220C9C3800531239 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 		4AA331C221EB8E74004E2536 /* WeekdaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
 		4AA331C621EB8EB0004E2536 /* AddTripDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripDateViewController.swift; sourceTree = "<group>"; };
 		4ABF96B0223BEA0E006FFD40 /* settingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingVM.swift; sourceTree = "<group>"; };
-		4AC7103B21EE10C600B20448 /* TripDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
+		4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailMainViewController.swift; sourceTree = "<group>"; };
 		4AC7103D21EE110C00B20448 /* detailTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailTest.xib; sourceTree = "<group>"; };
 		4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		4AC710AE21F0EB3900B20448 /* AddTripCheckMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripCheckMapViewController.swift; sourceTree = "<group>"; };
 		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		4AC710B221F103EF00B20448 /* addDetailAllSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailAllSubView.swift; sourceTree = "<group>"; };
-		4ACC7002222AC9DC004095DA /* pastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastVC.swift; sourceTree = "<group>"; };
+		4ACC7002222AC9DC004095DA /* PastTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastTripViewController.swift; sourceTree = "<group>"; };
 		4ACC7004222AC9E5004095DA /* pastV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastV.swift; sourceTree = "<group>"; };
 		4ACC7006222ACA04004095DA /* pastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastVM.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,7 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				4A0004AE222CF1AC003DEC20 /* SettingViewController.swift */,
-				4A0004B0222D319F003DEC20 /* settingV.swift */,
+				4A0004B0222D319F003DEC20 /* SettingView.swift */,
 				4ABF96B0223BEA0E006FFD40 /* settingVM.swift */,
 				7D72670F22E33EB400589C82 /* settingModel.swift */,
 				7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */,
@@ -559,10 +559,10 @@
 			isa = PBXGroup;
 			children = (
 				4A5F61F4220C9DF600531239 /* Exchange */,
-				4A3BC29721F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift */,
+				4A3BC29721F3B2A800995E28 /* TripDetailDayViewController.swift */,
+				4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */,
 				7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */,
 				7D763E3A23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift */,
-				4AC7103B21EE10C600B20448 /* TripDetailViewController.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -580,7 +580,7 @@
 		7DCE767722F0A906001EF4B6 /* PastTrip */ = {
 			isa = PBXGroup;
 			children = (
-				4ACC7002222AC9DC004095DA /* pastVC.swift */,
+				4ACC7002222AC9DC004095DA /* PastTripViewController.swift */,
 			);
 			path = PastTrip;
 			sourceTree = "<group>";
@@ -852,11 +852,11 @@
 				7D72597E2301AC800034FA8E /* DirectAddAccountCell.swift in Sources */,
 				7DBC1D7224290B4B0011ED2B /* DirectAddReceiptPriceViewModel.swift in Sources */,
 				7D895C7123D32F72001AB3B6 /* TextFieldWithDescriptionView.swift in Sources */,
-				4AC7103C21EE10C600B20448 /* TripDetailViewController.swift in Sources */,
+				4AC7103C21EE10C600B20448 /* TripDetailMainViewController.swift in Sources */,
 				4A5F9CAD21FA100A0097C5C1 /* Enum_exchange.swift in Sources */,
 				4AC710AF21F0EB3900B20448 /* AddTripCheckMapViewController.swift in Sources */,
 				4A3A17E121F1C8B500313077 /* Date+.swift in Sources */,
-				4A0004B1222D319F003DEC20 /* settingV.swift in Sources */,
+				4A0004B1222D319F003DEC20 /* SettingView.swift in Sources */,
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
 				4A0004AF222CF1AC003DEC20 /* SettingViewController.swift in Sources */,
 				7D7259792301A7270034FA8E /* DirectAddAccountModel.swift in Sources */,
@@ -865,7 +865,7 @@
 				7D725971230062850034FA8E /* OpenSourceLicenseModel.swift in Sources */,
 				7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */,
 				7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */,
-				4A3BC29821F3B2A800995E28 /* TripDetailDayDataChangeViewController.swift in Sources */,
+				4A3BC29821F3B2A800995E28 /* TripDetailDayViewController.swift in Sources */,
 				7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */,
 				4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */,
 				7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */,
@@ -889,7 +889,7 @@
 				7D72931E23097CF400578A5F /* Reactive+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
 				7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */,
-				4ACC7003222AC9DC004095DA /* pastVC.swift in Sources */,
+				4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
 				4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */,

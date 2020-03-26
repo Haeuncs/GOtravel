@@ -16,7 +16,7 @@ protocol changeDelegate : class {
 }
 
 // detailVC 에서 cell 선택 시 이동하는 수정 뷰
-class TripDetailDayDataChangeViewController : UIViewController{
+class TripDetailDayViewController : UIViewController{
   //detailVC에서 받는 데이터
   var detailRealmDB : detailRealm?
   var countryRealmDB : countryRealm?
@@ -108,7 +108,7 @@ class TripDetailDayDataChangeViewController : UIViewController{
   }
 }
 // Delegate
-extension TripDetailDayDataChangeViewController : changeDelegate {
+extension TripDetailDayViewController : changeDelegate {
   func showAlert(longitude : Double, latitude : Double, title : String) {
     let titleAddSub = title.replacingOccurrences(of: " ", with: "+")
     let alertController = UIAlertController(title: "길찾기", message: "길찾기에 사용할 어플을 선택하세요.", preferredStyle: .alert)

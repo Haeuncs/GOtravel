@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import RealmSwift
 
-class pastVC: UIViewController {
+class PastTripViewController: UIViewController {
   //    @IBOutlet weak var subView: UIView!
   let selection = UISelectionFeedbackGenerator()
   let notification = UINotificationFeedbackGenerator()
@@ -71,7 +71,7 @@ class pastVC: UIViewController {
     
     tripCollectionView.rx.modelSelected(countryRealm.self)
       .subscribe(onNext: { (country) in
-        let tripViewController = TripDetailViewController()
+        let tripViewController = TripDetailMainViewController()
         tripViewController.countryRealmDB = country
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
@@ -215,10 +215,10 @@ class pastVC: UIViewController {
 
 }
 
-extension pastVC: UICollectionViewDelegate {
+extension PastTripViewController: UICollectionViewDelegate {
   
 }
-extension pastVC: UICollectionViewDelegateFlowLayout {
+extension PastTripViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return tripCollectionView.bounds.size
   }
@@ -228,7 +228,7 @@ extension pastVC: UICollectionViewDelegateFlowLayout {
   
   
 }
-extension pastVC: UIScrollViewDelegate {
+extension PastTripViewController: UIScrollViewDelegate {
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let x = targetContentOffset.pointee.x
     let index = Int(x / tripCollectionView.frame.width)

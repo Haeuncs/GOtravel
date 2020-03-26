@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-class settingV : UIView {
+class SettingView : UIView {
   
   var delegate: ViewControllerDelegate?
   
@@ -54,7 +54,7 @@ class settingV : UIView {
   
 }
 
-extension settingV : UITableViewDelegate {
+extension SettingView : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row == 0 {
       sendEmail()
@@ -64,7 +64,7 @@ extension settingV : UITableViewDelegate {
     }
   }
 }
-extension settingV : UITableViewDataSource {
+extension SettingView : UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tableCellList.count
   }
@@ -82,7 +82,7 @@ extension settingV : UITableViewDataSource {
   }
   
 }
-extension settingV: MFMailComposeViewControllerDelegate{
+extension SettingView: MFMailComposeViewControllerDelegate{
   func sendEmail() {
     if MFMailComposeViewController.canSendMail() {
       let mail = MFMailComposeViewController()
