@@ -16,6 +16,7 @@ class HomeViewModel {
   
   var tripData = BehaviorSubject(value: [countryRealm]())
   let realm = try? Realm()
+  let realmManager: RealmManagerType = RealmManager()
   
   init(service: HomeModelService) {
     
@@ -28,5 +29,8 @@ class HomeViewModel {
     tripData.onNext(data)
   }
   
+  func getTripData() {
+    self.tripData.onNext(realmManager.getPresentTripData())
+  }
   
 }

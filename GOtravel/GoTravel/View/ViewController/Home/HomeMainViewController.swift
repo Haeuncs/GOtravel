@@ -36,6 +36,7 @@ class HomeMainViewController: UIViewController {
     }
     
     navigationController?.navigationBar.isHidden = true
+    viewModel.getTripData()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -59,13 +60,28 @@ class HomeMainViewController: UIViewController {
   }
   
   func setup(count: Int){
-    self.pageControl.numberOfPages = count
-    self.pageControl.currentPage = 0
+    contentView.pageControl.numberOfPages = count
+    contentView.pageControl.currentPage = 0
     if count == 0 {
-      emptyView.isHidden = false
+      contentView.emptyView.isHidden = false
     }else{
-      emptyView.isHidden = true
+      contentView.emptyView.isHidden = true
     }
+  }
+  
+  func initView(){
+    view.backgroundColor = .white
+    contentView.tripCollectionView.delegate = self
+    
+    view.addSubview(contentView)
+    contentView.snp.makeConstraints { (make) in
+      make.top.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+    }
+    
+    titleConstraint = contentView.titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+    titleConstraint?.constant -= view.bounds.width
+    titleConstraint?.isActive = true
+
   }
   
   func rx(){
@@ -78,7 +94,7 @@ class HomeMainViewController: UIViewController {
       .disposed(by: disposeBag)
     
     viewModel.tripData.asObserver()
-      .bind(to: tripCollectionView.rx.items(
+      .bind(to: contentView.tripCollectionView.rx.items(
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { row, model, cell in
           cell.configure(withDelegate: mainVC_CVC_ViewModel(model))
@@ -88,7 +104,7 @@ class HomeMainViewController: UIViewController {
     }
     .disposed(by: disposeBag)
     
-    tripCollectionView.rx.modelSelected(countryRealm.self)
+    contentView.tripCollectionView.rx.modelSelected(countryRealm.self)
       .subscribe(onNext: { [weak self] (country) in
         let tripViewController = TripDetailMainViewController()
         tripViewController.countryRealmDB = country
@@ -98,20 +114,20 @@ class HomeMainViewController: UIViewController {
         self?.present(nav, animated: true, completion: nil)
       }).disposed(by: disposeBag)
     
-    navView.dismissBtn.rx.tap
+    contentView.navView.dismissBtn.rx.tap
       .subscribe(onNext: { [weak self](_) in
         let setting = SettingViewController()
         self?.navigationController?.pushViewController(setting, animated: true)
       }).disposed(by: disposeBag)
     
-    navView.actionBtn.rx.tap
+    contentView.navView.actionBtn.rx.tap
       .subscribe(onNext: { [weak self] (_) in
         let placeVC = AddTripViewController_new()
         //        placeVC.categoryIndex = 1
         self?.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
     
-    emptyView.addButton.rx.tap
+    contentView.emptyView.addButton.rx.tap
       .subscribe(onNext: { [weak self] (_) in
         let placeVC = AddTripViewController_new()
         //        placeVC.categoryIndex = 1
@@ -119,126 +135,18 @@ class HomeMainViewController: UIViewController {
       }).disposed(by: disposeBag)
   }
   
-  lazy var navView: CustomNavigationBarView = {
-    let view = CustomNavigationBarView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.setTitle(title: "")
-    view.setLeftIcon(image: UIImage(named: "settings")!)
-    view.setRightIcon(image: UIImage(named: "plus")!)
-    return view
-  }()
-  lazy var titleView: UIView = {
-    let view = UIView()
+  lazy var contentView: HomeMainView = {
+    let view = HomeMainView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.text = "여행 일정"
-    label.textColor = .black
-    label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
-    return label
-  }()
-  lazy var middleGuideView: UIView = {
-    let view = UIView()
-    view.backgroundColor = .white
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  lazy var tripCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .horizontal
-    
-    let collect = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collect.showsHorizontalScrollIndicator = false
-    collect.isPagingEnabled = true
-    collect.backgroundColor = .white
-    collect.register(
-      TripCell.self,
-      forCellWithReuseIdentifier: String(describing: TripCell.self))
-    collect.translatesAutoresizingMaskIntoConstraints = false
-    return collect
-  }()
-  lazy var pageControl: UIPageControl = {
-    let page = UIPageControl()
-    page.currentPageIndicatorTintColor = .black
-    page.pageIndicatorTintColor = .grey03
-    page.translatesAutoresizingMaskIntoConstraints = false
-    page.addTarget(self, action: #selector(changeCell), for: .touchUpInside)
-    return page
-  }()
-  lazy var emptyView: HomeTripEmptyView = {
-    let view = HomeTripEmptyView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.isHidden = true
-    return view
-  }()
-  
-  func initView(){
-    view.backgroundColor = .white
-    tripCollectionView.delegate = self
-    
-    view.addSubview(navView)
-    view.addSubview(titleView)
-    titleView.addSubview(titleLabel)
-    view.addSubview(middleGuideView)
-    middleGuideView.addSubview(tripCollectionView)
-    view.addSubview(pageControl)
-    
-    middleGuideView.addSubview(emptyView)
-    
-    navView.snp.makeConstraints { (make) in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.height.equalTo(44)
-    }
-    titleView.snp.makeConstraints{ make in
-      make.top.greaterThanOrEqualTo(navView.snp.bottom)
-      make.right.equalTo(view.snp.right)
-      make.bottom.equalTo(middleGuideView.snp.top)
-    }
-    titleConstraint = titleView.leftAnchor.constraint(equalTo: view.leftAnchor)
-    titleConstraint?.constant -= view.bounds.width
-    titleConstraint?.isActive = true
-    
-    titleLabel.snp.makeConstraints{ make in
-      make.top.greaterThanOrEqualTo(titleView.snp.top)
-      make.left.equalTo(titleView.snp.left).offset(16)
-      make.right.equalTo(titleView.snp.right)
-      make.bottom.equalTo(titleView.snp.bottom)
-    }
-    middleGuideView.snp.makeConstraints { (make) in
-      make.top.equalTo(navView.snp.bottom).offset(60)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
-    }
-    tripCollectionView.snp.makeConstraints { (make) in
-      make.centerX.equalTo(middleGuideView.snp.centerX)
-      make.centerY.equalTo(middleGuideView.snp.centerY)
-      make.height.equalTo(middleGuideView.snp.height)
-      make.width.equalTo(middleGuideView.snp.width)
-    }
-    pageControl.snp.makeConstraints{make in
-      make.top.equalTo(middleGuideView.snp.bottom)
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-    }
-    emptyView.snp.makeConstraints { (make) in
-      make.left.equalTo(view.snp.left)
-      make.right.equalTo(view.snp.right)
-      make.center.equalTo(middleGuideView.snp.center)
-    }
-  }
 }
 
 extension HomeMainViewController {
   
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
-    self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+    contentView.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     //    var frame: CGRect = self.tripCollectionView.frame
     //    frame.origin.x = frame.size.width * CGFloat(page ?? 0)
     //    frame.origin.y = 0
@@ -268,7 +176,7 @@ extension HomeMainViewController: UICollectionViewDelegate {
 }
 extension HomeMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return tripCollectionView.bounds.size
+    return contentView.tripCollectionView.bounds.size
   }
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 0
@@ -278,8 +186,8 @@ extension HomeMainViewController: UICollectionViewDelegateFlowLayout {
 extension HomeMainViewController: UIScrollViewDelegate {
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let x = targetContentOffset.pointee.x
-    let index = Int(x / tripCollectionView.frame.width)
-    self.pageControl.currentPage = index
+    let index = Int(x / contentView.tripCollectionView.frame.width)
+    contentView.pageControl.currentPage = index
   }
   
 }

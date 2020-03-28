@@ -10,92 +10,100 @@ import UIKit
 import SnapKit
 import RxCocoa
 import RxSwift
+import RxDataSources
 import RealmSwift
 
 class AccountMainViewController: UIViewController {
   var disposeBag = DisposeBag()
   let realm = try! Realm()
+
+  let viewModel_: AccountMainType
   
-  // TripDetailViewController 에서 전달 받는 데이터
-  var tripMoneyRealmDB: List<moneyRealm>? {
-    didSet {
-      if let data = tripMoneyRealmDB {
-        viewModel.accept(Array(data))
-      }
-    }
+  init(tripMoneyData: [moneyRealm], day: Int) {
+    viewModel_ = AccountMainViewModel(data: tripMoneyData, day: day)
+    print(tripMoneyData)
+    super.init(nibName: nil, bundle: nil)
   }
   
-  
-  var viewModel = BehaviorRelay(value: [moneyRealm]())
-  var cellSelected = BehaviorRelay(value: [moneyDetailRealm]())
-  /// day 값이 있다면 이 값에 데이터 set됨 디폴트는 0임
-  var selectedIndex = BehaviorRelay(value: Int())
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
     rx()
     
-
+    self.dayCollectionView.selectItem(at: IndexPath(row: self.viewModel_.input.selectedDay.value, section: 0),
+                                      animated: true,
+                                      scrollPosition: .centeredHorizontally)
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    do {
-      cellSelected.accept(Array(viewModel.value[selectedIndex.value].detailList))
-      setMoneyLabel(money: viewModel.value[selectedIndex.value])
-      dayCollectionView.selectItem(at: IndexPath(row: selectedIndex.value, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-      self.collectionView(dayCollectionView, didSelectItemAt: IndexPath(row:  selectedIndex.value, section: 0))
-    } catch {
-      print(error)
-    }
-
+    self.viewModel_.input.selectedDay.accept(self.viewModel_.input.selectedDay.value)
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-//    disposeBag = DisposeBag()
   }
-  func rx(){
-    viewModel.asObservable()
-      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: exchangeCVCell.self)) { row, model, cell in
+  
+  func rx() {
+    
+    self.viewModel_.input.tripMoneyData
+      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: exchangeCVCell.self)) { row, element, cell in
         if row == 0 {
           cell.dayLabel.text = "여행전"
-        }else{
+        } else {
           cell.dayLabel.text = "\(row) 일"
         }
     }.disposed(by: disposeBag)
     
-    cellSelected.asObservable()
-      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: exchangeTVC.self)) { row, model, cell in
-        cell.label1.text = model.subTitle
-        cell.label2.text = model.title
-        cell.label3.text = "\(Formatter.decimal.string(from: NSNumber(value: model.money)) ?? "0") 원"
-      }.disposed(by: disposeBag)
+    self.dayCollectionView.rx.itemSelected
+      .subscribe(onNext: { (indexPath) in
+        self.viewModel_.input.selectedDay.accept(indexPath.row)
+      }).disposed(by: disposeBag)
+    
+    self.viewModel_.output.specificDayDetail
+      .subscribe(onNext: { (data) in
+        self.setMoneyLabel(money: Array(data))
+      }).disposed(by: disposeBag)
+    
 
-    accountDayTableView.rx.modelSelected(moneyDetailRealm.self)
-      .subscribe(onNext: { (moneyDetail) in
-        do {
-//          let vc = DirectAddAccountViewController()
-          let vc = DirectAddReceiptViewController()
-          vc.realmMoneyList = try self.viewModel.value[self.selectedIndex.value]
-          vc.editMoneyDetailRealm = moneyDetail
-          self.navigationController?.pushViewController(vc, animated: true)
-        }catch {
-          print(error)
+    self.accountDayTableView.rx.itemDeleted
+      .subscribe(onNext: { (indexPath) in
+        RealmManager.shared
+          .deleteTripSpecificReceipt(data: self.viewModel_.input.tripMoneyData.value[self.viewModel_.input.selectedDay.value],
+                                     index: indexPath.row,
+                                     complete: {
+                                      self.viewModel_.input.selectedDay.accept(self.viewModel_.input.selectedDay.value)
+          })
+      }).disposed(by: disposeBag)
+
+    self.viewModel_.output.specificDayDetail
+      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: exchangeTVC.self)) { row, element, cell in
+        cell.label1.text = element.subTitle
+        cell.label2.text = element.title
+        cell.label3.text = "\(Formatter.decimal.string(from: NSNumber(value: element.money)) ?? "0") 원"
+    }.disposed(by: disposeBag)
+    
+    self.viewModel_.output.specificDayDetail
+      .subscribe(onNext: { (data) in
+        if data.count == 0 {
+          self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
+        } else {
+          self.accountDayTableView.restore()
         }
       }).disposed(by: disposeBag)
-//    navigationItem.rightBarButtonItem?.rx.tap
-//      .subscribe(onNext: { (_) in
-//        let vc = DirectAddAccountViewController()
-//        vc.realmMoneyList = try! self.viewModel.value()[try! self.selectedIndex.value()]
-//        self.navigationController?.pushViewController(vc, animated: true)
-//      }).disposed(by: disposeBag)
+
+    Observable
+      .zip(self.accountDayTableView.rx.modelSelected(moneyDetailRealm.self), self.accountDayTableView.rx.itemSelected)
+      .bind { [weak self] moneyDetail, indexPath in
+        let vc = DirectAddReceiptViewController()
+        vc.realmMoneyList = self?.viewModel_.output.specificDayDetail.value
+        vc.editMoneyDetailRealm = moneyDetail
+        self?.navigationController?.pushViewController(vc, animated: true)
+    }.disposed(by: disposeBag)
+    
   }
   func initView(){
-//    self.navigationItem.title = "여행 경비"
-//    self.navigationController?.navigationBar.tintColor = .blackText
-//    self.navigationItem.leftBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-//    self.navigationItem.rightBarButtonItem?.tintColor = Defaull_style.mainTitleColor
-//    let rightButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: nil)
-//    self.navigationItem.rightBarButtonItem = rightButton
 
     view.backgroundColor = .white
     view.addSubview(navView)
@@ -157,6 +165,7 @@ class AccountMainViewController: UIViewController {
   }()
   let accountDayTableView : UITableView = {
     let table = UITableView()
+//    table.isEditing = true
     table.rowHeight = 110
     table.separatorStyle = .none
     table.backgroundColor = .white
@@ -171,7 +180,7 @@ extension AccountMainViewController {
   @objc func saveEvent(){
 //    let vc = DirectAddAccountViewController()
     let vc = DirectAddReceiptViewController()
-    vc.realmMoneyList = try! self.viewModel.value[self.selectedIndex.value]
+    vc.realmMoneyList = self.viewModel_.output.specificDayDetail.value
     self.navigationController?.pushViewController(vc, animated: true)
   }
   @objc func popEvent(){
@@ -179,21 +188,21 @@ extension AccountMainViewController {
   }
 }
 
-extension AccountMainViewController: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-    let model = self.viewModel.value[indexPath.row]
-    self.setMoneyLabel(money: model)
-    self.cellSelected.accept(Array(model.detailList))
-    self.selectedIndex.accept(indexPath.row)
-    if model.detailList.count == 0 {
-      self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
-    }else{
-      self.accountDayTableView.restore()
-    }
-  }
-}
-
+//extension AccountMainViewController: UICollectionViewDelegate {
+//  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//    let model = self.viewModel.value[indexPath.row]
+//    self.setMoneyLabel(money: model)
+//    self.cellSelected.accept(Array(model.detailList))
+//    self.selectedIndex.accept(indexPath.row)
+//    if model.detailList.count == 0 {
+//      self.accountDayTableView.setEmptyMessage("X_X\n 이 날짜에 데이터가 없습니다. \n 데이터를 추가해주세요")
+//    }else{
+//      self.accountDayTableView.restore()
+//    }
+//  }
+//}
+//
 extension AccountMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
   {
@@ -203,13 +212,13 @@ extension AccountMainViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - logic
 extension AccountMainViewController {
-  func setMoneyLabel(money: moneyRealm){
+  func setMoneyLabel(money: [moneyDetailRealm]){
     var dayTotal = 0
     var allTotal = 0
-    for i in money.detailList {
+    for i in money {
       dayTotal = Int(i.money) + dayTotal
     }
-    for i in self.viewModel.value {
+    for i in self.viewModel_.input.tripMoneyData.value {
       for j in i.detailList {
         allTotal = Int(j.money) + allTotal
       }
@@ -219,5 +228,3 @@ extension AccountMainViewController {
 
   }
 }
-
-

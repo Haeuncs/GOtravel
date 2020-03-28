@@ -17,6 +17,7 @@ pod 'AnimatedTextInput'
 pod 'NVActivityIndicatorView'
 pod 'EasyTipView'
 pod 'SnapKit'
+pod 'RxDataSources'
 pod 'RxSwift'
 pod 'RxCocoa'
 

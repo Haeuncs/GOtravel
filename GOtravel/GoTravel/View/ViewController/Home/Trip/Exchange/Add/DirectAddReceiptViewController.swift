@@ -27,7 +27,7 @@ class DirectAddReceiptViewController: UIViewController {
   let realm = try! Realm()
 
   /// 이전 viewcontroller 에서 받는 값 (선택된 여행 일자)
-  var realmMoneyList: moneyRealm?
+  var realmMoneyList: List<moneyDetailRealm>?
   /// 데이터 수정일 때 받는 값
   var editMoneyDetailRealm: moneyDetailRealm?
   
@@ -122,13 +122,13 @@ class DirectAddReceiptViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
           } else {
             let moneyDetailRealmDB = moneyDetailRealm()
-            if let data = self.realmMoneyList {
+            if var data = self.realmMoneyList {
               moneyDetailRealmDB.money = self.viewModel.input.money.value
               moneyDetailRealmDB.title = self.viewModel.input.title.value!
               moneyDetailRealmDB.exchange = self.viewModel.input.exchangeName.value!
               moneyDetailRealmDB.subTitle = self.viewModel.input.subTitle.value!
               try self.realm.write {
-                data.detailList.append(moneyDetailRealmDB)
+                data.append(moneyDetailRealmDB)
               }
               self.navigationController?.popViewController(animated: true)
             }

@@ -228,11 +228,8 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-    let vc = AccountMainViewController()
-    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
     // 여행 전 경비가 있음으로 + 1
-    vc.selectedIndex = BehaviorRelay(value: indexPath.row + 1)
-    // 여행 전 경비가 있음으로 + 1
+    let vc = AccountMainViewController(tripMoneyData: Array(self.countryRealmDB.moneyList), day: indexPath.row + 1)
     self.navigationController?.pushViewController(vc, animated: true)
   }
   
@@ -464,8 +461,7 @@ extension TripDetailMainViewController: UIScrollViewDelegate {
 
 extension TripDetailMainViewController{
   @objc func pushExchangeViewController(){
-    let vc = AccountMainViewController()
-    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
+    let vc = AccountMainViewController(tripMoneyData: Array(self.countryRealmDB.moneyList), day: 0)
     //    vc.countryRealmDB = self.countryRealmDB
     self.navigationController?.pushViewController(vc, animated: true)
   }
@@ -474,10 +470,8 @@ extension TripDetailMainViewController{
 
 extension TripDetailMainViewController: TripDetailDataPopupDelegate {
   func TripDetailDataPopupMoney(day: Int) {
-    let vc = AccountMainViewController()
-    vc.tripMoneyRealmDB = self.countryRealmDB.moneyList
     // 여행 전 경비가 있음으로 + 1
-    vc.selectedIndex = BehaviorRelay(value: day + 1)
+    let vc = AccountMainViewController(tripMoneyData: Array(self.countryRealmDB.moneyList), day: day + 1)
     self.navigationController?.pushViewController(vc, animated: true)
   }
   

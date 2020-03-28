@@ -1,6 +1,7 @@
 PODS:
   - AnimatedTextInput (0.5.5)
   - CenteredCollectionView (2.2.1)
+  - Differentiator (4.0.1)
   - EasyTipView (2.0.4)
   - GoogleMaps (3.3.0):
     - GoogleMaps/Maps (= 3.3.0)
@@ -21,6 +22,10 @@ PODS:
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
@@ -37,6 +42,7 @@ DEPENDENCIES:
   - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
   - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
   - RxCocoa
+  - RxDataSources
   - RxSwift
   - SnapKit
 
@@ -44,12 +50,14 @@ SPEC REPOS:
   trunk:
     - AnimatedTextInput
     - CenteredCollectionView
+    - Differentiator
     - EasyTipView
     - GoogleMaps
     - GooglePlaces
     - IQKeyboardManagerSwift
     - NVActivityIndicatorView
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
     - SnapKit
@@ -77,6 +85,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AnimatedTextInput: aadbdfa5a538a03cc9fbea700b43d2bb21a5d132
   CenteredCollectionView: ba6e45fb7774627890621d73c8dd7dbd33391da9
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
   GoogleMaps: cfee83da305b9aaeccf92c24ac79df11c3003492
   GooglePlaces: 1e2a87bd9efee9623ee65d44ecc35ebfecd7b13c
@@ -85,10 +94,11 @@ SPEC CHECKSUMS:
   Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
   RealmSwift: 486f2e09d5a8ccff63ed66e48d0846b111deb5e5
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: bcaa4106d1dee6292621d8052860560a8275d9b2
+PODFILE CHECKSUM: efc05ec2325a2092e8101de8153393e2a833f77a
 
 COCOAPODS: 1.8.4
