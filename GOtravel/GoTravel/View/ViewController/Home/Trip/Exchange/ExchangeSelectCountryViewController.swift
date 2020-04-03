@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import NVActivityIndicatorView
 import SnapKit
 import RealmSwift
 import RxSwift
@@ -19,7 +18,6 @@ func HSBrandomColor(num : CGFloat) -> UIColor{
   let saturation : CGFloat =  0.45
   let brigtness : CGFloat = 0.85
   let randomHue = num
-  //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
 }
 
@@ -28,27 +26,21 @@ func HSBrandomColor() -> UIColor{
   let saturation : CGFloat =  0.45
   let brigtness : CGFloat = 0.85
   let randomHue = CGFloat.random(in: 0.0..<1.0)
-  //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
-}
-
-
-struct exchangeData: Codable {
-  var cur_unit : String
-  var deal_bas_r: String
 }
 
 /**
  환율 선택 테이블 화면
  */
-class ExchangeSelectCountryViewController : UIViewController,NVActivityIndicatorViewable {
+
+class ExchangeSelectCountryViewController : UIViewController {
   weak var directAddReceiptDelegate: DireactAddReceiptDelegate?
 
   var viewModel = ExchangeSelectViewModel()
   var disposeBag = DisposeBag()
   
   /// 네트워크를 통해서 받는 환율 정보 배열
-  var netWorkExchangeArr : [exchangeData] = []
+  var netWorkExchangeArr : [ExchangeData] = []
   var selectIndex = 0
   /// realm
   let realm = try? Realm()
@@ -169,6 +161,8 @@ extension ExchangeSelectCountryViewController {
     self.navigationController?.popViewController(animated: true)
   }
 }
+
+// MARK: - UITableViewDelegate
 extension ExchangeSelectCountryViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
@@ -192,35 +186,7 @@ extension ExchangeSelectCountryViewController: UITableViewDelegate {
       return false
     }
   }
-  //  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-  //    if indexPath.section == 0 {
-  //      let vc = DirectAddExchangeViewController()
-  //      vc.modalTransitionStyle = .coverVertical
-  //      vc.modalPresentationStyle = .fullScreen
-  //      self.present(vc, animated: true, completion: nil)
-  //    }else if indexPath.section == 1 {
-  //      if exchangeRealmData?.count ?? 0 > 0 {
-  //        let value = ExchangeCountryDictionary[netWorkExchangeArr[indexPath.row].cur_unit]
-  //        let StringToDouble = netWorkExchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble()
-  //        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: value?.country ?? "", belowLabel: "\(netWorkExchangeArr[indexPath.row].cur_unit) (\(value?.korName ?? ""))", doubleMoney: StringToDouble!)
-  //        self.navigationController?.popViewController(animated: true)
-  //      }else{
-  //        if let data = exchangeRealmData?[indexPath.row] {
-  //          delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
-  //          self.navigationController?.popViewController(animated: true)
-  //        }else{
-  //          Toast.show(message: "오류가 발생했어요!", isTabbar: false)
-  //        }
-  //      }
-  //    }else{
-  //      if let data = exchangeRealmData?[indexPath.row] {
-  //        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
-  //        self.navigationController?.popViewController(animated: true)
-  //      }else{
-  //        Toast.show(message: "오류가 발생했어요!", isTabbar: false)
-  //      }
-  //    }
-  //  }
+
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.section == 0 {
       let vc = DirectAddExchangeViewController()
@@ -231,9 +197,6 @@ extension ExchangeSelectCountryViewController: UITableViewDelegate {
       if exchangeRealmData?.count ?? 0 > 0 {
         
         if let data = exchangeRealmData?[indexPath.row] {
-          //          delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
-//          viewModel.selectedPublish.onNext(ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: nil, calculateDouble: data.krWon))
-//          viewModel.selectedPublish.onCompleted()
           let vc = DireactAddReceiptPriceViewController(type: .other, exchangeModel: ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: data.name, calculateDouble: data.krWon))
           vc.directAddReceiptDelegate = self.directAddReceiptDelegate
           self.navigationController?.pushViewController(vc, animated: true)
@@ -252,26 +215,16 @@ extension ExchangeSelectCountryViewController: UITableViewDelegate {
     }else{
       let value = ExchangeCountryDictionary[netWorkExchangeArr[indexPath.row].cur_unit]
       let StringToDouble = netWorkExchangeArr[indexPath.row].deal_bas_r.replacingOccurrences(of: ",", with: "").toDouble() ?? 0.0
-//
-//      viewModel.selectedPublish.onNext(ExchangeSelectModel(value: value!, foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
-//      viewModel.selectedPublish.onCompleted()
-//      self.navigationController?.popViewController(animated: true)
       
       let vc = DireactAddReceiptPriceViewController(type: .other, exchangeModel: ExchangeSelectModel(value: value ?? ExchangeCountry(country: netWorkExchangeArr[indexPath.row].cur_unit, korName: netWorkExchangeArr[indexPath.row].cur_unit), foreignName: netWorkExchangeArr[indexPath.row].cur_unit, calculateDouble: StringToDouble))
       vc.directAddReceiptDelegate = self.directAddReceiptDelegate
       self.navigationController?.pushViewController(vc, animated: true)
-      
-      //      if let data = exchangeRealmData?[indexPath.row] {
-      //        viewModel.selectedPublish.onNext(ExchangeSelectModel(value: ExchangeCountry(country: data.name, korName: data.exchangeName), foreignName: nil, calculateDouble: data.krWon))
-      ////        delegate?.exchangeSelectForeignDidTapCell(selectIndex: selectIndex, label: data.name, belowLabel: data.exchangeName, doubleMoney: data.krWon)
-      //        self.navigationController?.popViewController(animated: true)
-      //      }else{
-      //        Toast.show(message: "오류가 발생했어요!", isTabbar: false)
-      //      }
+
     }
   }
-  
 }
+
+// MARK: - UITableViewDataSource
 extension ExchangeSelectCountryViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
     if exchangeRealmData != nil {
@@ -342,9 +295,10 @@ extension ExchangeSelectCountryViewController {
     let dispatchQueue = DispatchQueue(label: "taskQueue")
     let dispatchSemaphore = DispatchSemaphore(value: 0)
     
-    let basicURL = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=fmmSohmV4M3z8jeqtUZiYmPXrUnjp1bs&data=AP01&searchdate="
+    let basicURL = Constant.Exchange.url
+    
     dispatchQueue.async {
-      while self.netWorkExchangeArr.count == 0{
+      while self.netWorkExchangeArr.count == 0 {
         // 오늘날짜부터 시작해서 데이터가 있는 날짜까지 뺌
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
@@ -368,10 +322,9 @@ extension ExchangeSelectCountryViewController {
             
           }
           do {
-            //                    print(data)
             let decoder = JSONDecoder()
             do {
-              let todo = try decoder.decode([exchangeData].self, from: data)
+              let todo = try decoder.decode([ExchangeData].self, from: data)
               self.netWorkExchangeArr = todo
               count = count - 1
               self.DateData = day
@@ -396,8 +349,8 @@ extension ExchangeSelectCountryViewController {
     }
     
   }
-  
 }
+
 extension ExchangeSelectCountryViewController {
   func checkRealmData(){
     if let data = realm?.objects(ExchangeRealm.self) {

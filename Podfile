@@ -7,18 +7,16 @@ target 'GOtravel' do
 
   # Pods for GOtravel
 #pod 'RealmSwift'
-pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
-pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
+pod 'Realm'
+pod 'RealmSwift'
 pod 'GoogleMaps'
 pod 'GooglePlaces'
 pod 'IQKeyboardManagerSwift'
-pod 'CenteredCollectionView'
 pod 'AnimatedTextInput'
-pod 'NVActivityIndicatorView'
-pod 'EasyTipView'
 pod 'SnapKit'
 pod 'RxDataSources'
 pod 'RxSwift'
 pod 'RxCocoa'
+pod 'CenteredCollectionView'
 
 end

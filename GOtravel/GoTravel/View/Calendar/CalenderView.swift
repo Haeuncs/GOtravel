@@ -54,6 +54,13 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
   var todaysDate = 0
   var firstWeekDayOfMonth = 0   //(Sunday-Saturday 1-7)
   
+  var firstSelectCount = 0
+  var didSelectCount = 0
+  var firstDate : Date?
+  var secondData : Date?
+  var dateRange = [Date]()
+  var selectCount = 0
+
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -185,15 +192,6 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     return cell
   }
-  var firstSelectCount = 0
-  var didSelectCount = 0
-  //    var presentMonthIndex = 0
-  //    var presentYear = 0
-  
-  var firstDate : Date?
-  var secondData : Date?
-  var dateRange = [Date]()
-  var selectCount = 0
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let cell=collectionView.cellForItem(at: indexPath)
     let cell2=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
@@ -283,20 +281,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
   var itemNum = 0
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        let width = CGFloat(Int(collectionView.frame.width/7))
     let paddingSpace = sectionInsets.left * 7
     let availableWidth = collectionView.frame.width - paddingSpace
     let widthPerItem = availableWidth / 7
-    let height: CGFloat = 80
     return CGSize(width: widthPerItem, height: widthPerItem)
-    
-    //        let paddingSpace = sectionInsets.left * 7
-    //        let availableWidth = collectionView.frame.width - paddingSpace
-    //        let widthPerItem = availableWidth / 7
-    //        let heightPerItem = widthPerItem + 21
-    //
-    //        return CGSize(width: widthPerItem, height: widthPerItem)
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -32,11 +32,11 @@ class PastTripViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initView()
+    rx()
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.isHidden = true
-    rx()
     processingDateData()
   }
   override func viewDidAppear(_ animated: Bool) {
@@ -51,7 +51,7 @@ class PastTripViewController: UIViewController {
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    disposeBag = DisposeBag()
+//    disposeBag = DisposeBag()
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)

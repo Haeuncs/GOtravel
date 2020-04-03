@@ -11,7 +11,7 @@ import RealmSwift
 import SnapKit
 
 
-class addDetailView : UIView {
+class TripDescriptionView : UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -225,39 +225,10 @@ class addDetailViewCellButtonView : UIView {
   }()
   func initView(){
     self.addSubview(addButton)
-//    addSubview(pathBtn)
-//    addSubview(moneyBtn)
-//    addSubview(detailBtn)
-//    addSubview(addBtn)
     addButton.snp.makeConstraints { (make) in
       make.trailing.equalTo(self)
       make.centerY.equalTo(self)
     }
-//    NSLayoutConstraint.activate([
-//      addBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-//      addBtn.heightAnchor.constraint(equalToConstant: 35),
-//      addBtn.widthAnchor.constraint(equalToConstant: 35),
-//      
-//      moneyBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-//      moneyBtn.heightAnchor.constraint(equalToConstant: 35),
-//      moneyBtn.widthAnchor.constraint(equalToConstant: 35),
-//      
-//      detailBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-//      detailBtn.heightAnchor.constraint(equalToConstant: 35),
-//      detailBtn.widthAnchor.constraint(equalToConstant: 35),
-//      
-//      pathBtn.topAnchor.constraint(equalTo: topAnchor,constant:5),
-//      pathBtn.heightAnchor.constraint(equalToConstant: 35),
-//      pathBtn.widthAnchor.constraint(equalToConstant: 35),
-//      
-//      
-//      addBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-//      detailBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-//      moneyBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-//      pathBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-//      
-//    ])
-    
   }
   
 }

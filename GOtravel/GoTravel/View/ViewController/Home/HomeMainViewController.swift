@@ -23,8 +23,8 @@ class HomeMainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    rx()
     initView()
+    rx()
     //    print(Realm.Configuration.defaultConfiguration.fileURL!)
     
   }

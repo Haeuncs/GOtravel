@@ -1,9 +1,9 @@
 //
-//  Enum_exchange.swift
+//  ExchangeCountry.swift
 //  GOtravel
 //
-//  Created by OOPSLA on 25/01/2019.
-//  Copyright © 2019 haeun. All rights reserved.
+//  Created by LEE HAEUN on 2020/03/28.
+//  Copyright © 2020 haeun. All rights reserved.
 //
 
 import Foundation
@@ -12,8 +12,8 @@ struct ExchangeCountry {
   let country: String
   let korName: String
 }
-let ExchangeCountryDictionary : [String: ExchangeCountry] =
-  [
+
+let ExchangeCountryDictionary : [String: ExchangeCountry] = [
     "KRW": ExchangeCountry(country: "대한민국", korName: "원"),
     "AED": ExchangeCountry(country: "아랍에미레이트", korName: "디르함"),
     "ATS": ExchangeCountry(country: "오스트리아", korName: "실링"),
@@ -46,38 +46,37 @@ let ExchangeCountryDictionary : [String: ExchangeCountry] =
     "AUD": ExchangeCountry(country: "호주", korName: "달러"),
     "IDR(100)": ExchangeCountry(country: "인도네시아", korName: "루피아")
     //    "인도네시아_루피아" :  "IDR",
-    
 ]
-struct exchange_country {
-  static var 대한민국_원 = "KRW"
-  static var 아랍에미레이트_디르함 = "AED"
-  static var 오스트리아_실링 = "ATS"
-  static var 벨기에_프랑 = "BEF"
-  static var 바레인_디나르 = "BHD"
-  static var 캐나다_달러 = "CAD"
-  static var 스위스_프랑 = "CHF"
-  
-  static var 중국_위안화 = "CNH"
-  static var 독일_마르크 = "DEM"
-  static var 덴마아크_크로네 = "DKK"
-  static var 스페인_페세타 = "ESP"
-  static var 유로 = "EUR"
-  static var 필란드_마르카 = "FIM"
-  static var 프랑스_프랑 = "FPF"
-  static var 영국_파운드 = "GBP"
-  static var 홍콩_달러 = "HKD"
-  static var 인도네시아_루피아 = "IDR"
-  static var 이태리_리라 = "ITL"
-  static var 일본_엔 = "JPY"
-  static var 쿠웨이트_디나르 = "KWD"
-  static var 말레이지아_링기트 = "MYR"
-  static var 네덜란드_길더 = "NLG"
-  static var 노르웨르_크로네 = "NOK"
-  static var 뉴질랜드_달러 = "NZD"
-  static var 사우디_리얄 = "SAR"
-  static var 스웨덴_크로나 = "SEK"
-  static var 싱카포르_달러 = "SGD"
-  static var 태국_바트 = "THB"
-  static var 미국_달러 = "USD"
-  static var 씨에프에이_프랑 = "XOF"
+
+enum exchange_country: String {
+  case 대한민국_원 = "KRW"
+  case 아랍에미레이트_디르함 = "AED"
+  case 오스트리아_실링 = "ATS"
+  case 벨기에_프랑 = "BEF"
+  case 바레인_디나르 = "BHD"
+  case 캐나다_달러 = "CAD"
+  case 스위스_프랑 = "CHF"
+  case 중국_위안화 = "CNH"
+  case 독일_마르크 = "DEM"
+  case 덴마아크_크로네 = "DKK"
+  case 스페인_페세타 = "ESP"
+  case 유로 = "EUR"
+  case 필란드_마르카 = "FIM"
+  case 프랑스_프랑 = "FPF"
+  case 영국_파운드 = "GBP"
+  case 홍콩_달러 = "HKD"
+  case 인도네시아_루피아 = "IDR"
+  case 이태리_리라 = "ITL"
+  case 일본_엔 = "JPY"
+  case 쿠웨이트_디나르 = "KWD"
+  case 말레이지아_링기트 = "MYR"
+  case 네덜란드_길더 = "NLG"
+  case 노르웨르_크로네 = "NOK"
+  case 뉴질랜드_달러 = "NZD"
+  case 사우디_리얄 = "SAR"
+  case 스웨덴_크로나 = "SEK"
+  case 싱카포르_달러 = "SGD"
+  case 태국_바트 = "THB"
+  case 미국_달러 = "USD"
+  case 씨에프에이_프랑 = "XOF"
 }

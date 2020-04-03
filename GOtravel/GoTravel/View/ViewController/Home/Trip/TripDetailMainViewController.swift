@@ -78,7 +78,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     view.backgroundColor = .white
     
 //    view.addSubview(navView)
-    view.addSubview(TripDescriptionView)
+    view.addSubview(tripDescriptionView)
     view.addSubview(scheduleMainTableView)
     
     
@@ -128,11 +128,11 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
 //      make.height.equalTo(44)
 //    }
     NSLayoutConstraint.activate([
-      TripDescriptionView.topAnchor.constraint(equalTo: baseView.bottomAnchor),
-      TripDescriptionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-      TripDescriptionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      tripDescriptionView.topAnchor.constraint(equalTo: baseView.bottomAnchor),
+      tripDescriptionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      tripDescriptionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       
-      scheduleMainTableView.topAnchor.constraint(equalTo: TripDescriptionView.bottomAnchor),
+      scheduleMainTableView.topAnchor.constraint(equalTo: tripDescriptionView.bottomAnchor),
       scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -145,8 +145,8 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
   func getRealmData(){
     //        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
     
-    TripDescriptionView.countryLabel.text = countryRealmDB.country
-    TripDescriptionView.subLabel.text = countryRealmDB.city
+    tripDescriptionView.countryLabel.text = countryRealmDB.country
+    tripDescriptionView.subLabel.text = countryRealmDB.city
     
     let dateFormatter = DateFormatter()
     let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period - 1, to: countryRealmDB.date!)
@@ -157,7 +157,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     let endDay = dateFormatter.string(from: DBDate!)
     
     
-    TripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
+    tripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
     //        scheduleMainTableView.reloadData()
   }
   // MARK: 버튼 이벤트
@@ -289,8 +289,8 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
   }()
   // title을 갖는 뷰
   // 여행지랑 몇박 몇일인지 등등
-  lazy var TripDescriptionView: addDetailView = {
-    let view = addDetailView()
+  lazy var tripDescriptionView: TripDescriptionView = {
+    let view = TripDescriptionView()
     view.moneyBtn.addTarget(self, action: #selector(pushExchangeViewController), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
     return view

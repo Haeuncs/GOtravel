@@ -105,7 +105,6 @@ class HomeMainView: UIView {
   lazy var tripCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    
     let collect = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collect.showsHorizontalScrollIndicator = false
     collect.isPagingEnabled = true

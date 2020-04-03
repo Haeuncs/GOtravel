@@ -29,7 +29,7 @@ struct exchangeTableCellViewModel : exchangeTableCellProtocol{
     
   }
 }
-class exchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
   
   var viewModel: AccountViewModel?
 
@@ -249,7 +249,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
       moneyTV.reloadData()
     }
   }
-  var delegate : exchangeView?
+  var delegate : ExchangeView?
   //  var exchangeCell:exchangeCVCell?
   override init(frame: CGRect) {
     super.init(frame: frame)

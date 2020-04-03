@@ -1,8 +1,7 @@
 PODS:
   - AnimatedTextInput (0.5.5)
-  - CenteredCollectionView (2.2.1)
+  - CenteredCollectionView (2.2.2)
   - Differentiator (4.0.1)
-  - EasyTipView (2.0.4)
   - GoogleMaps (3.3.0):
     - GoogleMaps/Maps (= 3.3.0)
   - GoogleMaps/Base (3.3.0)
@@ -11,14 +10,11 @@ PODS:
   - GooglePlaces (3.3.0):
     - GoogleMaps/Base (= 3.3.0)
   - IQKeyboardManagerSwift (6.5.5)
-  - NVActivityIndicatorView (4.7.0):
-    - NVActivityIndicatorView/Presenter (= 4.7.0)
-  - NVActivityIndicatorView/Presenter (4.7.0)
-  - Realm (3.16.1):
-    - Realm/Headers (= 3.16.1)
-  - Realm/Headers (3.16.1)
-  - RealmSwift (3.16.1):
-    - Realm (= 3.16.1)
+  - Realm (4.3.2):
+    - Realm/Headers (= 4.3.2)
+  - Realm/Headers (4.3.2)
+  - RealmSwift (4.3.2):
+    - Realm (= 4.3.2)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -34,13 +30,11 @@ PODS:
 DEPENDENCIES:
   - AnimatedTextInput
   - CenteredCollectionView
-  - EasyTipView
   - GoogleMaps
   - GooglePlaces
   - IQKeyboardManagerSwift
-  - NVActivityIndicatorView
-  - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
-  - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
+  - Realm
+  - RealmSwift
   - RxCocoa
   - RxDataSources
   - RxSwift
@@ -51,54 +45,32 @@ SPEC REPOS:
     - AnimatedTextInput
     - CenteredCollectionView
     - Differentiator
-    - EasyTipView
     - GoogleMaps
     - GooglePlaces
     - IQKeyboardManagerSwift
-    - NVActivityIndicatorView
+    - Realm
+    - RealmSwift
     - RxCocoa
     - RxDataSources
     - RxRelay
     - RxSwift
     - SnapKit
 
-EXTERNAL SOURCES:
-  Realm:
-    :branch: tg/xcode-11-b1
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: true
-  RealmSwift:
-    :branch: tg/xcode-11-b1
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: true
-
-CHECKOUT OPTIONS:
-  Realm:
-    :commit: 2e58dfe78e5f641262c4c5c7e5a13f05b434c610
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: true
-  RealmSwift:
-    :commit: 2e58dfe78e5f641262c4c5c7e5a13f05b434c610
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: true
-
 SPEC CHECKSUMS:
   AnimatedTextInput: aadbdfa5a538a03cc9fbea700b43d2bb21a5d132
-  CenteredCollectionView: ba6e45fb7774627890621d73c8dd7dbd33391da9
+  CenteredCollectionView: a9217908a698c386cbb98af11b596da48900b908
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
   GoogleMaps: cfee83da305b9aaeccf92c24ac79df11c3003492
   GooglePlaces: 1e2a87bd9efee9623ee65d44ecc35ebfecd7b13c
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
-  NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
-  Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
-  RealmSwift: 486f2e09d5a8ccff63ed66e48d0846b111deb5e5
+  Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
+  RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: efc05ec2325a2092e8101de8153393e2a833f77a
+PODFILE CHECKSUM: 63701c9bfc2789a8b326d4ff0279a09a40712aff
 
 COCOAPODS: 1.8.4
