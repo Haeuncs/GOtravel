@@ -6,7 +6,7 @@
 >
 > iOS App to Manage Travel Schedules and Travel Expenses
 
-<img src="githubImage/Screen2.png">
+<img src="githubImage/ScreenMain.png">
 
 ## Download
 
