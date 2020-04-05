@@ -62,6 +62,10 @@ Then run 'GOtravel.xcworkspace'.
 
 Done! 🥳
 
+## Structure
+
+<img src="githubImage/structure.jpg">
+
 ## Screenshot
 
 <img src="githubImage/Screen1.png">
