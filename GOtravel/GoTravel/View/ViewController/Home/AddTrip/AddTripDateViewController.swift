@@ -95,6 +95,7 @@ class AddTripDateViewController: BaseUIViewController {
     view.addSubview(textfield)
     view.addSubview(calenderView)
     view.addSubview(confirmButton)
+
     textfield.snp.makeConstraints { (make) in
       make.top.equalTo(baseView.snp.bottom).offset(6)
       make.leading.equalTo(view.snp.leading).offset(16)
@@ -106,6 +107,7 @@ class AddTripDateViewController: BaseUIViewController {
     calenderView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive=true
     calenderView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive=true
     calenderView.heightAnchor.constraint(equalToConstant: 70 + (widthPerItem * 6)).isActive=true
+
     confirmButton.snp.makeConstraints { (make) in
       make.height.equalTo(56)
       make.leading.equalTo(view.snp.leading).offset(16)
@@ -149,7 +151,7 @@ class AddTripDateViewController: BaseUIViewController {
   }()
     
   let calenderView: CalenderView = {
-    let v=CalenderView(theme: MyTheme.dark)
+    let v = CalenderView(theme: MyTheme.dark)
     v.translatesAutoresizingMaskIntoConstraints=false
     return v
   }()

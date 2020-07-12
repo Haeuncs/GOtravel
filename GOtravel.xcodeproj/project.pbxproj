@@ -38,6 +38,9 @@
 		4AC710B321F103EF00B20448 /* TripDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* TripDescriptionView.swift */; };
 		4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7002222AC9DC004095DA /* PastTripViewController.swift */; };
 		4ACC7007222ACA04004095DA /* pastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC7006222ACA04004095DA /* pastVM.swift */; };
+		7D03764E24BB86670071124E /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D03764D24BB86660071124E /* DateCell.swift */; };
+		7D03765024BB8B640071124E /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D03764F24BB8B640071124E /* UIButton+.swift */; };
+		7D03765224BB8B8A0071124E /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D03765124BB8B8A0071124E /* String+.swift */; };
 		7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C030E22EB5FA5001FD837 /* TabbarController.swift */; };
 		7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */; };
 		7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */; };
@@ -152,6 +155,9 @@
 		4ACC7002222AC9DC004095DA /* PastTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastTripViewController.swift; sourceTree = "<group>"; };
 		4ACC7006222ACA04004095DA /* pastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pastVM.swift; sourceTree = "<group>"; };
 		5C8D0EDA739926CE14E7B79C /* Pods_GOtravel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GOtravel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D03764D24BB86660071124E /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		7D03764F24BB8B640071124E /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		7D03765124BB8B8A0071124E /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		7D0C030E22EB5FA5001FD837 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		7D0C031422EB7122001FD837 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = "../New Group/SettingTableViewCell.swift"; sourceTree = "<group>"; };
 		7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
@@ -361,6 +367,8 @@
 				7D72931D23097CF400578A5F /* Reactive+.swift */,
 				7D1D587A237A9AD20007E2F3 /* UICollectionView+.swift */,
 				7D895C7723D43307001AB3B6 /* UIViewController+.swift */,
+				7D03764F24BB8B640071124E /* UIButton+.swift */,
+				7D03765124BB8B8A0071124E /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -383,6 +391,7 @@
 				4AA331C021EB8E73004E2536 /* CalenderView.swift */,
 				4AA331C121EB8E74004E2536 /* MonthView.swift */,
 				4AA331C221EB8E74004E2536 /* WeekdaysView.swift */,
+				7D03764D24BB86660071124E /* DateCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -874,6 +883,7 @@
 				4ACC7007222ACA04004095DA /* pastVM.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+.swift in Sources */,
 				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
+				7D03764E24BB86670071124E /* DateCell.swift in Sources */,
 				4AA331C721EB8EB0004E2536 /* AddTripDateViewController.swift in Sources */,
 				7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */,
 				7DFC581122FF05E5002BFD86 /* DirectAddExchangeViewController.swift in Sources */,
@@ -926,11 +936,13 @@
 				7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
 				7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */,
+				7D03765024BB8B640071124E /* UIButton+.swift in Sources */,
 				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,
 				7D895C6723D2E4C4001AB3B6 /* BaseUIViewController.swift in Sources */,
 				7DBA0D9E242F938D00C248E4 /* Constant.swift in Sources */,
 				7D72931E23097CF400578A5F /* Reactive+.swift in Sources */,
 				7DBA0D93242CF9DD00C248E4 /* HomeMainView.swift in Sources */,
+				7D03765224BB8B8A0071124E /* String+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
 				7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */,
 				4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */,
