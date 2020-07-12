@@ -26,6 +26,7 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
   - SnapKit (5.0.0)
+  - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - AnimatedTextInput
@@ -39,6 +40,7 @@ DEPENDENCIES:
   - RxDataSources
   - RxSwift
   - SnapKit
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -55,6 +57,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - SwiftLint
 
 SPEC CHECKSUMS:
   AnimatedTextInput: aadbdfa5a538a03cc9fbea700b43d2bb21a5d132
@@ -70,7 +73,8 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 63701c9bfc2789a8b326d4ff0279a09a40712aff
+PODFILE CHECKSUM: 9435418172b31dd706d78c767164c8c800cf4f98
 
 COCOAPODS: 1.8.4

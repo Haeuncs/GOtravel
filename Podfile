@@ -18,5 +18,6 @@ pod 'RxDataSources'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'CenteredCollectionView'
+pod 'SwiftLint'
 
 end

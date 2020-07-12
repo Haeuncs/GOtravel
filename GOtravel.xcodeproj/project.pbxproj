@@ -711,6 +711,7 @@
 				4A969BEE21E5A2F00016DB49 /* Resources */,
 				42B924D9955BB40D13940D17 /* [CP] Embed Pods Frameworks */,
 				B80A38B2D4E1155D8E113B6A /* [CP] Copy Pods Resources */,
+				7D03765324BB98270071124E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -835,6 +836,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GOtravel/Pods-GOtravel-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7D03765324BB98270071124E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		B80A38B2D4E1155D8E113B6A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
