@@ -63,7 +63,7 @@ class PastTripViewController: UIViewController {
       .bind(to: tripCollectionView.rx.items(
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { row, model, cell in
-          cell.configure(withDelegate: mainVC_CVC_ViewModel(model))
+          cell.configure(withDelegate: MainVCCVCViewModel(model))
           cell.mainBackgroundView.backgroundColor = HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
           

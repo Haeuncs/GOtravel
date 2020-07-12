@@ -72,16 +72,16 @@ class CustomNavigationBarView: UIView {
   }
   func setLeftText(title:String) {
     dismissBtn.setTitle(title, for: .normal)
-    dismissBtn.setTitleColor(Defaull_style.mainTitleColor, for: .normal)
+    dismissBtn.setTitleColor(DefaullStyle.mainTitleColor, for: .normal)
   }
 
   func setButtonEditText(title: String){
     actionBtn.setTitle(title, for: .normal)
-    actionBtn.setTitleColor(Defaull_style.lightGray, for: .normal)
+    actionBtn.setTitleColor(DefaullStyle.lightGray, for: .normal)
   }
   func setButtonDoneText(title: String){
     actionBtn.setTitle(title, for: .normal)
-    actionBtn.setTitleColor(Defaull_style.mainTitleColor, for: .normal)
+    actionBtn.setTitleColor(DefaullStyle.mainTitleColor, for: .normal)
   }
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -109,8 +109,8 @@ class CustomNavigationBarView: UIView {
     btn.setTitle("", for: .normal)
     btn.titleLabel?.textAlignment = .center
     btn.titleLabel?.font = UIFont.sb18
-    btn.setTitleColor(Defaull_style.mainTitleColor, for: .normal)
-    btn.setTitleColor(Defaull_style.lightGray, for: .disabled)
+    btn.setTitleColor(DefaullStyle.mainTitleColor, for: .normal)
+    btn.setTitleColor(DefaullStyle.lightGray, for: .disabled)
     return btn
   }()
   

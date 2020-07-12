@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-struct Default_color {
+struct DefaultColor {
   static var darkGray = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
   static var darkRed = #colorLiteral(red: 0.5019607843, green: 0.1529411765, blue: 0.1764705882, alpha: 1)
 }
 
-struct Defaull_style {
+struct DefaullStyle {
   
   static var bgColor = UIColor.white
   static var mainTitleColor = #colorLiteral(red: 0.1605227888, green: 0.1743844748, blue: 0.1929721534, alpha: 1)

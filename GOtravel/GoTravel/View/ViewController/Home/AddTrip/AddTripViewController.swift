@@ -93,7 +93,7 @@ class AddTripViewController : UIViewController {
     table.translatesAutoresizingMaskIntoConstraints = false
     table.separatorStyle = .none
     table.backgroundColor = UIColor.white
-    table.register(placeSearchTableViewCell.self, forCellReuseIdentifier: "cell")
+    table.register(PlaceSearchTableViewCell.self, forCellReuseIdentifier: "cell")
     return table
   }()
   lazy var containerView : UIView = {
@@ -211,7 +211,7 @@ extension AddTripViewController : UITableViewDelegate{
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! placeSearchTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PlaceSearchTableViewCell
     cell.titleLabel.text = tablePlaceInfo[indexPath.row].title
     cell.addressLabel.text = tablePlaceInfo[indexPath.row].address
     

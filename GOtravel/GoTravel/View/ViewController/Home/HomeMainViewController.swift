@@ -97,7 +97,7 @@ class HomeMainViewController: UIViewController {
       .bind(to: contentView.tripCollectionView.rx.items(
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { row, model, cell in
-          cell.configure(withDelegate: mainVC_CVC_ViewModel(model))
+          cell.configure(withDelegate: MainVCCVCViewModel(model))
           cell.mainBackgroundView.backgroundColor = HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.6, x: 0, y: 0, blur: 20, spread: 0)
           
@@ -122,14 +122,14 @@ class HomeMainViewController: UIViewController {
     
     contentView.navView.actionBtn.rx.tap
       .subscribe(onNext: { [weak self] (_) in
-        let placeVC = AddTripViewController_new()
+        let placeVC = AddTripViewControllerNew()
         //        placeVC.categoryIndex = 1
         self?.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)
     
     contentView.emptyView.addButton.rx.tap
       .subscribe(onNext: { [weak self] (_) in
-        let placeVC = AddTripViewController_new()
+        let placeVC = AddTripViewControllerNew()
         //        placeVC.categoryIndex = 1
         self?.navigationController?.pushViewController(placeVC, animated: true)
       }).disposed(by: disposeBag)

@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct settingList {
+struct SettingList {
   let title: String
   let description: String
 }
-struct openSource {
+struct OpenSource {
   let title: String
   let license: String
 }

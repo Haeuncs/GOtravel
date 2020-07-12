@@ -8,7 +8,7 @@
 
 import UIKit
 
-class colorCVCell: UICollectionViewCell {
+class ColorCVCell: UICollectionViewCell {
   let widthSize = CGFloat(40)
   
   override init(frame: CGRect) {

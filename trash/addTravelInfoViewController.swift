@@ -8,6 +8,3 @@
 
 import UIKit
 
-class addTravelInfoViewController  {
-    
-}

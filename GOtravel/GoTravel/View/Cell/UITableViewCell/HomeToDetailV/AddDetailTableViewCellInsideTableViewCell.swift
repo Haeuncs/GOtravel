@@ -106,7 +106,7 @@ class TripDetailEmptyTableViewCell: UITableViewCell {
   }()
 }
 
-class addDetailTableViewCellInsideTableViewCell : UITableViewCell{
+class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
   var timeLabelIsHidden : Bool = true
   var memoLabelIsHidden : Bool = true
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

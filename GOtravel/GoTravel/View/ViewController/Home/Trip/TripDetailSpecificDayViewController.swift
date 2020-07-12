@@ -219,15 +219,15 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
     return stack
   }()
   
-  lazy var collectionview: customCollectionView = {
+  lazy var collectionview: CustomCollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    let myCollectionView = customCollectionView(frame: .zero, collectionViewLayout : layout)
+    let myCollectionView = CustomCollectionView(frame: .zero, collectionViewLayout : layout)
     myCollectionView.showsHorizontalScrollIndicator = false
     myCollectionView.translatesAutoresizingMaskIntoConstraints = false
     myCollectionView.backgroundColor = UIColor.clear
     myCollectionView.allowsSelection = true
-    myCollectionView.register(colorCVCell.self, forCellWithReuseIdentifier: "Cell")
+    myCollectionView.register(ColorCVCell.self, forCellWithReuseIdentifier: "Cell")
     return myCollectionView
   }()
   lazy var confirmButton: BottomButton = {
@@ -259,7 +259,7 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
 
 extension TripDetailSpecificDayViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let cell = collectionView.cellForItem(at: indexPath) as? colorCVCell else {
+    guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCVCell else {
       return
     }
     colorPik = cell.colorView.backgroundColor!.toString()
@@ -283,7 +283,7 @@ extension TripDetailSpecificDayViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! colorCVCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ColorCVCell
     let color = HSBrandomColor(num : CGFloat(Double((indexPath.row + 1) * 10) / Double(100)))
     cell.colorView.backgroundColor = color
     
@@ -329,7 +329,7 @@ extension TripDetailSpecificDayViewController: UICollectionViewDelegateFlowLayou
   }
 }
 
-class customCollectionView: UICollectionView {
+class CustomCollectionView: UICollectionView {
   override func reloadData() {
     super.reloadData()
     self.invalidateIntrinsicContentSize()

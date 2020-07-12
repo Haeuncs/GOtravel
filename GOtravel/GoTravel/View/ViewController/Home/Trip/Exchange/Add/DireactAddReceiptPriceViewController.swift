@@ -192,32 +192,32 @@ class DireactAddReceiptPriceViewController: UIViewController {
     view.distribution = .fillEqually
     return view
   }()
-  lazy var stackView123: threeItemStackView = {
-    let view = threeItemStackView(first: 1, second: 2, third: 3)
+  lazy var stackView123: ThreeItemStackView = {
+    let view = ThreeItemStackView(first: 1, second: 2, third: 3)
     view.firstButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.secondButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.thirdButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var stackView456: threeItemStackView = {
-    let view = threeItemStackView(first: 4, second: 5, third: 6)
+  lazy var stackView456: ThreeItemStackView = {
+    let view = ThreeItemStackView(first: 4, second: 5, third: 6)
     view.firstButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.secondButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.thirdButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var stackView789: threeItemStackView = {
-    let view = threeItemStackView(first: 7, second: 8, third: 9)
+  lazy var stackView789: ThreeItemStackView = {
+    let view = ThreeItemStackView(first: 7, second: 8, third: 9)
     view.firstButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.secondButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.thirdButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var stackView0: deleteCancelNumberStackView = {
-    let view = deleteCancelNumberStackView(second: 0)
+  lazy var stackView0: DeleteCancelNumberStackView = {
+    let view = DeleteCancelNumberStackView(second: 0)
     view.secondButton.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     view.thirdButton.addTarget(self, action: #selector(deleteDidTap(_:)), for: .touchUpInside)
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -246,7 +246,7 @@ class DireactAddReceiptPriceViewController: UIViewController {
   }
 }
 
-class threeItemStackView: UIStackView {
+class ThreeItemStackView: UIStackView {
   
   init(first: Int, second: Int, third: Int) {
     super.init(frame: .zero)
@@ -294,7 +294,7 @@ class threeItemStackView: UIStackView {
     return button
   }()
 }
-class deleteCancelNumberStackView: UIStackView {
+class DeleteCancelNumberStackView: UIStackView {
   
   init(second: Int) {
     super.init(frame: .zero)

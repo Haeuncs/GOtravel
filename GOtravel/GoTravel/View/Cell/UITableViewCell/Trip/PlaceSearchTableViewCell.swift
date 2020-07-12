@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class placeSearchTableViewCell : UITableViewCell {
+class PlaceSearchTableViewCell : UITableViewCell {
   override var isSelected: Bool {
     get {
       return super.isSelected

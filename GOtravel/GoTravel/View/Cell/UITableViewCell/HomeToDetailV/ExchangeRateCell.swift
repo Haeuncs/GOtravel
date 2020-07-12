@@ -56,7 +56,7 @@ class ExchangeRateCell: UITableViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "타이틀"
     label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-    label.textColor = Defaull_style.mainTitleColor
+    label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
   lazy var descriptionLabel: UILabel = {
@@ -64,7 +64,7 @@ class ExchangeRateCell: UITableViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     label.text = "설명"
-    label.textColor = Defaull_style.mainTitleColor
+    label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
   lazy var moneyLabel: UILabel = {
@@ -72,13 +72,13 @@ class ExchangeRateCell: UITableViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
     label.text = "설명"
-    label.textColor = Defaull_style.mainTitleColor
+    label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
   lazy var bottomLineView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = Defaull_style.lightGray
+    view.backgroundColor = DefaullStyle.lightGray
     return view
   }()
 

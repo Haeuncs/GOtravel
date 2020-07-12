@@ -94,7 +94,7 @@ class TabbarViewController : UITabBarController, UITabBarControllerDelegate {
   /// tabbar 아이템 선택시 표시되는 라인
   lazy var selectLine : UIView = {
     let view = UIView()
-    view.backgroundColor = Defaull_style.mainTitleColor
+    view.backgroundColor = DefaullStyle.mainTitleColor
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()

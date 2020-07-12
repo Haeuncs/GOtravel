@@ -12,7 +12,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class AddTripViewController_new: BaseUIViewController {
+class AddTripViewControllerNew: BaseUIViewController {
   var disposeBag = DisposeBag()
   var viewModel = AddTripViewModel()
   
@@ -70,7 +70,7 @@ class AddTripViewController_new: BaseUIViewController {
     viewModel.places.asObservable()
       .bind(to: tableView.rx.items(
         cellIdentifier: "cell",
-        cellType: placeSearchTableViewCell.self))
+        cellType: PlaceSearchTableViewCell.self))
       { [weak self](row, element, cell) in
         cell.titleLabel.text = element.title
         cell.addressLabel.text = element.address
@@ -88,20 +88,20 @@ class AddTripViewController_new: BaseUIViewController {
         if let beforeSelectedIndex = self?.viewModel.selectedIndex.value {
           let beforeSelectedCell = self?.tableView.cellForRow(
             at: IndexPath(row: beforeSelectedIndex, section: 0))
-            as? placeSearchTableViewCell
+            as? PlaceSearchTableViewCell
           
           beforeSelectedCell?.imageView_.isHidden = true
           if beforeSelectedIndex == indexPath.row {
             self?.viewModel.selectedIndex.accept(nil)
             self?.viewModel.selectedPlace.accept(nil)
           }else{
-            let cell = self?.tableView.cellForRow(at: indexPath) as? placeSearchTableViewCell
+            let cell = self?.tableView.cellForRow(at: indexPath) as? PlaceSearchTableViewCell
             cell?.imageView_.isHidden = false
             self?.viewModel.selectedPlace.accept((self?.viewModel.places.value[indexPath.row])!)
             self?.viewModel.selectedIndex.accept(indexPath.row)
           }
         }else{
-          let cell = self?.tableView.cellForRow(at: indexPath) as? placeSearchTableViewCell
+          let cell = self?.tableView.cellForRow(at: indexPath) as? PlaceSearchTableViewCell
           cell?.imageView_.isHidden = false
           self?.viewModel.selectedPlace.accept((self?.viewModel.places.value[indexPath.row])!)
           self?.viewModel.selectedIndex.accept(indexPath.row)
@@ -158,7 +158,7 @@ class AddTripViewController_new: BaseUIViewController {
     tableView.separatorStyle = .none
     //    tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.register(placeSearchTableViewCell.self, forCellReuseIdentifier: "cell")
+    tableView.register(PlaceSearchTableViewCell.self, forCellReuseIdentifier: "cell")
     return tableView
   }()
   lazy var confirmButton: BottomButton = {

@@ -3,8 +3,6 @@ whitelist_rules:
   - colon
   - empty_enum_arguments
   - fatal_error_message
-  - force_cast
-  - force_try
   - force_unwrapping
   - implicitly_unwrapped_optional
   - legacy_cggeometry_functions

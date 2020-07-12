@@ -17,9 +17,9 @@ class SettingView : UIView {
   // FIXIT : 테이블 뷰 셀에 추가할 배열
   //    var tableCellArr = ["알림 설정","백업"]
   var tableCellArr = ["문의 하기","오픈소스 라이선스"]
-  let tableCellList: [settingList] = [
-    settingList(title: "문의하기", description: "오류나 개선 사항이 있으면 말씀해주세요."),
-    settingList(title: "오픈소스 라이센스", description: "앱 개발에 쓰인 오픈소스입니다.")
+  let tableCellList: [SettingList] = [
+    SettingList(title: "문의하기", description: "오류나 개선 사항이 있으면 말씀해주세요."),
+    SettingList(title: "오픈소스 라이센스", description: "앱 개발에 쓰인 오픈소스입니다.")
   ]
   
   override init(frame: CGRect) {
@@ -46,7 +46,7 @@ class SettingView : UIView {
   let table : UITableView = {
     let table = UITableView()
     table.separatorStyle = .none
-    table.backgroundColor = Defaull_style.topTableView
+    table.backgroundColor = DefaullStyle.topTableView
     table.translatesAutoresizingMaskIntoConstraints  = false
     table.register(SettingTableViewCell.self, forCellReuseIdentifier: String(describing: SettingTableViewCell.self))
     return table

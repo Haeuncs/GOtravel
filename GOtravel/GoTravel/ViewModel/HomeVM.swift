@@ -14,7 +14,7 @@ protocol mainVC_protocol {
     var cityTitle : String{get}
     var ddayTitle : String{get}
 }
-struct  mainVC_CVC_ViewModel: mainVC_protocol{
+struct  MainVCCVCViewModel: mainVC_protocol{
     var countryTitle : String
     var cityTitle : String
     var ddayTitle : String

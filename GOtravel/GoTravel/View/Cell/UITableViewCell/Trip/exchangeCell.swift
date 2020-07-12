@@ -9,7 +9,7 @@
 import SnapKit
 import UIKit
 
-class exchangeCVCell : UICollectionViewCell {
+class ExchangeCVCell : UICollectionViewCell {
   
   override var isSelected: Bool {
     didSet {
@@ -34,7 +34,7 @@ class exchangeCVCell : UICollectionViewCell {
     let label = UILabel()
     label.text = "1일"
     label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-    label.textColor = Defaull_style.dateColor
+    label.textColor = DefaullStyle.dateColor
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()

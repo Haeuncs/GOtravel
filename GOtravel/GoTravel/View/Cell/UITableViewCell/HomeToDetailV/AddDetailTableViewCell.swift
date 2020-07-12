@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
+class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
   
   let realm = try! Realm()
   
@@ -55,7 +55,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
   
   func initView(){
     // programmatically 방식의 cell
-    detailScheduleTableView.register(addDetailTableViewCellInsideTableViewCell.self, forCellReuseIdentifier: "cell")
+    detailScheduleTableView.register(AddDetailTableViewCellInsideTableViewCell.self, forCellReuseIdentifier: "cell")
     detailScheduleTableView.register(TripDetailEmptyTableViewCell.self, forCellReuseIdentifier: "TripDetailEmptyTableViewCell")
 
     detailScheduleTableView.delegate = self
@@ -118,7 +118,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     let tableView = UITableView()
     tableView.tag = 1
     tableView.backgroundColor = .white
-    tableView.separatorColor = Defaull_style.subTitleColor
+    tableView.separatorColor = DefaullStyle.subTitleColor
     tableView.separatorStyle = .none
     tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,8 +143,8 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  var paddingViewBottom : addDetailViewCellButtonView = {
-    let view = addDetailViewCellButtonView()
+  var paddingViewBottom : AddDetailViewCellButtonView = {
+    let view = AddDetailViewCellButtonView()
     //        view.backgroundColor = UIColor.clear
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -152,7 +152,7 @@ class addDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
   
 }
 // MARK: tableView 부분
-extension addDetailTableViewCell {
+extension AddDetailTableViewCell {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("select Cell \(indexPath.row)")
@@ -205,7 +205,7 @@ extension addDetailTableViewCell {
       let emptyCell = tableView.dequeueReusableCell(withIdentifier: "TripDetailEmptyTableViewCell", for: indexPath) as! TripDetailEmptyTableViewCell
       return emptyCell
     }else{
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCellInsideTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDetailTableViewCellInsideTableViewCell
       cell.titleLabel.text = dayRealmDB!.detailList[indexPath.row].title
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "ko-KR")

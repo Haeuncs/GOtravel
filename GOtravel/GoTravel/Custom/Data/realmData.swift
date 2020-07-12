@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import MapKit
+// swiftlint:disable all
 
 //class categoryRealm : Object {
 //    var categoryList = List<categoryDetailRealm>()
@@ -69,3 +70,4 @@ class ExchangeRealm : Object{
     @objc dynamic var exchangeName: String = ""
     @objc dynamic var krWon: Double = 0.0
 }
+// swiftlint:enable all

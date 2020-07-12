@@ -156,7 +156,7 @@ class TripDateView: UIView {
   }()
   
 }
-class addDetailViewCellButtonView : UIView {
+class AddDetailViewCellButtonView : UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)

@@ -8,7 +8,7 @@
 
 import Foundation
 import RealmSwift
-
+// swiftlint:disable all
 class realmTravelDetailInfo : Object{
     @objc dynamic var startDate = Date()
     @objc dynamic var endDate = Date()
@@ -22,3 +22,4 @@ class realmTravelInfo : Object{
     @objc dynamic var startDate = Date()
     @objc dynamic var endDate = Date()
 }
+// swiftlint:enable all

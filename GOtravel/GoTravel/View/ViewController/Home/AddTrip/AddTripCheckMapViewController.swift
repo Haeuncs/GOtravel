@@ -94,7 +94,7 @@ class AddTripCheckMapViewController : UIViewController {
     label.text = "1"
     label.textAlignment = .center
     label.font = UIFont.systemFont(ofSize: 25, weight: .medium)
-    label.textColor = Defaull_style.markerTextColor
+    label.textColor = DefaullStyle.markerTextColor
     //        label.backgroundColor = .black
     label.clipsToBounds = true
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +105,7 @@ class AddTripCheckMapViewController : UIViewController {
     let customMarker = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     customMarker.layer.cornerRadius = 40/2
     customMarker.layer.borderWidth = 1.5
-    customMarker.layer.borderColor = Defaull_style.markerTextColor.cgColor
+    customMarker.layer.borderColor = DefaullStyle.markerTextColor.cgColor
     customMarker.backgroundColor = color
     customMarker.translatesAutoresizingMaskIntoConstraints = false
     customMarker.addSubview(textLabelInMarker)

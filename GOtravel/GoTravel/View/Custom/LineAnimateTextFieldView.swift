@@ -43,7 +43,7 @@ class LineAnimateTextView: UIView {
   lazy var textFieldLine: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = Defaull_style.lightGray
+    view.backgroundColor = DefaullStyle.lightGray
     return view
   }()
   lazy var textFieldActiveLine: UIView = {
@@ -202,7 +202,7 @@ class LineAnimateTextFieldView: UIView {
   lazy var textFieldLine: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = Defaull_style.lightGray
+    view.backgroundColor = DefaullStyle.lightGray
     return view
   }()
   lazy var textFieldActiveLine: UIView = {

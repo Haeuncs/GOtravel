@@ -13,7 +13,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-public enum sizeConstant {
+public enum SizeConstant {
   public static let paddingSize = 50
 }
 //let paddingSize = 10
@@ -21,8 +21,8 @@ protocol changeDetailVCVDelegate : class {
   func inputData()->(title:String,startTime:Date,endTime:Date,color:String,memo:String)
 }
 protocol addDetailViewTableViewCellDelegate : class {
-  func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell,detailIndex : Int)
-  func tableViewDeleteEvent(_ sender: addDetailTableViewCell)
+  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell,detailIndex : Int)
+  func tableViewDeleteEvent(_ sender: AddDetailTableViewCell)
 }
 
 protocol TripDetailDataPopupDelegate: class {
@@ -70,7 +70,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     beforeSelectIndexPath = false
     isEdit = false
         
-    scheduleMainTableView.register(addDetailTableViewCell.self, forCellReuseIdentifier: "cell")
+    scheduleMainTableView.register(AddDetailTableViewCell.self, forCellReuseIdentifier: "cell")
     
     scheduleMainTableView.dataSource = self
     scheduleMainTableView.delegate = self
@@ -301,13 +301,13 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     tableView.backgroundColor = .white
     tableView.tag = 0
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.separatorColor = Defaull_style.subTitleColor
+    tableView.separatorColor = DefaullStyle.subTitleColor
     tableView.separatorStyle = .none
     tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     tableView.allowsSelection = false
     return tableView
   }()
-  func openViewEvent(currentCell : addDetailTableViewCell){
+  func openViewEvent(currentCell : AddDetailTableViewCell){
     // duration 작을 수록 느리게 애니메이션
     
     UIView.animate(withDuration: 0.5, animations: {
@@ -331,7 +331,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
       
     })
   }
-  func colseViewEvent(beforeCell : addDetailTableViewCell){
+  func colseViewEvent(beforeCell : AddDetailTableViewCell){
     // duration 작을 수록 느리게 애니메이션
     
     UIView.animate(withDuration: 0.5, animations: {
@@ -355,7 +355,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
   }
   // MARK: 버튼의 animate 정의
   func buttonEvent(indexPath : IndexPath){
-    let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? addDetailTableViewCell
+    let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? AddDetailTableViewCell
     // 머니 버튼이 가려져 있다면 보이기
     if currentCell?.paddingViewBottom.moneyBtn.alpha == 0.0 {
       openViewEvent(currentCell: currentCell!)
@@ -369,7 +369,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
 // MARK: delegate 정의 (cell 에서 사용한다.)
 extension TripDetailMainViewController {
   // The cell calls this method when the user taps the heart button
-  func addDetailViewTableViewCellDidTapInTableView(_ sender: addDetailTableViewCell, detailIndex : Int) {
+  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell, detailIndex : Int) {
     guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
     selectRow = tappedIndexPath.row
     //        print(detailIndex)
@@ -379,7 +379,7 @@ extension TripDetailMainViewController {
     changeVC.countryRealmDB = countryRealmDB
     self.navigationController?.pushViewController(changeVC, animated: true)
   }
-  func tableViewDeleteEvent(_ sender: addDetailTableViewCell) {
+  func tableViewDeleteEvent(_ sender: AddDetailTableViewCell) {
     guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
     print("tab", sender, tappedIndexPath)
     self.scheduleMainTableView.reloadData()
@@ -397,10 +397,10 @@ extension TripDetailMainViewController : UITableViewDelegate{
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     let rowCount = countryRealmDB.dayList[indexPath.row].detailList.count
     if rowCount == 0 {
-      return CGFloat(80 * 1 + (sizeConstant.paddingSize))
+      return CGFloat(80 * 1 + (SizeConstant.paddingSize))
     }
     else{
-      return CGFloat(80 * rowCount + (sizeConstant.paddingSize))
+      return CGFloat(80 * rowCount + (SizeConstant.paddingSize))
     }
   }
 }
@@ -410,7 +410,7 @@ extension TripDetailMainViewController : UITableViewDataSource{
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! addDetailTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDetailTableViewCell
     
     cell.dayRealmDB = countryRealmDB.dayList[indexPath.row]
     

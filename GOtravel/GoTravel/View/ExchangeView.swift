@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 import RealmSwift
 
-protocol exchangeTableCellProtocol {
+protocol ExchangeTableCellProtocol {
   var subTitle : String {get}
   var mainTitle : String {get}
   var numberTitle : String {get}
 }
-struct exchangeTableCellViewModel : exchangeTableCellProtocol{
+struct ExchangeTableCellViewModel : ExchangeTableCellProtocol{
   var subTitle: String
   
   var mainTitle: String
@@ -53,7 +53,7 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = .horizontal
     mainCV = UICollectionView(frame: CGRect(x: 0, y: 5 , width: self.bounds.width , height: self.bounds.height / 12), collectionViewLayout: flowLayout)
-    mainCV.register(exchangeCVCell.self, forCellWithReuseIdentifier: "exchangeCVCell")
+    mainCV.register(ExchangeCVCell.self, forCellWithReuseIdentifier: "exchangeCVCell")
     mainCV.backgroundColor = UIColor.clear
     mainCV.delegate = self
     mainCV.dataSource = self
@@ -85,15 +85,15 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     belowView.selectDay = self.selectDay
     
   }
-  let moneyLabel : exchangeSubView = {
-    let label = exchangeSubView()
+  let moneyLabel : ExchangeSubView = {
+    let label = ExchangeSubView()
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
   // 테이블뷰
-  let belowView : exchangeTV = {
-    let view = exchangeTV()
+  let belowView : ExchangeTV = {
+    let view = ExchangeTV()
     view.layer.cornerRadius = 10
     view.backgroundColor = UIColor.clear
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -121,8 +121,11 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exchangeCVCell", for: indexPath) as!
-    exchangeCVCell
+    guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "exchangeCVCell",
+            for: indexPath) as? ExchangeCVCell else {
+      return UICollectionViewCell()
+    }
     cell.dayLabel.text = "\(indexPath.row) 일"
     cell.layer.cornerRadius = 5
     cell.backgroundColor = .white
@@ -150,7 +153,7 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
   }
 }
 
-class exchangeSubView : UIView {
+class ExchangeSubView : UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     initView()
@@ -177,20 +180,20 @@ class exchangeSubView : UIView {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var dayView: accountLabelView = {
-    let view = accountLabelView()
+  lazy var dayView: AccountLabelView = {
+    let view = AccountLabelView()
     view.descriptionLabel.text = "하루 합계"
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var totalView: accountLabelView = {
-    let view = accountLabelView()
+  lazy var totalView: AccountLabelView = {
+    let view = AccountLabelView()
     view.descriptionLabel.text = "총합"
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
 }
-class accountLabelView: UIView {
+class AccountLabelView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     initView()
@@ -237,10 +240,9 @@ class accountLabelView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
 }
 
-class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
+class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
   
   let realm = try! Realm()
   var countryRealmDB = countryRealm()
@@ -259,7 +261,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
   }
   override func layoutSubviews() {
     print(countryRealmDB)
-    moneyTV.register(exchangeTVC.self, forCellReuseIdentifier: "cell")
+    moneyTV.register(ExchangeCell.self, forCellReuseIdentifier: "cell")
     moneyTV.delegate = self
     moneyTV.dataSource = self
     
@@ -274,7 +276,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
   let moneyTV : UITableView = {
     let table = UITableView()
     table.separatorStyle = .none
-    table.backgroundColor = Defaull_style.topTableView
+    table.backgroundColor = DefaullStyle.topTableView
     table.translatesAutoresizingMaskIntoConstraints  = false
     return table
   }()
@@ -286,7 +288,11 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
   //    }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! exchangeTVC
+    guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "cell",
+            for: indexPath) as? ExchangeCell else {
+      return UITableViewCell()
+    }
     
     let data = countryRealmDB.moneyList[selectDay].detailList[indexPath.row]
     
@@ -294,8 +300,8 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     cell.label2.text = data.title
     
     cell.backgroundColor = UIColor.clear
-    cell.contentView.layer.cornerRadius = CGFloat(Defaull_style.insideTableViewCorner)
-    cell.contentView.backgroundColor = Defaull_style.insideTableView
+    cell.contentView.layer.cornerRadius = CGFloat(DefaullStyle.insideTableViewCorner)
+    cell.contentView.backgroundColor = DefaullStyle.insideTableView
     cell.contentView.layer.shadowColor = UIColor.black.cgColor
     cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
     cell.contentView.layer.shadowOpacity = 0.2
@@ -361,7 +367,7 @@ class exchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
   
   
 }
-class exchangeTVC : UITableViewCell {
+class ExchangeCell : UITableViewCell {
   override func prepareForReuse() {
     
   }

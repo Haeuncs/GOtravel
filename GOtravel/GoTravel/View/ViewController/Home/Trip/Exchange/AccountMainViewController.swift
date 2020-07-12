@@ -48,7 +48,7 @@ class AccountMainViewController: UIViewController {
   func rx() {
     
     self.viewModel_.input.tripMoneyData
-      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: exchangeCVCell.self)) { row, element, cell in
+      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: ExchangeCVCell.self)) { row, element, cell in
         if row == 0 {
           cell.dayLabel.text = "여행전"
         } else {
@@ -78,7 +78,7 @@ class AccountMainViewController: UIViewController {
       }).disposed(by: disposeBag)
 
     self.viewModel_.output.specificDayDetail
-      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: exchangeTVC.self)) { row, element, cell in
+      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: ExchangeCell.self)) { row, element, cell in
         cell.label1.text = element.subTitle
         cell.label2.text = element.title
         cell.label3.text = "\(Formatter.decimal.string(from: NSNumber(value: element.money)) ?? "0") 원"
@@ -153,13 +153,13 @@ class AccountMainViewController: UIViewController {
     let collect = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     collect.contentInset = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16  )
     collect.translatesAutoresizingMaskIntoConstraints = false
-    collect.register(exchangeCVCell.self, forCellWithReuseIdentifier: "exchangeCVCell")
+    collect.register(ExchangeCVCell.self, forCellWithReuseIdentifier: "exchangeCVCell")
     collect.backgroundColor = .white
     collect.delegate = self
     return collect
   }()
-  let moneyView : exchangeSubView = {
-    let label = exchangeSubView()
+  let moneyView : ExchangeSubView = {
+    let label = ExchangeSubView()
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -170,7 +170,7 @@ class AccountMainViewController: UIViewController {
     table.separatorStyle = .none
     table.backgroundColor = .white
     table.translatesAutoresizingMaskIntoConstraints  = false
-    table.register(exchangeTVC.self, forCellReuseIdentifier: "exchangeTVC")
+    table.register(ExchangeCell.self, forCellReuseIdentifier: "exchangeTVC")
     return table
   }()
 

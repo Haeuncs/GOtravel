@@ -28,11 +28,11 @@
 		4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF96B0223BEA0E006FFD40 /* settingVM.swift */; };
 		4AC7103C21EE10C600B20448 /* TripDetailMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */; };
 		4AC7103E21EE110C00B20448 /* detailTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7103D21EE110C00B20448 /* detailTest.xib */; };
-		4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */; };
-		4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */; };
+		4AC7104021EE566300B20448 /* AddDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7103F21EE566300B20448 /* AddDetailTableViewCell.swift */; };
+		4AC7104221EF9DF300B20448 /* AddDetailTableViewCellInsideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7104121EF9DF300B20448 /* AddDetailTableViewCellInsideTableViewCell.swift */; };
 		4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7107321EFD5B200B20448 /* UIDevice+.swfit */; };
 		4AC710AA21F0C6C900B20448 /* AddTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710A921F0C6C900B20448 /* AddTripViewController.swift */; };
-		4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */; };
+		4AC710AD21F0D39900B20448 /* PlaceSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AC21F0D39900B20448 /* PlaceSearchTableViewCell.swift */; };
 		4AC710AF21F0EB3900B20448 /* AddTripCheckMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710AE21F0EB3900B20448 /* AddTripCheckMapViewController.swift */; };
 		4AC710B121F0EE1400B20448 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B021F0EE1400B20448 /* struct.swift */; };
 		4AC710B321F103EF00B20448 /* TripDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC710B221F103EF00B20448 /* TripDescriptionView.swift */; };
@@ -144,11 +144,11 @@
 		4ABF96B0223BEA0E006FFD40 /* settingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingVM.swift; sourceTree = "<group>"; };
 		4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailMainViewController.swift; sourceTree = "<group>"; };
 		4AC7103D21EE110C00B20448 /* detailTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailTest.xib; sourceTree = "<group>"; };
-		4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCell.swift; sourceTree = "<group>"; };
-		4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
+		4AC7103F21EE566300B20448 /* AddDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailTableViewCell.swift; sourceTree = "<group>"; };
+		4AC7104121EF9DF300B20448 /* AddDetailTableViewCellInsideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailTableViewCellInsideTableViewCell.swift; sourceTree = "<group>"; };
 		4AC7107321EFD5B200B20448 /* UIDevice+.swfit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "UIDevice+.swfit"; sourceTree = "<group>"; };
 		4AC710A921F0C6C900B20448 /* AddTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripViewController.swift; sourceTree = "<group>"; };
-		4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeSearchTableViewCell.swift; sourceTree = "<group>"; };
+		4AC710AC21F0D39900B20448 /* PlaceSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchTableViewCell.swift; sourceTree = "<group>"; };
 		4AC710AE21F0EB3900B20448 /* AddTripCheckMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripCheckMapViewController.swift; sourceTree = "<group>"; };
 		4AC710B021F0EE1400B20448 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		4AC710B221F103EF00B20448 /* TripDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDescriptionView.swift; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		4A5F61EF220C9D9C00531239 /* HomeToDetailV */ = {
 			isa = PBXGroup;
 			children = (
-				4AC7103F21EE566300B20448 /* addDetailTableViewCell.swift */,
-				4AC7104121EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift */,
+				4AC7103F21EE566300B20448 /* AddDetailTableViewCell.swift */,
+				4AC7104121EF9DF300B20448 /* AddDetailTableViewCellInsideTableViewCell.swift */,
 				7DFC580E22FEF402002BFD86 /* ExchangeRateCell.swift */,
 			);
 			path = HomeToDetailV;
@@ -439,7 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				7D72596C22FFF0F90034FA8E /* exchangeCell.swift */,
-				4AC710AC21F0D39900B20448 /* placeSearchTableViewCell.swift */,
+				4AC710AC21F0D39900B20448 /* PlaceSearchTableViewCell.swift */,
 				4A5F9CB0220495F50097C5C1 /* exchangeCell.swift */,
 			);
 			path = Trip;
@@ -883,7 +883,7 @@
 				7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */,
 				7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */,
 				7D72671022E33EB500589C82 /* settingModel.swift in Sources */,
-				4AC7104021EE566300B20448 /* addDetailTableViewCell.swift in Sources */,
+				4AC7104021EE566300B20448 /* AddDetailTableViewCell.swift in Sources */,
 				7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */,
 				7DBC1D702428F1D40011ED2B /* DireactAddReceiptPriceViewController.swift in Sources */,
 				7DFC581422FF0D27002BFD86 /* CustomNavigationBarView.swift in Sources */,
@@ -900,7 +900,7 @@
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,
 				4ACC7007222ACA04004095DA /* pastVM.swift in Sources */,
 				4AA331BD21EB3EF8004E2536 /* UIColor+.swift in Sources */,
-				4AC710AD21F0D39900B20448 /* placeSearchTableViewCell.swift in Sources */,
+				4AC710AD21F0D39900B20448 /* PlaceSearchTableViewCell.swift in Sources */,
 				7D03764E24BB86670071124E /* DateCell.swift in Sources */,
 				4AA331C721EB8EB0004E2536 /* AddTripDateViewController.swift in Sources */,
 				7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */,
@@ -941,7 +941,7 @@
 				7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */,
 				7D763E3B23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift in Sources */,
 				7DBC1D6E2428EAE90011ED2B /* DirectAddReceiptViewModel.swift in Sources */,
-				4AC7104221EF9DF300B20448 /* addDetailTableViewCellInsideTableViewCell.swift in Sources */,
+				4AC7104221EF9DF300B20448 /* AddDetailTableViewCellInsideTableViewCell.swift in Sources */,
 				7D895C7823D43307001AB3B6 /* UIViewController+.swift in Sources */,
 				7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,

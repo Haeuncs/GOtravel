@@ -49,7 +49,7 @@ class SettingTableViewCell: UITableViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "타이틀"
     label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-    label.textColor = Defaull_style.mainTitleColor
+    label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
   lazy var descriptionLabel: UILabel = {
@@ -64,7 +64,7 @@ class SettingTableViewCell: UITableViewCell {
   lazy var bottomLineView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = Defaull_style.lightGray
+    view.backgroundColor = DefaullStyle.lightGray
     return view
   }()
 }

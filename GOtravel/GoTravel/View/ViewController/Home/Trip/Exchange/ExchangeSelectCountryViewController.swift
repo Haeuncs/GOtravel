@@ -126,7 +126,7 @@ class ExchangeSelectCountryViewController : UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = .sb14
     label.backgroundColor = .red
-    label.textColor = Defaull_style.mainTitleColor
+    label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
   let timeLabel : UILabel = {
