@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
 //        dismiss(animated: true, completion: nil)
 //    }
     @IBOutlet private var mapView: MKMapView!
-    var root : UINavigationController?
+    var root: UINavigationController?
     var mapItems: [MKMapItem]?
     var boundingRegion: MKCoordinateRegion?
 
@@ -93,8 +93,6 @@ class MapViewController: UIViewController {
         print(mapItems.first?.placemark.subLocality)
         print(mapItems.first?.placemark.region)
         print(mapItems.first?.placemark.timeZone)
-        
-
         
     }
     override func viewDidAppear(_ animated: Bool) {

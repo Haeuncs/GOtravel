@@ -13,10 +13,8 @@ import RxCocoa
 class DirectAddAccountViewModel {
   var foreignCalculateBy100: Bool = false
   var isKoreaMoneySelected = BehaviorSubject<Bool>(value: true)
-  
   var isSelectedCategory = BehaviorSubject<Int>(value: 0)
-  
-  
+
   let categoryArr: [DirectAddAccountModel] = [
     DirectAddAccountModel(ExampleImage: UIImage(named: "boarding-pass")!, title: "항공비"),
     DirectAddAccountModel(ExampleImage: UIImage(named: "breakfast")!, title: "식비"),
@@ -28,6 +26,7 @@ class DirectAddAccountViewModel {
     DirectAddAccountModel(ExampleImage: UIImage(named: "diary")!, title: "보험"),
     DirectAddAccountModel(ExampleImage: UIImage(named: "packing")!, title: "기타"),
   ]
+  
   lazy var data: Driver<[DirectAddAccountModel]> = {
     return Observable.of(categoryArr).asDriver(onErrorJustReturn: [])
   }()

@@ -82,7 +82,6 @@ extension UIColor {
     return UIColor(white: 245.0 / 255.0, alpha: 1.0)
   }
 
-
   @nonobjc class var brownGrey: UIColor {
     return UIColor(white: 158.0 / 255.0, alpha: 1.0)
   }
@@ -95,9 +94,7 @@ extension UIColor {
     return UIColor(red: 0.0, green: 188.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)
   }
 
-
 }
-
 
 extension UIColor {
   @nonobjc class var butterscotch: UIColor {
@@ -113,13 +110,13 @@ extension UIColor {
 	static var orange: UIColor {
 		return UIColor(red: 1, green: 0.5764705882, blue: 0.462745098, alpha: 1)
 	}
-    static var myRed : UIColor{
+    static var myRed: UIColor{
         return #colorLiteral(red: 0.8544613487, green: 0.4680916344, blue: 0.4745311296, alpha: 1)
     }
-    static var myBlue : UIColor{
+    static var myBlue: UIColor{
         return #colorLiteral(red: 0.4680916344, green: 0.6239366865, blue: 0.8544613487, alpha: 1)
     }
-    static var myGreen : UIColor {
+    static var myGreen: UIColor {
         return #colorLiteral(red: 0.6286184273, green: 0.8544613487, blue: 0.4680916344, alpha: 1)
     }
     func toString() -> String {
@@ -149,7 +146,7 @@ extension String {
                     let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
                     let numberFormatter = NumberFormatter()
                     numberFormatter.numberStyle = NumberFormatter.Style.decimal
-                    var formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
+                    var formattedNumber = numberFormatter.string(from: NSNumber(value: (subtractionDot.toDouble())!))
                     
                     formattedNumber?.append(String(dotAfter))
                     return formattedNumber ?? ""
@@ -158,7 +155,7 @@ extension String {
             }else{
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = NumberFormatter.Style.decimal
-                let formattedNumber = numberFormatter.string(from: NSNumber(value:(subtractionDot.toDouble())!))
+                let formattedNumber = numberFormatter.string(from: NSNumber(value: (subtractionDot.toDouble())!))
                 
                 return formattedNumber ?? ""
             }

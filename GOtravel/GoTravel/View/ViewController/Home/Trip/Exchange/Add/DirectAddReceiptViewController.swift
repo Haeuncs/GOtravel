@@ -143,7 +143,7 @@ class DirectAddReceiptViewController: UIViewController {
       .disposed(by: disposeBag)
     
     viewModel.output.categories.asObservable()
-      .bind(to: self.categoryCollectionView.rx.items(cellIdentifier: "cell", cellType: DirectAddAccountCell.self)) { row, element, cell in
+      .bind(to: self.categoryCollectionView.rx.items(cellIdentifier: "cell", cellType: DirectAddAccountCell.self)) { _, element, cell in
         cell.directAddAccountModel = element
     }.disposed(by: disposeBag)
     

@@ -12,24 +12,24 @@ import GoogleMaps
 import RealmSwift
 import SnapKit
 
-class AddTripCheckMapViewController : UIViewController {
+class AddTripCheckMapViewController: UIViewController {
   // 장소 검색 0, 지역 검색 1
   var categoryIndex = 0
-  var arrayMap : Bool?
+  var arrayMap: Bool?
   
   let realm = try! Realm()
   // 장소 검색에서 VC에게 전달받는 변수들
   var selectPlaceInfo = PlaceInfo()
   var dayRealmDB = dayRealm()
   
-  var myColor : UIColor?
+  var myColor: UIColor?
   
   // path 버튼 선택 시 VC에게 전달받는 변수들
   var currentSelect = detailRealm()
   var dayDetailRealm = List<detailRealm>()
   
   // path 의 전체를 표한하기 위해서 사용된 변수들
-  lazy var  mapView : GMSMapView = {
+  lazy var  mapView: GMSMapView = {
     let map = GMSMapView()
     map.translatesAutoresizingMaskIntoConstraints = false
     return map
@@ -44,12 +44,13 @@ class AddTripCheckMapViewController : UIViewController {
   override func viewDidLoad() {
     view.backgroundColor = .white
     // 여행 도시 추가
-    if arrayMap == false{
+    if arrayMap == false {
       navView.setButtonTitle(title: "다음")
       navView.actionBtn.addTarget(self, action: #selector(nextEvent), for: .touchUpInside)
       map()
       initView()
-    }else{
+    }
+    else {
       navView.setButtonTitle(title: "")
       array_map()
       initView()
@@ -75,10 +76,7 @@ class AddTripCheckMapViewController : UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
-      customTabBarController.setSelectLine(index: 0)
-    }
-    //    }
-    
+    }    
   }
   lazy var navView: CustomNavigationBarView = {
     let view = CustomNavigationBarView()
@@ -89,7 +87,7 @@ class AddTripCheckMapViewController : UIViewController {
     return view
   }()
   // 마커 안에 들어가는 라벨
-  lazy var textLabelInMarker : UILabel = {
+  lazy var textLabelInMarker: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     label.text = "1"
     label.textAlignment = .center
@@ -101,9 +99,9 @@ class AddTripCheckMapViewController : UIViewController {
     
     return label
   }()
-  func customMarker(color : UIColor) -> UIImage {
+  func customMarker(color: UIColor) -> UIImage {
     let customMarker = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-    customMarker.layer.cornerRadius = 40/2
+    customMarker.layer.cornerRadius = 40 / 2
     customMarker.layer.borderWidth = 1.5
     customMarker.layer.borderColor = DefaullStyle.markerTextColor.cgColor
     customMarker.backgroundColor = color
@@ -116,7 +114,7 @@ class AddTripCheckMapViewController : UIViewController {
     
     return customMarker.asImage()
   }
-  func draw_marker(i : detailRealm,index:Int){
+  func draw_marker(i: detailRealm,index: Int){
     let marker = GMSMarker()
     let colorStr = i.color
     var colorUIColor = #colorLiteral(red: 0.5372078419, green: 0.5372861624, blue: 0.5371831059, alpha: 1)
@@ -132,7 +130,7 @@ class AddTripCheckMapViewController : UIViewController {
     marker.map = self.mapView
     location_coordi.append(marker.position)
   }
-  func characterToCgfloat(str : String) -> CGFloat {
+  func characterToCgfloat(str: String) -> CGFloat {
     let n = NumberFormatter().number(from: str)
     return n as! CGFloat
   }
@@ -144,31 +142,31 @@ class AddTripCheckMapViewController : UIViewController {
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     //    view = mapView
     if dayDetailRealm.count == 1 {
-      draw_marker(i: dayDetailRealm.first!,index : 1)
+      draw_marker(i: dayDetailRealm.first!,index: 1)
     }else{
       // 데이터 다 계산한 후에 화면 업데이트 하도록 디스패치 그룹 만들어줌
       let dispatchGroup = DispatchGroup()
       
-      for i in 0 ..< dayDetailRealm.count-1{
+      for i in 0 ..< dayDetailRealm.count - 1{
         dispatchGroup.enter()
         //0,1,2
         let origin = "\(dayDetailRealm[i].latitude),\(dayDetailRealm[i].longitude)"
-        draw_marker(i: dayDetailRealm[i],index : i+1)
-        let destination = "\(dayDetailRealm[i+1].latitude),\(dayDetailRealm[i+1].longitude)"
-        draw_marker(i: dayDetailRealm[i+1],index : i+2)
+        draw_marker(i: dayDetailRealm[i],index: i + 1)
+        let destination = "\(dayDetailRealm[i + 1].latitude),\(dayDetailRealm[i + 1].longitude)"
+        draw_marker(i: dayDetailRealm[i + 1],index: i + 2)
         guard let googleMapAPIKey = Singleton.shared.googleMapAPIKey else { return }
         let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=transit&key=" + googleMapAPIKey
         
         print(urlString)
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {
-          (data, response, error) in
+          (data, _, error) in
           if(error != nil){
             print("error")
             dispatchGroup.leave()
           }else{
             do{
-              let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
+              let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: AnyObject]
               let routes = json["routes"] as! NSArray
               let state = json["status"]
               let error = json["error_message"]
@@ -182,7 +180,7 @@ class AddTripCheckMapViewController : UIViewController {
                 OperationQueue.main.addOperation({
                   for route in routes
                   {
-                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+                    let routeOverviewPolyline: NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
                     let points = routeOverviewPolyline.object(forKey: "points")
                     let path = GMSPath.init(fromEncodedPath: points! as! String)
                     self.pathArr.append(path!)
@@ -199,7 +197,7 @@ class AddTripCheckMapViewController : UIViewController {
                 OperationQueue.main.addOperation({
                   let path = GMSMutablePath()
                   path.add(CLLocationCoordinate2D(latitude: self.dayDetailRealm[i].latitude, longitude: self.dayDetailRealm[i].longitude))
-                  path.add(CLLocationCoordinate2D(latitude: self.dayDetailRealm[i+1].latitude, longitude: self.dayDetailRealm[i+1].longitude))
+                  path.add(CLLocationCoordinate2D(latitude: self.dayDetailRealm[i + 1].latitude, longitude: self.dayDetailRealm[i + 1].longitude))
                   self.pathArr.append(path)
                   let polyline = GMSPolyline.init(path: path)
                   polyline.strokeWidth = 4
@@ -218,7 +216,7 @@ class AddTripCheckMapViewController : UIViewController {
         }).resume()
       }
       
-      dispatchGroup.notify(queue:.main) {
+      dispatchGroup.notify(queue: .main) {
         print("실행")
         var bounds = GMSCoordinateBounds()
         for loc in self.location_coordi{

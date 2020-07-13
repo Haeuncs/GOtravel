@@ -26,18 +26,17 @@ class HomeMainViewController: UIViewController {
     initView()
     rx()
     //    print(Realm.Configuration.defaultConfiguration.fileURL!)
-    
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
-      customTabBarController.setSelectLine(index: 0)
     }
     
     navigationController?.navigationBar.isHidden = true
     viewModel.getTripData()
   }
+
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     titleConstraint?.constant = 0
@@ -49,10 +48,10 @@ class HomeMainViewController: UIViewController {
       }, completion: nil)
     
   }
+
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     titleConstraint?.constant -= view.bounds.width
-    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -96,7 +95,7 @@ class HomeMainViewController: UIViewController {
     viewModel.tripData.asObserver()
       .bind(to: contentView.tripCollectionView.rx.items(
         cellIdentifier: String(describing: TripCell.self),
-        cellType: TripCell.self)) { row, model, cell in
+        cellType: TripCell.self)) { _, model, cell in
           cell.configure(withDelegate: MainVCCVCViewModel(model))
           cell.mainBackgroundView.backgroundColor = HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.6, x: 0, y: 0, blur: 20, spread: 0)
@@ -143,19 +142,13 @@ class HomeMainViewController: UIViewController {
 }
 
 extension HomeMainViewController {
-  
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
     contentView.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-    //    var frame: CGRect = self.tripCollectionView.frame
-    //    frame.origin.x = frame.size.width * CGFloat(page ?? 0)
-    //    frame.origin.y = 0
-    //    self.tripCollectionView.scrollRectToVisible(frame, animated: true)
   }
 }
 
 extension HomeMainViewController: UICollectionViewDelegate {
-  
   func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     if let myCell = cell as? TripCell {
       UIView.animate(withDuration: 1, animations: {
@@ -174,6 +167,7 @@ extension HomeMainViewController: UICollectionViewDelegate {
     }
   }
 }
+
 extension HomeMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return contentView.tripCollectionView.bounds.size
@@ -183,6 +177,7 @@ extension HomeMainViewController: UICollectionViewDelegateFlowLayout {
   }
   
 }
+
 extension HomeMainViewController: UIScrollViewDelegate {
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let x = targetContentOffset.pointee.x

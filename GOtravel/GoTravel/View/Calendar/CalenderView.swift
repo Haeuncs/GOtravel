@@ -56,8 +56,8 @@ class CalenderView: UIView, MonthViewDelegate {
   
   var firstSelectCount = 0
   var didSelectCount = 0
-  var firstDate : Date?
-  var secondData : Date?
+  var firstDate: Date?
+  var secondData: Date?
   var dateRange = [Date]()
   var selectCount = 0
 
@@ -65,10 +65,9 @@ class CalenderView: UIView, MonthViewDelegate {
   var calcWidth = 0
   var itemNum = 0
 
-
-  let addBtn : UIButton = {
+  let addBtn: UIButton = {
     let b = UIButton()
-    b.translatesAutoresizingMaskIntoConstraints=false
+    b.translatesAutoresizingMaskIntoConstraints = false
     b.layer.cornerRadius = 5
     b.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
     b.isHidden = true
@@ -81,14 +80,14 @@ class CalenderView: UIView, MonthViewDelegate {
   }()
 
   let monthView: MonthView = {
-    let v=MonthView()
-    v.translatesAutoresizingMaskIntoConstraints=false
+    let v = MonthView()
+    v.translatesAutoresizingMaskIntoConstraints = false
     return v
   }()
 
   let weekdaysView: WeekdaysView = {
-    let v=WeekdaysView()
-    v.translatesAutoresizingMaskIntoConstraints=false
+    let v = WeekdaysView()
+    v.translatesAutoresizingMaskIntoConstraints = false
     return v
   }()
 
@@ -96,21 +95,21 @@ class CalenderView: UIView, MonthViewDelegate {
     let layout = UICollectionViewFlowLayout()
     //        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
-    let myCollectionView=UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+    let myCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
     myCollectionView.showsHorizontalScrollIndicator = false
-    myCollectionView.translatesAutoresizingMaskIntoConstraints=false
-    myCollectionView.backgroundColor=UIColor.clear
-    myCollectionView.allowsMultipleSelection=false
+    myCollectionView.translatesAutoresizingMaskIntoConstraints = false
+    myCollectionView.backgroundColor = UIColor.clear
+    myCollectionView.allowsMultipleSelection = false
     return myCollectionView
   }()
 
-  let ddayLabel : UILabel = {
+  let ddayLabel: UILabel = {
     let label = UILabel()
     label.text = " "
     label.textAlignment = .left
-    label.font=UIFont.systemFont(ofSize: 18, weight: .semibold)
+    label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
     label.textColor = .tealish
-    label.translatesAutoresizingMaskIntoConstraints=false
+    label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
 
@@ -133,7 +132,7 @@ class CalenderView: UIView, MonthViewDelegate {
     initializeView()
   }
   
-  func search(year:Int,month:Int){
+  func search(year: Int,month: Int){
     var dateCombine = ""
     dateCombine = "\(year)-\(month)-01"
     print(dateCombine)
@@ -141,9 +140,8 @@ class CalenderView: UIView, MonthViewDelegate {
     
   }
 
-  func search(year:Int,month:Int,day:Int) -> [UILabel]{
-    var dateBelowLabel:[UILabel] = []
-    
+  func search(year: Int,month: Int,day: Int) -> [UILabel]{
+    var dateBelowLabel: [UILabel] = []
     
     let dateCombine = "\(year)-\(month)-\(day)"
     print(dateCombine)
@@ -167,49 +165,49 @@ class CalenderView: UIView, MonthViewDelegate {
     currentMonthIndex = Calendar.current.component(.month, from: Date())
     currentYear = Calendar.current.component(.year, from: Date())
     todaysDate = Calendar.current.component(.day, from: Date())
-    firstWeekDayOfMonth=getFirstWeekDay()
+    firstWeekDayOfMonth = getFirstWeekDay()
     
     //for leap years, make february month of 29 days
     if currentMonthIndex == 2 && currentYear % 4 == 0 {
-      numOfDaysInMonth[currentMonthIndex-1] = 29
+      numOfDaysInMonth[currentMonthIndex - 1] = 29
     }
     //end
     
-    presentMonthIndex=currentMonthIndex
-    presentYear=currentYear
+    presentMonthIndex = currentMonthIndex
+    presentYear = currentYear
     
     setupViews()
     
-    myCollectionView.delegate=self
-    myCollectionView.dataSource=self
+    myCollectionView.delegate = self
+    myCollectionView.dataSource = self
     myCollectionView.register(DateCell.self, forCellWithReuseIdentifier: "Cell")
     
   }
 
   func setupViews() {
     addSubview(monthView)
-    monthView.topAnchor.constraint(equalTo: topAnchor).isActive=true
-    monthView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive=true
-    monthView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive=true
-    monthView.heightAnchor.constraint(equalToConstant: 58).isActive=true
-    monthView.delegate=self
+    monthView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    monthView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+    monthView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
+    monthView.heightAnchor.constraint(equalToConstant: 58).isActive = true
+    monthView.delegate = self
     
     addSubview(ddayLabel)
-    ddayLabel.topAnchor.constraint(equalTo: monthView.bottomAnchor).isActive=true
+    ddayLabel.topAnchor.constraint(equalTo: monthView.bottomAnchor).isActive = true
     ddayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-    monthView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive=true
+    monthView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
     
     addSubview(weekdaysView)
-    weekdaysView.topAnchor.constraint(equalTo: ddayLabel.bottomAnchor).isActive=true
-    weekdaysView.leftAnchor.constraint(equalTo: leftAnchor).isActive=true
-    weekdaysView.rightAnchor.constraint(equalTo: rightAnchor).isActive=true
-    weekdaysView.heightAnchor.constraint(equalToConstant: 30).isActive=true
+    weekdaysView.topAnchor.constraint(equalTo: ddayLabel.bottomAnchor).isActive = true
+    weekdaysView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+    weekdaysView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+    weekdaysView.heightAnchor.constraint(equalToConstant: 30).isActive = true
     
     addSubview(myCollectionView)
-    myCollectionView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor, constant: 0).isActive=true
-    myCollectionView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive=true
-    myCollectionView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive=true
-    myCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive=true
+    myCollectionView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor, constant: 0).isActive = true
+    myCollectionView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+    myCollectionView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+    myCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     
   }
 
@@ -225,7 +223,7 @@ class CalenderView: UIView, MonthViewDelegate {
     }
   }
 
-  @objc func buttonClicked(sender : UIButton){
+  @objc func buttonClicked(sender: UIButton){
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -235,10 +233,10 @@ class CalenderView: UIView, MonthViewDelegate {
 
 extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cell=collectionView.cellForItem(at: indexPath)
-    let cell2=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DateCell
+    let cell = collectionView.cellForItem(at: indexPath)
+    let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DateCell
 
-    let day = indexPath.row-(firstWeekDayOfMonth - 2)
+    let day = indexPath.row - (firstWeekDayOfMonth - 2)
     var dateCombine = ""
     dateCombine = "\(currentYear)-\(currentMonthIndex)-\(day)"
     var date = Date.parse(dateCombine)
@@ -271,7 +269,7 @@ extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
           dateRange.append(addDate!)
           addDate = Calendar.current.date(byAdding: .day, value: 1, to: addDate!)!
         }
-        dateRange = dateRange.sorted(by: {$0 < $1})
+        dateRange = dateRange.sorted(by: { $0 < $1 })
         //                print(dateRange)
         // 몇 일 남았는지 계산
         let interval = dateRange.last!.timeIntervalSince(dateRange.first!)
@@ -283,7 +281,7 @@ extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         let dday = (dateRange.first!.interval(ofComponent: .day, fromDate: Date()) + 1)
 
         DispatchQueue.main.async {
-          self.ddayLabel.text = "\(days)박 \(days+1)일, D-\(dday)"
+          self.ddayLabel.text = "\(days)박 \(days + 1)일, D-\(dday)"
           self.addBtn.isHidden = false
           ddayDB = dday + 1
           nightDB = days + 1
@@ -308,7 +306,7 @@ extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     print("didclick")
     didSelectCount = 1
-    let cell=collectionView.cellForItem(at: indexPath)
+    let cell = collectionView.cellForItem(at: indexPath)
     cell?.layer.borderColor = UIColor.clear.cgColor
     //        cell?.backgroundColor=UIColor.clear
     //        let lbl = cell?.subviews[1] as! UILabel
@@ -337,7 +335,7 @@ extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
 
 extension CalenderView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    itemNum = numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1
+    itemNum = numOfDaysInMonth[currentMonthIndex - 1] + firstWeekDayOfMonth - 1
     print(itemNum)
     return itemNum
   }
@@ -357,7 +355,7 @@ extension CalenderView: UICollectionViewDataSource {
     cell.isHidden = false
 
     var dateCombine = ""
-    let calcDate = indexPath.row-firstWeekDayOfMonth+2
+    let calcDate = indexPath.row - firstWeekDayOfMonth + 2
     dateCombine = "\(currentYear)-\(currentMonthIndex)-\(calcDate)"
 
     let date = Date.parse(dateCombine)
@@ -393,7 +391,7 @@ extension CalenderView: UICollectionViewDataSource {
   }
 
   func didChangeMonth(monthIndex: Int, year: Int) {
-    currentMonthIndex=monthIndex+1
+    currentMonthIndex = monthIndex + 1
     currentYear = year
 
     //for leap year, make february month of 29 days
@@ -406,7 +404,7 @@ extension CalenderView: UICollectionViewDataSource {
     }
     //end
 
-    firstWeekDayOfMonth=getFirstWeekDay()
+    firstWeekDayOfMonth = getFirstWeekDay()
 
     myCollectionView.reloadData()
 

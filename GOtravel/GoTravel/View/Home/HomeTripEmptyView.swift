@@ -9,8 +9,40 @@
 import Foundation
 import SnapKit
 
-
 class HomeTripEmptyView: UIView {
+  lazy var stackView: UIView = {
+    let stack = UIView()
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    //    stack.axis = .vertical
+    //    stack.alignment = .center
+    return stack
+  }()
+  lazy var imageView: UIImageView = {
+    let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.contentMode = .scaleAspectFit
+    view.image = UIImage(named: "luggageFreepik")
+    view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 8, blur: 6, spread: 0)
+    return view
+  }()
+  lazy var titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.text = "아직 여행 일정이 없어요."
+    label.font = .sb24
+    return label
+  }()
+  lazy var addButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("일정 추가 하기", for: .normal)
+    button.titleLabel?.font = .b18
+    button.backgroundColor = .tealish
+    button.layer.cornerRadius = 18
+    button.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 6, blur: 6, spread: 0)
+    return button
+  }()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.addSubview(stackView)
@@ -46,36 +78,4 @@ class HomeTripEmptyView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  lazy var stackView: UIView = {
-    let stack = UIView()
-    stack.translatesAutoresizingMaskIntoConstraints = false
-//    stack.axis = .vertical
-//    stack.alignment = .center
-    return stack
-  }()
-  lazy var imageView: UIImageView = {
-    let view = UIImageView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleAspectFit
-    view.image = UIImage(named: "luggageFreepik")
-    view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 8, blur: 6, spread: 0)
-    return view
-  }()
-  lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.text = "아직 여행 일정이 없어요."
-    label.font = .sb24
-    return label
-  }()
-  lazy var addButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("일정 추가 하기", for: .normal)
-    button.titleLabel?.font = .b18
-    button.backgroundColor = .tealish
-    button.layer.cornerRadius = 18
-    button.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 6, blur: 6, spread: 0)
-    return button
-  }()
 }

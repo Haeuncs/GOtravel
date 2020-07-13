@@ -39,7 +39,7 @@
       
       viewModel.data.asObservable()
         .bind(to: tableView.rx.items(cellIdentifier: "cell", cellType: OpenSourceCell.self)) {
-          row, model, cell in
+          _, model, cell in
           cell.openSourceModel = model
       }.disposed(by: disposeBag)
       
@@ -57,6 +57,5 @@
         tableView.deselectRow(at: indexPath, animated: true)
       }
     }
-    
     
   }

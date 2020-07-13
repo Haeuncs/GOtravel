@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 //get date from string
 extension String {
@@ -18,5 +19,10 @@ extension String {
 
   var date: Date? {
     return String.dateFormatter.date(from: self)
+  }
+
+  func toCGFloat() -> CGFloat {
+    let number = NumberFormatter().number(from: self)
+    return number as? CGFloat ?? 0
   }
 }

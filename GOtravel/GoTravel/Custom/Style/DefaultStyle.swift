@@ -53,4 +53,3 @@ struct DefaullStyle {
   //        weekdaysLblColor = UIColor.black
   //    }
 }
-

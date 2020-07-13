@@ -4,7 +4,6 @@ import CenteredCollectionView
 import RealmSwift
 import EasyTipView
 
-
 //FIXIT : 클릭하면 이동하는거 index row 기준 아니고 데이터 자체를 이동하기
 class HomeViewController: UIViewController {
   weak var tipView: EasyTipView?
@@ -22,10 +21,10 @@ class HomeViewController: UIViewController {
   let cellPercentWidth: CGFloat = 0.8
   var scrollToEdgeEnabled = false
   
-  var myBackgroundColor : UIColor?
+  var myBackgroundColor: UIColor?
   let realm = try? Realm()
   // 기본 저장 데이터
-  var countryRealmDB : List<countryRealm>?
+  var countryRealmDB: List<countryRealm>?
   
   @IBAction func settingBtn(_ sender: Any) {
     let setting = SettingViewController()
@@ -72,7 +71,7 @@ class HomeViewController: UIViewController {
       preferences.drawing.foregroundColor = UIColor.white
       preferences.drawing.backgroundColor = UIColor.black
       EasyTipView.globalPreferences = preferences
-      self.view.backgroundColor = UIColor(hue:0.75, saturation:0.01, brightness:0.96, alpha:1.00)
+      self.view.backgroundColor = UIColor(hue: 0.75, saturation: 0.01, brightness: 0.96, alpha: 1.00)
       let text = "이 버튼을 눌러서 여행할 도시를\n입력하세요! 😆"
       //    tipView.show(animated: true, forItem: self.navView, withinSuperView: nil)
       let tip = EasyTipView(text: text, preferences: preferences, delegate: self)
@@ -180,7 +179,6 @@ extension HomeViewController: UICollectionViewDataSource {
     }
   }
   
-  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: TripCell.self), for: indexPath) as! TripCell
     cell.configure(withDelegate: mainVC_CVC_ViewModel(countryRealmDB![indexPath.row]))
@@ -202,8 +200,8 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 // hsb random color
 func HSBrandomColor() -> UIColor{
-  let saturation : CGFloat =  0.45
-  let brigtness : CGFloat = 0.85
+  let saturation: CGFloat = 0.45
+  let brigtness: CGFloat = 0.85
   let randomHue = CGFloat.random(in: 0.0..<1.0)
   //        print(UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1))
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
@@ -233,7 +231,7 @@ extension HomeViewController {
       guideView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       
       stackView.widthAnchor.constraint(equalToConstant: view.frame.width),
-      stackView.heightAnchor.constraint(equalToConstant: view.frame.height/2),
+      stackView.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
       stackView.centerXAnchor.constraint(equalTo: guideView.centerXAnchor),
       stackView.centerYAnchor.constraint(equalTo: guideView.centerYAnchor),
       
@@ -247,7 +245,7 @@ extension HomeViewController {
     // configure layout
     centeredCollectionViewFlowLayout.itemSize = CGSize(
       width: self.view.bounds.width * cellPercentWidth,
-      height:self.view.bounds.height/2
+      height: self.view.bounds.height / 2
     )
     centeredCollectionViewFlowLayout.minimumLineSpacing = 20
     collectionView.showsVerticalScrollIndicator = false

@@ -28,9 +28,9 @@ class DateCell: UICollectionViewCell {
     let label = UILabel()
     label.text = "00"
     label.textAlignment = .center
-    label.font=UIFont.systemFont(ofSize: 16)
-    label.textColor=Colors.darkGray
-    label.translatesAutoresizingMaskIntoConstraints=false
+    label.font = UIFont.systemFont(ofSize: 16)
+    label.textColor = Colors.darkGray
+    label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
 

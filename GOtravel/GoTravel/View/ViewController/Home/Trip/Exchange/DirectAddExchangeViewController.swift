@@ -61,7 +61,7 @@ class DirectAddExchangeViewController: UIViewController {
       }).disposed(by: disposeBag)
     
     nameTextField.textField.rx.text.orEmpty
-      .subscribe(onNext: { (s) in
+      .subscribe(onNext: { (_) in
         self.checkAllFieldFill()
       }).disposed(by: disposeBag)
     exchangeNameTextField.textField.rx.text.orEmpty
@@ -70,7 +70,7 @@ class DirectAddExchangeViewController: UIViewController {
         self.exchangeName.on(.next(s))
       }).disposed(by: disposeBag)
     krWonTextField.textField.rx.text.orEmpty
-      .subscribe(onNext: { (s) in
+      .subscribe(onNext: { (_) in
         self.checkAllFieldFill()
       }).disposed(by: disposeBag)
   }
@@ -134,7 +134,6 @@ class DirectAddExchangeViewController: UIViewController {
     return text
   }()
 }
-
 
 // MARK: - Logic
 extension DirectAddExchangeViewController {

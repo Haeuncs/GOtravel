@@ -15,14 +15,14 @@ import SnapKit
 
 // 도시 검색 Search View Controller
 
-class AddTripViewController : UIViewController {
+class AddTripViewController: UIViewController {
   // 앞 View 에서 전달 받는 데이터
   var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
   /// categoryIndex == 0 이면 도시 검색, 1이면 장소 검색
   var categoryIndex = 0
   
-  var countryRealmDB : countryRealm?
-  var dayRealmDB  : dayRealm?
+  var countryRealmDB: countryRealm?
+  var dayRealmDB: dayRealm?
   
   private var searchController: UISearchController!
   
@@ -81,8 +81,8 @@ class AddTripViewController : UIViewController {
     text.tintColor = .black
     text.textColor = .black
     text.attributedPlaceholder = NSAttributedString(
-      string:"어디로 여행을 가시나요?",
-      attributes:[NSAttributedString.Key.foregroundColor:
+      string: "어디로 여행을 가시나요?",
+      attributes: [NSAttributedString.Key.foregroundColor:
         UIColor.grey03])
     text.translatesAutoresizingMaskIntoConstraints = false
 //    text.placeholder = "어디로 여행을 가시나요?"
@@ -96,7 +96,7 @@ class AddTripViewController : UIViewController {
     table.register(PlaceSearchTableViewCell.self, forCellReuseIdentifier: "cell")
     return table
   }()
-  lazy var containerView : UIView = {
+  lazy var containerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.white
@@ -166,7 +166,6 @@ class AddTripViewController : UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     
-    
     //        self.tableView.reloadData()
     
   }
@@ -204,8 +203,7 @@ extension AddTripViewController {
   }
 }
 
-
-extension AddTripViewController : UITableViewDelegate{
+extension AddTripViewController: UITableViewDelegate{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tablePlaceInfo.count
   }
@@ -247,12 +245,11 @@ extension AddTripViewController {
   }
 }
 
-extension AddTripViewController : UISearchBarDelegate{
+extension AddTripViewController: UISearchBarDelegate{
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     self.navigationController?.popViewController(animated: true)
   }
 }
-
 
 extension AddTripViewController: GMSAutocompleteFetcherDelegate {
   
@@ -266,7 +263,7 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
       new_data.title = prediction.attributedPrimaryText.string
       new_data.address = prediction.attributedSecondaryText?.string ?? ""
       
-      let placeID =  prediction.placeID
+      let placeID = prediction.placeID
       let placeClient = GMSPlacesClient()
       dispatchGroup.enter()
       placeClient.lookUpPlaceID(placeID, callback: { (place, error) -> Void in
@@ -289,7 +286,7 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
         print(self.tablePlaceInfo)
       })
     }
-    dispatchGroup.notify(queue:.main) {
+    dispatchGroup.notify(queue: .main) {
       self.tableView.reloadData()
     }
   }

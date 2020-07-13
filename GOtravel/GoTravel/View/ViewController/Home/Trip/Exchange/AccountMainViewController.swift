@@ -48,7 +48,7 @@ class AccountMainViewController: UIViewController {
   func rx() {
     
     self.viewModel_.input.tripMoneyData
-      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: ExchangeCVCell.self)) { row, element, cell in
+      .bind(to: dayCollectionView.rx.items(cellIdentifier: "exchangeCVCell", cellType: ExchangeCVCell.self)) { row, _, cell in
         if row == 0 {
           cell.dayLabel.text = "여행전"
         } else {
@@ -65,7 +65,6 @@ class AccountMainViewController: UIViewController {
       .subscribe(onNext: { (data) in
         self.setMoneyLabel(money: Array(data))
       }).disposed(by: disposeBag)
-    
 
     self.accountDayTableView.rx.itemDeleted
       .subscribe(onNext: { (indexPath) in
@@ -78,7 +77,7 @@ class AccountMainViewController: UIViewController {
       }).disposed(by: disposeBag)
 
     self.viewModel_.output.specificDayDetail
-      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: ExchangeCell.self)) { row, element, cell in
+      .bind(to: accountDayTableView.rx.items(cellIdentifier: "exchangeTVC", cellType: ExchangeCell.self)) { _, element, cell in
         cell.label1.text = element.subTitle
         cell.label2.text = element.title
         cell.label3.text = "\(Formatter.decimal.string(from: NSNumber(value: element.money)) ?? "0") 원"
@@ -95,7 +94,7 @@ class AccountMainViewController: UIViewController {
 
     Observable
       .zip(self.accountDayTableView.rx.modelSelected(moneyDetailRealm.self), self.accountDayTableView.rx.itemSelected)
-      .bind { [weak self] moneyDetail, indexPath in
+      .bind { [weak self] moneyDetail, _ in
         let vc = DirectAddReceiptViewController()
         vc.realmMoneyList = self?.viewModel_.output.specificDayDetail.value
         vc.editMoneyDetailRealm = moneyDetail
@@ -158,18 +157,18 @@ class AccountMainViewController: UIViewController {
     collect.delegate = self
     return collect
   }()
-  let moneyView : ExchangeSubView = {
+  let moneyView: ExchangeSubView = {
     let label = ExchangeSubView()
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  let accountDayTableView : UITableView = {
+  let accountDayTableView: UITableView = {
     let table = UITableView()
 //    table.isEditing = true
     table.rowHeight = 110
     table.separatorStyle = .none
     table.backgroundColor = .white
-    table.translatesAutoresizingMaskIntoConstraints  = false
+    table.translatesAutoresizingMaskIntoConstraints = false
     table.register(ExchangeCell.self, forCellReuseIdentifier: "exchangeTVC")
     return table
   }()

@@ -10,8 +10,7 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-
-class TripDescriptionView : UIView {
+class TripDescriptionView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -23,7 +22,7 @@ class TripDescriptionView : UIView {
   }
   
   // titleView label 정의
-  var countryLabel : UILabel = {
+  var countryLabel: UILabel = {
     let label = UILabel()
     label.text = "일본 여행 🗺"
     label.textColor = .black
@@ -32,7 +31,7 @@ class TripDescriptionView : UIView {
     return label
   }()
   
-  var subLabel : UILabel = {
+  var subLabel: UILabel = {
     let label = UILabel()
     label.text = "오사카 교토"
     label.textColor = .black
@@ -40,7 +39,7 @@ class TripDescriptionView : UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  var dateLabel : UILabel = {
+  var dateLabel: UILabel = {
     let label = UILabel()
     label.text = "2019.02.10~2019.02.16 5박6일"
     label.textColor = .black
@@ -54,7 +53,7 @@ class TripDescriptionView : UIView {
     btn.setImage(UIImage(named: "changeSmashicons"), for: .normal)
     btn.imageView?.frame = CGRect(x: 0, y: 0, width: 21, height: 21)
     btn.imageView?.contentMode = .scaleAspectFit
-    btn.layer.cornerRadius = 38/2
+    btn.layer.cornerRadius = 38 / 2
     btn.backgroundColor = .white
     btn.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 0, blur: 4, spread: 0)
     
@@ -132,7 +131,7 @@ class TripDateView: UIView {
     stack.spacing = 8
     return stack
   }()
-  let dateLabel : UILabel = {
+  let dateLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
     label.font = .sb17
@@ -145,7 +144,7 @@ class TripDateView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  let dayOfTheWeek : UILabel = {
+  let dayOfTheWeek: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
     label.font = .sb17
@@ -156,7 +155,7 @@ class TripDateView: UIView {
   }()
   
 }
-class AddDetailViewCellButtonView : UIView {
+class AddDetailViewCellButtonView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -178,7 +177,7 @@ class AddDetailViewCellButtonView : UIView {
     return button
   }()
 
-  let addBtn : UIButton = {
+  let addBtn: UIButton = {
     let button = UIButton(type: .custom)
     let image = UIImage(named: "addBtn")?.withRenderingMode(.alwaysTemplate)
     button.setImage(image, for: .normal)
@@ -187,7 +186,7 @@ class AddDetailViewCellButtonView : UIView {
     
     return button
   }()
-  var moneyBtn : UIButton = {
+  var moneyBtn: UIButton = {
     let button = UIButton(type: .custom)
     button.alpha = 0.0
     let image = UIImage(named: "moneyBtn")?.withRenderingMode(.alwaysTemplate)
@@ -197,7 +196,7 @@ class AddDetailViewCellButtonView : UIView {
     
     return button
   }()
-  let detailBtn : UIButton = {
+  let detailBtn: UIButton = {
     let button = UIButton(type: .custom)
     button.alpha = 0.0
     let image = UIImage(named: "detailBtn")?.withRenderingMode(.alwaysTemplate)
@@ -207,7 +206,7 @@ class AddDetailViewCellButtonView : UIView {
     
     return button
   }()
-  let pathBtn : UIButton = {
+  let pathBtn: UIButton = {
     let button = UIButton(type: .custom)
     button.alpha = 0.0
     let image = UIImage(named: "pathBtn")?.withRenderingMode(.alwaysTemplate)
@@ -218,7 +217,7 @@ class AddDetailViewCellButtonView : UIView {
     return button
   }()
   
-  let view : UIView = {
+  let view: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -232,4 +231,3 @@ class AddDetailViewCellButtonView : UIView {
   }
   
 }
-

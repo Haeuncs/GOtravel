@@ -105,8 +105,6 @@ class TripCell: UICollectionViewCell {
 
     countryLabel.font = ddayLabel.font.withSize (30)
     
-    
-    
     contentView.addSubview(mainBackgroundView)
     
     mainBackgroundView.addSubview(mainStackView)

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PlaceSearchTableViewCell : UITableViewCell {
+class PlaceSearchTableViewCell: UITableViewCell {
   override var isSelected: Bool {
     get {
       return super.isSelected
@@ -24,20 +24,20 @@ class PlaceSearchTableViewCell : UITableViewCell {
       }
     }
   }
-  lazy var titleLabel : UILabel = {
+  lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textColor = .black
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  lazy var addressLabel : UILabel = {
+  lazy var addressLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
     label.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  lazy var stackView : UIStackView = {
+  lazy var stackView: UIStackView = {
     let stack = UIStackView(arrangedSubviews: [titleLabel,addressLabel])
     stack.alignment = .fill
     stack.distribution = .fill
@@ -70,7 +70,7 @@ class PlaceSearchTableViewCell : UITableViewCell {
     NSLayoutConstraint.activate([
       //            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
       //            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant:20),
+      stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
       stackView.trailingAnchor.constraint(lessThanOrEqualTo: imageView_.leadingAnchor),
       stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       

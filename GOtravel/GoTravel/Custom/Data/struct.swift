@@ -12,7 +12,7 @@ import GoogleMaps
 // addDetailView cell 사용함
 struct TableData
 {
-    var section:String = ""
+    var section: String = ""
     var data = Array<String>()
     init(){}
 }
@@ -20,10 +20,10 @@ struct TableData
 // placeSearchViewControleler 에서 사용함, 데이터 임시 저장
 
 struct PlaceInfo {
-    var title : String = ""
-    var address : String = ""
-    var placeID : String = ""
-    var location : CLLocationCoordinate2D?
+    var title: String = ""
+    var address: String = ""
+    var placeID: String = ""
+    var location: CLLocationCoordinate2D?
     init(){}
 
 }

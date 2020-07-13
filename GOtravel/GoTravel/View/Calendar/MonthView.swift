@@ -29,12 +29,12 @@ class MonthView: UIView {
   var delegate: MonthViewDelegate?
 
   let lblName: UILabel = {
-    let lbl=UILabel()
+    let lbl = UILabel()
     lbl.text="Default Month Year text"
     lbl.textColor = .black
     lbl.textAlignment = .left
     lbl.font = .sb24
-    lbl.translatesAutoresizingMaskIntoConstraints=false
+    lbl.translatesAutoresizingMaskIntoConstraints = false
     return lbl
   }()
 
@@ -71,7 +71,7 @@ class MonthView: UIView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor=UIColor.clear
+    self.backgroundColor = UIColor.clear
     
     currentMonthIndex = Calendar.current.component(.month, from: Date()) - 1
     currentYear = Calendar.current.component(.year, from: Date())
@@ -119,10 +119,8 @@ class MonthView: UIView {
     lblName.text = "\(currentYear)년 \(currentMonthIndex + 1)월"
     delegate?.didChangeMonth(monthIndex: currentMonthIndex, year: currentYear)
   }
-
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 }
-

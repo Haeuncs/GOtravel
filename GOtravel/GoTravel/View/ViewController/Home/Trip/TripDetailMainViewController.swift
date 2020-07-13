@@ -17,11 +17,11 @@ public enum SizeConstant {
   public static let paddingSize = 50
 }
 //let paddingSize = 10
-protocol changeDetailVCVDelegate : class {
-  func inputData()->(title:String,startTime:Date,endTime:Date,color:String,memo:String)
+protocol changeDetailVCVDelegate: class {
+  func inputData() -> (title: String,startTime: Date,endTime: Date,color: String,memo: String)
 }
-protocol addDetailViewTableViewCellDelegate : class {
-  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell,detailIndex : Int)
+protocol addDetailViewTableViewCellDelegate: class {
+  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell,detailIndex: Int)
   func tableViewDeleteEvent(_ sender: AddDetailTableViewCell)
 }
 
@@ -34,7 +34,7 @@ protocol TripDetailDataPopupDelegate: class {
 class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableViewCellDelegate{
   
   // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
-  var isEdit : Bool? = false
+  var isEdit: Bool? = false
   let realm = try! Realm()
   // push 로 데이터 전달됨
   var countryRealmDB = countryRealm()
@@ -43,7 +43,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
   let impact = UIImpactFeedbackGenerator()
   
   // scroll 시작 시, 열려있는 버튼이 있을 때 다시 닫을 때 사용
-  var currentIndexPath : IndexPath?
+  var currentIndexPath: IndexPath?
   // 각 셀의 버튼은 테이블 당 한개만 나타날 수 있도록 하는 변수
   var beforeSelectIndexPath = false
   
@@ -81,7 +81,6 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     view.addSubview(tripDescriptionView)
     view.addSubview(scheduleMainTableView)
     
-    
     let customView = UIStackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
     customView.alignment = .center
     customView.distribution = .fill
@@ -94,12 +93,11 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     
     scheduleMainTableView.tableFooterView = customView
     
-    
     initLayout()
     getRealmData()
   }
   
-  @objc func alldDleteLabelEvent(sender:UITapGestureRecognizer) {
+  @objc func alldDleteLabelEvent(sender: UITapGestureRecognizer) {
     let uiAlertControl = UIAlertController(title: "여행 데이터 삭제", message: "한번 삭제한 데이터는 복구 할 수 없습니다. 삭제하시겠습니까? ", preferredStyle: .actionSheet)
     
     uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: { (_) in
@@ -156,7 +154,6 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     let startDay = dateFormatter.string(from: countryRealmDB.date!)
     let endDay = dateFormatter.string(from: DBDate!)
     
-    
     tripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
     //        scheduleMainTableView.reloadData()
   }
@@ -196,7 +193,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     selectRow = indexPath.row
     buttonEvent(indexPath: indexPath)
   }
-  @objc func placeButtonEvent(_ sender : UIButton){
+  @objc func placeButtonEvent(_ sender: UIButton){
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
@@ -206,25 +203,23 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     placeVC.categoryIndex = 0
     self.navigationController?.pushViewController(placeVC, animated: true)
   }
-  @objc func pathButtonEvent(_ sender : UIButton){
+  @objc func pathButtonEvent(_ sender: UIButton){
     impact.impactOccurred()
     //        self.scheduleMainTableView.reloadData()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-    let googleVC = AddTripCheckMapViewController()
-    if countryRealmDB.dayList[indexPath.row].detailList.first != nil{
-      googleVC.navTitle = countryRealmDB.city
-      googleVC.arrayMap = true
-      googleVC.currentSelect = countryRealmDB.dayList[indexPath.row].detailList.first!
-      googleVC.dayDetailRealm = countryRealmDB.dayList[indexPath.row].detailList
-      googleVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
-      self.navigationController?.pushViewController(googleVC, animated: true)
-      
+
+    guard let tripDetail = countryRealmDB.dayList[indexPath.row].detailList.first else {
+        return
     }
-    
-    //
+
+    let dayDetail = countryRealmDB.dayList[indexPath.row].detailList
+
+    let tripRouteViewController = TripRouteViewController(day: indexPath.row, tripDetail: tripDetail, dayDetail: dayDetail)
+    self.navigationController?.pushViewController(tripRouteViewController, animated: true)
   }
-  @objc func exchangeButtonEvent(_ sender : UIButton){
+
+  @objc func exchangeButtonEvent(_ sender: UIButton){
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
@@ -233,14 +228,13 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     self.navigationController?.pushViewController(vc, animated: true)
   }
   
-  
-  func callAction(with data : String){
+  func callAction(with data: String){
     print("pushing view")
     print(data)
   }
   var sum = 0
   // delete label footer view
-  let deleteDataLabel : UILabel = {
+  let deleteDataLabel: UILabel = {
     let label = UILabel()
     label.text = "이 여행 데이터 전체 삭제"
     label.textAlignment = .center
@@ -252,29 +246,28 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     return label
   }()
   
-  
   // MARK: VC에서 View 그릴 떄 사용하는 것들
-  let deleteBtnS : UIButton = {
+  let deleteBtnS: UIButton = {
     let button = UIButton()
     button.backgroundColor = UIColor.myRed
     button.setTitle("삭제", for: .normal)
     
-    button.translatesAutoresizingMaskIntoConstraints=false
+    button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
-  let addBtnS : UIButton = {
+  let addBtnS: UIButton = {
     let button = UIButton()
     button.backgroundColor = UIColor.myBlue
     button.setTitle("확인", for: .normal)
-    button.translatesAutoresizingMaskIntoConstraints=false
+    button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
-  let deleteAndSaveStack : UIStackView = {
+  let deleteAndSaveStack: UIStackView = {
     let stack = UIStackView()
     stack.distribution = .fillEqually
     stack.axis = .horizontal
     stack.isHidden = false
-    stack.translatesAutoresizingMaskIntoConstraints=false
+    stack.translatesAutoresizingMaskIntoConstraints = false
     return stack
   }()
   lazy var navView: CustomNavigationBarView = {
@@ -296,7 +289,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     return view
   }()
   // 날짜별 테이블뷰
-  var scheduleMainTableView : UITableView = {
+  var scheduleMainTableView: UITableView = {
     let tableView = UITableView()
     tableView.backgroundColor = .white
     tableView.tag = 0
@@ -307,7 +300,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     tableView.allowsSelection = false
     return tableView
   }()
-  func openViewEvent(currentCell : AddDetailTableViewCell){
+  func openViewEvent(currentCell: AddDetailTableViewCell){
     // duration 작을 수록 느리게 애니메이션
     
     UIView.animate(withDuration: 0.5, animations: {
@@ -327,11 +320,9 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
       currentCell.paddingViewBottom.detailBtn.alpha = 1
       currentCell.paddingViewBottom.pathBtn.alpha = 1
       
-      
-      
     })
   }
-  func colseViewEvent(beforeCell : AddDetailTableViewCell){
+  func colseViewEvent(beforeCell: AddDetailTableViewCell){
     // duration 작을 수록 느리게 애니메이션
     
     UIView.animate(withDuration: 0.5, animations: {
@@ -354,7 +345,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
     
   }
   // MARK: 버튼의 animate 정의
-  func buttonEvent(indexPath : IndexPath){
+  func buttonEvent(indexPath: IndexPath){
     let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? AddDetailTableViewCell
     // 머니 버튼이 가려져 있다면 보이기
     if currentCell?.paddingViewBottom.moneyBtn.alpha == 0.0 {
@@ -369,7 +360,7 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
 // MARK: delegate 정의 (cell 에서 사용한다.)
 extension TripDetailMainViewController {
   // The cell calls this method when the user taps the heart button
-  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell, detailIndex : Int) {
+  func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell, detailIndex: Int) {
     guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
     selectRow = tappedIndexPath.row
     //        print(detailIndex)
@@ -385,10 +376,9 @@ extension TripDetailMainViewController {
     self.scheduleMainTableView.reloadData()
   }
   
-  
 }
 
-extension TripDetailMainViewController : UITableViewDelegate{
+extension TripDetailMainViewController: UITableViewDelegate{
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("select")
     // 지금은 select 이벤트 없음
@@ -404,7 +394,7 @@ extension TripDetailMainViewController : UITableViewDelegate{
     }
   }
 }
-extension TripDetailMainViewController : UITableViewDataSource{
+extension TripDetailMainViewController: UITableViewDataSource{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return countryRealmDB.dayList.count
   }
@@ -448,7 +438,6 @@ extension TripDetailMainViewController : UITableViewDataSource{
     cell.mydelegate = self
     cell.isEdit = isEdit!
     
-    
     return cell
   }
   
@@ -467,7 +456,6 @@ extension TripDetailMainViewController{
   }
 }
 
-
 extension TripDetailMainViewController: TripDetailDataPopupDelegate {
   func TripDetailDataPopupMoney(day: Int) {
     // 여행 전 경비가 있음으로 + 1
@@ -484,14 +472,13 @@ extension TripDetailMainViewController: TripDetailDataPopupDelegate {
   }
   
   func TripDetailDataPopupPath(day: Int) {
-    let googleVC = AddTripCheckMapViewController()
-    if countryRealmDB.dayList[day].detailList.first != nil{
-      googleVC.navTitle = countryRealmDB.city
-      googleVC.arrayMap = true
-      googleVC.currentSelect = countryRealmDB.dayList[day].detailList.first!
-      googleVC.dayDetailRealm = countryRealmDB.dayList[day].detailList
-      googleVC.dayRealmDB = countryRealmDB.dayList[day]
-      self.navigationController?.pushViewController(googleVC, animated: true)
+    guard let tripDetail = countryRealmDB.dayList[day].detailList.first else {
+        return
     }
+
+    let dayDetail = countryRealmDB.dayList[day].detailList
+
+    let tripRouteViewController = TripRouteViewController(day: day, tripDetail: tripDetail, dayDetail: dayDetail)
+    self.navigationController?.pushViewController(tripRouteViewController, animated: true)
   }
 }

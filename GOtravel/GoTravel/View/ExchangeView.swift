@@ -11,25 +11,25 @@ import UIKit
 import RealmSwift
 
 protocol ExchangeTableCellProtocol {
-  var subTitle : String {get}
-  var mainTitle : String {get}
-  var numberTitle : String {get}
+  var subTitle: String { get }
+  var mainTitle: String { get }
+  var numberTitle: String { get }
 }
-struct ExchangeTableCellViewModel : ExchangeTableCellProtocol{
+struct ExchangeTableCellViewModel: ExchangeTableCellProtocol{
   var subTitle: String
   
   var mainTitle: String
   
   var numberTitle: String
   
-  init(_ data : moneyDetailRealm) {
+  init(_ data: moneyDetailRealm) {
     self.mainTitle = data.title
     self.subTitle = data.subTitle
     self.numberTitle = ""
     
   }
 }
-class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class ExchangeView: UIView,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
   
   var viewModel: AccountViewModel?
 
@@ -37,12 +37,11 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
   var countryRealmDB = countryRealm()
   var selectDay = 0
   
-  var mainCV     : UICollectionView!
+  var mainCV: UICollectionView!
   
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
-  
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -85,14 +84,14 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
     belowView.selectDay = self.selectDay
     
   }
-  let moneyLabel : ExchangeSubView = {
+  let moneyLabel: ExchangeSubView = {
     let label = ExchangeSubView()
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
   // 테이블뷰
-  let belowView : ExchangeTV = {
+  let belowView: ExchangeTV = {
     let view = ExchangeTV()
     view.layer.cornerRadius = 10
     view.backgroundColor = UIColor.clear
@@ -153,7 +152,7 @@ class ExchangeView : UIView,UICollectionViewDelegate, UICollectionViewDataSource
   }
 }
 
-class ExchangeSubView : UIView {
+class ExchangeSubView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     initView()
@@ -221,7 +220,7 @@ class AccountLabelView: UIView {
     return view
   }()
   /// 설명
-  lazy var descriptionLabel : UILabel = {
+  lazy var descriptionLabel: UILabel = {
     let label = UILabel()
     label.text = "하루"
     label.textAlignment = .center
@@ -231,7 +230,7 @@ class AccountLabelView: UIView {
     return label
   }()
   /// money 표시
-  lazy var moneyLabel : UILabel = {
+  lazy var moneyLabel: UILabel = {
     let label = UILabel()
     label.text = "￦ 100.000"
     label.textAlignment = .center
@@ -242,7 +241,7 @@ class AccountLabelView: UIView {
   }()
 }
 
-class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
+class ExchangeTV: UIView,UITableViewDelegate,UITableViewDataSource {
   
   let realm = try! Realm()
   var countryRealmDB = countryRealm()
@@ -251,7 +250,7 @@ class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
       moneyTV.reloadData()
     }
   }
-  var delegate : ExchangeView?
+  var delegate: ExchangeView?
   //  var exchangeCell:exchangeCVCell?
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -273,15 +272,15 @@ class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
       moneyTV.trailingAnchor.constraint(equalTo: self.trailingAnchor),
     ])
   }
-  let moneyTV : UITableView = {
+  let moneyTV: UITableView = {
     let table = UITableView()
     table.separatorStyle = .none
     table.backgroundColor = DefaullStyle.topTableView
-    table.translatesAutoresizingMaskIntoConstraints  = false
+    table.translatesAutoresizingMaskIntoConstraints = false
     return table
   }()
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return self.frame.height/5
+    return self.frame.height / 5
   }
   //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
   //        return 20
@@ -318,7 +317,7 @@ class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
       let subtractionDot = dotBefore.replacingOccurrences(of: ",", with: "")
       let numberFormatter = NumberFormatter()
       numberFormatter.numberStyle = NumberFormatter.Style.decimal
-      let formattedNumber = numberFormatter.string(from: NSNumber(value:Double(subtractionDot)!))
+      let formattedNumber = numberFormatter.string(from: NSNumber(value: Double(subtractionDot)!))
       
       //            formattedNumber?.append(String(dotAfter))
       cell.label3.text = "￦ \(formattedNumber!)"
@@ -343,7 +342,6 @@ class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     return countryRealmDB.moneyList[selectDay].detailList.count
   }
   
-  
   // Set the spacing between sections
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 10
@@ -365,9 +363,8 @@ class ExchangeTV : UIView,UITableViewDelegate,UITableViewDataSource {
     }
   }
   
-  
 }
-class ExchangeCell : UITableViewCell {
+class ExchangeCell: UITableViewCell {
   override func prepareForReuse() {
     
   }
@@ -414,7 +411,7 @@ class ExchangeCell : UITableViewCell {
     ])
     
   }
-  let insideView : UIView = {
+  let insideView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = .white
@@ -427,7 +424,7 @@ class ExchangeCell : UITableViewCell {
     stack.spacing = 8
     return stack
   }()
-  let label1 : UILabel = {
+  let label1: UILabel = {
     let label = UILabel()
     label.textColor = .black
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -435,7 +432,7 @@ class ExchangeCell : UITableViewCell {
     label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     return label
   }()
-  let label2 : UILabel = {
+  let label2: UILabel = {
     let label = UILabel()
     label.adjustsFontSizeToFitWidth = true
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -444,7 +441,7 @@ class ExchangeCell : UITableViewCell {
     label.textColor = .black
     return label
   }()
-  let label3 : UILabel = {
+  let label3: UILabel = {
     let label = UILabel()
     label.textColor = .black
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -452,6 +449,5 @@ class ExchangeCell : UITableViewCell {
     label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
     return label
   }()
-  
   
 }

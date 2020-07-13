@@ -40,7 +40,6 @@ class DismissNavigationBar: UIView {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-
   
   lazy var button: DismissButton = {
     let btn = DismissButton()
@@ -87,4 +86,3 @@ class DismissButton: UIButton{
   }()
 
 }
-

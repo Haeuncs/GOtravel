@@ -47,6 +47,8 @@
 		7D1D587E237A9BCA0007E2F3 /* PastTripEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */; };
 		7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */; };
 		7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1F73A422F6B75E000AA055 /* Singleton.swift */; };
+		7D276DF124BCC2BE00CA4554 /* TripRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276DF024BCC2BE00CA4554 /* TripRouteViewController.swift */; };
+		7D276DF324BCC2CB00CA4554 /* TripRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276DF224BCC2CB00CA4554 /* TripRouteViewModel.swift */; };
 		7D72596622FFEF080034FA8E /* ExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596522FFEF080034FA8E /* ExchangeView.swift */; };
 		7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */; };
 		7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596C22FFF0F90034FA8E /* exchangeCell.swift */; };
@@ -164,6 +166,8 @@
 		7D1D587D237A9BCA0007E2F3 /* PastTripEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastTripEmptyView.swift; sourceTree = "<group>"; };
 		7D1F73A222F6B73F000AA055 /* ViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerDelegate.swift; sourceTree = "<group>"; };
 		7D1F73A422F6B75E000AA055 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		7D276DF024BCC2BE00CA4554 /* TripRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRouteViewController.swift; sourceTree = "<group>"; };
+		7D276DF224BCC2CB00CA4554 /* TripRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRouteViewModel.swift; sourceTree = "<group>"; };
 		7D72596522FFEF080034FA8E /* ExchangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeView.swift; sourceTree = "<group>"; };
 		7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeSelectCountryViewController.swift; sourceTree = "<group>"; };
 		7D72596C22FFF0F90034FA8E /* exchangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeCell.swift; sourceTree = "<group>"; };
@@ -580,6 +584,8 @@
 				4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */,
 				7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */,
 				7D763E3A23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift */,
+				7D276DF024BCC2BE00CA4554 /* TripRouteViewController.swift */,
+				7D276DF224BCC2CB00CA4554 /* TripRouteViewModel.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -912,6 +918,7 @@
 				7D72596F230062530034FA8E /* OpenSourceLicenseViewModel.swift in Sources */,
 				7DFC581822FF120E002BFD86 /* LineAnimateTextFieldView.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
+				7D276DF124BCC2BE00CA4554 /* TripRouteViewController.swift in Sources */,
 				7D895C6923D2E4ED001AB3B6 /* DismissNavigationBar.swift in Sources */,
 				4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */,
 				7D895C6423D2E235001AB3B6 /* CustomNavigationContoller.swift in Sources */,
@@ -950,6 +957,7 @@
 				7D895C7423D342DF001AB3B6 /* AddTripViewModel.swift in Sources */,
 				7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
+				7D276DF324BCC2CB00CA4554 /* TripRouteViewModel.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,

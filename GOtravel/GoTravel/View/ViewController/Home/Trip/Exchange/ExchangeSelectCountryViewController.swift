@@ -14,17 +14,17 @@ import RxSwift
 import RxCocoa
 
 // hsb random color
-func HSBrandomColor(num : CGFloat) -> UIColor{
-  let saturation : CGFloat =  0.45
-  let brigtness : CGFloat = 0.85
+func HSBrandomColor(num: CGFloat) -> UIColor{
+  let saturation: CGFloat = 0.45
+  let brigtness: CGFloat = 0.85
   let randomHue = num
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
 }
 
 // hsb random color
 func HSBrandomColor() -> UIColor{
-  let saturation : CGFloat =  0.45
-  let brigtness : CGFloat = 0.85
+  let saturation: CGFloat = 0.45
+  let brigtness: CGFloat = 0.85
   let randomHue = CGFloat.random(in: 0.0..<1.0)
   return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
 }
@@ -33,14 +33,14 @@ func HSBrandomColor() -> UIColor{
  환율 선택 테이블 화면
  */
 
-class ExchangeSelectCountryViewController : UIViewController {
+class ExchangeSelectCountryViewController: UIViewController {
   weak var directAddReceiptDelegate: DireactAddReceiptDelegate?
 
   var viewModel = ExchangeSelectViewModel()
   var disposeBag = DisposeBag()
   
   /// 네트워크를 통해서 받는 환율 정보 배열
-  var netWorkExchangeArr : [ExchangeData] = []
+  var netWorkExchangeArr: [ExchangeData] = []
   var selectIndex = 0
   /// realm
   let realm = try? Realm()
@@ -129,7 +129,7 @@ class ExchangeSelectCountryViewController : UIViewController {
     label.textColor = DefaullStyle.mainTitleColor
     return label
   }()
-  let timeLabel : UILabel = {
+  let timeLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textAlignment = .right
@@ -137,7 +137,7 @@ class ExchangeSelectCountryViewController : UIViewController {
     label.textColor = .black
     return label
   }()
-  let selectCountryTV : UITableView = {
+  let selectCountryTV: UITableView = {
     let table = UITableView()
     table.separatorStyle = .none
     table.allowsMultipleSelectionDuringEditing = false
@@ -308,7 +308,7 @@ extension ExchangeSelectCountryViewController {
         let currnetURL = basicURL + day
         let url = URL(string: currnetURL)
         print(url)
-        URLSession.shared.dataTask(with: url!) { (data, response
+        URLSession.shared.dataTask(with: url!) { (data, _
           , error) in
           dispatchGroup.enter()
           

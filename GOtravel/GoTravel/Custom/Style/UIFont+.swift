@@ -120,6 +120,5 @@ extension UIFont {
   class var r16: UIFont {
   return UIFont(name: "AppleSDGothicNeo-Regular", size: 16.0)!
   }
-  
 
 }

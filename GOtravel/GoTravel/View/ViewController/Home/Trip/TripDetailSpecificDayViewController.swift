@@ -22,22 +22,21 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
   var heightConstraint: NSLayoutConstraint?
   let realm = try! Realm()
   
-  var detailRealmDB : detailRealm? {
+  var detailRealmDB: detailRealm? {
     didSet{
       print("detailRealmDB")
       print(detailRealmDB!)
     }
   }
-  var countryRealmDB : countryRealm?{
+  var countryRealmDB: countryRealm?{
     didSet{
       print("countryRealmDB")
       print(countryRealmDB!)
     }
   }
   
-  
-  var colorPik : String = ""
-  var memoText : String = ""
+  var colorPik: String = ""
+  var memoText: String = ""
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -61,7 +60,7 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
     memoTextInput.textView.text = db.memo
     colorPik = db.color
   }
-  func characterToCgfloat(str : String) -> CGFloat {
+  func characterToCgfloat(str: String) -> CGFloat {
     let n = NumberFormatter().number(from: str)
     return n as! CGFloat
   }
@@ -131,7 +130,6 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
       make.trailing.equalTo(view.snp.trailing).offset(-16)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45).priority(.high)
       
-      
     }
   }
   func bindRx() {
@@ -169,14 +167,13 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
     heightConstraint?.isActive = true
   }
   
-  
   lazy var scrollView: UIScrollView = {
     let scroll = UIScrollView()
     scroll.shouldIgnoreScrollingAdjustment = true
     scroll.translatesAutoresizingMaskIntoConstraints = false
     return scroll
   }()
-  lazy var titleLabel : UILabel = {
+  lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.text = "여행"
     label.textColor = .black
@@ -184,20 +181,20 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  lazy var titleTextInput : LineAnimateTextFieldView = {
+  lazy var titleTextInput: LineAnimateTextFieldView = {
     let text = LineAnimateTextFieldView()
     text.configure(title: "장소", placeHodeler: "장소", Font: .  r14)
     text.translatesAutoresizingMaskIntoConstraints = false
     return text
   }()
-  lazy var miniMemoTextInput : LineAnimateTextFieldView = {
+  lazy var miniMemoTextInput: LineAnimateTextFieldView = {
     let text = LineAnimateTextFieldView()
     text.configure(title: "힌줄 메모", placeHodeler: "한줄 메모", Font: .r14)
     text.translatesAutoresizingMaskIntoConstraints = false
     //        text.type = .numeric
     return text
   }()
-  lazy var memoTextInput : LineAnimateTextView = {
+  lazy var memoTextInput: LineAnimateTextView = {
     let text = LineAnimateTextView(description: "메모", placeholder: "메모를 입력해주세요.")
     text.translatesAutoresizingMaskIntoConstraints = false
     //    text.configure(placeHodeler: "메모 입력", Font: .r14)
@@ -222,7 +219,7 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
   lazy var collectionview: CustomCollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    let myCollectionView = CustomCollectionView(frame: .zero, collectionViewLayout : layout)
+    let myCollectionView = CustomCollectionView(frame: .zero, collectionViewLayout: layout)
     myCollectionView.showsHorizontalScrollIndicator = false
     myCollectionView.translatesAutoresizingMaskIntoConstraints = false
     myCollectionView.backgroundColor = UIColor.clear
@@ -256,7 +253,6 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
   
 }
 
-
 extension TripDetailSpecificDayViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCVCell else {
@@ -284,7 +280,7 @@ extension TripDetailSpecificDayViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ColorCVCell
-    let color = HSBrandomColor(num : CGFloat(Double((indexPath.row + 1) * 10) / Double(100)))
+    let color = HSBrandomColor(num: CGFloat(Double((indexPath.row + 1) * 10) / Double(100)))
     cell.colorView.backgroundColor = color
     
     if selectedColorIndex == indexPath || colorPik == color.toString() {
@@ -303,9 +299,9 @@ extension TripDetailSpecificDayViewController: UICollectionViewDataSource {
     return cell
   }
   // hsb random color
-  func HSBrandomColor(num : CGFloat) -> UIColor{
-    let saturation : CGFloat =  0.45
-    let brigtness : CGFloat = 0.85
+  func HSBrandomColor(num: CGFloat) -> UIColor{
+    let saturation: CGFloat = 0.45
+    let brigtness: CGFloat = 0.85
     let randomHue = num
     return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
   }

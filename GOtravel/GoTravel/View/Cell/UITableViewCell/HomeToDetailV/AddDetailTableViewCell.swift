@@ -19,8 +19,8 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
   
   // MARK: VC로 부터 전달받는 데이터
   var count = 0
-  var isEdit : Bool = false
-  var dayRealmDB : dayRealm?
+  var isEdit: Bool = false
+  var dayRealmDB: dayRealm?
   
   // MARK: VC에서 사용하는 변수
   var buttonSelect = false
@@ -106,7 +106,7 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     ])
   }
   // MARK: Cell 에서 사용하는 것들
-  lazy var dateView : TripDateView = {
+  lazy var dateView: TripDateView = {
     let view = TripDateView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = .white
@@ -114,7 +114,7 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
     return view
   }()
-  lazy var detailScheduleTableView : UITableView = {
+  lazy var detailScheduleTableView: UITableView = {
     let tableView = UITableView()
     tableView.tag = 1
     tableView.backgroundColor = .white
@@ -125,7 +125,7 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     tableView.register(TripDetailEmptyTableViewCell.self, forCellReuseIdentifier: "TripDetailEmptyTableViewCell")
     return tableView
   }()
-  lazy var stackView : UIStackView = {
+  lazy var stackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .horizontal
     stack.alignment = .fill
@@ -134,7 +134,7 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     stack.translatesAutoresizingMaskIntoConstraints = false
     return stack
   }()
-  lazy var label : UILabel = {
+  lazy var label: UILabel = {
     let label = UILabel()
     label.text = "일정을 추가하세요."
     label.textAlignment = .center
@@ -143,7 +143,7 @@ class AddDetailTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewD
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  var paddingViewBottom : AddDetailViewCellButtonView = {
+  var paddingViewBottom: AddDetailViewCellButtonView = {
     let view = AddDetailViewCellButtonView()
     //        view.backgroundColor = UIColor.clear
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -237,7 +237,7 @@ extension AddDetailTableViewCell {
       return cell
     }
   }
-  func characterToCgfloat(str : String) -> CGFloat {
+  func characterToCgfloat(str: String) -> CGFloat {
     let n = NumberFormatter().number(from: str)
     return n as! CGFloat
   }

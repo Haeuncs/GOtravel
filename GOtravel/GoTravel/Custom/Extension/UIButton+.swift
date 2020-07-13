@@ -16,6 +16,6 @@ extension UIButton {
     pulse.toValue = 1.0
     pulse.autoreverses = true
     pulse.repeatCount = Float.infinity
-    layer.add(pulse,forKey:nil)
+    layer.add(pulse,forKey: nil)
   }
 }

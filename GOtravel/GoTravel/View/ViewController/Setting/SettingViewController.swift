@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SettingViewController : UIViewController {
+class SettingViewController: UIViewController {
   override func viewDidLoad() {
     self.navigationItem.title = "설정"
     view.backgroundColor = .white
@@ -42,7 +42,7 @@ class SettingViewController : UIViewController {
       ])
   }
   // 테이블뷰
-  let belowView : SettingView = {
+  let belowView: SettingView = {
     let view = SettingView()
     view.layer.cornerRadius = 10
     view.backgroundColor = UIColor.white

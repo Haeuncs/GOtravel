@@ -11,15 +11,15 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-protocol changeDelegate : class {
-  func showAlert(longitude : Double, latitude : Double, title : String)
+protocol changeDelegate: class {
+  func showAlert(longitude: Double, latitude: Double, title: String)
 }
 
 // detailVC 에서 cell 선택 시 이동하는 수정 뷰
-class TripDetailDayViewController : UIViewController{
+class TripDetailDayViewController: UIViewController{
   //detailVC에서 받는 데이터
-  var detailRealmDB : detailRealm?
-  var countryRealmDB : countryRealm?
+  var detailRealmDB: detailRealm?
+  var countryRealmDB: countryRealm?
   
   let realm = try! Realm()
   
@@ -78,7 +78,7 @@ class TripDetailDayViewController : UIViewController{
     return view
   }()
 
-  let mainView : changeDetailView = {
+  let mainView: changeDetailView = {
     let view = changeDetailView()
     view.backgroundColor = .white
     view.layer.cornerRadius = 1
@@ -108,8 +108,8 @@ class TripDetailDayViewController : UIViewController{
   }
 }
 // Delegate
-extension TripDetailDayViewController : changeDelegate {
-  func showAlert(longitude : Double, latitude : Double, title : String) {
+extension TripDetailDayViewController: changeDelegate {
+  func showAlert(longitude: Double, latitude: Double, title: String) {
     let titleAddSub = title.replacingOccurrences(of: " ", with: "+")
     let alertController = UIAlertController(title: "길찾기", message: "길찾기에 사용할 어플을 선택하세요.", preferredStyle: .alert)
     alertController.addAction(UIAlertAction(title: "애플 지도", style: .default, handler: {(_) in
@@ -118,8 +118,8 @@ extension TripDetailDayViewController : changeDelegate {
       
       UIApplication.shared.open(URL(string: encoded!)!, options: [:], completionHandler: nil)
     }))
-    alertController.addAction(UIAlertAction(title: "구글 지도", style: .default, handler:{(_) in
-      if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+    alertController.addAction(UIAlertAction(title: "구글 지도", style: .default, handler: {(_) in
+      if (UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!)) {
         let text = "comgooglemaps://?q=\(titleAddSub)&center=\(latitude),\(longitude)&zoom=15&views=transit"
         let encoded = text.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         //한글 검색어도 사용할 수 있도록 함

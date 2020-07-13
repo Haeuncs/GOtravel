@@ -10,7 +10,7 @@ import RealmSwift
 import RxCocoa
 import RxSwift
 
-class AccountMainViewController : UIViewController{
+class AccountMainViewController: UIViewController{
   var viewModel = AccountViewModel()
   var disposeBag = DisposeBag()
   
@@ -89,7 +89,6 @@ class AccountMainViewController : UIViewController{
     mainView.backgroundColor = Defaull_style.topTableView
     mainView.layer.cornerRadius = CGFloat(Defaull_style.topTableViewCorner)
     
-    
     NSLayoutConstraint.activate([
       mainView.topAnchor.constraint(equalTo: view.topAnchor, constant: mainViewPadding),
       mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -mainViewPadding),
@@ -97,7 +96,7 @@ class AccountMainViewController : UIViewController{
       mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainViewPadding),
     ])
   }
-  let mainView : exchangeView = {
+  let mainView: exchangeView = {
     let view = exchangeView()
     view.backgroundColor = Defaull_style.backgroundColor
     view.translatesAutoresizingMaskIntoConstraints = false

@@ -149,7 +149,7 @@ class AddTripViewControllerNew: BaseUIViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var tableView : UITableView = {
+  lazy var tableView: UITableView = {
     let tableView = UITableView()
     tableView.rowHeight = 74
     //    tableView.tag = 1

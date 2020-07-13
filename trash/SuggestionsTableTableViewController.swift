@@ -8,12 +8,11 @@ Table view controller used to display suggested search criteria.
 import UIKit
 import MapKit
 
-
 class SuggestionsTableTableViewController: UITableViewController {
     
     let searchCompleter = MKLocalSearchCompleter()
     var completerResults: [MKLocalSearchCompletion]?
-    var subResults : [MKLocalSearchCompletion] = []
+    var subResults: [MKLocalSearchCompletion] = []
 
     convenience init() {
         self.init(style: .plain)

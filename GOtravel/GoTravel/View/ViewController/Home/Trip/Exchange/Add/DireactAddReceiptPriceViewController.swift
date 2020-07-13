@@ -91,7 +91,7 @@ class DireactAddReceiptPriceViewController: UIViewController {
       make.bottom.equalTo(numberInputStackView.snp.top)
     }
     numberInputStackView.snp.makeConstraints { (make) in
-      make.height.equalTo(76*3)
+      make.height.equalTo(76 * 3)
       make.leading.equalTo(view.snp.leading).offset(48)
       make.trailing.equalTo(view.snp.trailing).offset(-48)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-48)

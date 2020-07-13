@@ -70,7 +70,7 @@ class CustomNavigationBarView: UIView {
   func setButtonEnabled(enabled: Bool){
     actionBtn.isEnabled = enabled
   }
-  func setLeftText(title:String) {
+  func setLeftText(title: String) {
     dismissBtn.setTitle(title, for: .normal)
     dismissBtn.setTitleColor(DefaullStyle.mainTitleColor, for: .normal)
   }
@@ -86,7 +86,7 @@ class CustomNavigationBarView: UIView {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  lazy var titleLabel : UILabel = {
+  lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "레이블"
@@ -95,7 +95,7 @@ class CustomNavigationBarView: UIView {
     return label
   }()
   
-  lazy var dismissBtn : UIButton = {
+  lazy var dismissBtn: UIButton = {
     let btn = UIButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
     btn.setImage(UIImage(named: "icnXNew"), for: .normal)
@@ -103,7 +103,7 @@ class CustomNavigationBarView: UIView {
     return btn
   }()
   
-  lazy var actionBtn : UIButton = {
+  lazy var actionBtn: UIButton = {
     let btn = UIButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
     btn.setTitle("", for: .normal)

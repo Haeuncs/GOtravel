@@ -55,7 +55,7 @@ class AddTripViewModel: NSObject, GMSAutocompleteFetcherDelegate {
       new_data.title = prediction.attributedPrimaryText.string
       new_data.address = prediction.attributedSecondaryText?.string ?? ""
       
-      let placeID =  prediction.placeID
+      let placeID = prediction.placeID
       let placeClient = GMSPlacesClient()
       dispatchGroup.enter()
       placeClient.lookUpPlaceID(placeID, callback: { (place, error) -> Void in
@@ -77,7 +77,7 @@ class AddTripViewModel: NSObject, GMSAutocompleteFetcherDelegate {
         dispatchGroup.leave()
       })
     }
-    dispatchGroup.notify(queue:.main) {
+    dispatchGroup.notify(queue: .main) {
       self.places.accept(placeInfo)
       //      self.tableView.reloadData()
     }
@@ -86,8 +86,6 @@ class AddTripViewModel: NSObject, GMSAutocompleteFetcherDelegate {
   func didFailAutocompleteWithError(_ error: Error) {
     print(error.localizedDescription)
   }
-  
-  
 }
 //extension AddTripViewModel: NSObject, GMSAutocompleteFetcherDelegate {
 //  func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {

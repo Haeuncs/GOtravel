@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-
 class HomeViewModel {
   
   var tripData = BehaviorSubject(value: [countryRealm]())

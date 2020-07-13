@@ -9,7 +9,6 @@
 import Foundation
 
 struct ExchangeData: Codable {
-  var cur_unit : String
+  var cur_unit: String
   var deal_bas_r: String
 }
-

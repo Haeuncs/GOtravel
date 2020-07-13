@@ -34,7 +34,6 @@ class DirectAddReceiptPriceViewModel: DirectAddReceiptPriceViewModelInput, Direc
   
   var output: DirectAddReceiptPriceViewModelOutput { return self }
   
-  
   init() {
     self.exchangeModel = PublishSubject()
     self.calculatedKor = BehaviorRelay(value: 0)
@@ -52,7 +51,6 @@ class DirectAddReceiptPriceViewModel: DirectAddReceiptPriceViewModelInput, Direc
     }.bind(to: self.calculatedKor)
     .disposed(by: disposeBag)
   }
-  
   
   //  if textField.text?.count != 0 {
   //    if (textField.text?.contains("."))!{

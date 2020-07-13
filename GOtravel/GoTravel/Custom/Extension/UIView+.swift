@@ -49,7 +49,7 @@ extension UIView {
             }
         } else {
             UIGraphicsBeginImageContext(self.frame.size)
-            self.layer.render(in:UIGraphicsGetCurrentContext()!)
+            self.layer.render(in: UIGraphicsGetCurrentContext()!)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return UIImage(cgImage: image!.cgImage!)
@@ -58,15 +58,15 @@ extension UIView {
 }
 extension UIView {
     
-    func setCardView(view : UIView){
+    func setCardView(view: UIView){
         
         view.layer.cornerRadius = 5.0
-        view.layer.borderColor  =  UIColor.clear.cgColor
+        view.layer.borderColor = UIColor.clear.cgColor
         view.layer.borderWidth = 5.0
         view.layer.shadowOpacity = 0.5
-        view.layer.shadowColor =  UIColor.lightGray.cgColor
+        view.layer.shadowColor = UIColor.lightGray.cgColor
         view.layer.shadowRadius = 5.0
-        view.layer.shadowOffset = CGSize(width:5, height: 5)
+        view.layer.shadowOffset = CGSize(width: 5, height: 5)
         view.layer.masksToBounds = true
         
     }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-class SettingView : UIView {
+class SettingView: UIView {
   
   var delegate: ViewControllerDelegate?
   
@@ -43,18 +43,18 @@ class SettingView : UIView {
       table.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
       ])
   }
-  let table : UITableView = {
+  let table: UITableView = {
     let table = UITableView()
     table.separatorStyle = .none
     table.backgroundColor = DefaullStyle.topTableView
-    table.translatesAutoresizingMaskIntoConstraints  = false
+    table.translatesAutoresizingMaskIntoConstraints = false
     table.register(SettingTableViewCell.self, forCellReuseIdentifier: String(describing: SettingTableViewCell.self))
     return table
   }()
   
 }
 
-extension SettingView : UITableViewDelegate {
+extension SettingView: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row == 0 {
       sendEmail()
@@ -64,7 +64,7 @@ extension SettingView : UITableViewDelegate {
     }
   }
 }
-extension SettingView : UITableViewDataSource {
+extension SettingView: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tableCellList.count
   }
@@ -94,7 +94,7 @@ extension SettingView: MFMailComposeViewControllerDelegate{
     } else {
       // show failure alert
       let alertController = UIAlertController(title: "오류 😢", message: "mail 앱에 계정이 연결되어 있지 않아요.\nhaeun.developer@gmail.com 으로 보내주세요.", preferredStyle: .alert)
-      let action = UIAlertAction(title: "확인", style: .default) { (action:UIAlertAction) in
+      let action = UIAlertAction(title: "확인", style: .default) { (_: UIAlertAction) in
         print("확인 클릭");
       }
       alertController.addAction(action)
@@ -107,4 +107,3 @@ extension SettingView: MFMailComposeViewControllerDelegate{
     controller.dismiss(animated: true)
   }
 }
-

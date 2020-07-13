@@ -1,7 +1,7 @@
 //
 //  ExchangeCountry.swift
 //  GOtravel
-//
+//`
 //  Created by LEE HAEUN on 2020/03/28.
 //  Copyright © 2020 haeun. All rights reserved.
 //
@@ -13,7 +13,7 @@ struct ExchangeCountry {
   let korName: String
 }
 
-let ExchangeCountryDictionary : [String: ExchangeCountry] = [
+let ExchangeCountryDictionary: [String: ExchangeCountry] = [
     "KRW": ExchangeCountry(country: "대한민국", korName: "원"),
     "AED": ExchangeCountry(country: "아랍에미레이트", korName: "디르함"),
     "ATS": ExchangeCountry(country: "오스트리아", korName: "실링"),

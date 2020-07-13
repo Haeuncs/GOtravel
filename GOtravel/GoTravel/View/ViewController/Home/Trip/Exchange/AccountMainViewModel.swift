@@ -11,7 +11,6 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-
 protocol AccountMainInput {
   var tripMoneyData: BehaviorRelay<[moneyRealm]> { get }
   var selectedDay: BehaviorRelay<Int> { get }

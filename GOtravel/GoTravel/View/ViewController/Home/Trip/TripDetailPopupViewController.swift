@@ -12,8 +12,8 @@ import RxCocoa
 
 class TripDetailPopupViewController: UIViewController {
   var disposeBag = DisposeBag()
-  var originPopup : CGFloat = 0
-  var originHeight : CGFloat = 0
+  var originPopup: CGFloat = 0
+  var originHeight: CGFloat = 0
   var originMinY: CGFloat = 0
   // 진동 feedbvar
   let impact = UIImpactFeedbackGenerator()
@@ -140,7 +140,7 @@ class TripDetailPopupViewController: UIViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var backGroundView : UIView = {
+  lazy var backGroundView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = .dim
@@ -164,7 +164,7 @@ class TripDetailPopupViewController: UIViewController {
 
 extension TripDetailPopupViewController {
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    let touch : UITouch? = touches.first
+    let touch: UITouch? = touches.first
     if touch?.view == backGroundView {
       self.dismiss(animated: true, completion: nil)
     }
@@ -187,10 +187,10 @@ extension TripDetailPopupViewController {
       self.delegate?.TripDetailDataPopupPath(day: self.day)
     }
   }
-  @objc func gestureEvent(gesture : UIPanGestureRecognizer) {
+  @objc func gestureEvent(gesture: UIPanGestureRecognizer) {
     let touchPoint = gesture.location(in: contentView)
     
-    var initialTouchPoint :CGPoint = CGPoint(x: 0, y: 0)
+    var initialTouchPoint: CGPoint = CGPoint(x: 0, y: 0)
     if gesture.state == .began {
       initialTouchPoint = touchPoint
       print(initialTouchPoint)
@@ -199,12 +199,12 @@ extension TripDetailPopupViewController {
       let y = (touchPoint.y - initialTouchPoint.y)
       if (touchPoint.y - initialTouchPoint.y > 0 ){
         UIView.animate(withDuration: 0.3, animations: {
-          self.contentView.frame = CGRect(x: 16, y:  self.contentView.frame.minY + y,
+          self.contentView.frame = CGRect(x: 16, y: self.contentView.frame.minY + y,
                                           width: self.contentView.frame.size.width, height: self.contentView.frame.size.height)
         })
       }else{
         UIView.animate(withDuration: 0.3, animations: {
-          self.contentView.frame = CGRect(x: 16, y:  self.contentView.frame.minY + y,
+          self.contentView.frame = CGRect(x: 16, y: self.contentView.frame.minY + y,
                                           width: self.contentView.frame.size.width, height: self.contentView.frame.size.height)
         })
       }
@@ -216,7 +216,7 @@ extension TripDetailPopupViewController {
         })
       }else{
         UIView.animate(withDuration: 0.3, animations: {
-          self.contentView.frame = CGRect(x: 16, y:  self.originPopup,
+          self.contentView.frame = CGRect(x: 16, y: self.originPopup,
                                           width: self.contentView.frame.size.width, height: self.contentView.frame.size.height)
         })
       }
@@ -276,4 +276,3 @@ class TripDetailPopupView: UIView {
   }()
 
 }
-

@@ -42,7 +42,6 @@ class AddTripDateViewController: BaseUIViewController {
     self.extendedLayoutIncludesOpaqueBars = true
     if let customTabBarController = self.tabBarController as? TabbarViewController {
       customTabBarController.hideTabBarAnimated(hide: true, completion: nil)
-      customTabBarController.setSelectLine(index: 0)
     }
   }
   override func viewWillLayoutSubviews() {
@@ -64,7 +63,7 @@ class AddTripDateViewController: BaseUIViewController {
       dayListDB.append(dayRealmDB)
       // 가계부 기록 데이
       let moneyRealmDB = moneyRealm()
-      moneyRealmDB.day = i-1
+      moneyRealmDB.day = i - 1
       saveCountryRealmData.moneyList.append(moneyRealmDB)
     }
     
@@ -84,7 +83,6 @@ class AddTripDateViewController: BaseUIViewController {
       realm.add(saveCountryRealmData)
     }
     
-    
   }
   func initializeView(){
     self.view.backgroundColor = .white
@@ -102,11 +100,11 @@ class AddTripDateViewController: BaseUIViewController {
       make.trailing.equalTo(view.snp.trailing).offset(-16)
     }
 
-    calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive=true
-    calenderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive=true
-    calenderView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive=true
-    calenderView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive=true
-    calenderView.heightAnchor.constraint(equalToConstant: 70 + (widthPerItem * 6)).isActive=true
+    calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+    calenderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+    calenderView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    calenderView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    calenderView.heightAnchor.constraint(equalToConstant: 70 + (widthPerItem * 6)).isActive = true
 
     confirmButton.snp.makeConstraints { (make) in
       make.height.equalTo(56)
@@ -115,7 +113,6 @@ class AddTripDateViewController: BaseUIViewController {
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45)
       
     }
-
     
   }
   @objc func buttonClicked(){
@@ -140,19 +137,19 @@ class AddTripDateViewController: BaseUIViewController {
     return button
   }()
 
-  let ddayLabel : UILabel = {
+  let ddayLabel: UILabel = {
     let label = UILabel()
     label.text = ""
     label.textAlignment = .center
-    label.font=UIFont.systemFont(ofSize: 20, weight: .heavy)
+    label.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
     label.textColor = .black
-    label.translatesAutoresizingMaskIntoConstraints=false
+    label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
     
   let calenderView: CalenderView = {
     let v = CalenderView(theme: MyTheme.dark)
-    v.translatesAutoresizingMaskIntoConstraints=false
+    v.translatesAutoresizingMaskIntoConstraints = false
     return v
   }()
   

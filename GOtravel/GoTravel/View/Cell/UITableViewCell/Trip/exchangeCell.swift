@@ -9,7 +9,7 @@
 import SnapKit
 import UIKit
 
-class ExchangeCVCell : UICollectionViewCell {
+class ExchangeCVCell: UICollectionViewCell {
   
   override var isSelected: Bool {
     didSet {
@@ -25,12 +25,12 @@ class ExchangeCVCell : UICollectionViewCell {
   lazy var indicator: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer.cornerRadius = 5/2
+    view.layer.cornerRadius = 5 / 2
     view.backgroundColor = .clear
     return view
   }()
 
-  lazy var dayLabel : UILabel = {
+  lazy var dayLabel: UILabel = {
     let label = UILabel()
     label.text = "1일"
     label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -50,13 +50,12 @@ class ExchangeCVCell : UICollectionViewCell {
   }
   func layoutInit(){
     contentView.backgroundColor = .white
-    contentView.layer.cornerRadius = 60/2
+    contentView.layer.cornerRadius = 60 / 2
     contentView.clipsToBounds = false
     contentView.layer.zeplinStyleShadows(color: .black, alpha: 0.13, x: 0, y: 3, blur: 8, spread: 0)
 
     contentView.addSubview(dayLabel)
     contentView.addSubview(indicator)
-
     
     NSLayoutConstraint.activate([
       dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),

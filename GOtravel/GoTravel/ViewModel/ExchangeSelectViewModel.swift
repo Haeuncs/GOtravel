@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 struct ExchangeSelectModel{
   /// 국가이름(혹은 알아볼 수 있는)
   /// 달러 같은거
@@ -20,11 +19,11 @@ struct ExchangeSelectModel{
   /// 계산에 쓰이는 double
   var calculateDouble: Double
 }
+
 class ExchangeSelectViewModel {
   
   let selectedPublish = PublishSubject<ExchangeSelectModel>()
   var selected: Observable<ExchangeSelectModel> {
     return selectedPublish.asObserver()
   }
-
 }

@@ -42,7 +42,6 @@ class PopNavigationBar: UIView {
     return view
   }()
   
-  
   lazy var button: PopButton = {
     let btn = PopButton()
     btn.translatesAutoresizingMaskIntoConstraints = false

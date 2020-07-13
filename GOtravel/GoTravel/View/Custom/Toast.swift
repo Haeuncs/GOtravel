@@ -89,4 +89,3 @@ class Toast: UIView {
     return label
   }()
 }
-

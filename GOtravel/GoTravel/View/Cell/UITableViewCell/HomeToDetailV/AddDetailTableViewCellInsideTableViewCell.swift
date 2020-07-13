@@ -82,7 +82,7 @@ class TripDetailEmptyTableViewCell: UITableViewCell {
     return stack
   }()
 
-  lazy var titleLabel : UILabel = {
+  lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.text = "🏷 일정이 없어요"
     label.textAlignment = .center
@@ -106,9 +106,9 @@ class TripDetailEmptyTableViewCell: UITableViewCell {
   }()
 }
 
-class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
-  var timeLabelIsHidden : Bool = true
-  var memoLabelIsHidden : Bool = true
+class AddDetailTableViewCellInsideTableViewCell: UITableViewCell{
+  var timeLabelIsHidden: Bool = true
+  var memoLabelIsHidden: Bool = true
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     //        print("sub test style")
@@ -180,7 +180,7 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  let detailInfoWithcolorView : UIStackView = {
+  let detailInfoWithcolorView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .horizontal
     stack.alignment = .fill
@@ -189,7 +189,7 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     stack.translatesAutoresizingMaskIntoConstraints = false
     return stack
   }()
-  let stackView : UIStackView = {
+  let stackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
     stack.alignment = .leading
@@ -198,27 +198,27 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     stack.translatesAutoresizingMaskIntoConstraints = false
     return stack
   }()
-  var colorParentView : UIView = {
+  var colorParentView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var colorView : UIView = {
+  lazy var colorView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.red
-    view.layer.cornerRadius = 8/2
+    view.layer.cornerRadius = 8 / 2
     // 타원 그리기
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var mainView : UIView = {
+  lazy var mainView: UIView = {
     let view = UIView()
     //        view.backgroundColor = .green
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
   
-  lazy var titleLabel : UILabel = {
+  lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = .sb17
     label.lineBreakMode = .byTruncatingTail
@@ -226,7 +226,7 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  lazy var timeLabel : UILabel = {
+  lazy var timeLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
     label.textColor = .black
@@ -238,7 +238,7 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  lazy var oneLineMemo : UILabel = {
+  lazy var oneLineMemo: UILabel = {
     let label = UILabel()
     label.font = .r12
     label.lineBreakMode = .byTruncatingTail
@@ -247,6 +247,5 @@ class AddDetailTableViewCellInsideTableViewCell : UITableViewCell{
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  
   
 }

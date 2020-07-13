@@ -46,6 +46,5 @@ class BottomButton: UIButton {
     label.textColor = .white
     return label
   }()
-
   
 }
