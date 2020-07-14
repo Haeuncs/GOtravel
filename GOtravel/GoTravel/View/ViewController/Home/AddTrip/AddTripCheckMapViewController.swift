@@ -14,7 +14,7 @@ import SnapKit
 
 class AddTripCheckMapViewController: UIViewController {
 
-  let isSearchCity: Bool
+  let searchType: SearchType
   let realm = try! Realm()
 
   // 장소 검색에서 VC에게 전달받는 변수들
@@ -50,8 +50,8 @@ class AddTripCheckMapViewController: UIViewController {
     return label
   }()
 
-  init(isSearchCity: Bool) {
-    self.isSearchCity = isSearchCity
+  init(searchType: SearchType) {
+    self.searchType = searchType
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -157,7 +157,7 @@ extension AddTripCheckMapViewController {
   }
 
   @objc func nextEvent() {
-    if isSearchCity {
+    if searchType == .city {
       let countryRealmDB = countryRealm()
       countryRealmDB.city = selectPlaceInfo.address
       countryRealmDB.country = selectPlaceInfo.title

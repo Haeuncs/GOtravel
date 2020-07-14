@@ -200,10 +200,9 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
     let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-    let placeVC = AddTripViewController()
+    let placeVC = AddTripViewController(searchType: .place)
     placeVC.countryRealmDB = countryRealmDB
     placeVC.dayRealmDB = countryRealmDB.dayList[indexPath.row]
-    placeVC.categoryIndex = 0
     self.navigationController?.pushViewController(placeVC, animated: true)
   }
   @objc func pathButtonEvent(_ sender: UIButton){
@@ -471,10 +470,9 @@ extension TripDetailMainViewController: TripDetailDataPopupDelegate {
   }
   
   func TripDetailDataPopupSchedule(day: Int) {
-    let placeVC = AddTripViewController()
+    let placeVC = AddTripViewController(searchType: .place)
     placeVC.countryRealmDB = countryRealmDB
     placeVC.dayRealmDB = countryRealmDB.dayList[day]
-    placeVC.categoryIndex = 0
     self.navigationController?.pushViewController(placeVC, animated: true)
   }
   
