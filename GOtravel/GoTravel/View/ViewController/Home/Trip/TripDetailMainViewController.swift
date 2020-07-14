@@ -31,7 +31,7 @@ protocol TripDetailDataPopupDelegate: class {
   func TripDetailDataPopupPath(day: Int)
 }
 
-class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableViewCellDelegate{
+class TripDetailMainViewController: BaseUIViewController, addDetailViewTableViewCellDelegate {
   
   // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
   var isEdit: Bool? = false
@@ -63,9 +63,12 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
       self.scheduleMainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
   }
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
   }
+
+
   func initView(){
     beforeSelectIndexPath = false
     isEdit = false
@@ -215,7 +218,11 @@ class TripDetailMainViewController: BaseUIViewController ,addDetailViewTableView
 
     let dayDetail = countryRealmDB.dayList[indexPath.row].detailList
 
-    let tripRouteViewController = TripRouteViewController(day: indexPath.row, tripDetail: tripDetail, dayDetail: dayDetail)
+    let tripRouteViewController = TripRouteViewController(
+      day: indexPath.row,
+      tripDetail: tripDetail,
+      dayDetail: dayDetail
+    )
     self.navigationController?.pushViewController(tripRouteViewController, animated: true)
   }
 
@@ -475,7 +482,6 @@ extension TripDetailMainViewController: TripDetailDataPopupDelegate {
     guard let tripDetail = countryRealmDB.dayList[day].detailList.first else {
         return
     }
-
     let dayDetail = countryRealmDB.dayList[day].detailList
 
     let tripRouteViewController = TripRouteViewController(day: day, tripDetail: tripDetail, dayDetail: dayDetail)

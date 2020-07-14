@@ -220,15 +220,11 @@ extension AddTripViewController: UITableViewDelegate{
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let googleMapVC = AddTripCheckMapViewController()
-    print(tablePlaceInfo[indexPath.row])
+    let googleMapVC = AddTripCheckMapViewController(isSearchCity: categoryIndex == 0 ? false : true)
     googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
-    googleMapVC.myColor = #colorLiteral(red: 0.8209087171, green: 0.454993382, blue: 0.461091971, alpha: 1)
-    if categoryIndex == 0{
+    if categoryIndex == 0 {
       googleMapVC.dayRealmDB = dayRealmDB!
     }
-    googleMapVC.arrayMap = false
-    googleMapVC.categoryIndex = categoryIndex
     self.navigationController?.pushViewController(googleMapVC, animated: true)
   }
   
