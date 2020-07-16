@@ -121,13 +121,6 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
   }
   
   func initLayout(){
-    // constraint
-//    navView.snp.makeConstraints { (make) in
-//      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-//      make.left.equalTo(view.snp.left)
-//      make.right.equalTo(view.snp.right)
-//      make.height.equalTo(44)
-//    }
     NSLayoutConstraint.activate([
       tripDescriptionView.topAnchor.constraint(equalTo: baseView.bottomAnchor),
       tripDescriptionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -144,8 +137,7 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     
   }
   func getRealmData(){
-    //        countryRealmDB = realm.objects(countryRealm.self).sorted(byKeyPath: "date", ascending: true)[selectIndex]
-    
+
     tripDescriptionView.countryLabel.text = countryRealmDB.country
     tripDescriptionView.subLabel.text = countryRealmDB.city
     
@@ -165,14 +157,17 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     // 피드백 진동
     impact.impactOccurred()
     let point = sender.convert(CGPoint.zero, to: scheduleMainTableView as UIView)
-    let indexPath: IndexPath! = scheduleMainTableView.indexPathForRow(at: point)
-    
+    guard let indexPath: IndexPath = scheduleMainTableView.indexPathForRow(at: point) else {
+      return
+    }
+
     let vc = TripDetailPopupViewController()
     vc.setup(self.countryRealmDB, day: indexPath.row, delegate: self)
     vc.modalTransitionStyle = .crossDissolve
     vc.modalPresentationStyle = .overFullScreen
     self.present(vc, animated: true, completion: nil)
   }
+
   @objc func editEvent(){
     isEdit = !isEdit!
     scheduleMainTableView.reloadData()
@@ -351,13 +346,15 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     
   }
   // MARK: 버튼의 animate 정의
-  func buttonEvent(indexPath: IndexPath){
-    let currentCell = scheduleMainTableView.cellForRow(at: indexPath)! as? AddDetailTableViewCell
+  func buttonEvent(indexPath: IndexPath) {
+    guard let currentCell = scheduleMainTableView.cellForRow(at: indexPath) as? AddDetailTableViewCell else {
+      return
+    }
     // 머니 버튼이 가려져 있다면 보이기
-    if currentCell?.paddingViewBottom.moneyBtn.alpha == 0.0 {
-      openViewEvent(currentCell: currentCell!)
+    if currentCell.paddingViewBottom.moneyBtn.alpha == 0.0 {
+      openViewEvent(currentCell: currentCell)
     }else{
-      colseViewEvent(beforeCell: currentCell!)
+      colseViewEvent(beforeCell: currentCell)
     }
     
   }

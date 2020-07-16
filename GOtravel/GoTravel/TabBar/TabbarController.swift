@@ -19,7 +19,11 @@ var hasTopNotch: Bool {
 }
 
 class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
-  
+  private enum Layout {
+    static let homeIcon = UIImage(named: "home (1)")!
+    static let menuIcon = UIImage(named: "menu (1)")!
+    static let iconSize = CGSize(width: 24, height: 24)
+  }
   private let tabbarItemCount = 2
   private var currentTab = 0
   private var firstCheck = true
@@ -34,14 +38,20 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     self.tabBar.isTranslucent = false
 
     let tabOne = UINavigationController(rootViewController: HomeMainViewController())
-    let image1 = resizedImageWith(image: UIImage(named: "home (1)")!, targetSize: CGSize(width: 24, height: 24))
+    let image1 = resizedImageWith(
+      image: Layout.homeIcon,
+      targetSize: Layout.iconSize
+    )
     let tabOneBarItem = UITabBarItem(title: nil, image: image1, selectedImage: image1)
     tabOneBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     tabOne.tabBarItem = tabOneBarItem
     
     let tabTwo = UINavigationController(rootViewController: PastTripViewController())
     
-    let image2 = resizedImageWith(image: UIImage(named: "menu (1)")!, targetSize: CGSize(width: 24, height: 24))
+    let image2 = resizedImageWith(
+      image: Layout.menuIcon,
+      targetSize: Layout.iconSize
+    )
     let tabTwoBarItem2 = UITabBarItem(title: nil, image: image2, selectedImage: image2)
     tabTwoBarItem2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     tabTwo.tabBarItem = tabTwoBarItem2
@@ -49,7 +59,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     self.viewControllers = [tabOne, tabTwo]
   }
 
-  @objc func hideTabBarAnimated(hide:Bool, completion: ((Bool) -> Void)? = nil ) {
+  @objc func hideTabBarAnimated(hide:Bool, completion: ((Bool) -> Void)? = nil) {
     if (tabBarIsVisible() == !hide) {
       if let completion = completion {
         return completion(true)
@@ -68,7 +78,10 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
       self.view.setNeedsDisplay()
       self.view.layoutIfNeeded()
     }, completion: { (_) in
-      self.tabBarController?.tabBar.isHidden = !(self.tabBarController?.tabBar.isHidden)!
+      guard let isHidden = self.tabBarController?.tabBar.isHidden else {
+        return
+      }
+      self.tabBarController?.tabBar.isHidden = !isHidden
     })
   }
 
