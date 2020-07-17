@@ -53,6 +53,10 @@
 		7D276E5624C09C1E00CA4554 /* ExchangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5524C09C1E00CA4554 /* ExchangeCell.swift */; };
 		7D276E5824C09C4C00CA4554 /* ExchangeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5724C09C4C00CA4554 /* ExchangeTableView.swift */; };
 		7D276E5A24C09C6900CA4554 /* ExchangeSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5924C09C6900CA4554 /* ExchangeSubView.swift */; };
+		7D276E5C24C1CF0D00CA4554 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5B24C1CF0D00CA4554 /* Int+.swift */; };
+		7D276E5E24C1CF2000CA4554 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5D24C1CF2000CA4554 /* Double+.swift */; };
+		7D276E6024C1CF5C00CA4554 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */; };
+		7D276E6224C1CF7F00CA4554 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */; };
 		7D72596622FFEF080034FA8E /* ExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596522FFEF080034FA8E /* ExchangeView.swift */; };
 		7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */; };
 		7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596C22FFF0F90034FA8E /* exchangeCell.swift */; };
@@ -176,6 +180,10 @@
 		7D276E5524C09C1E00CA4554 /* ExchangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCell.swift; sourceTree = "<group>"; };
 		7D276E5724C09C4C00CA4554 /* ExchangeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTableView.swift; sourceTree = "<group>"; };
 		7D276E5924C09C6900CA4554 /* ExchangeSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeSubView.swift; sourceTree = "<group>"; };
+		7D276E5B24C1CF0D00CA4554 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		7D276E5D24C1CF2000CA4554 /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
 		7D72596522FFEF080034FA8E /* ExchangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeView.swift; sourceTree = "<group>"; };
 		7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeSelectCountryViewController.swift; sourceTree = "<group>"; };
 		7D72596C22FFF0F90034FA8E /* exchangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeCell.swift; sourceTree = "<group>"; };
@@ -271,7 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				7DBA0DA0242F954400C248E4 /* Network */,
-				7DBA0D98242F92EF00C248E4 /* Custom */,
+				7DBA0D98242F92EF00C248E4 /* Utils */,
 				7D8DBB9222F0A19B008C20E9 /* Model */,
 				7DFC580922FE6E0F002BFD86 /* TabBar */,
 				7D8DBB9122F0A18A008C20E9 /* ViewController */,
@@ -307,11 +315,11 @@
 				7D7293192309252A00578A5F /* AccountMainViewController.swift */,
 				7DBA0D96242E2A3500C248E4 /* AccountMainViewModel.swift */,
 				7DFC581022FF05E5002BFD86 /* DirectAddExchangeViewController.swift */,
-				7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */,
-				7D33700E242A5FA900138DDE /* Add */,
 				7D276E5524C09C1E00CA4554 /* ExchangeCell.swift */,
-				7D276E5724C09C4C00CA4554 /* ExchangeTableView.swift */,
+				7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */,
 				7D276E5924C09C6900CA4554 /* ExchangeSubView.swift */,
+				7D276E5724C09C4C00CA4554 /* ExchangeTableView.swift */,
+				7D33700E242A5FA900138DDE /* Add */,
 			);
 			path = Exchange;
 			sourceTree = "<group>";
@@ -384,6 +392,10 @@
 				7D895C7723D43307001AB3B6 /* UIViewController+.swift */,
 				7D03764F24BB8B640071124E /* UIButton+.swift */,
 				7D03765124BB8B8A0071124E /* String+.swift */,
+				7D276E5B24C1CF0D00CA4554 /* Int+.swift */,
+				7D276E5D24C1CF2000CA4554 /* Double+.swift */,
+				7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */,
+				7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -591,13 +603,13 @@
 		7D8DBB9722F0A27C008C20E9 /* Trip */ = {
 			isa = PBXGroup;
 			children = (
-				4A5F61F4220C9DF600531239 /* Exchange */,
+				7D276E5324C09A0A00CA4554 /* TripDatePopupView.swift */,
 				4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */,
 				7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */,
 				7D763E3A23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift */,
 				7D276DF024BCC2BE00CA4554 /* TripRouteViewController.swift */,
 				7D276DF224BCC2CB00CA4554 /* TripRouteViewModel.swift */,
-				7D276E5324C09A0A00CA4554 /* TripDatePopupView.swift */,
+				4A5F61F4220C9DF600531239 /* Exchange */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -612,7 +624,7 @@
 			path = GOtravelUITests;
 			sourceTree = "<group>";
 		};
-		7DBA0D98242F92EF00C248E4 /* Custom */ = {
+		7DBA0D98242F92EF00C248E4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				4A6EB2B021E64F0800A96C61 /* Data */,
@@ -622,7 +634,7 @@
 				4AA331CB21ECA6EA004E2536 /* Extension */,
 				7DBA0D9D242F938D00C248E4 /* Constant.swift */,
 			);
-			path = Custom;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		7DBA0D99242F930200C248E4 /* Struct */ = {
@@ -959,6 +971,7 @@
 				7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */,
 				7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */,
 				7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */,
+				7D276E6024C1CF5C00CA4554 /* UILabel+.swift in Sources */,
 				4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */,
 				7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */,
 				7D763E3B23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift in Sources */,
@@ -976,7 +989,9 @@
 				7D276DF324BCC2CB00CA4554 /* TripRouteViewModel.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */,
+				7D276E6224C1CF7F00CA4554 /* Dictionary+.swift in Sources */,
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
+				7D276E5C24C1CF0D00CA4554 /* Int+.swift in Sources */,
 				7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */,
 				7D03765024BB8B640071124E /* UIButton+.swift in Sources */,
 				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,
@@ -987,6 +1002,7 @@
 				7D03765224BB8B8A0071124E /* String+.swift in Sources */,
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
 				7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */,
+				7D276E5E24C1CF2000CA4554 /* Double+.swift in Sources */,
 				4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */,
 				7DBA0DA2242F955A00C248E4 /* ExchangeData.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,

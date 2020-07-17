@@ -59,7 +59,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     self.viewControllers = [tabOne, tabTwo]
   }
 
-  @objc func hideTabBarAnimated(hide:Bool, completion: ((Bool) -> Void)? = nil) {
+  @objc func hideTabBarAnimated(hide: Bool, completion: ((Bool) -> Void)? = nil) {
     if (tabBarIsVisible() == !hide) {
       if let completion = completion {
         return completion(true)
