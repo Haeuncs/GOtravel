@@ -41,13 +41,13 @@ struct  MainVCCVCViewModel: mainVC_protocol {
         
         // 여행 시작 날이거나 여행 중인 날
         if dday >= 0 {
-            if model.contentType == .travelling {
+            if model.contentType == .traveling {
                 self.ddayTitle = "\((dday * -1) + 1)일차"
             } else if model.contentType == .future {
                 self.ddayTitle = "D-\(dday)"
             }
         }else{
-            self.ddayTitle = "\(dateFormatter.string(from: endDate)) ~ \(dateFormatter.string(from: endDate))"
+            self.ddayTitle = "\(dateFormatter.string(from: date)) ~ \(dateFormatter.string(from: endDate))"
         }
     }
 }

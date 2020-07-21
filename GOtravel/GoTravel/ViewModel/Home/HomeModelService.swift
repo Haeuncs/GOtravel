@@ -15,39 +15,46 @@ struct TravelDataType {
 }
 
 class HomeModelService {
-    static func orderByDate(data: Results<countryRealm>) -> [TravelDataType]{
+    static func orderByDate(data: Results<countryRealm>) -> [TravelDataType] {
         // sorted by date
         var processedData: [TravelDataType] = []
         let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
-
+        
         for i in sortedByDate {
             let startDay = i.date ?? Date()
             guard let endDate = Calendar.current.date(
                 byAdding: .day,
                 value: i.period - 1,
                 to: startDay
-            ) else {
-                continue
+                ) else {
+                    continue
             }
-
+            
             if endDate > Date() || endDate.isInSameDay(date: Date()) {
                 let isFutureTravel = Date() < startDay
-
+                
                 processedData.append(TravelDataType(countryData: i, contentType: isFutureTravel ? .future : .traveling))
             }
         }
         return processedData
     }
-
+    
     static func pastTravel(data: Results<countryRealm>) -> [TravelDataType] {
         var processedData: [TravelDataType] = []
-
-        for i in data {
-          let startDay = i.date ?? Date()
-          let endDate = Calendar.current.date(byAdding: .day, value: i.period - 1, to: startDay)
-          if endDate ?? Date() < Date() {
-            processedData.append(TravelDataType(countryData: i, contentType: .past))
-          }
+        let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
+        
+        for i in sortedByDate {
+            let startDay = i.date ?? Date()
+            guard let endDate = Calendar.current.date(
+                byAdding: .day,
+                value: i.period - 1,
+                to: startDay
+                ) else {
+                    continue
+            }
+            if endDate < Date() {
+                processedData.append(TravelDataType(countryData: i, contentType: .past))
+            }
         }
         return processedData
     }

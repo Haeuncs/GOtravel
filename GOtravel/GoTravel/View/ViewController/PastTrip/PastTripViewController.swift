@@ -69,10 +69,10 @@ class PastTripViewController: UIViewController {
           
     }.disposed(by: disposeBag)
     
-    tripCollectionView.rx.modelSelected(countryRealm.self)
+    tripCollectionView.rx.modelSelected(TravelDataType.self)
       .subscribe(onNext: { (country) in
         let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country
+        tripViewController.countryRealmDB = country.countryData
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen
@@ -180,15 +180,11 @@ class PastTripViewController: UIViewController {
   }
   
   func processingDateData(){
-    var processedData = List<countryRealm>()
-    
     // 1. load
-    guard var countryRealmDB = realm?.objects(countryRealm.self) else {
+    guard let countryRealmDB = realm?.objects(countryRealm.self) else {
         tripData.onNext([])
         return
     }
-    
-    countryRealmDB = countryRealmDB.sorted(byKeyPath: "date", ascending: true)
 
     var processedTravel = HomeModelService.pastTravel(data: countryRealmDB)
     // 3. order
@@ -199,7 +195,7 @@ class PastTripViewController: UIViewController {
     }else{
       tripCollectionView.backgroundView = .none
     }
-    self.pageControl.numberOfPages = processedData.count
+    self.pageControl.numberOfPages = processedTravel.count
     self.pageControl.currentPage = 0
     tripData.onNext(Array(processedTravel))
   }
