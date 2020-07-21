@@ -22,7 +22,7 @@ class PastTripViewController: UIViewController {
   
   var disposeBag = DisposeBag()
   /// realm trip data
-  var tripData = BehaviorSubject(value: [countryRealm]())
+  var tripData = BehaviorSubject(value: [TravelDataType]())
   let realm = try? Realm()
   // 기본 저장 데이터
   var countryRealmDB: List<countryRealm>?
@@ -183,30 +183,25 @@ class PastTripViewController: UIViewController {
     var processedData = List<countryRealm>()
     
     // 1. load
-    var countryRealmDB = realm?.objects(countryRealm.self)
-    
-    countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-    // 2. processing
-    if let countryRealmDB = countryRealmDB {
-      for i in countryRealmDB {
-        let startDay = i.date ?? Date()
-        let endDate = Calendar.current.date(byAdding: .day, value: i.period, to: startDay)
-        if endDate ?? Date() < Date() {
-          processedData.append(i)
-        }
-      }
+    guard var countryRealmDB = realm?.objects(countryRealm.self) else {
+        tripData.onNext([])
+        return
     }
-    // 3. order
-    processedData.sort { (($0.date)?.compare($1.date!))! == .orderedDescending }
     
-    if processedData.count == 0 {
+    countryRealmDB = countryRealmDB.sorted(byKeyPath: "date", ascending: true)
+
+    var processedTravel = HomeModelService.pastTravel(data: countryRealmDB)
+    // 3. order
+    processedTravel.sort { (($0.countryData.date)?.compare($1.countryData.date!))! == .orderedDescending }
+    
+    if processedTravel.count == 0 {
       tripCollectionView.backgroundView = emptyView
     }else{
       tripCollectionView.backgroundView = .none
     }
     self.pageControl.numberOfPages = processedData.count
     self.pageControl.currentPage = 0
-    tripData.onNext(Array(processedData))
+    tripData.onNext(Array(processedTravel))
   }
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage

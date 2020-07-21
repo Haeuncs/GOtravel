@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-
 import UIKit
 import MapKit
 import SnapKit
@@ -17,9 +16,7 @@ enum MyTheme {
   case light
   case dark
 }
-var ddayDB = 0
-var nightDB = 0
-var dayDate = Date()
+
 var categoryArr = ["항공","숙박","쇼핑","식사","교통비","기타"]
 
 class AddTripDateViewController: BaseUIViewController {
@@ -37,6 +34,7 @@ class AddTripDateViewController: BaseUIViewController {
     self.title = "여행 기간 설정 🗓"
     initializeView()
   }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.extendedLayoutIncludesOpaqueBars = true
@@ -44,19 +42,26 @@ class AddTripDateViewController: BaseUIViewController {
       customTabBarController.hideTabBarAnimated(hide: true, completion: nil)
     }
   }
+
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     calenderView.myCollectionView.collectionViewLayout.invalidateLayout()
   }
+
   func saveRealmData(){
+    let periodWithLastDay = calenderView.dateRange.count
+    guard let firstDate = calenderView.firstDate else {
+            return
+    }
+
     saveCountryRealmData.country = saveCountryRealmData.country
     saveCountryRealmData.city = saveCountryRealmData.city
-    saveCountryRealmData.date = dayDate
-    saveCountryRealmData.period = nightDB
+    saveCountryRealmData.date = firstDate
+    saveCountryRealmData.period = periodWithLastDay
     saveCountryRealmData.longitude = saveCountryRealmData.longitude
     saveCountryRealmData.latitude = saveCountryRealmData.latitude
     
-    for i in 1...nightDB{
+    for i in 1...periodWithLastDay {
       // 디테일 기록 데이
       let dayRealmDB = dayRealm()
       dayRealmDB.day = i
@@ -68,7 +73,7 @@ class AddTripDateViewController: BaseUIViewController {
     }
     
     let moneyRealmDB = moneyRealm()
-    moneyRealmDB.day = nightDB
+    moneyRealmDB.day = periodWithLastDay
     saveCountryRealmData.moneyList.append(moneyRealmDB)
     
     saveCountryRealmData.dayList = dayListDB

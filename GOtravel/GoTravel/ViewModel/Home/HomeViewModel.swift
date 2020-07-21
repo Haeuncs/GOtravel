@@ -13,7 +13,7 @@ import RealmSwift
 
 class HomeViewModel {
   
-  var tripData = BehaviorSubject(value: [countryRealm]())
+  var tripData = BehaviorSubject(value: [TravelDataType]())
   let realm = try? Realm()
   let realmManager: RealmManagerType = RealmManager()
   
@@ -24,7 +24,7 @@ class HomeViewModel {
       return
     }
     debugPrint(readmData)
-    let data = service.orderByDate(data: readmData)
+    let data = HomeModelService.orderByDate(data: readmData)
     tripData.onNext(data)
   }
   

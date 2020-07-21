@@ -12,6 +12,12 @@ import RxSwift
 import SnapKit
 import RealmSwift
 
+enum TravelContentType {
+    case traveling
+    case past
+    case future
+}
+
 class HomeMainViewController: UIViewController {
   
   private var viewModel: HomeViewModel!
@@ -103,10 +109,10 @@ class HomeMainViewController: UIViewController {
     }
     .disposed(by: disposeBag)
     
-    contentView.tripCollectionView.rx.modelSelected(countryRealm.self)
+    contentView.tripCollectionView.rx.modelSelected(TravelDataType.self)
       .subscribe(onNext: { [weak self] (country) in
         let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country
+        tripViewController.countryRealmDB = country.countryData
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen

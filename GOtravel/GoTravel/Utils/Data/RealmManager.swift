@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 protocol RealmManagerType {
-  func getPresentTripData() -> [countryRealm]
+  func getPresentTripData() -> [TravelDataType]
   func saveTripData(data: countryRealm)
   func deleteTripData(data: countryRealm)
   func saveTripSpecificDetail(data: dayRealm, detail: detailRealm)
@@ -26,11 +26,11 @@ class RealmManager: RealmManagerType {
   static let shared = RealmManager()
   let realm = try? Realm()
   
-  func getPresentTripData() -> [countryRealm] {
+  func getPresentTripData() -> [TravelDataType] {
     guard let data = realm?.objects(countryRealm.self) else {
       return []
     }
-    return orderByDate(data: data)
+    return HomeModelService.orderByDate(data: data)
   }
   
   func saveTripData(data: countryRealm) {

@@ -9,20 +9,46 @@
 import Foundation
 import RealmSwift
 
+struct TravelDataType {
+    let countryData: countryRealm
+    let contentType: TravelContentType
+}
+
 class HomeModelService {
-  func orderByDate(data: Results<countryRealm>) -> [countryRealm]{
-    // sorted by date
-    var processedData: [countryRealm] = []
-    
-    let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
-    // 전처리 오늘 보다 이전 날짜는 제외
-    for i in sortedByDate {
-      let startDay = i.date ?? Date()
-      let endDate = Calendar.current.date(byAdding: .day, value: i.period, to: startDay)
-      if endDate ?? Date() > Date() {
-        processedData.append(i)
-      }
+    static func orderByDate(data: Results<countryRealm>) -> [TravelDataType]{
+        // sorted by date
+        var processedData: [TravelDataType] = []
+        let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
+
+        for i in sortedByDate {
+            let startDay = i.date ?? Date()
+            guard let endDate = Calendar.current.date(
+                byAdding: .day,
+                value: i.period - 1,
+                to: startDay
+            ) else {
+                continue
+            }
+
+            if endDate > Date() || endDate.isInSameDay(date: Date()) {
+                let isFutureTravel = Date() < startDay
+
+                processedData.append(TravelDataType(countryData: i, contentType: isFutureTravel ? .future : .traveling))
+            }
+        }
+        return processedData
     }
-    return processedData
-  }
+
+    static func pastTravel(data: Results<countryRealm>) -> [TravelDataType] {
+        var processedData: [TravelDataType] = []
+
+        for i in data {
+          let startDay = i.date ?? Date()
+          let endDate = Calendar.current.date(byAdding: .day, value: i.period - 1, to: startDay)
+          if endDate ?? Date() < Date() {
+            processedData.append(TravelDataType(countryData: i, contentType: .past))
+          }
+        }
+        return processedData
+    }
 }
