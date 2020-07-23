@@ -93,7 +93,9 @@ class HomeMainViewController: UIViewController {
     service = HomeModelService()
     viewModel = HomeViewModel(service: self.service)
     
-    viewModel.tripData.subscribe(onNext: { [weak self] (arr) in
+    viewModel.tripData
+        .distinctUntilChanged({ $0.count == $1.count })
+        .subscribe(onNext: { [weak self] (arr) in
       self?.setup(count: arr.count)
     })
       .disposed(by: disposeBag)

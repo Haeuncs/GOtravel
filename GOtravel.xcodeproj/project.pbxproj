@@ -75,6 +75,7 @@
 		7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7394182308226E00FBA898 /* HomeMainViewController.swift */; };
 		7D763DF323DAA9540006FF6E /* TripDetailPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */; };
 		7D763E3B23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D763E3A23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift */; };
+		7D7668F524C9CB5E0082AA5C /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7668F424C9CB5E0082AA5C /* CGFloat+.swift */; };
 		7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4323CF3E67001AB3B6 /* Appdelegate.swift */; };
 		7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */; };
 		7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */; };
@@ -202,6 +203,7 @@
 		7D7394182308226E00FBA898 /* HomeMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewController.swift; sourceTree = "<group>"; };
 		7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailPopupViewController.swift; sourceTree = "<group>"; };
 		7D763E3A23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailSpecificDayViewController.swift; sourceTree = "<group>"; };
+		7D7668F424C9CB5E0082AA5C /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		7D895C4323CF3E67001AB3B6 /* Appdelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Appdelegate.swift; path = ../GoTravel/Appdelegate.swift; sourceTree = "<group>"; };
 		7D895C4623CF6774001AB3B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		7D895C4823CF6B6C001AB3B6 /* HomeModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModelService.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 				7D276E5D24C1CF2000CA4554 /* Double+.swift */,
 				7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */,
 				7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */,
+				7D7668F424C9CB5E0082AA5C /* CGFloat+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */,
 				4AA331B721EB3D92004E2536 /* TripCell.swift in Sources */,
 				7D276DF324BCC2CB00CA4554 /* TripRouteViewModel.swift in Sources */,
+				7D7668F524C9CB5E0082AA5C /* CGFloat+.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
 				7D895C6E23D2F2F9001AB3B6 /* AddTripViewController_New.swift in Sources */,
 				7D276E6224C1CF7F00CA4554 /* Dictionary+.swift in Sources */,
