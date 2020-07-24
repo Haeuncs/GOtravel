@@ -32,9 +32,13 @@ protocol TripDetailDataPopupDelegate: class {
 }
 
 class TripDetailMainViewController: BaseUIViewController, addDetailViewTableViewCellDelegate {
-  
+
   // 테이블이 스크롤이 가능하게 할 것인가? -> 편집 클릭 시에 가능하도록! and 삭제 이동 기능도 사용
-  var isEdit: Bool? = false
+    var isPlanEditMode: Bool = false {
+        didSet {
+            editConfirmButton.isHidden = !isPlanEditMode
+        }
+    }
   let realm = try! Realm()
   // push 로 데이터 전달됨
   var countryRealmDB = countryRealm()
@@ -68,54 +72,46 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     super.viewWillDisappear(animated)
   }
 
-
-  func initView(){
+  func initView() {
     beforeSelectIndexPath = false
-    isEdit = false
+    isPlanEditMode = false
         
     scheduleMainTableView.register(AddDetailTableViewCell.self, forCellReuseIdentifier: "cell")
     
     scheduleMainTableView.dataSource = self
     scheduleMainTableView.delegate = self
-    
+
+    rightNavigationButtonView.button.imageView_.image = UIImage(named: "dots")
+    rightNavigationButtonView.button.addTarget(self, action: #selector(settingPlans), for: .touchUpInside)
     view.backgroundColor = .white
     
 //    view.addSubview(navView)
     view.addSubview(tripDescriptionView)
     view.addSubview(scheduleMainTableView)
-    
-    let customView = UIStackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
-    customView.alignment = .center
-    customView.distribution = .fill
-    //        customView.backgroundColor = UIColor.red
-    customView.addArrangedSubview(deleteDataLabel)
-    
-    let tap = UITapGestureRecognizer(target: self, action: #selector(TripDetailMainViewController.alldDleteLabelEvent))
-    deleteDataLabel.isUserInteractionEnabled = true
-    deleteDataLabel.addGestureRecognizer(tap)
-    
-    scheduleMainTableView.tableFooterView = customView
+    view.addSubview(editConfirmButton)
     
     initLayout()
     getRealmData()
   }
   
-  @objc func alldDleteLabelEvent(sender: UITapGestureRecognizer) {
+  @objc func alldDleteLabelEvent() {
     let uiAlertControl = UIAlertController(title: "여행 데이터 삭제", message: "한번 삭제한 데이터는 복구 할 수 없습니다. 삭제하시겠습니까? ", preferredStyle: .actionSheet)
     
-    uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .default, handler: { (_) in
+    uiAlertControl.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { (_) in
       try! self.realm.write {
         self.realm.delete(self.countryRealmDB)
       }
       self.dismiss(animated: true, completion: nil)
     })
     )
-    // 아이패드에서도 작동하기 위해서 사용 popoverController
+
     uiAlertControl.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-    if let popoverController = uiAlertControl.popoverPresentationController {
-      popoverController.barButtonItem = sender as? UIBarButtonItem
-    }
-    
+//    // 아이패드에서도 작동하기 위해서 사용 popoverController
+//    uiAlertControl.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+//    if let popoverController = uiAlertControl.popoverPresentationController {
+//      popoverController.barButtonItem = sender as? UIBarButtonItem
+//    }
+//
     self.present(uiAlertControl, animated: true, completion: nil)
     
   }
@@ -130,11 +126,15 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
       scheduleMainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       scheduleMainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scheduleMainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      
-      deleteDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      deleteDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
-    
+
+    editConfirmButton.snp.makeConstraints { (make) in
+      make.height.equalTo(56)
+      make.leading.equalTo(view.snp.leading).offset(16)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45)
+
+    }
   }
   func getRealmData(){
 
@@ -168,8 +168,26 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     self.present(vc, animated: true, completion: nil)
   }
 
+    @objc func settingPlans(_ sender: UIButton) {
+        impact.impactOccurred()
+        let planText = isPlanEditMode ? "일정 수정 완료" : "일정 수정하기"
+        let settingDatas = [
+            PullUpPopupDataType(image: UIImage(named: "SettingPlanPencil")!, title: planText, handler: { [weak self] in
+                guard let self = self else { return }
+                self.isPlanEditMode = !self.isPlanEditMode
+                self.scheduleMainTableView.reloadData()
+            }),
+            PullUpPopupDataType(image: UIImage(named: "SettingPlanDelete")!, title: "여행 데이터 전체 삭제하기", handler: { [weak self] in
+                guard let self = self else { return }
+                self.alldDleteLabelEvent()
+            }),
+        ]
+        let pullUpViewController = PullUpPopupViewController(title: "설정", pullUpDatas: settingDatas)
+        present(pullUpViewController, animated: true, completion: nil)
+    }
+
   @objc func editEvent(){
-    isEdit = !isEdit!
+    isPlanEditMode = !isPlanEditMode
     scheduleMainTableView.reloadData()
     if self.navigationItem.rightBarButtonItem?.title == "편집"{
       self.navigationItem.rightBarButtonItem?.title = "완료"
@@ -234,20 +252,8 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     print(data)
   }
   var sum = 0
-  // delete label footer view
-  let deleteDataLabel: UILabel = {
-    let label = UILabel()
-    label.text = "이 여행 데이터 전체 삭제"
-    label.textAlignment = .center
-    label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-    label.textColor = #colorLiteral(red: 0.802965343, green: 0.08342111856, blue: 0, alpha: 1)
-    
-    label.translatesAutoresizingMaskIntoConstraints = false
-    
-    return label
-  }()
-  
-  // MARK: VC에서 View 그릴 떄 사용하는 것들
+
+    // MARK: VC에서 View 그릴 떄 사용하는 것들
   let deleteBtnS: UIButton = {
     let button = UIButton()
     button.backgroundColor = UIColor.myRed
@@ -276,7 +282,7 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     view.translatesAutoresizingMaskIntoConstraints = false
     view.setTitle(title: "")
     view.setLeftForPop()
-    view.setButtonTitle(title: "편집")
+    view.setRightIcon(image: UIImage(named: "dots")!)
     view.dismissBtn.addTarget(self, action: #selector(dismissEvent), for: .touchUpInside)
     view.actionBtn.addTarget(self, action: #selector(editEvent), for: .touchUpInside)
     return view
@@ -301,62 +307,19 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     tableView.allowsSelection = false
     return tableView
   }()
-  func openViewEvent(currentCell: AddDetailTableViewCell){
-    // duration 작을 수록 느리게 애니메이션
-    
-    UIView.animate(withDuration: 0.5, animations: {
-      let transformScaled = CGAffineTransform
-        .identity
-        .scaledBy(x: 0.8, y: 0.8)
-      
-      let moveMoney = CGAffineTransform(translationX: -50, y: 0)
-      let movedetail = CGAffineTransform(translationX: 50, y: 0)
-      let movePath = CGAffineTransform(translationX: 100, y: 0)
-      
-      currentCell.paddingViewBottom.addBtn.transform = transformScaled
-      currentCell.paddingViewBottom.moneyBtn.transform = moveMoney
-      currentCell.paddingViewBottom.detailBtn.transform = movedetail
-      currentCell.paddingViewBottom.pathBtn.transform = movePath
-      currentCell.paddingViewBottom.moneyBtn.alpha = 1
-      currentCell.paddingViewBottom.detailBtn.alpha = 1
-      currentCell.paddingViewBottom.pathBtn.alpha = 1
-      
-    })
-  }
-  func colseViewEvent(beforeCell: AddDetailTableViewCell){
-    // duration 작을 수록 느리게 애니메이션
-    
-    UIView.animate(withDuration: 0.5, animations: {
-      
-      let transformScaled = CGAffineTransform
-        .identity
-        .scaledBy(x: 1.0, y: 1.0)
-      
-      let moveMoney = CGAffineTransform(translationX: 0, y: 0)
-      let movedetail = CGAffineTransform(translationX: 0, y: 0)
-      let movePath = CGAffineTransform(translationX: 0, y: 0)
-      beforeCell.paddingViewBottom.addBtn.transform = transformScaled
-      beforeCell.paddingViewBottom.moneyBtn.transform = moveMoney
-      beforeCell.paddingViewBottom.detailBtn.transform = movedetail
-      beforeCell.paddingViewBottom.pathBtn.transform = movePath
-      beforeCell.paddingViewBottom.moneyBtn.alpha = 0.0
-      beforeCell.paddingViewBottom.detailBtn.alpha = 0.0
-      beforeCell.paddingViewBottom.pathBtn.alpha = 0.0
-    })
-    
-  }
+        lazy var editConfirmButton: BottomButton = {
+          let button = BottomButton()
+          button.translatesAutoresizingMaskIntoConstraints = false
+          button.title = "수정 완료"
+    //      button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+          return button
+        }()
+
   // MARK: 버튼의 animate 정의
   func buttonEvent(indexPath: IndexPath) {
     guard let currentCell = scheduleMainTableView.cellForRow(at: indexPath) as? AddDetailTableViewCell else {
       return
     }
-    // 머니 버튼이 가려져 있다면 보이기
-    if currentCell.paddingViewBottom.moneyBtn.alpha == 0.0 {
-      openViewEvent(currentCell: currentCell)
-    }else{
-      colseViewEvent(beforeCell: currentCell)
-    }
-    
   }
   
 }
@@ -405,7 +368,10 @@ extension TripDetailMainViewController: UITableViewDataSource{
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDetailTableViewCell
 
-    cell.configure(planByDate: countryRealmDB.dayList[indexPath.row])
+    cell.configure(
+        planByDate: countryRealmDB.dayList[indexPath.row],
+        isEditMode: isPlanEditMode
+    )
     
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ko-KR")
@@ -418,29 +384,9 @@ extension TripDetailMainViewController: UITableViewDataSource{
     cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일차"
 
     cell.paddingViewBottom.addButton.addTarget(self, action: #selector(moreDidTap(_:)), for: .touchUpInside)
-    cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
-    cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
-    cell.paddingViewBottom.pathBtn.addTarget(self, action: #selector(self.pathButtonEvent(_:)), for: .touchUpInside)
-    cell.paddingViewBottom.moneyBtn.addTarget(self, action: #selector(self.exchangeButtonEvent(_:)), for: .touchUpInside)
-    
-    let transformScaled = CGAffineTransform
-      .identity
-      .scaledBy(x: 1.0, y: 1.0)
-    
-    let moveMoney = CGAffineTransform(translationX: 0, y: 0)
-    let movedetail = CGAffineTransform(translationX: 0, y: 0)
-    let movePath = CGAffineTransform(translationX: 0, y: 0)
-    cell.paddingViewBottom.addBtn.transform = transformScaled
-    cell.paddingViewBottom.moneyBtn.transform = moveMoney
-    cell.paddingViewBottom.detailBtn.transform = movedetail
-    cell.paddingViewBottom.pathBtn.transform = movePath
-    cell.paddingViewBottom.moneyBtn.alpha = 0.0
-    cell.paddingViewBottom.detailBtn.alpha = 0.0
-    cell.paddingViewBottom.pathBtn.alpha = 0.0
-    
+
     cell.mydelegate = self
-    cell.isEditMode = isEdit!
-    
+
     return cell
   }
   

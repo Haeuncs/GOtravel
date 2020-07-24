@@ -31,7 +31,7 @@ class BaseUIViewController: UIViewController {
       popNav.button.popLabel.text = title
     }
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -40,11 +40,16 @@ class BaseUIViewController: UIViewController {
     view.addSubview(dismissNav)
     view.addSubview(baseView)
     view.addSubview(contentView)
+    view.addSubview(rightNavigationButtonView)
     dismissNav.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.leading.equalTo(view.snp.leading)
-      make.trailing.equalTo(view.snp.trailing)
       make.height.equalTo(48)
+    }
+    rightNavigationButtonView.snp.makeConstraints { (make) in
+        make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+        make.trailing.equalTo(view.snp.trailing)
+        make.height.equalTo(48)
     }
     baseView.snp.makeConstraints { (make) in
       make.top.equalTo(dismissNav.snp.bottom)
@@ -97,13 +102,18 @@ class BaseUIViewController: UIViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  lazy var popNav: PopNavigationBar = {
-    let view = PopNavigationBar()
+  lazy var popNav: NavigationButtonView = {
+    let view = NavigationButtonView()
     view.isUserInteractionEnabled = true
     view.translatesAutoresizingMaskIntoConstraints = false
     view.button.addTarget(self, action: #selector(event), for: .touchUpInside)
     return view
   }()
+    lazy var rightNavigationButtonView: NavigationButtonView = {
+        let view = NavigationButtonView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
   lazy var dismissNav: DismissNavigationBar = {
     let view = DismissNavigationBar()
     view.button.addTarget(self, action: #selector(event), for: .touchUpInside)

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class PopNavigationBar: UIView {
+class NavigationButtonView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -42,14 +42,14 @@ class PopNavigationBar: UIView {
     return view
   }()
   
-  lazy var button: PopButton = {
-    let btn = PopButton()
+  lazy var button: NavigationButton = {
+    let btn = NavigationButton()
     btn.translatesAutoresizingMaskIntoConstraints = false
     return btn
   }()
 }
 
-class PopButton: UIButton{
+class NavigationButton: UIButton{
   override init(frame: CGRect) {
     super.init(frame: frame)
     contentView.isUserInteractionEnabled = false

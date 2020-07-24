@@ -34,8 +34,9 @@ class AddDetailTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(planByDate: dayRealm) {
+    func configure(planByDate: dayRealm, isEditMode: Bool) {
         dayRealmDB = planByDate
+        self.isEditMode = isEditMode
 
         if planByDate.detailList.isEmpty == false {
             detailScheduleTableView.allowsSelection = true
@@ -72,13 +73,9 @@ class AddDetailTableViewCell: UITableViewCell {
     func initLayout(){
         contentView.backgroundColor = .white
 
-        //    contentView.addSubview(stackView)
         contentView.addSubview(detailScheduleTableView)
         contentView.addSubview(paddingViewBottom)
         contentView.addSubview(dateView)
-
-        //    stackView.addArrangedSubview(dateView)
-        //    stackView.addArrangedSubview(detailScheduleTableView)
 
         dateView.snp.makeConstraints { (make) in
             make.top.leading.equalTo(contentView).offset(16)
@@ -126,15 +123,7 @@ class AddDetailTableViewCell: UITableViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.text = "일정을 추가하세요."
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+
     var paddingViewBottom: AddDetailViewCellButtonView = {
         let view = AddDetailViewCellButtonView()
         //        view.backgroundColor = UIColor.clear
@@ -197,7 +186,7 @@ extension AddDetailTableViewCell: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        isEditMode
+        return isEditMode
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
