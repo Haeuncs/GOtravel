@@ -35,19 +35,19 @@ struct  MainVCCVCViewModel: mainVC_protocol {
         }
         let dday = date.interval(ofComponent: .day, fromDate: Date())
 
-        print("비교하는 \(dateFormatter.string(from: date))")
-        print("오늘 날짜 \(dateFormatter.string(from: Date()))")
+        print("비교하는 \(date.localDateString())")
+        print("비교하는 \(endDate.localDateString())")
+        print("오늘 날짜 \(Date().localDateString())")
         print(dday)
         
         // 여행 시작 날이거나 여행 중인 날
-        if dday >= 0 {
-            if model.contentType == .traveling {
-                self.ddayTitle = "\((dday * -1) + 1)일차"
-            } else if model.contentType == .future {
-                self.ddayTitle = "D-\(dday)"
-            }
-        }else{
+        switch model.contentType {
+        case .future:
+            self.ddayTitle = "D-\(dday + 1)"
+        case .past:
             self.ddayTitle = "\(dateFormatter.string(from: date)) ~ \(dateFormatter.string(from: endDate))"
+        case .traveling:
+            self.ddayTitle = "\(abs(dday))일차"
         }
     }
 }
