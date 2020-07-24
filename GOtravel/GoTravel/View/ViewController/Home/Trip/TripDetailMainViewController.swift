@@ -404,8 +404,8 @@ extension TripDetailMainViewController: UITableViewDataSource{
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDetailTableViewCell
-    
-    cell.dayRealmDB = countryRealmDB.dayList[indexPath.row]
+
+    cell.configure(planByDate: countryRealmDB.dayList[indexPath.row])
     
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ko-KR")
@@ -416,7 +416,7 @@ extension TripDetailMainViewController: UITableViewDataSource{
     let day = dateFormatter.string(from: DBDate ?? Date())
     cell.dateView.dayOfTheWeek.text = day + "요일"
     cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일차"
-    cell.count = countryRealmDB.dayList[indexPath.row].detailList.count
+
     cell.paddingViewBottom.addButton.addTarget(self, action: #selector(moreDidTap(_:)), for: .touchUpInside)
     cell.paddingViewBottom.addBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside)
     cell.paddingViewBottom.detailBtn.addTarget(self, action: #selector(self.placeButtonEvent(_:)), for: .touchUpInside)
@@ -439,7 +439,7 @@ extension TripDetailMainViewController: UITableViewDataSource{
     cell.paddingViewBottom.pathBtn.alpha = 0.0
     
     cell.mydelegate = self
-    cell.isEdit = isEdit!
+    cell.isEditMode = isEdit!
     
     return cell
   }

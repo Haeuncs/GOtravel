@@ -123,4 +123,18 @@ extension UIColor {
     let colorRef = self.cgColor
     return CIColor(cgColor: colorRef).stringRepresentation
   }
+
+    func stringToColor(
+        red: String,
+        green: String,
+        blue: String,
+        alpha: String
+    ) -> UIColor {
+        return UIColor.init(
+            red: red.toCGFloat(),
+            green: green.toCGFloat(),
+            blue: blue.toCGFloat(),
+            alpha: alpha.toCGFloat()
+        )
+    }
 }

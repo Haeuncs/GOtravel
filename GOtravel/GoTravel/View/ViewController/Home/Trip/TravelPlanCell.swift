@@ -1,147 +1,73 @@
 //
-//  addDetailTableViewCellInsideTableViewCell.swift
+//  TravelPlanCell.swift
 //  GOtravel
 //
-//  Created by OOPSLA on 17/01/2019.
-//  Copyright © 2019 haeun. All rights reserved.
+//  Created by LEE HAEUN on 2020/07/24.
+//  Copyright © 2020 haeun. All rights reserved.
 //
 
 import UIKit
 import SnapKit
 
-// MARK: - 데이터가 없는 날짜의 테이블 뷰 셀
-class TripDetailEmptyTableViewCell: UITableViewCell {
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-   initView()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func initView(){
-    self.addSubview(topSpaceView)
-    self.addSubview(view)
-    self.addSubview(bottomSpaceView)
-    view.addSubview(stackView)
-    stackView.addArrangedSubview(titleLabel)
+class TravelPlanCell: UITableViewCell{
+    static let reuseIdentifier = String(describing: TravelPlanCell.self)
 
-    topSpaceView.snp.makeConstraints { (make) in
-      make.top.equalTo(self.snp.top)
-      make.leading.trailing.equalTo(self)
-      make.height.equalTo(4)
-    }
-    view.snp.makeConstraints { (make) in
-      make.top.equalTo(topSpaceView.snp.bottom)
-      make.leading.equalTo(self.snp.leading).offset(8)
-      make.trailing.equalTo(self.snp.trailing).offset(-16)
-    }
-    bottomSpaceView.snp.makeConstraints { (make) in
-      make.top.equalTo(view.snp.bottom)
-      make.leading.trailing.bottom.equalTo(self)
-      make.height.equalTo(8)
-    }
-    stackView.snp.makeConstraints { (make) in
-      make.center.equalTo(view)
-      make.leading.equalTo(view.snp.leading)
-      make.trailing.equalTo(view.snp.trailing)
-    }
-//    addButton.snp.makeConstraints { (make) in
-//      make.width.equalTo(52)
-//      make.height.equalTo(28)
-//    }
-  }
-  lazy var topSpaceView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  lazy var bottomSpaceView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-
-  lazy var view: UIView = {
-    let view = UIView()
-    view.backgroundColor = .white
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer.cornerRadius = 8
-    view.layer.zeplinStyleShadows(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
-    return view
-  }()
-
-  lazy var stackView: UIStackView = {
-    let stack = UIStackView()
-    stack.translatesAutoresizingMaskIntoConstraints = false
-    stack.axis = .vertical
-    stack.alignment = .center
-    stack.distribution = .equalSpacing
-    stack.spacing = 5
-    return stack
-  }()
-
-  lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.text = "🏷 일정이 없어요"
-    label.textAlignment = .center
-    label.font = .sb11
-    label.lineBreakMode = .byTruncatingTail
-    label.textColor = .black
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
-  lazy var addButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("추가", for: .normal)
-    button.titleLabel?.textAlignment = .center
-    button.titleLabel?.font = .sb17
-    button.tintColor = .white
-    button.backgroundColor = .greyishTeal
-    button.layer.cornerRadius = 8
-    button.layer.zeplinStyleShadows(color: .greyishTeal, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
-    return button
-  }()
-}
-
-class AddDetailTableViewCellInsideTableViewCell: UITableViewCell{
   var timeLabelIsHidden: Bool = true
   var memoLabelIsHidden: Bool = true
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentView.backgroundColor = .white
+        colorView.backgroundColor = UIColor.clear
+        timeLabel.text = ""
+        oneLineMemo.text = ""
+        titleLabel.text = ""
+
+    }
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    //        print("sub test style")
-    contentView.backgroundColor = .white
-    timeLabel.text = ""
-    oneLineMemo.text = ""
-    titleLabel.text = ""
-    
     initView()
+    selectionStyle = .none
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
+    func configure(plan: detailRealm) {
+        titleLabel.text = plan.title
+
+        if plan.color != "default" {
+            let colorArr = plan.color.components(separatedBy: " ")
+            colorView.backgroundColor = UIColor().stringToColor(
+                red: colorArr[0],
+                green: colorArr[1],
+                blue: colorArr[2],
+                alpha: colorArr[3]
+            )
+        }
+
+        oneLineMemo.text = plan.oneLineMemo
+    }
+
   func initView(){
-    self.addSubview(topSpaceView)
-    self.addSubview(view)
-    self.addSubview(bottomSpaceView)
+    contentView.addSubview(topSpaceView)
+    contentView.addSubview(view)
+    contentView.addSubview(bottomSpaceView)
     view.addSubview(colorView)
     view.addSubview(stackView)
     stackView.addArrangedSubview(oneLineMemo)
     stackView.addArrangedSubview(titleLabel)
-    
+
     topSpaceView.snp.makeConstraints { (make) in
       make.top.equalTo(self.snp.top)
-      make.leading.trailing.equalTo(self)
+      make.leading.trailing.equalTo(contentView)
       make.height.equalTo(4)
     }
     view.snp.makeConstraints { (make) in
       make.top.equalTo(topSpaceView.snp.bottom)
-      make.leading.equalTo(self.snp.leading).offset(8)
-      make.trailing.equalTo(self.snp.trailing).offset(-16)
+      make.leading.equalTo(contentView.snp.leading).offset(8)
+      make.trailing.equalTo(contentView.snp.trailing).offset(-16)
     }
     bottomSpaceView.snp.makeConstraints { (make) in
       make.top.equalTo(view.snp.bottom)
@@ -217,7 +143,7 @@ class AddDetailTableViewCellInsideTableViewCell: UITableViewCell{
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  
+
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = .sb17
@@ -232,9 +158,9 @@ class AddDetailTableViewCellInsideTableViewCell: UITableViewCell{
     label.textColor = .black
     label.numberOfLines = 0
     label.isHidden = true
-    
+
     //        label.backgroundColor = .red
-    
+
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -247,5 +173,5 @@ class AddDetailTableViewCellInsideTableViewCell: UITableViewCell{
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-  
+
 }
