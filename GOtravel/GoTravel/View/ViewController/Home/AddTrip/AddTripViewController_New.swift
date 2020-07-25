@@ -121,25 +121,25 @@ class AddTripViewControllerNew: BaseUIViewController {
     
     confirmButton.rx.tap
       .subscribe(onNext: { [weak self](_) in
-        guard let placeData = self?.viewModel.selectedPlace.value else {
+        guard let placeData = self?.viewModel.selectedPlace.value,
+        let latitude = placeData.location?.latitude,
+        let longitude = placeData.location?.longitude else {
+            // FIXIT: warning
           return
         }
-        let countryRealmDB = countryRealm()
-        countryRealmDB.city = placeData.address
-        countryRealmDB.country = placeData.title
-        countryRealmDB.latitude = (placeData.location?.latitude)!
-        countryRealmDB.longitude = (placeData.location?.longitude)!
-        let calenderVC = AddTripDateViewController()
+        let newTripData = Trip(
+            city: placeData.address,
+            country: placeData.title,
+            date: Date(),
+            identifier: UUID(),
+            period: 0,
+            coordinate: Coordinate(
+                latitude: latitude,
+                longitude: longitude
+        ))
+        let calenderVC = AddTripDateViewController(newTripData: newTripData)
         calenderVC.popTitle = "도시 검색"
-        calenderVC.saveCountryRealmData = countryRealmDB
         self?.navigationController?.pushViewController( calenderVC, animated: true)
-
-//        let googleMapVC = AddTripCheckMapViewController()
-//        googleMapVC.selectPlaceInfo = (self?.viewModel.selectedPlace.value!)!
-//        googleMapVC.myColor = #colorLiteral(red: 0.8209087171, green: 0.454993382, blue: 0.461091971, alpha: 1)
-//        googleMapVC.arrayMap = false
-//        googleMapVC.categoryIndex = 1
-//        self?.navigationController?.pushViewController(googleMapVC, animated: true)
       })
       .disposed(by: disposeBag)
   }

@@ -9,27 +9,26 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import RealmSwift
+
 
 class HomeViewModel {
   
-  var tripData = BehaviorSubject(value: [TravelDataType]())
-  let realm = try? Realm()
-  let realmManager: RealmManagerType = RealmManager()
-  
+  var tripData = BehaviorSubject(value: [TripDataType]())
+
   init(service: HomeModelService) {
-    
-    guard let readmData = realm?.objects(countryRealm.self) else {
-      tripData.onNext([])
-      return
-    }
-    debugPrint(readmData)
-    let data = HomeModelService.orderByDate(data: readmData)
-    tripData.onNext(data)
+
+    getTripData()
   }
   
   func getTripData() {
-    self.tripData.onNext(realmManager.getPresentTripData())
+
+    guard let trips = TripCoreDataManager.shared.fetchAllTrip() else {
+        tripData.onNext([])
+        return
+    }
+
+    let data = HomeModelService.orderByDate(trip: trips)
+    tripData.onNext(data)
   }
   
 }

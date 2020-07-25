@@ -39,7 +39,7 @@ class TripCoreDataManager: NSObject {
         )
 
         viewContext = persistentContainer.viewContext
-        backgroundContext = persistentContainer.newBackgroundContext()
+        backgroundContext = persistentContainer.viewContext
     }
 
     func saveContext(context: NSManagedObjectContext) {
@@ -80,8 +80,8 @@ class TripCoreDataManager: NSObject {
 
     private func fetch(identifier: UUID?, context: NSManagedObjectContext) -> [ManagedTrip]? {
         let fetchRequest = NSFetchRequest<ManagedTrip>(entityName: "Trip")
-        if let identifier = identifier {
-            let predicate = NSPredicate(format: "identifier == %@", identifier as CVarArg)
+        if let currentIdentifier = identifier {
+            let predicate = NSPredicate(format: "identifier == %@", currentIdentifier as CVarArg)
             fetchRequest.predicate = predicate
             fetchRequest.fetchLimit = 1
         }
@@ -95,14 +95,30 @@ class TripCoreDataManager: NSObject {
 
     }
 
-    func fetchAllTrip() -> [ManagedTrip]? {
+    func fetchAllTrip() -> [Trip]? {
         guard let context = backgroundContext else { return nil }
-        return fetch(identifier: nil, context: context)
+        guard let fetchedTrips = fetch(identifier: nil, context: context) else {
+            return nil
+        }
+        return fetchedTrips.map { (managedTrip) -> Trip in
+            managedTrip.toTrip()
+        }
     }
 
-    func fetchTrip(identifier: UUID) -> ManagedTrip? {
+    func fetchTrip(identifier: UUID) -> Trip? {
         guard let context = backgroundContext else { return nil }
-        return fetch(identifier: identifier, context: context)?.first
+        guard let managedTrip = fetch(identifier: identifier, context: context)?.first else {
+            return nil
+        }
+        return managedTrip.toTrip()
+    }
+
+    func fetchManagedTrip(identifier: UUID) -> ManagedTrip? {
+        guard let context = backgroundContext else { return nil }
+        guard let managedTrip = fetch(identifier: identifier, context: context)?.first else {
+            return nil
+        }
+        return managedTrip
     }
 
     func deleteTrip(identifier: UUID) -> Bool {
@@ -117,35 +133,30 @@ class TripCoreDataManager: NSObject {
         return true
     }
 
-    func updateTrip(updateTrip: Trip) -> ManagedTrip? {
+    func updateTrip(updateTrip: Trip) -> Trip? {
         guard let context = backgroundContext else { return nil }
 
         let identifier = updateTrip.identifier
-        guard let fetcedManagedTrip = fetchTrip(identifier: identifier) else {
+        guard let fetchedManagedTrip = fetchManagedTrip(identifier: identifier) else {
             return nil
         }
         
-        fetcedManagedTrip.country = updateTrip.country
-        fetcedManagedTrip.city = updateTrip.city
-        fetcedManagedTrip.date = updateTrip.date
-        fetcedManagedTrip.period = updateTrip.period
-        fetcedManagedTrip.identifier = updateTrip.identifier
-        fetcedManagedTrip.coordinate = updateTrip.coordinate.toManaged(context: context)
-        var payByDays = [ManagedPay]()
-        for payData in updateTrip.payByDays {
-            payByDays.append(payData.toManaged(context: context))
-        }
-        fetcedManagedTrip.payByDays = NSSet(array: payByDays)
-
-        var planByDays = [ManagedPlan]()
-        for planData in updateTrip.planByDays {
-            planByDays.append(planData.toManaged(context: context))
-        }
-        fetcedManagedTrip.planByDays = NSSet(array: planByDays)
+        fetchedManagedTrip.country = updateTrip.country
+        fetchedManagedTrip.city = updateTrip.city
+        fetchedManagedTrip.date = updateTrip.date
+        fetchedManagedTrip.period = Int16(updateTrip.period)
+        fetchedManagedTrip.identifier = updateTrip.identifier
+        fetchedManagedTrip.coordinate = updateTrip.coordinate.toManaged(context: context)
+        fetchedManagedTrip.payByDays = NSSet(array:  updateTrip.payByDays.map({ (payByDays) -> ManagedPayByDays in
+            payByDays.toManaged(context: context)
+        }))
+        fetchedManagedTrip.planByDays = NSSet(array: updateTrip.planByDays.map({ (planByDays) -> ManagedPlanByDays in
+            planByDays.toManaged(context: context)
+        }))
 
         saveContext(context: context)
 
-        return fetcedManagedTrip
+        return fetchTrip(identifier: updateTrip.identifier)
     }
 
     func updateTrip(updateTrip: ManagedTrip) -> ManagedTrip? {

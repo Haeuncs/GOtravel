@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import GooglePlaces
-import RealmSwift
+
 import IQKeyboardManagerSwift
 import SnapKit
 
@@ -24,10 +24,9 @@ class AddTripViewController: UIViewController {
   var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
 
   var searchType: SearchType
-  
-  var countryRealmDB: countryRealm?
-  var dayRealmDB: dayRealm?
-  
+    var trip: Trip
+    let day: Int
+
   var tablePlaceInfo = Array<PlaceInfo>()
   var fetcher: GMSAutocompleteFetcher?
 
@@ -91,10 +90,12 @@ class AddTripViewController: UIViewController {
     return view
   }()
 
-  init(searchType: SearchType) {
-    self.searchType = searchType
-    super.init(nibName: nil, bundle: nil)
-  }
+    init(searchType: SearchType, trip: Trip, day: Int) {
+        self.searchType = searchType
+        self.day = day
+        self.trip = trip
+        super.init(nibName: nil, bundle: nil)
+    }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -234,11 +235,20 @@ extension AddTripViewController: UITableViewDelegate{
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let googleMapVC = AddTripCheckMapViewController(searchType: searchType)
-    googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
-    if searchType == .place {
-      googleMapVC.dayRealmDB = dayRealmDB!
-    }
+    let mapData = tablePlaceInfo[indexPath.row]
+    let newPlan = Plan(
+        address: mapData.address,
+        title: mapData.title,
+        coordinate: Coordinate(latitude: mapData.location?.latitude ?? 0, longitude: mapData.location?.longitude ?? 0),
+        displayOrder: Int16(trip.planByDays[day].plans.count + 1),
+        identifier: UUID()
+    )
+    let googleMapVC = AddTripCheckMapViewController(
+        searchType: searchType,
+        trip: trip,
+        plan: newPlan,
+        day: day
+    )
     self.navigationController?.pushViewController(googleMapVC, animated: true)
   }
   

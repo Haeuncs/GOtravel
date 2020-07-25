@@ -22,18 +22,20 @@ class TripDetailPopupViewController: UIViewController {
   
   weak var delegate: TripDetailDataPopupDelegate?
 
-  func setup(_ realmDate: countryRealm, day: Int, delegate: TripDetailDataPopupDelegate) {
-    print(realmDate)
+  func setup(
+    _ trip: Trip,
+    day: Int,
+    delegate: TripDetailDataPopupDelegate
+  ) {
     self.delegate = delegate
     self.day = day
-    if let startDate = realmDate.date {
-      let currentDate = Calendar.current.date(byAdding: .day, value: day, to: startDate)
-      let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "ko-KR")
-      dateFormatter.dateFormat = "M월 dd일 E요일"
-      titleLabel.text = dateFormatter.string(from: currentDate!) + " \(day + 1)일차"
+    let startDate = trip.date
+    let currentDate = Calendar.current.date(byAdding: .day, value: day, to: startDate)
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "ko-KR")
+    dateFormatter.dateFormat = "M월 dd일 E요일"
+    titleLabel.text = dateFormatter.string(from: currentDate!) + " \(day + 1)일차"
     }
-  }
   
   override func viewDidLoad() {
     super.viewDidLoad()

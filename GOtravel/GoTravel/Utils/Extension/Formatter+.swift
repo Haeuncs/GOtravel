@@ -14,7 +14,6 @@ extension Formatter {
     formatter.numberStyle = NumberFormatter.Style.decimal
     return formatter
   }()
-
 }
 //extension integer{
 //  var formattedWithSeparator: String {

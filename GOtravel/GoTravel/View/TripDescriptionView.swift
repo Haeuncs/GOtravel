@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 import SnapKit
 
 class TripDescriptionView: UIView {

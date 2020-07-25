@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 struct Colors {
     static var darkGray = #colorLiteral(red: 0.3764705882, green: 0.3647058824, blue: 0.3647058824, alpha: 1)
@@ -273,10 +273,18 @@ extension CalenderView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
 
             dateRange = dateRange.sorted(by: { $0 < $1 })
 
-            let leftDay = firstDate!.interval(ofComponent: .day, fromDate: Date())
             let travelDays = secondData!.interval(ofComponent: .day, fromDate: firstDate!)
 
-            let ddayStr = leftDay == 0 ? "D+1" : "D-\(leftDay)"
+            let (type, day) = firstDate!.startDayDDay()
+
+            let ddayStr: String
+            switch type {
+            case .traveling, .past:
+                ddayStr = "D+" + String(day)
+            case .future:
+                ddayStr = "D-" + String(day)
+            }
+            
             DispatchQueue.main.async {
                 self.ddayLabel.text = "\(travelDays)박 \(travelDays + 1)일, \(ddayStr)"
                 self.addBtn.isHidden = false

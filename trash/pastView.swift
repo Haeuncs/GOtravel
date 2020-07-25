@@ -9,7 +9,7 @@
 ////import Foundation
 //import UIKit
 //import CenteredCollectionView
-//import RealmSwift
+//
 //
 //class pastView : UIView {
 //  

@@ -11,33 +11,21 @@ import RxSwift
 import RxCocoa
 import AnimatedTextInput
 import SnapKit
-import RealmSwift
+
 import IQKeyboardManagerSwift
 
 class TripDetailSpecificDayViewController: BaseUIViewController {
 
     private var disposeBag = DisposeBag()
 
-    private var selectedColorIndex: IndexPath?
-
     var heightConstraint: NSLayoutConstraint?
-    let realm = try! Realm()
 
-    var detailRealmDB: detailRealm? {
-        didSet{
-            print("detailRealmDB")
-            print(detailRealmDB!)
-        }
-    }
-    var countryRealmDB: countryRealm?{
-        didSet{
-            print("countryRealmDB")
-            print(countryRealmDB!)
-        }
-    }
-
-    var colorPik: String = ""
     var memoText: String = ""
+    var pinColor: UIColor?
+
+    var trip: Trip
+    var plan: Plan
+    let day: Int
 
     lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -107,27 +95,32 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
         return button
     }()
 
+    init(trip: Trip, plan: Plan, day: Int) {
+        self.trip = trip
+        self.plan = plan
+        self.day = day
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         isDismiss = false
         popTitle = "여행"
         initView()
         bindRx()
-        guard let db = detailRealmDB else {
-            return
+
+        if let pinColor = plan.pinColor {
+            colorLabel.textColor = pinColor
+            self.pinColor = pinColor
         }
-        if db.color != "default" {
-            let colorArr = db.color.components(separatedBy: " ")
-            self.colorLabel.textColor = UIColor.init(red: characterToCgfloat(str: colorArr[0]),
-                                                     green: characterToCgfloat(str: colorArr[1]),
-                                                     blue: characterToCgfloat(str: colorArr[2]),
-                                                     alpha: characterToCgfloat(str: colorArr[3]))
-        }
-        titleLabel.text = (countryRealmDB?.city ?? "") + " 여행"
-        titleTextInput.textField.text = db.title
-        miniMemoTextInput.textField.text = db.oneLineMemo
-        memoTextInput.textView.text = db.memo
-        colorPik = db.color
+        titleLabel.text = (trip.city) + " 여행"
+        titleTextInput.textField.text = plan.title
+        miniMemoTextInput.textField.text = plan.oneLineMemo
+        memoTextInput.textView.text = plan.memo
     }
 
     func characterToCgfloat(str: String) -> CGFloat {
@@ -246,15 +239,19 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
     }
 
     @objc func saveDidTap(){
-        if colorPik == "" {
-            colorPik = "default"
+        // FIXIT: COLOR
+        plan.pinColor = pinColor
+        plan.title = titleTextInput.textField.text ?? ""
+        plan.memo = memoTextInput.textView.text ?? ""
+        plan.oneLineMemo = miniMemoTextInput.textField.text ?? ""
+        let plans = trip.planByDays[day].plans
+        for index in 0 ..< plans.count where plans[index].identifier == plan.identifier {
+            trip.planByDays[day].plans[index] = plan
+            break
         }
-        try! realm.write {
-            detailRealmDB?.color = colorPik
-            detailRealmDB?.title = titleTextInput.textField.text ?? ""
-            detailRealmDB?.memo = memoTextInput.textView.text ?? ""
-            detailRealmDB?.oneLineMemo = miniMemoTextInput.textField.text ?? ""
-        }
+
+        let test = TripCoreDataManager.shared.updateTrip(updateTrip: trip)
+
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -268,14 +265,9 @@ extension TripDetailSpecificDayViewController: UICollectionViewDelegate {
         }
 
         colorLabel.textColor = cellBackgroundColor
+        pinColor = cellBackgroundColor
 
-        if let beforeSelected = self.selectedColorIndex {
-            self.selectedColorIndex = indexPath
-            self.collectionview.reloadItems(at: [beforeSelected])
-        }
-
-        self.selectedColorIndex = indexPath
-        self.collectionview.reloadItems(at: [indexPath])
+        self.collectionview.reloadData()
     }
 }
 
@@ -293,20 +285,19 @@ extension TripDetailSpecificDayViewController: UICollectionViewDataSource {
 
         cell.colorView.backgroundColor = color
 
-        guard selectedColorIndex == indexPath || colorPik == color.toString() else {
+        guard let pinColor = self.pinColor else {
             cell.colorView.layer.borderColor = UIColor.clear.cgColor
             return cell
         }
 
-        if selectedColorIndex == nil {
-            selectedColorIndex = indexPath
+        if pinColor == color {
+            let darkenedBase = pinColor.darker()
+            cell.colorView.layer.borderColor = darkenedBase.cgColor
+            cell.colorView.layer.borderWidth = 3
         }
-        let darkenedBase = UIColor(displayP3Red: color.cgColor.components![0] / 2,
-                                   green: color.cgColor.components![1] / 2,
-                                   blue: color.cgColor.components![2] / 2,
-                                   alpha: 1)
-        cell.colorView.layer.borderColor = darkenedBase.cgColor
-        cell.colorView.layer.borderWidth = 3
+        else {
+            cell.colorView.layer.borderWidth = 0
+        }
         return cell
     }
 }

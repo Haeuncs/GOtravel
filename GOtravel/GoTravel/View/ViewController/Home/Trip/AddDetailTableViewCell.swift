@@ -9,21 +9,19 @@
 
 import Foundation
 import UIKit
-import RealmSwift
 
 class AddDetailTableViewCell: UITableViewCell {
-    let realm = try! Realm()
 
     weak var mydelegate: addDetailViewTableViewCellDelegate?
 
     // MARK: VC로 부터 전달받는 데이터
     var isEditMode: Bool = false
     // avoid realm transaction
-    var copyDayPlan: DayPlan?
+    var planByDay: PlanByDays?
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        copyDayPlan = nil
+        planByDay = nil
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,11 +33,11 @@ class AddDetailTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(planByDate: DayPlan, isEditMode: Bool) {
-        copyDayPlan = planByDate
+    func configure(planByDay: PlanByDays, isEditMode: Bool) {
+        self.planByDay = planByDay
         self.isEditMode = isEditMode
 
-        if planByDate.detailList.isEmpty == false {
+        if planByDay.plans.isEmpty == false {
             detailScheduleTableView.allowsSelection = true
             detailScheduleTableView.isEditing = isEditMode
         }
@@ -136,15 +134,19 @@ class AddDetailTableViewCell: UITableViewCell {
 
 extension AddDetailTableViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let plans = copyDayPlan?.detailList, plans.isEmpty == false else {
-                return 1
+        if planByDay?.plans.isEmpty ?? true {
+            return 1
         }
-        return plans.count
+        return planByDay?.plans.count ?? 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let plans = copyDayPlan?.detailList, plans.isEmpty == false else {
+        guard let plans = planByDay?.plans else {
+            return UITableViewCell()
+        }
+
+        if plans.isEmpty {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: TravelEmptyPlanCell.reuseIdentifier,
                 for: indexPath) as? TravelEmptyPlanCell else {
@@ -180,7 +182,7 @@ extension AddDetailTableViewCell: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if copyDayPlan?.detailList.count == 0 {
+        if planByDay?.plans.count == 0 {
             return .none
         }
         return .delete
@@ -191,20 +193,29 @@ extension AddDetailTableViewCell: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if copyDayPlan?.detailList.count != 0 {
-            let currentMove = copyDayPlan?.detailList[sourceIndexPath.row]
+
+        guard var planByDay = planByDay else {
+            return
+        }
+
+        if planByDay.plans.count != 0 {
+            let currentMove = planByDay.plans[sourceIndexPath.row]
 //            try! self.realm.write {
-                self.copyDayPlan?.detailList.remove(at: sourceIndexPath.row)
-                self.copyDayPlan?.detailList.insert(currentMove!, at: destinationIndexPath.row)
+            planByDay.plans.remove(at: sourceIndexPath.row)
+            planByDay.plans.insert(currentMove, at: destinationIndexPath.row)
 //            }
-            mydelegate?.reorderEvet(planByDay: copyDayPlan!)
+            mydelegate?.reorderEvet(planByDay: planByDay)
         }
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
+        guard var plans = planByDay?.plans else {
+            return
+        }
+
         if editingStyle == .delete {
 //            try! self.realm.write {
-                self.copyDayPlan?.detailList.remove(at: indexPath.row)
+                plans.remove(at: indexPath.row)
 //            }
             self.mydelegate?.tableViewDeleteEvent(self)
 

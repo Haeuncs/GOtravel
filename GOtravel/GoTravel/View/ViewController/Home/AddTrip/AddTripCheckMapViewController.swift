@@ -9,17 +9,15 @@
 import Foundation
 import UIKit
 import GoogleMaps
-import RealmSwift
+
 import SnapKit
 
 class AddTripCheckMapViewController: UIViewController {
 
-  let searchType: SearchType
-  let realm = try! Realm()
-
-  // 장소 검색에서 VC에게 전달받는 변수들
-  var selectPlaceInfo = PlaceInfo()
-  var dayRealmDB = dayRealm()
+  private let searchType: SearchType
+    private let newPlan: Plan
+    private var trip: Trip
+    private let day: Int
 
   // path의 VC에서 받는 city 네임
   var navTitle = ""
@@ -50,8 +48,11 @@ class AddTripCheckMapViewController: UIViewController {
     return label
   }()
 
-  init(searchType: SearchType) {
-    self.searchType = searchType
+    init(searchType: SearchType, trip: Trip, plan: Plan, day: Int) {
+        self.searchType = searchType
+        self.newPlan = plan
+        self.day = day
+        self.trip = trip
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -107,42 +108,22 @@ class AddTripCheckMapViewController: UIViewController {
     return customMarker.asImage()
   }
 
-  func draw_marker(i: detailRealm, index: Int) {
-    let marker = GMSMarker()
-    let colorStr = i.color
-    var colorUIColor = #colorLiteral(red: 0.5372078419, green: 0.5372861624, blue: 0.5371831059, alpha: 1)
-    if colorStr != "default"{
-      let colorArr = colorStr.components(separatedBy: " ")
-      colorUIColor = UIColor.init(red: characterToCgfloat(str: colorArr[0]), green: characterToCgfloat(str: colorArr[1]), blue: characterToCgfloat(str: colorArr[2]), alpha: characterToCgfloat(str: colorArr[3]))
-    }
-    textLabelInMarker.text = String(index)
-    marker.icon = customMarker(color: colorUIColor)
-    marker.position = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
-    marker.title = i.title
-    marker.snippet = i.address
-    marker.map = self.mapView
-  }
-
-  func characterToCgfloat(str: String) -> CGFloat {
+func characterToCgfloat(str: String) -> CGFloat {
     let n = NumberFormatter().number(from: str)
     return n as! CGFloat
   }
   
   // path 선택 시
   func map() {
-    navView.setTitle(title: selectPlaceInfo.title)
+    navView.setTitle(title: newPlan.title)
 
-    guard let latitude = self.selectPlaceInfo.location?.latitude,
-      let longitude = self.selectPlaceInfo.location?.longitude else {
-        return
-    }
     let position = CLLocationCoordinate2D(
-      latitude: latitude,
-      longitude: longitude
+        latitude: newPlan.coordinate.latitude,
+        longitude: newPlan.coordinate.longitude
     )
     let marker = GMSMarker(position: position)
-    marker.title = self.selectPlaceInfo.title
-    marker.snippet = self.selectPlaceInfo.address
+    marker.title = newPlan.title
+    marker.snippet = newPlan.address
     marker.map = self.mapView
 
     DispatchQueue.main.async {
@@ -156,30 +137,10 @@ extension AddTripCheckMapViewController {
     self.navigationController?.popViewController(animated: true)
   }
 
-  @objc func nextEvent() {
-    if searchType == .city {
-      let countryRealmDB = countryRealm()
-      countryRealmDB.city = selectPlaceInfo.address
-      countryRealmDB.country = selectPlaceInfo.title
-      countryRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
-      countryRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
-      let calenderVC = AddTripDateViewController()
-      calenderVC.saveCountryRealmData = countryRealmDB
-      self.navigationController?.pushViewController( calenderVC, animated: true)
+    @objc func nextEvent() {
+        trip.planByDays[day].plans.append(newPlan)
+        let result = TripCoreDataManager.shared.updateTrip(updateTrip: trip)
+        print(result)
+        self.navigationController?.popToRootViewController(animated: true)
     }
-    else {
-      let detailRealmDB = detailRealm()
-      detailRealmDB.title = selectPlaceInfo.title
-      detailRealmDB.address = selectPlaceInfo.address
-      detailRealmDB.longitude = (selectPlaceInfo.location?.longitude)!
-      detailRealmDB.latitude = (selectPlaceInfo.location?.latitude)!
-      detailRealmDB.color = "default"
-      debugPrint(detailRealmDB)
-      debugPrint(dayRealmDB.detailList)
-      try! realm.write {
-        dayRealmDB.detailList.append(detailRealmDB)
-      }
-      self.navigationController?.popToRootViewController(animated: true)
-    }
-  }
 }

@@ -34,20 +34,19 @@ class TravelPlanCell: UITableViewCell{
     fatalError("init(coder:) has not been implemented")
   }
 
-    func configure(plan: detailRealm) {
+    func configure(plan: Plan) {
         titleLabel.text = plan.title
-
-        if plan.color != "default" {
-            let colorArr = plan.color.components(separatedBy: " ")
-            colorView.backgroundColor = UIColor().stringToColor(
-                red: colorArr[0],
-                green: colorArr[1],
-                blue: colorArr[2],
-                alpha: colorArr[3]
-            )
+        if let memo = plan.oneLineMemo {
+            oneLineMemo.text = memo
+            oneLineMemo.isHidden = false
+        } else {
+            oneLineMemo.isHidden = true
         }
-
-        oneLineMemo.text = plan.oneLineMemo
+        guard let color = plan.pinColor else {
+            colorView.backgroundColor = .clear
+            return
+        }
+        colorView.backgroundColor = color
     }
 
   func initView(){

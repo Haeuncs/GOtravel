@@ -59,6 +59,7 @@ class PullUpPopupCell: UITableViewCell {
         imageView_.snp.makeConstraints { (make) in
             make.leading.equalTo(contentView)
             make.centerY.equalTo(contentView)
+            make.width.height.equalTo(28)
         }
         
         titleLabel.snp.makeConstraints { (make) in

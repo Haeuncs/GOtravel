@@ -64,14 +64,20 @@
 		7D2EC25E24CC0FB900BE30BC /* Notification.Name+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC25D24CC0FB900BE30BC /* Notification.Name+.swift */; };
 		7D2EC26824CC104800BE30BC /* GOtravelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC26724CC104800BE30BC /* GOtravelTests.swift */; };
 		7D2EC27024CC106500BE30BC /* TripCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC26F24CC106500BE30BC /* TripCoreDataTests.swift */; };
-		7D34EA8424CC1556006DBC55 /* ManagedTrip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA7E24CC1554006DBC55 /* ManagedTrip+CoreDataProperties.swift */; };
-		7D34EA8524CC1556006DBC55 /* ManagedPlan+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA8024CC1555006DBC55 /* ManagedPlan+CoreDataProperties.swift */; };
-		7D34EA8624CC1556006DBC55 /* ManagedCoordinate+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA8124CC1555006DBC55 /* ManagedCoordinate+CoreDataProperties.swift */; };
-		7D34EA8724CC1556006DBC55 /* ManagedPay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA8324CC1556006DBC55 /* ManagedPay+CoreDataClass.swift */; };
-		7D34EA8824CC1556006DBC55 /* ManagedCoordinate+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA7F24CC1555006DBC55 /* ManagedCoordinate+CoreDataClass.swift */; };
-		7D34EA8924CC1556006DBC55 /* ManagedPlan+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA7D24CC1554006DBC55 /* ManagedPlan+CoreDataClass.swift */; };
-		7D34EA8A24CC1556006DBC55 /* ManagedPay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA8224CC1556006DBC55 /* ManagedPay+CoreDataProperties.swift */; };
-		7D34EA8B24CC1556006DBC55 /* ManagedTrip+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34EA7C24CC1553006DBC55 /* ManagedTrip+CoreDataClass.swift */; };
+		7D464F7C24CC432300964E88 /* ManagedPlanByDays+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7724CC432300964E88 /* ManagedPlanByDays+CoreDataClass.swift */; };
+		7D464F7D24CC432300964E88 /* ManagedPay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7224CC432200964E88 /* ManagedPay+CoreDataClass.swift */; };
+		7D464F7E24CC432300964E88 /* ManagedCoordinate+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7824CC432300964E88 /* ManagedCoordinate+CoreDataClass.swift */; };
+		7D464F8024CC432300964E88 /* ManagedPay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7A24CC432300964E88 /* ManagedPay+CoreDataProperties.swift */; };
+		7D464F8224CC432300964E88 /* ManagedPayByDays+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7424CC432200964E88 /* ManagedPayByDays+CoreDataClass.swift */; };
+		7D464F8324CC432300964E88 /* ManagedCoordinate+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7924CC432300964E88 /* ManagedCoordinate+CoreDataProperties.swift */; };
+		7D464F8424CC432300964E88 /* ManagedTrip+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7124CC432200964E88 /* ManagedTrip+CoreDataClass.swift */; };
+		7D464F8524CC432300964E88 /* ManagedPlanByDays+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7B24CC432300964E88 /* ManagedPlanByDays+CoreDataProperties.swift */; };
+		7D464F8624CC432300964E88 /* ManagedTrip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7324CC432200964E88 /* ManagedTrip+CoreDataProperties.swift */; };
+		7D464F8724CC432300964E88 /* ManagedPayByDays+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F7524CC432300964E88 /* ManagedPayByDays+CoreDataProperties.swift */; };
+		7D464F8924CC871D00964E88 /* DataFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F8824CC871D00964E88 /* DataFormatter+.swift */; };
+		7D464F8C24CC977E00964E88 /* ManagedPlan+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F8B24CC977E00964E88 /* ManagedPlan+CoreDataProperties.swift */; };
+		7D464F8D24CC977E00964E88 /* ManagedPay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F8A24CC977E00964E88 /* ManagedPay+CoreDataProperties.swift */; };
+		7D464F8F24CC987800964E88 /* ManagedPlan+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D464F8E24CC987800964E88 /* ManagedPlan+CoreDataClass.swift */; };
 		7D72596622FFEF080034FA8E /* ExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596522FFEF080034FA8E /* ExchangeView.swift */; };
 		7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */; };
 		7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72596C22FFF0F90034FA8E /* exchangeCell.swift */; };
@@ -210,14 +216,20 @@
 		7D2EC26724CC104800BE30BC /* GOtravelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOtravelTests.swift; sourceTree = "<group>"; };
 		7D2EC26924CC104800BE30BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D2EC26F24CC106500BE30BC /* TripCoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCoreDataTests.swift; sourceTree = "<group>"; };
-		7D34EA7C24CC1553006DBC55 /* ManagedTrip+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTrip+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedTrip+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		7D34EA7D24CC1554006DBC55 /* ManagedPlan+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPlan+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedPlan+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		7D34EA7E24CC1554006DBC55 /* ManagedTrip+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTrip+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedTrip+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		7D34EA7F24CC1555006DBC55 /* ManagedCoordinate+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedCoordinate+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedCoordinate+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		7D34EA8024CC1555006DBC55 /* ManagedPlan+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPlan+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedPlan+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		7D34EA8124CC1555006DBC55 /* ManagedCoordinate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedCoordinate+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedCoordinate+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		7D34EA8224CC1556006DBC55 /* ManagedPay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPay+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedPay+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		7D34EA8324CC1556006DBC55 /* ManagedPay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPay+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/ManagedPay+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7124CC432200964E88 /* ManagedTrip+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTrip+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedTrip+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7224CC432200964E88 /* ManagedPay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPay+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPay+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7324CC432200964E88 /* ManagedTrip+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTrip+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedTrip+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F7424CC432200964E88 /* ManagedPayByDays+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPayByDays+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPayByDays+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7524CC432300964E88 /* ManagedPayByDays+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPayByDays+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPayByDays+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F7724CC432300964E88 /* ManagedPlanByDays+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPlanByDays+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPlanByDays+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7824CC432300964E88 /* ManagedCoordinate+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedCoordinate+CoreDataClass.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedCoordinate+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		7D464F7924CC432300964E88 /* ManagedCoordinate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedCoordinate+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedCoordinate+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F7A24CC432300964E88 /* ManagedPay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPay+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPay+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F7B24CC432300964E88 /* ManagedPlanByDays+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPlanByDays+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPlanByDays+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F8824CC871D00964E88 /* DataFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataFormatter+.swift"; sourceTree = "<group>"; };
+		7D464F8A24CC977E00964E88 /* ManagedPay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPay+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPay+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F8B24CC977E00964E88 /* ManagedPlan+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedPlan+CoreDataProperties.swift"; path = "/Users/leehaeun/개발/GOtravel/GOtravel/GoTravel/Utils/Data/CoreData/ManagedPlan+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		7D464F8E24CC987800964E88 /* ManagedPlan+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ManagedPlan+CoreDataClass.swift"; path = "../../../../../../../.Trash/ManagedPlan+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7D72596522FFEF080034FA8E /* ExchangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeView.swift; sourceTree = "<group>"; };
 		7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeSelectCountryViewController.swift; sourceTree = "<group>"; };
 		7D72596C22FFF0F90034FA8E /* exchangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchangeCell.swift; sourceTree = "<group>"; };
@@ -424,6 +436,7 @@
 				7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */,
 				7D7668F424C9CB5E0082AA5C /* CGFloat+.swift */,
 				7D2EC25D24CC0FB900BE30BC /* Notification.Name+.swift */,
+				7D464F8824CC871D00964E88 /* DataFormatter+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -482,16 +495,21 @@
 		7D2EC24824CBFC0800BE30BC /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				7D34EA7D24CC1554006DBC55 /* ManagedPlan+CoreDataClass.swift */,
-				7D34EA8024CC1555006DBC55 /* ManagedPlan+CoreDataProperties.swift */,
-				7D34EA7C24CC1553006DBC55 /* ManagedTrip+CoreDataClass.swift */,
-				7D34EA7E24CC1554006DBC55 /* ManagedTrip+CoreDataProperties.swift */,
-				7D34EA8324CC1556006DBC55 /* ManagedPay+CoreDataClass.swift */,
-				7D34EA8224CC1556006DBC55 /* ManagedPay+CoreDataProperties.swift */,
-				7D34EA7F24CC1555006DBC55 /* ManagedCoordinate+CoreDataClass.swift */,
-				7D34EA8124CC1555006DBC55 /* ManagedCoordinate+CoreDataProperties.swift */,
+				7D464F7824CC432300964E88 /* ManagedCoordinate+CoreDataClass.swift */,
+				7D464F7924CC432300964E88 /* ManagedCoordinate+CoreDataProperties.swift */,
+				7D464F7224CC432200964E88 /* ManagedPay+CoreDataClass.swift */,
+				7D464F8A24CC977E00964E88 /* ManagedPay+CoreDataProperties.swift */,
+				7D464F7424CC432200964E88 /* ManagedPayByDays+CoreDataClass.swift */,
+				7D464F7524CC432300964E88 /* ManagedPayByDays+CoreDataProperties.swift */,
+				7D464F8E24CC987800964E88 /* ManagedPlan+CoreDataClass.swift */,
+				7D464F8B24CC977E00964E88 /* ManagedPlan+CoreDataProperties.swift */,
+				7D464F7724CC432300964E88 /* ManagedPlanByDays+CoreDataClass.swift */,
+				7D464F7B24CC432300964E88 /* ManagedPlanByDays+CoreDataProperties.swift */,
+				7D464F7124CC432200964E88 /* ManagedTrip+CoreDataClass.swift */,
+				7D464F7324CC432200964E88 /* ManagedTrip+CoreDataProperties.swift */,
 				7D2EC25924CBFC6900BE30BC /* TripCoreDataManager.swift */,
 				7D2EC25B24CBFC7B00BE30BC /* TripManager.swift */,
+				7D464F7A24CC432300964E88 /* ManagedPay+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -499,8 +517,8 @@
 		7D2EC26624CC104800BE30BC /* GOtravelTests */ = {
 			isa = PBXGroup;
 			children = (
-				7D2EC26724CC104800BE30BC /* GOtravelTests.swift */,
 				7D2EC26924CC104800BE30BC /* Info.plist */,
+				7D2EC26724CC104800BE30BC /* GOtravelTests.swift */,
 				7D2EC26F24CC106500BE30BC /* TripCoreDataTests.swift */,
 			);
 			path = GOtravelTests;
@@ -657,10 +675,10 @@
 		7D8DBB9622F0A255008C20E9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				7D7668FC24CB30E30082AA5C /* TripCell.swift */,
 				7D7394182308226E00FBA898 /* HomeMainViewController.swift */,
-				7D8DBB9722F0A27C008C20E9 /* Trip */,
+				7D7668FC24CB30E30082AA5C /* TripCell.swift */,
 				4A5F61F5220C9EB900531239 /* AddTrip */,
+				7D8DBB9722F0A27C008C20E9 /* Trip */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -670,6 +688,8 @@
 			children = (
 				4AC7103F21EE566300B20448 /* AddDetailTableViewCell.swift */,
 				7DFC580E22FEF402002BFD86 /* ExchangeRateCell.swift */,
+				7D7668F624CB2E510082AA5C /* TravelEmptyPlanCell.swift */,
+				7D7668F824CB2E600082AA5C /* TravelPlanCell.swift */,
 				7D276E5324C09A0A00CA4554 /* TripDatePopupView.swift */,
 				4AC7103B21EE10C600B20448 /* TripDetailMainViewController.swift */,
 				7D763DF223DAA9530006FF6E /* TripDetailPopupViewController.swift */,
@@ -677,8 +697,6 @@
 				7D276DF024BCC2BE00CA4554 /* TripRouteViewController.swift */,
 				7D276DF224BCC2CB00CA4554 /* TripRouteViewModel.swift */,
 				4A5F61F4220C9DF600531239 /* Exchange */,
-				7D7668F624CB2E510082AA5C /* TravelEmptyPlanCell.swift */,
-				7D7668F824CB2E600082AA5C /* TravelPlanCell.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -964,12 +982,9 @@
 				7DFC581A22FF29BD002BFD86 /* Toast.swift in Sources */,
 				7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */,
 				7D895C4923CF6B6C001AB3B6 /* HomeModelService.swift in Sources */,
-				7D34EA8924CC1556006DBC55 /* ManagedPlan+CoreDataClass.swift in Sources */,
 				7D72671022E33EB500589C82 /* settingModel.swift in Sources */,
 				4AC7104021EE566300B20448 /* AddDetailTableViewCell.swift in Sources */,
-				7D34EA8A24CC1556006DBC55 /* ManagedPay+CoreDataProperties.swift in Sources */,
 				7D72596A22FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift in Sources */,
-				7D34EA8424CC1556006DBC55 /* ManagedTrip+CoreDataProperties.swift in Sources */,
 				7DBC1D702428F1D40011ED2B /* DireactAddReceiptPriceViewController.swift in Sources */,
 				7DFC581422FF0D27002BFD86 /* CustomNavigationBarView.swift in Sources */,
 				7D763DF323DAA9540006FF6E /* TripDetailPopupViewController.swift in Sources */,
@@ -981,6 +996,7 @@
 				7DFC581622FF0DEA002BFD86 /* UIFont+.swift in Sources */,
 				7D9E123A241689F00061E7BF /* TextField.swift in Sources */,
 				7D1D587E237A9BCA0007E2F3 /* PastTripEmptyView.swift in Sources */,
+				7D464F7D24CC432300964E88 /* ManagedPay+CoreDataClass.swift in Sources */,
 				7DBA0D95242E1BED00C248E4 /* RealmManager.swift in Sources */,
 				7D1F73A322F6B73F000AA055 /* ViewControllerDelegate.swift in Sources */,
 				4AA331BC21EB3EF8004E2536 /* UIView+.swift in Sources */,
@@ -992,23 +1008,25 @@
 				4AA331C721EB8EB0004E2536 /* AddTripDateViewController.swift in Sources */,
 				7D0C030F22EB5FA5001FD837 /* TabbarController.swift in Sources */,
 				7DFC581122FF05E5002BFD86 /* DirectAddExchangeViewController.swift in Sources */,
+				7D464F7C24CC432300964E88 /* ManagedPlanByDays+CoreDataClass.swift in Sources */,
 				7D72598023023AB80034FA8E /* ExchangeSelectViewModel.swift in Sources */,
 				7D2EC23724CBF7F600BE30BC /* Trip.xcdatamodeld in Sources */,
 				7DFC580B22FEF186002BFD86 /* CALayer+.swift in Sources */,
 				7DBA0D9B242F932900C248E4 /* ExchangeCountry.swift in Sources */,
 				7DBA0DA4242F975C00C248E4 /* ColorCollectionViewCell.swift in Sources */,
+				7D464F8C24CC977E00964E88 /* ManagedPlan+CoreDataProperties.swift in Sources */,
 				7D72596F230062530034FA8E /* OpenSourceLicenseViewModel.swift in Sources */,
 				7DFC581822FF120E002BFD86 /* LineAnimateTextFieldView.swift in Sources */,
 				7D2EC25A24CBFC6900BE30BC /* TripCoreDataManager.swift in Sources */,
+				7D464F8324CC432300964E88 /* ManagedCoordinate+CoreDataProperties.swift in Sources */,
 				4AA331BF21EB7119004E2536 /* realmData.swift in Sources */,
 				7D276DF124BCC2BE00CA4554 /* TripRouteViewController.swift in Sources */,
+				7D464F8224CC432300964E88 /* ManagedPayByDays+CoreDataClass.swift in Sources */,
 				7D895C6923D2E4ED001AB3B6 /* DismissNavigationBar.swift in Sources */,
 				4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */,
 				7D895C6423D2E235001AB3B6 /* CustomNavigationContoller.swift in Sources */,
 				4AC710B121F0EE1400B20448 /* struct.swift in Sources */,
-				7D34EA8824CC1556006DBC55 /* ManagedCoordinate+CoreDataClass.swift in Sources */,
 				7D9E123C241A69930061E7BF /* DirectAddReceiptViewController.swift in Sources */,
-				7D34EA8724CC1556006DBC55 /* ManagedPay+CoreDataClass.swift in Sources */,
 				4A779F5921E7C24C00CCE52F /* MKPlacemark+.swift in Sources */,
 				4A5B322721F6913E0007AB21 /* DefaultStyle.swift in Sources */,
 				4AC710B321F103EF00B20448 /* TripDescriptionView.swift in Sources */,
@@ -1016,12 +1034,15 @@
 				7D7668FD24CB30E40082AA5C /* TripCell.swift in Sources */,
 				7DBA0D97242E2A3500C248E4 /* AccountMainViewModel.swift in Sources */,
 				7DBC1D7224290B4B0011ED2B /* DirectAddReceiptPriceViewModel.swift in Sources */,
-				7D34EA8624CC1556006DBC55 /* ManagedCoordinate+CoreDataProperties.swift in Sources */,
 				7D276E5824C09C4C00CA4554 /* ExchangeTableView.swift in Sources */,
+				7D464F8524CC432300964E88 /* ManagedPlanByDays+CoreDataProperties.swift in Sources */,
 				7D895C7123D32F72001AB3B6 /* TextFieldWithDescriptionView.swift in Sources */,
+				7D464F8924CC871D00964E88 /* DataFormatter+.swift in Sources */,
 				4AC7103C21EE10C600B20448 /* TripDetailMainViewController.swift in Sources */,
+				7D464F7E24CC432300964E88 /* ManagedCoordinate+CoreDataClass.swift in Sources */,
 				4AC710AF21F0EB3900B20448 /* AddTripCheckMapViewController.swift in Sources */,
 				4A3A17E121F1C8B500313077 /* Date+.swift in Sources */,
+				7D464F8024CC432300964E88 /* ManagedPay+CoreDataProperties.swift in Sources */,
 				4A0004B1222D319F003DEC20 /* SettingView.swift in Sources */,
 				4AA331C421EB8E74004E2536 /* MonthView.swift in Sources */,
 				7D276E5624C09C1E00CA4554 /* ExchangeCell.swift in Sources */,
@@ -1034,23 +1055,24 @@
 				7D725971230062850034FA8E /* OpenSourceLicenseModel.swift in Sources */,
 				7D0C031522EB7122001FD837 /* SettingTableViewCell.swift in Sources */,
 				7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */,
-				7D34EA8524CC1556006DBC55 /* ManagedPlan+CoreDataProperties.swift in Sources */,
+				7D464F8424CC432300964E88 /* ManagedTrip+CoreDataClass.swift in Sources */,
 				7D1F73A522F6B75E000AA055 /* Singleton.swift in Sources */,
 				7D276E6024C1CF5C00CA4554 /* UILabel+.swift in Sources */,
 				4A5F61E7220C9C3800531239 /* HomeVM.swift in Sources */,
 				7D895C7623D3568A001AB3B6 /* BottomButton.swift in Sources */,
+				7D464F8F24CC987800964E88 /* ManagedPlan+CoreDataClass.swift in Sources */,
 				7D763E3B23DDB47A0006FF6E /* TripDetailSpecificDayViewController.swift in Sources */,
 				7DBC1D6E2428EAE90011ED2B /* DirectAddReceiptViewModel.swift in Sources */,
 				7D895C7823D43307001AB3B6 /* UIViewController+.swift in Sources */,
 				7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */,
 				4AA331C521EB8E74004E2536 /* WeekdaysView.swift in Sources */,
 				7D276E5424C09A0A00CA4554 /* TripDatePopupView.swift in Sources */,
+				7D464F8724CC432300964E88 /* ManagedPayByDays+CoreDataProperties.swift in Sources */,
 				4AC710AA21F0C6C900B20448 /* AddTripViewController.swift in Sources */,
 				7D1D587B237A9AD20007E2F3 /* UICollectionView+.swift in Sources */,
 				7D895C7423D342DF001AB3B6 /* AddTripViewModel.swift in Sources */,
 				7D895C4423CF3E67001AB3B6 /* Appdelegate.swift in Sources */,
 				7D276DF324BCC2CB00CA4554 /* TripRouteViewModel.swift in Sources */,
-				7D34EA8B24CC1556006DBC55 /* ManagedTrip+CoreDataClass.swift in Sources */,
 				7D2EC23424CB573300BE30BC /* PullUpPopupDataType.swift in Sources */,
 				7D7668F524C9CB5E0082AA5C /* CGFloat+.swift in Sources */,
 				4A5F9CB1220495F60097C5C1 /* exchangeCell.swift in Sources */,
@@ -1070,11 +1092,13 @@
 				7D725973230062EB0034FA8E /* OpenSourceCell.swift in Sources */,
 				7D895C4723CF6774001AB3B6 /* HomeViewModel.swift in Sources */,
 				7D276E5E24C1CF2000CA4554 /* Double+.swift in Sources */,
+				7D464F8D24CC977E00964E88 /* ManagedPay+CoreDataProperties.swift in Sources */,
 				4ACC7003222AC9DC004095DA /* PastTripViewController.swift in Sources */,
 				7DBA0DA2242F955A00C248E4 /* ExchangeData.swift in Sources */,
 				4AA331C321EB8E74004E2536 /* CalenderView.swift in Sources */,
 				7D2EC23224CB565F00BE30BC /* PullUpPopupCell.swift in Sources */,
 				4AA331B921EB3EB2004E2536 /* ControlCenterView.swift in Sources */,
+				7D464F8624CC432300964E88 /* ManagedTrip+CoreDataProperties.swift in Sources */,
 				4ABF96B1223BEA0E006FFD40 /* settingVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

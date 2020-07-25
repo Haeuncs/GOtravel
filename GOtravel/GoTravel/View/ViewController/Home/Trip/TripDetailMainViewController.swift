@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import RealmSwift
+
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -23,7 +23,7 @@ protocol changeDetailVCVDelegate: class {
 protocol addDetailViewTableViewCellDelegate: class {
     func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell,detailIndex: Int)
     func tableViewDeleteEvent(_ sender: AddDetailTableViewCell)
-    func reorderEvet(planByDay: DayPlan)
+    func reorderEvet(planByDay: PlanByDays)
 }
 
 protocol TripDetailDataPopupDelegate: class {
@@ -33,16 +33,17 @@ protocol TripDetailDataPopupDelegate: class {
 }
 
 class TripDetailMainViewController: BaseUIViewController, addDetailViewTableViewCellDelegate {
-    func reorderEvet(planByDay: DayPlan) {
-        let newDetailList = List<detailRealm>()
-        for data in planByDay.detailList {
-            newDetailList.append(data)
-        }
-        countryRealmForEdit[planByDay.day - 1].detailList = planByDay.detailList
-
-//        try! self.realm.write {
-//
+    func reorderEvet(planByDay: PlanByDays) {
+        editedPlanByDays[planByDay.day] = planByDay
+//        let newDetailList = List<detailRealm>()
+//        for data in planByDay.detailList {
+//            newDetailList.append(data)
 //        }
+//        countryRealmForEdit[planByDay.day - 1].detailList = planByDay.detailList
+//
+////        try! self.realm.write {
+////
+////        }
     }
 
     let impact = UIImpactFeedbackGenerator()
@@ -53,10 +54,9 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
         }
     }
 
-    let realm = try! Realm()
 
-    let countryRealmDB: countryRealm
-    var countryRealmForEdit = [DayPlan]()
+    var tripData: Trip
+    var editedPlanByDays: [PlanByDays]
 
     // scroll 시작 시, 열려있는 버튼이 있을 때 다시 닫을 때 사용
     var currentIndexPath: IndexPath?
@@ -119,11 +119,12 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
         button.addTarget(self, action: #selector(cancelEditPlans), for: .touchUpInside)
         return button
     }()
-    init(travelData: countryRealm) {
-        self.countryRealmDB = travelData
-        for data in travelData.dayList {
-            countryRealmForEdit.append(DayPlan(day: data.day, detailList: Array(data.detailList)))
-        }
+    init(trip: Trip) {
+        self.tripData = trip
+        self.editedPlanByDays = trip.planByDays
+//        for data in travelData.dayList {
+//            countryRealmForEdit.append(DayPlan(day: data.day, detailList: Array(data.detailList)))
+//        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -139,11 +140,12 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
         scheduleMainTableView.delegate = self
         configureLayout()
         getRealmData()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(tripDataChanged), name: .tripDataChange, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        scheduleMainTableView.reloadData()
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: self.beforeSelectRowForScroll, section: 0)
             self.scheduleMainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
@@ -184,18 +186,22 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     }
 
     func getRealmData(){
-        tripDescriptionView.countryLabel.text = countryRealmDB.country
-        tripDescriptionView.subLabel.text = countryRealmDB.city
+        tripDescriptionView.countryLabel.text = tripData.country
+        tripDescriptionView.subLabel.text = tripData.city
 
         let dateFormatter = DateFormatter()
-        let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.period - 1, to: countryRealmDB.date!)
+        let DBDate = Calendar.current.date(
+            byAdding: .day,
+            value: tripData.period - 1,
+            to: tripData.date
+        )
         dateFormatter.dateFormat = "yyyy.MM.dd"
         dateFormatter.locale = Locale(identifier: "ko-KR")
         //    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        let startDay = dateFormatter.string(from: countryRealmDB.date!)
+        let startDay = dateFormatter.string(from: tripData.date)
         let endDay = dateFormatter.string(from: DBDate!)
 
-        tripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(countryRealmDB.period - 1)박 \(countryRealmDB.period)일"
+        tripDescriptionView.dateLabel.text = "\(startDay) ~ \(endDay)"+"    "+"\(tripData.period - 1)박 \(tripData.period)일"
         //        scheduleMainTableView.reloadData()
     }
 
@@ -221,9 +227,7 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
                 title: "삭제",
                 style: .destructive,
                 handler: { (_) in
-                    try! self.realm.write {
-                        self.realm.delete(self.countryRealmDB)
-                    }
+                    TripCoreDataManager.shared.deleteTrip(identifier: self.tripData.identifier)
                     self.dismiss(animated: true, completion: nil)
             })
         )
@@ -240,11 +244,32 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
             return
         }
 
-        let vc = TripDetailPopupViewController()
-        vc.setup(self.countryRealmDB, day: indexPath.row, delegate: self)
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: true, completion: nil)
+        var moreDatas = [
+            PullUpPopupDataType(image: UIImage(named: "atm")!, title: "경비 추가하기", handler: { [weak self] in
+                guard let self = self else { return }
+                self.TripDetailDataPopupMoney(day: indexPath.row)
+            }),
+            PullUpPopupDataType(image: UIImage(named: "pin")!, title: "일정 추가하기", handler: { [weak self] in
+                guard let self = self else { return }
+                self.TripDetailDataPopupSchedule(day: indexPath.row)
+            }),
+        ]
+
+        if tripData.planByDays[indexPath.row].plans.isEmpty == false {
+            moreDatas.append(PullUpPopupDataType(image: UIImage(named: "route")!, title: "경로 보기", handler: { [weak self] in
+                guard let self = self else { return }
+                self.TripDetailDataPopupPath(day: indexPath.row)
+            }))
+        }
+
+        let currentDate = Calendar.current.date(byAdding: .day, value: indexPath.row, to: tripData.date) ?? Date()
+
+        let title = currentDate.dateToKorString()
+        let pullUpViewController = PullUpPopupViewController(
+            title: title,
+            pullUpDatas: moreDatas
+        )
+        present(pullUpViewController, animated: true, completion: nil)
     }
 
     @objc func settingPlans(_ sender: UIButton) {
@@ -273,6 +298,14 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     @objc func dismissEvent() {
         dismiss(animated: true, completion: nil)
     }
+
+    @objc func tripDataChanged() {
+        guard let newTripData = TripCoreDataManager.shared.fetchTrip(identifier: tripData.identifier) else {
+            return
+        }
+        tripData = newTripData
+        scheduleMainTableView.reloadData()
+    }
 }
 
 // MARK: delegate 정의 (cell 에서 사용한다.)
@@ -281,11 +314,11 @@ extension TripDetailMainViewController {
     func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell, detailIndex: Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
         beforeSelectRowForScroll = tappedIndexPath.row
-        //        print(detailIndex)
-        //        dismiss(animated: true, completion: nil)
-        let changeVC = TripDetailSpecificDayViewController()
-        changeVC.detailRealmDB = countryRealmDB.dayList[tappedIndexPath.row].detailList[detailIndex]
-        changeVC.countryRealmDB = countryRealmDB
+
+        let changeVC = TripDetailSpecificDayViewController(
+            trip: tripData,
+            plan: tripData.planByDays[tappedIndexPath.row].plans[detailIndex], day: detailIndex
+        )
         self.navigationController?.pushViewController(changeVC, animated: true)
     }
     func tableViewDeleteEvent(_ sender: AddDetailTableViewCell) {
@@ -303,7 +336,7 @@ extension TripDetailMainViewController: UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let rowCount = countryRealmForEdit[indexPath.row].detailList.count
+        let rowCount = tripData.planByDays[indexPath.row].plans.count
         if rowCount == 0 {
             return CGFloat(80 * 1 + (SizeConstant.paddingSize))
         }
@@ -314,26 +347,26 @@ extension TripDetailMainViewController: UITableViewDelegate{
 }
 extension TripDetailMainViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countryRealmForEdit.count
+        return tripData.planByDays.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AddDetailTableViewCell
 
         cell.configure(
-            planByDate: countryRealmForEdit[indexPath.row],
+            planByDay: tripData.planByDays[indexPath.row],
             isEditMode: isPlanEditMode
         )
 
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
-        let DBDate = Calendar.current.date(byAdding: .day, value: countryRealmDB.dayList[indexPath.row].day - 1, to: countryRealmDB.date!)
+        let DBDate = Calendar.current.date(byAdding: .day, value: tripData.planByDays[indexPath.row].day - 1, to: tripData.date)
 
         dateFormatter.setLocalizedDateFormatFromTemplate("e")
 
         let day = dateFormatter.string(from: DBDate ?? Date())
         cell.dateView.dayOfTheWeek.text = day + "요일"
-        cell.dateView.dateLabel.text = String(countryRealmDB.dayList[indexPath.row].day) + "일차"
+        cell.dateView.dateLabel.text = String(tripData.planByDays[indexPath.row].day) + "일차"
 
         cell.paddingViewBottom.addButton.addTarget(self, action: #selector(moreDidTap(_:)), for: .touchUpInside)
 
@@ -351,33 +384,36 @@ extension TripDetailMainViewController: UIScrollViewDelegate {
 
 extension TripDetailMainViewController{
     @objc func pushExchangeViewController(){
-        let vc = AccountMainViewController(tripMoneyData: Array(self.countryRealmDB.moneyList), day: 0)
-        //    vc.countryRealmDB = self.countryRealmDB
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = AccountMainViewController(
+//            trip: tripData,
+//            day: 0
+//        )
+//        //    vc.countryRealmDB = self.countryRealmDB
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension TripDetailMainViewController: TripDetailDataPopupDelegate {
     func TripDetailDataPopupMoney(day: Int) {
         // 여행 전 경비가 있음으로 + 1
-        let vc = AccountMainViewController(tripMoneyData: Array(self.countryRealmDB.moneyList), day: day + 1)
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = AccountMainViewController(
+//            trip: tripData,
+//            day: day + 1
+//        )
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func TripDetailDataPopupSchedule(day: Int) {
-        let placeVC = AddTripViewController(searchType: .place)
-        placeVC.countryRealmDB = countryRealmDB
-        placeVC.dayRealmDB = countryRealmDB.dayList[day]
+        let placeVC = AddTripViewController(searchType: .place, trip: tripData, day: day)
         self.navigationController?.pushViewController(placeVC, animated: true)
     }
 
     func TripDetailDataPopupPath(day: Int) {
-        guard let tripDetail = countryRealmDB.dayList[day].detailList.first else {
-            return
-        }
-        let dayDetail = countryRealmDB.dayList[day].detailList
-
-        let tripRouteViewController = TripRouteViewController(day: day, tripDetail: tripDetail, dayDetail: dayDetail)
+        let tripRouteViewController = TripRouteViewController(
+            day: day,
+            trip: tripData,
+            plans: tripData.planByDays[day].plans
+        )
         self.navigationController?.pushViewController(tripRouteViewController, animated: true)
     }
 }

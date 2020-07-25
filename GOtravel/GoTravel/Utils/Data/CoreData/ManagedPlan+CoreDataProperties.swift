@@ -2,7 +2,7 @@
 //  ManagedPlan+CoreDataProperties.swift
 //  
 //
-//  Created by LEE HAEUN on 2020/07/25.
+//  Created by LEE HAEUN on 2020/07/26.
 //
 //
 
@@ -10,13 +10,24 @@ import UIKit
 import CoreData
 
 struct Plan {
-    internal init(address: String, memo: String? = nil, oneLineMemo: String? = nil, pinColor: UIColor? = nil, title: String, coordinate: Coordinate) {
+    internal init(
+        address: String,
+        memo: String? = nil,
+        oneLineMemo: String? = nil,
+        pinColor: UIColor? = nil,
+        title: String,
+        coordinate: Coordinate,
+        displayOrder: Int16,
+        identifier: UUID
+    ) {
         self.address = address
         self.memo = memo
         self.oneLineMemo = oneLineMemo
         self.pinColor = pinColor
         self.title = title
         self.coordinate = coordinate
+        self.displayOrder = displayOrder
+        self.identifier = identifier
     }
 
     var address: String
@@ -25,6 +36,8 @@ struct Plan {
     var pinColor: UIColor?
     var title: String
     var coordinate: Coordinate
+    var displayOrder: Int16
+    var identifier: UUID
 }
 
 extension Plan {
@@ -39,6 +52,7 @@ extension Plan {
         managedPlan.title = self.title
         managedPlan.coordinate = self.coordinate.toManaged(context: context)
         managedPlan.address = self.address
+        managedPlan.identifier = self.identifier
         return managedPlan
     }
 }
@@ -53,15 +67,32 @@ extension ManagedPlan {
     @NSManaged public var memo: String?
     @NSManaged public var oneLineMemo: String?
     @NSManaged public var pinColor: NSObject?
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
+    @NSManaged public var displayOrder: Int16
+    @NSManaged public var identifier: UUID
     @NSManaged public var coordinate: ManagedCoordinate?
-    @NSManaged public var ofTrip: ManagedTrip?
+    @NSManaged public var ofPlanByDays: ManagedPlanByDays?
 
 }
 
 extension ManagedPlan {
     func toPlan() -> Plan {
-        let plan = Plan(address: self.address ?? "", memo: self.memo ?? "", oneLineMemo: self.oneLineMemo ?? "", pinColor: self.pinColor as? UIColor, title: self.title ?? "", coordinate: Coordinate(latitude: self.coordinate?.latitude ?? 0, longitude: self.coordinate?.longitude ?? 0))
+        var color: UIColor?
+
+        if let colorData = pinColor as? Data {
+            color = UIColor.color(data: colorData)
+        }
+        
+        let plan = Plan(
+            address: self.address ?? "",
+            memo: self.memo ?? "",
+            oneLineMemo: self.oneLineMemo ?? "",
+            pinColor: color,
+            title: self.title ,
+            coordinate: Coordinate(latitude: self.coordinate?.latitude ?? 0, longitude: self.coordinate?.longitude ?? 0),
+            displayOrder: self.displayOrder,
+            identifier: self.identifier
+        )
 
         return plan
     }

@@ -8,7 +8,7 @@
 //
 //import UIKit
 //import CenteredCollectionView
-//import RealmSwift
+//
 //
 //class mainVC: UIViewController {
 //    @IBOutlet weak var subView: UIView!

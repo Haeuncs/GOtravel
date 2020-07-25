@@ -10,6 +10,17 @@ import Foundation
 
 //get first day of the month
 extension Date {
+    func startDayDDay() -> (TravelContentType, Int) {
+        let isSameDay = isInSameDay(date: Date())
+        let dayDistence = self.interval(ofComponent: .day, fromDate: Date())
+        if isSameDay {
+            return (TravelContentType.traveling, 1)
+        }
+        else {
+            return dayDistence < 0 ? (TravelContentType.past, dayDistence * -1) : (TravelContentType.future, abs((dayDistence * -1) - 1) )
+        }
+    }
+
     var weekday: Int {
         return Calendar.current.component(.weekday, from: self)
     }
@@ -79,5 +90,16 @@ extension Date {
     func localDateString() -> String
     {
         return Date.localFormatter.string(from: self)
+    }
+
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko-KR")
+        dateFormatter.dateFormat = "M월 dd일 E요일"
+        return dateFormatter
+    }()
+
+    func dateToKorString() -> String {
+        return Date.dateFormatter.string(from: self)
     }
 }

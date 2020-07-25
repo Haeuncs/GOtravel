@@ -7,24 +7,23 @@
 //
 
 import Foundation
-import RealmSwift
 
-struct TravelDataType {
-    let countryData: countryRealm
+struct TripDataType {
+    let trip: Trip
     let contentType: TravelContentType
 }
 
 class HomeModelService {
-    static func orderByDate(data: Results<countryRealm>) -> [TravelDataType] {
+    static func orderByDate(trip: [Trip]) -> [TripDataType] {
         // sorted by date
-        var processedData: [TravelDataType] = []
-        let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
-        
+        var processedData: [TripDataType] = []
+        let sortedByDate = trip.sorted {$0.date > $1.date}
+
         for i in sortedByDate {
-            let startDay = i.date ?? Date()
+            let startDay = i.date
             guard let endDate = Calendar.current.date(
                 byAdding: .day,
-                value: i.period - 1,
+                value: Int(i.period) - 1,
                 to: startDay
                 ) else {
                     continue
@@ -33,27 +32,28 @@ class HomeModelService {
             if endDate > Date() || endDate.isInSameDay(date: Date()) {
                 let isFutureTravel = Date() < startDay
                 
-                processedData.append(TravelDataType(countryData: i, contentType: isFutureTravel ? .future : .traveling))
+                processedData.append(TripDataType(trip: i, contentType: isFutureTravel ? .future : .traveling))
             }
         }
         return processedData
     }
     
-    static func pastTravel(data: Results<countryRealm>) -> [TravelDataType] {
-        var processedData: [TravelDataType] = []
-        let sortedByDate = data.sorted(byKeyPath: "date", ascending: true)
-        
+    static func pastOrderByDate(trip: [Trip]) -> [TripDataType] {
+        // sorted by date
+        var processedData: [TripDataType] = []
+        let sortedByDate = trip.sorted {$0.date > $1.date}
+
         for i in sortedByDate {
-            let startDay = i.date ?? Date()
+            let startDay = i.date
             guard let endDate = Calendar.current.date(
                 byAdding: .day,
-                value: i.period - 1,
+                value: Int(i.period) - 1,
                 to: startDay
                 ) else {
                     continue
             }
             if endDate < Date() {
-                processedData.append(TravelDataType(countryData: i, contentType: .past))
+                processedData.append(TripDataType(trip: i, contentType: .past))
             }
         }
         return processedData

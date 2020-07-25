@@ -11,12 +11,12 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import GoogleMaps
-import RealmSwift
+
 
 class TripRouteViewController: UIViewController {
   let day: Int
-  let tripDetail: detailRealm
-  let dayDetail: List<detailRealm>
+  let trip: Trip
+  let plans: [Plan]
   var routePaths: [GMSPath] = []
   var routeLocationCoordinate: [CLLocationCoordinate2D] = []
 
@@ -46,10 +46,10 @@ class TripRouteViewController: UIViewController {
     return label
   }()
 
-  init(day: Int, tripDetail: detailRealm, dayDetail: List<detailRealm>) {
+    init(day: Int, trip: Trip, plans: [Plan]) {
     self.day = day
-    self.tripDetail = tripDetail
-    self.dayDetail = dayDetail
+    self.trip = trip
+    self.plans = plans
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -92,8 +92,8 @@ class TripRouteViewController: UIViewController {
 
   func configureMap() {
     let camera = GMSCameraPosition.camera(
-      withLatitude: tripDetail.latitude,
-      longitude: tripDetail.longitude,
+        withLatitude: trip.coordinate.latitude,
+      longitude: trip.coordinate.longitude,
       zoom: 11.5
     )
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -103,27 +103,20 @@ class TripRouteViewController: UIViewController {
     self.navigationController?.popViewController(animated: true)
   }
 
-  func drawMarker(detail: detailRealm, index: Int) {
+  func drawMarker(plan: Plan, index: Int) {
     let marker = GMSMarker()
-    let colorStr = detail.color
     var colorUIColor = #colorLiteral(red: 0.5372078419, green: 0.5372861624, blue: 0.5371831059, alpha: 1)
-    if colorStr != "default" {
-      let colorArr = colorStr.components(separatedBy: " ")
-      colorUIColor = UIColor(
-        red: colorArr[0].toCGFloat(),
-        green: colorArr[1].toCGFloat(),
-        blue: colorArr[2].toCGFloat(),
-        alpha: colorArr[3].toCGFloat()
-      )
+    if let colorStr = plan.pinColor {
+        colorUIColor = colorStr
     }
     textLabelInMarker.text = String(index)
     marker.icon = customMarker(color: colorUIColor)
     marker.position = CLLocationCoordinate2D(
-      latitude: detail.latitude,
-      longitude: detail.longitude
+        latitude: plan.coordinate.latitude,
+        longitude: plan.coordinate.longitude
     )
-    marker.title = detail.title
-    marker.snippet = detail.address
+    marker.title = plan.title
+    marker.snippet = plan.address
     marker.map = self.mapView
     routeLocationCoordinate.append(marker.position)
   }
@@ -144,20 +137,20 @@ class TripRouteViewController: UIViewController {
   }
 
   func drawTripRoute() {
-    guard dayDetail.count > 1 else {
-      drawMarker(detail: dayDetail.first!, index: 1)
+    guard plans.count > 1 else {
+        drawMarker(plan: plans.first!, index: 1)
       return
     }
 
     // 데이터 다 계산한 후에 화면 업데이트 하도록 디스패치 그룹 만들어줌
     let dispatchGroup = DispatchGroup()
-    for i in 0 ..< dayDetail.count - 1 {
+    for i in 0 ..< plans.count - 1 {
       dispatchGroup.enter()
       //0,1,2
-      let origin = "\(dayDetail[i].latitude),\(dayDetail[i].longitude)"
-      drawMarker(detail: dayDetail[i],index: i + 1)
-      let destination = "\(dayDetail[i + 1].latitude),\(dayDetail[i + 1].longitude)"
-      drawMarker(detail: dayDetail[i + 1],index: i + 2)
+        let origin = "\(plans[i].coordinate.latitude),\(plans[i].coordinate.longitude)"
+      drawMarker(plan: plans[i],index: i + 1)
+        let destination = "\(plans[i + 1].coordinate.latitude),\(plans[i + 1].coordinate.longitude)"
+      drawMarker(plan: plans[i + 1],index: i + 2)
       guard let googleMapAPIKey = Singleton.shared.googleMapAPIKey else { return }
       let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=transit&key=" + googleMapAPIKey
 
@@ -196,12 +189,12 @@ class TripRouteViewController: UIViewController {
             OperationQueue.main.addOperation({
               let path = GMSMutablePath()
               let originCoordinate = CLLocationCoordinate2D(
-                latitude: self.dayDetail[i].latitude,
-                longitude: self.dayDetail[i].longitude
+                latitude: self.plans[i].coordinate.latitude,
+                longitude: self.plans[i].coordinate.longitude
               )
               let destinationCoordinate = CLLocationCoordinate2D(
-                latitude: self.dayDetail[i + 1].latitude,
-                longitude: self.dayDetail[i + 1].longitude
+                latitude: self.plans[i + 1].coordinate.latitude,
+                longitude: self.plans[i + 1].coordinate.longitude
               )
               path.add(originCoordinate)
               path.add(destinationCoordinate)

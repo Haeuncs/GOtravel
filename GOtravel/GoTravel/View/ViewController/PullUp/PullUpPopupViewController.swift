@@ -61,6 +61,7 @@ class PullUpPopupViewController: UIViewController {
         tableView.register(PullUpPopupCell.self, forCellReuseIdentifier: PullUpPopupCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isScrollEnabled = false
         return tableView
     }()
 

@@ -7,7 +7,7 @@ Secondary view controller used to display the map and found annotations.
 
 import UIKit
 import MapKit
-import RealmSwift
+
 
 class MapViewController: UIViewController {
     let realm = try! Realm()

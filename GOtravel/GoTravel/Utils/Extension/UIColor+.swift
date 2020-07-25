@@ -140,12 +140,44 @@ extension UIColor {
 }
 
 extension UIColor {
-
+    
     class func color(data:Data) -> UIColor? {
-        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor
+         return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor
     }
 
     func encode() -> Data? {
-        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+         return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+    }
+
+    func HSBrandomColor() -> UIColor{
+        let saturation: CGFloat = 0.45
+        let brigtness: CGFloat = 0.85
+        let randomHue = CGFloat.random(in: 0.0..<1.0)
+        return UIColor(hue: CGFloat(randomHue), saturation: saturation, brightness: brigtness, alpha: 1)
     }
 }
+
+extension UIColor {
+    func darker() -> UIColor {
+
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0, a:CGFloat = 0
+
+        if self.getRed(&r, green: &g, blue: &b, alpha: &a){
+            return UIColor(red: max(r - 0.2, 0.0), green: max(g - 0.2, 0.0), blue: max(b - 0.2, 0.0), alpha: a)
+        }
+
+        return UIColor()
+    }
+
+    func lighter() -> UIColor {
+
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0, a:CGFloat = 0
+
+        if self.getRed(&r, green: &g, blue: &b, alpha: &a){
+            return UIColor(red: min(r + 0.2, 1.0), green: min(g + 0.2, 1.0), blue: min(b + 0.2, 1.0), alpha: a)
+        }
+
+        return UIColor()
+    }
+}
+

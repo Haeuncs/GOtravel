@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 import UIKit
 import MapKit
 import SnapKit
@@ -20,15 +19,21 @@ enum MyTheme {
 var categoryArr = ["항공","숙박","쇼핑","식사","교통비","기타"]
 
 class AddTripDateViewController: BaseUIViewController {
+
+    var newTripData: Trip
   
-  let realm = try! Realm()
-  
-  var saveCountryRealmData = countryRealm()
-  
-  var dayListDB = List<dayRealm>()
   var theme = MyTheme.dark
 
-  override func viewDidLoad() {
+    init(newTripData: Trip) {
+        self.newTripData = newTripData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
     super.viewDidLoad()
     
     self.title = "여행 기간 설정 🗓"
@@ -54,40 +59,25 @@ class AddTripDateViewController: BaseUIViewController {
             return
     }
 
-    saveCountryRealmData.country = saveCountryRealmData.country
-    saveCountryRealmData.city = saveCountryRealmData.city
-    saveCountryRealmData.date = firstDate
-    saveCountryRealmData.period = periodWithLastDay
-    saveCountryRealmData.longitude = saveCountryRealmData.longitude
-    saveCountryRealmData.latitude = saveCountryRealmData.latitude
-    
+    newTripData.date = firstDate
+    newTripData.period = periodWithLastDay
+
+    var mockPlanByDays = [PlanByDays]()
+    var mockPayByDays = [PayByDays]()
+
     for i in 1...periodWithLastDay {
       // 디테일 기록 데이
-      let dayRealmDB = dayRealm()
-      dayRealmDB.day = i
-      dayListDB.append(dayRealmDB)
-      // 가계부 기록 데이
-      let moneyRealmDB = moneyRealm()
-      moneyRealmDB.day = i - 1
-      saveCountryRealmData.moneyList.append(moneyRealmDB)
+        mockPlanByDays.append(PlanByDays(day: i, plans: []))
+        mockPayByDays.append(PayByDays(day: i - 1, pays: []))
     }
-    
-    let moneyRealmDB = moneyRealm()
-    moneyRealmDB.day = periodWithLastDay
-    saveCountryRealmData.moneyList.append(moneyRealmDB)
-    
-    saveCountryRealmData.dayList = dayListDB
-    
-    for i in 0..<categoryArr.count{
-      let catecoryDB = categoryDetailRealm()
-      catecoryDB.title = categoryArr[i]
-      saveCountryRealmData.categoryList.append(catecoryDB)
-      
-    }
-    try! realm.write {
-      realm.add(saveCountryRealmData)
-    }
-    
+    mockPayByDays.append(PayByDays(day: periodWithLastDay, pays: []))
+
+    newTripData.planByDays = mockPlanByDays
+    newTripData.payByDays = mockPayByDays
+
+    // FIXIT: Move to VM
+    TripCoreDataManager.shared.add(newData: newTripData)
+
   }
   func initializeView(){
     self.view.backgroundColor = .white

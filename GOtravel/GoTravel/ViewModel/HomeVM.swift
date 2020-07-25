@@ -20,8 +20,8 @@ struct  MainVCCVCViewModel: mainVC_protocol {
     var cityTitle: String
     var ddayTitle: String
 
-    init(_ model: TravelDataType) {
-        let countryData = model.countryData
+    init(_ model: TripDataType) {
+        let countryData = model.trip
         self.countryTitle = countryData.country
         self.cityTitle = countryData.city
         self.ddayTitle = ""
@@ -29,8 +29,8 @@ struct  MainVCCVCViewModel: mainVC_protocol {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.M.dd"
 
-        guard let date = countryData.date,
-            let endDate = Calendar.current.date(byAdding: .day, value: countryData.period - 1, to: date) else {
+        let date = countryData.date
+        guard let endDate = Calendar.current.date(byAdding: .day, value: countryData.period - 1, to: date) else {
             return
         }
         let dday = date.interval(ofComponent: .day, fromDate: Date())
@@ -39,7 +39,7 @@ struct  MainVCCVCViewModel: mainVC_protocol {
         print("비교하는 \(endDate.localDateString())")
         print("오늘 날짜 \(Date().localDateString())")
         print(dday)
-        
+
         // 여행 시작 날이거나 여행 중인 날
         switch model.contentType {
         case .future:
