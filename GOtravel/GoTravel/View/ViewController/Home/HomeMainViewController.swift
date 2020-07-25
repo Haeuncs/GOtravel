@@ -113,8 +113,7 @@ class HomeMainViewController: UIViewController {
     
     contentView.tripCollectionView.rx.modelSelected(TravelDataType.self)
       .subscribe(onNext: { [weak self] (country) in
-        let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country.countryData
+        let tripViewController = TripDetailMainViewController(travelData: country.countryData)
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen

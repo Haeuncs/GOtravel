@@ -71,8 +71,7 @@ class PastTripViewController: UIViewController {
     
     tripCollectionView.rx.modelSelected(TravelDataType.self)
       .subscribe(onNext: { (country) in
-        let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country.countryData
+        let tripViewController = TripDetailMainViewController(travelData: country.countryData)
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen

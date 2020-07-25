@@ -51,6 +51,11 @@ class dayRealm : Object {
     @objc dynamic var day: Int = 0
     var detailList = List<detailRealm>()
 }
+// create struct avoid realm trasation
+struct DayPlan {
+    var day: Int
+    var detailList: [detailRealm]
+}
 
 class detailRealm : Object{
     @objc dynamic var title: String = ""
