@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Coordinate" representedClassName="Coordinate" syncable="YES">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="ofPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plan" inverseName="coordinate" inverseEntity="Plan"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="coordinate" inverseEntity="Trip"/>
+    </entity>
+    <entity name="Pay" representedClassName="Pay" syncable="YES">
+        <attribute name="exchangeName" optional="YES" attributeType="String"/>
+        <attribute name="krWon" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="payByDays" inverseEntity="Trip"/>
+    </entity>
+    <entity name="Plan" representedClassName="Plan" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="oneLineMemo" optional="YES" attributeType="String"/>
+        <attribute name="pinColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="coordinate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coordinate" inverseName="ofPlan" inverseEntity="Coordinate"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="planByDays" inverseEntity="Trip"/>
+    </entity>
+    <entity name="Trip" representedClassName="Trip" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="period" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="coordinate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coordinate" inverseName="ofTrip" inverseEntity="Coordinate"/>
+        <relationship name="payByDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pay" inverseName="ofTrip" inverseEntity="Pay"/>
+        <relationship name="planByDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plan" inverseName="ofTrip" inverseEntity="Plan"/>
+    </entity>
+    <elements>
+        <element name="Trip" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="Pay" positionX="-36" positionY="9" width="128" height="103"/>
+        <element name="Plan" positionX="0" positionY="45" width="128" height="148"/>
+        <element name="Coordinate" positionX="18" positionY="63" width="128" height="103"/>
+    </elements>
+</model>
