@@ -22,7 +22,7 @@ protocol changeDetailVCVDelegate: class {
 }
 protocol addDetailViewTableViewCellDelegate: class {
     func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell,detailIndex: Int)
-    func tableViewDeleteEvent(_ sender: AddDetailTableViewCell)
+    func tableViewDeleteEvent(planByDay: PlanByDays)
     func reorderEvet(planByDay: PlanByDays)
 }
 
@@ -32,28 +32,18 @@ protocol TripDetailDataPopupDelegate: class {
     func TripDetailDataPopupPath(day: Int)
 }
 
-class TripDetailMainViewController: BaseUIViewController, addDetailViewTableViewCellDelegate {
-    func reorderEvet(planByDay: PlanByDays) {
-        editedPlanByDays[planByDay.day] = planByDay
-//        let newDetailList = List<detailRealm>()
-//        for data in planByDay.detailList {
-//            newDetailList.append(data)
-//        }
-//        countryRealmForEdit[planByDay.day - 1].detailList = planByDay.detailList
-//
-////        try! self.realm.write {
-////
-////        }
-    }
+class TripDetailMainViewController: BaseUIViewController {
 
     let impact = UIImpactFeedbackGenerator()
+
+    let safeInsetBottom: CGFloat = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0
 
     var isPlanEditMode: Bool = false {
         didSet {
             editPlanStackView.isHidden = !isPlanEditMode
+            scheduleMainTableView.contentInset.bottom = isPlanEditMode ? 56 + 45 + safeInsetBottom : 0
         }
     }
-
 
     var tripData: Trip
     var editedPlanByDays: [PlanByDays]
@@ -119,12 +109,10 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
         button.addTarget(self, action: #selector(cancelEditPlans), for: .touchUpInside)
         return button
     }()
+    
     init(trip: Trip) {
         self.tripData = trip
         self.editedPlanByDays = trip.planByDays
-//        for data in travelData.dayList {
-//            countryRealmForEdit.append(DayPlan(day: data.day, detailList: Array(data.detailList)))
-//        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -208,14 +196,18 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     // MARK: OBJC
 
     @objc func saveEditPlans() {
+        tripData.planByDays = editedPlanByDays
+        _ = TripCoreDataManager.shared.updateTrip(updateTrip: tripData)
         isPlanEditMode = false
         scheduleMainTableView.reloadData()
     }
 
     @objc func cancelEditPlans() {
+        editedPlanByDays = tripData.planByDays
         isPlanEditMode = false
         scheduleMainTableView.reloadData()
     }
+
     @objc func alldDleteLabelEvent() {
         let uiAlertControl = UIAlertController(
             title: "여행 데이터 삭제",
@@ -227,7 +219,7 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
                 title: "삭제",
                 style: .destructive,
                 handler: { (_) in
-                    TripCoreDataManager.shared.deleteTrip(identifier: self.tripData.identifier)
+                    _ = TripCoreDataManager.shared.deleteTrip(identifier: self.tripData.identifier)
                     self.dismiss(animated: true, completion: nil)
             })
         )
@@ -308,8 +300,7 @@ class TripDetailMainViewController: BaseUIViewController, addDetailViewTableView
     }
 }
 
-// MARK: delegate 정의 (cell 에서 사용한다.)
-extension TripDetailMainViewController {
+extension TripDetailMainViewController: addDetailViewTableViewCellDelegate {
 
     func addDetailViewTableViewCellDidTapInTableView(_ sender: AddDetailTableViewCell, detailIndex: Int) {
         guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
@@ -321,20 +312,25 @@ extension TripDetailMainViewController {
         )
         self.navigationController?.pushViewController(changeVC, animated: true)
     }
-    func tableViewDeleteEvent(_ sender: AddDetailTableViewCell) {
-        guard let tappedIndexPath = scheduleMainTableView.indexPath(for: sender) else { return }
-        print("tab", sender, tappedIndexPath)
-        self.scheduleMainTableView.reloadData()
+
+    func tableViewDeleteEvent(planByDay: PlanByDays) {
+        var beforeDelete = tripData.planByDays
+        for index in 0 ..< beforeDelete.count where beforeDelete[index].day == planByDay.day {
+            beforeDelete[index] = planByDay
+        }
+        tripData.planByDays = beforeDelete
+        _ = TripCoreDataManager.shared.updateTrip(updateTrip: tripData)
     }
 
+    func reorderEvet(planByDay: PlanByDays) {
+        for index in 0 ..< editedPlanByDays.count where editedPlanByDays[index].day == planByDay.day {
+            editedPlanByDays[index] = planByDay
+            break
+        }
+    }
 }
 
-extension TripDetailMainViewController: UITableViewDelegate{
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("select")
-        // 지금은 select 이벤트 없음
-    }
-
+extension TripDetailMainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let rowCount = tripData.planByDays[indexPath.row].plans.count
         if rowCount == 0 {
@@ -345,7 +341,7 @@ extension TripDetailMainViewController: UITableViewDelegate{
         }
     }
 }
-extension TripDetailMainViewController: UITableViewDataSource{
+extension TripDetailMainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tripData.planByDays.count
     }
@@ -375,11 +371,6 @@ extension TripDetailMainViewController: UITableViewDataSource{
         return cell
     }
 
-}
-extension TripDetailMainViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        // 버튼 animate 원상복구
-    }
 }
 
 extension TripDetailMainViewController{
