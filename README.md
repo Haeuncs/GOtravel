@@ -4,7 +4,15 @@
 
 > 여행 일정과 여행 경비를 관리하는 iOS 앱
 >
-> iOS App to Manage Travel Schedules and Travel Expenses
+> iOS App to Manage Trip Schedules and Trip cost
+
+
+## Notice
+
+This is the almost first app I made while studying swift.
+I am constantly refactoring this project.
+If you are looking for a swift project for learning, I highly recommend viewing [Here Another Repo_Core Data + RxSwift + MemoApp](https://github.com/Haeuncs/MemoApp).
+
 
 <img src="githubImage/ScreenMain.png">
 
@@ -62,9 +70,9 @@ Then run 'GOtravel.xcworkspace'.
 
 Done! 🥳
 
-## Structure
+## DataBase
 
-<img src="githubImage/structure.jpg">
+<img src="githubImage/DataBase.png">
 
 ## Screenshot
 
