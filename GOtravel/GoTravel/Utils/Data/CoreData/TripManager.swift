@@ -44,6 +44,11 @@ class TripManager {
                 for jndex in 0 ..< currentTrip.payByDays[index].pays.count
                     where currentTrip.payByDays[index].pays[jndex].identifier == pay.identifier {
                         currentTrip.payByDays[index].pays.remove(at: jndex)
+
+                        for zndex in 0 ..< currentTrip.payByDays[index].pays.count {
+                            currentTrip.payByDays[index].pays[zndex].displayOrder = Int16(zndex)
+                        }
+
                         break outerLoop
                 }
         }

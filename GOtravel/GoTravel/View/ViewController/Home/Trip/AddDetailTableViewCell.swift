@@ -199,11 +199,19 @@ extension AddDetailTableViewCell: UITableViewDelegate {
         }
 
         if planByDay.plans.count != 0 {
+
+            // Swap display order
+            let sourceOrder = planByDay.plans[sourceIndexPath.row].displayOrder
+            let destinationOrder = planByDay.plans[destinationIndexPath.row].displayOrder
+
+            planByDay.plans[sourceIndexPath.row].displayOrder = destinationOrder
+            planByDay.plans[destinationIndexPath.row].displayOrder = sourceOrder
+
             let currentMove = planByDay.plans[sourceIndexPath.row]
-//            try! self.realm.write {
+
             planByDay.plans.remove(at: sourceIndexPath.row)
             planByDay.plans.insert(currentMove, at: destinationIndexPath.row)
-//            }
+
             mydelegate?.reorderEvet(planByDay: planByDay)
         }
     }

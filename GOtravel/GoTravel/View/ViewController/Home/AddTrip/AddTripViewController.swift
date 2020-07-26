@@ -235,12 +235,14 @@ extension AddTripViewController: UITableViewDelegate{
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let mapData = tablePlaceInfo[indexPath.row]
+    guard let mapData = tablePlaceInfo[safe: indexPath.row] else {
+        return
+    }
     let newPlan = Plan(
         address: mapData.address,
         title: mapData.title,
         coordinate: Coordinate(latitude: mapData.location?.latitude ?? 0, longitude: mapData.location?.longitude ?? 0),
-        displayOrder: Int16(trip.planByDays[day].plans.count + 1),
+        displayOrder: Int16(trip.planByDays[day].plans.count),
         identifier: UUID()
     )
     let googleMapVC = AddTripCheckMapViewController(

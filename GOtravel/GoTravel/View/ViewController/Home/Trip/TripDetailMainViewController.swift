@@ -314,9 +314,16 @@ extension TripDetailMainViewController: addDetailViewTableViewCellDelegate {
     }
 
     func tableViewDeleteEvent(planByDay: PlanByDays) {
+        var deletedPlanByDay = planByDay
         var beforeDelete = tripData.planByDays
-        for index in 0 ..< beforeDelete.count where beforeDelete[index].day == planByDay.day {
-            beforeDelete[index] = planByDay
+
+        for index in 0 ..< deletedPlanByDay.plans.count {
+            deletedPlanByDay.plans[index].displayOrder = Int16(index)
+        }
+
+        for index in 0 ..< beforeDelete.count where beforeDelete[index].day == deletedPlanByDay.day {
+            beforeDelete[index] = deletedPlanByDay
+            break
         }
         tripData.planByDays = beforeDelete
         _ = TripCoreDataManager.shared.updateTrip(updateTrip: tripData)
