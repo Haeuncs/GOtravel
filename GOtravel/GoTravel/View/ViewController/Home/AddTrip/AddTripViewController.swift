@@ -9,45 +9,27 @@
 import Foundation
 import UIKit
 import GooglePlaces
-import RealmSwift
+
 import IQKeyboardManagerSwift
 import SnapKit
 
 // 도시 검색 Search View Controller
+enum SearchType {
+  case city
+  case place
+}
 
 class AddTripViewController: UIViewController {
   // 앞 View 에서 전달 받는 데이터
   var category = [["장소 검색","검색하고 싶은 장소를 검색하세요."],["도시 검색","검색하고 싶은 도시를 입력하세요."]]
-  /// categoryIndex == 0 이면 도시 검색, 1이면 장소 검색
-  var categoryIndex = 0
-  
-  var countryRealmDB: countryRealm?
-  var dayRealmDB: dayRealm?
-  
-  private var searchController: UISearchController!
-  
+
+  var searchType: SearchType
+    var trip: Trip
+    let day: Int
+
   var tablePlaceInfo = Array<PlaceInfo>()
   var fetcher: GMSAutocompleteFetcher?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    IQKeyboardManager.shared.enable = false
-    if categoryIndex == 0 {
-      navView.setTitle(title: "여행 장소 검색")
-    }else{
-      navView.setTitle(title: "여행 도시 검색")
-    }
-    initView()
-  }
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.view.backgroundColor = UIColor.white
-    tableView.reloadData()
-    if let customTabBarController = self.tabBarController as? TabbarViewController {
-      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
-    }
 
-  }
   lazy var navView: CustomNavigationBarView = {
     let view = CustomNavigationBarView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +37,7 @@ class AddTripViewController: UIViewController {
     view.dismissBtn.addTarget(self, action: #selector(popEvent), for: .touchUpInside)
     return view
   }()
+
   lazy var searchView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +47,7 @@ class AddTripViewController: UIViewController {
     view.layer.zeplinStyleShadows(color: .black, alpha: 0.1, x: 0, y: 3, blur: 20, spread: 0)
     return view
   }()
+
   lazy var searchImg: UIImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFit
@@ -72,6 +56,7 @@ class AddTripViewController: UIViewController {
     image.tintColor = .grey03
     return image
   }()
+
   lazy var textField: UITextField = {
     let text = UITextField()
     text.clearButtonMode = UITextField.ViewMode.whileEditing
@@ -85,9 +70,10 @@ class AddTripViewController: UIViewController {
       attributes: [NSAttributedString.Key.foregroundColor:
         UIColor.grey03])
     text.translatesAutoresizingMaskIntoConstraints = false
-//    text.placeholder = "어디로 여행을 가시나요?"
+    //    text.placeholder = "어디로 여행을 가시나요?"
     return text
   }()
+
   lazy var tableView: UITableView = {
     let table = UITableView()
     table.translatesAutoresizingMaskIntoConstraints = false
@@ -96,12 +82,45 @@ class AddTripViewController: UIViewController {
     table.register(PlaceSearchTableViewCell.self, forCellReuseIdentifier: "cell")
     return table
   }()
+
   lazy var containerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.white
     return view
   }()
+
+    init(searchType: SearchType, trip: Trip, day: Int) {
+        self.searchType = searchType
+        self.day = day
+        self.trip = trip
+        super.init(nibName: nil, bundle: nil)
+    }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    IQKeyboardManager.shared.enable = false
+    switch searchType {
+    case .city:
+      navView.setTitle(title: "여행 도시 검색")
+    case .place:
+      navView.setTitle(title: "여행 장소 검색")
+    }
+    initView()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.view.backgroundColor = UIColor.white
+    tableView.reloadData()
+    if let customTabBarController = self.tabBarController as? TabbarViewController {
+      customTabBarController.hideTabBarAnimated(hide: false, completion: nil)
+    }
+  }
 
   func initView(){
     self.view.backgroundColor = .white
@@ -151,23 +170,19 @@ class AddTripViewController: UIViewController {
     
     // Set up the autocomplete filter.
     let filter = GMSAutocompleteFilter()
-    if categoryIndex == 0 {
-      // 사업체 검색
-      filter.type = .establishment
-    }else{
-      // 지역 검색
+    switch searchType {
+    case .city:
       filter.type = .city
+    case .place:
+      filter.type = .establishment
     }
-    
+
     // Create the fetcher.
     fetcher = GMSAutocompleteFetcher(bounds: bounds, filter: filter)
     fetcher?.delegate = self
     
     tableView.delegate = self
     tableView.dataSource = self
-    
-    //        self.tableView.reloadData()
-    
   }
 }
 
@@ -220,15 +235,22 @@ extension AddTripViewController: UITableViewDelegate{
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let googleMapVC = AddTripCheckMapViewController()
-    print(tablePlaceInfo[indexPath.row])
-    googleMapVC.selectPlaceInfo = tablePlaceInfo[indexPath.row]
-    googleMapVC.myColor = #colorLiteral(red: 0.8209087171, green: 0.454993382, blue: 0.461091971, alpha: 1)
-    if categoryIndex == 0{
-      googleMapVC.dayRealmDB = dayRealmDB!
+    guard let mapData = tablePlaceInfo[safe: indexPath.row] else {
+        return
     }
-    googleMapVC.arrayMap = false
-    googleMapVC.categoryIndex = categoryIndex
+    let newPlan = Plan(
+        address: mapData.address,
+        title: mapData.title,
+        coordinate: Coordinate(latitude: mapData.location?.latitude ?? 0, longitude: mapData.location?.longitude ?? 0),
+        displayOrder: Int16(trip.planByDays[day].plans.count),
+        identifier: UUID()
+    )
+    let googleMapVC = AddTripCheckMapViewController(
+        searchType: searchType,
+        trip: trip,
+        plan: newPlan,
+        day: day
+    )
     self.navigationController?.pushViewController(googleMapVC, animated: true)
   }
   
@@ -295,14 +317,4 @@ extension AddTripViewController: GMSAutocompleteFetcherDelegate {
     //resultText?.text = error.localizedDescription
     print(error.localizedDescription)
   }
-
 }
-//
-//extension AddTripViewController: UISearchResultsUpdating {
-//  // MARK: - UISearchResultsUpdating Delegate
-//  func updateSearchResults(for searchController: UISearchController) {
-//    // TODO
-//    print(searchController.searchBar.text!)
-//    fetcher?.sourceTextHasChanged(searchController.searchBar.text!)
-//  }
-//}

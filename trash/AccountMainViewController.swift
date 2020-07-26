@@ -6,7 +6,7 @@
 //  Copyright © 2019 haeun. All rights reserved.
 //
 import UIKit
-import RealmSwift
+
 import RxCocoa
 import RxSwift
 

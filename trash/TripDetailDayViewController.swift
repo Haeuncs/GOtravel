@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import RealmSwift
+
 import SnapKit
 
 protocol changeDelegate: class {
@@ -91,17 +91,19 @@ class TripDetailDayViewController: UIViewController{
     self.navigationController?.popViewController(animated: true)
   }
   @objc func saveBtn(){
-    let setData = mainView as? changeDetailView;
-    if setData?.colorPik == "" {
-      setData?.colorPik = "default"
+    guard let setData = mainView as? changeDetailView else {
+      return
+    }
+    if setData.colorPik == "" {
+      setData.colorPik = "default"
     }
     try! realm.write {
-      detailRealmDB?.color = setData!.colorPik
-      detailRealmDB?.title = setData!.titleTextInput.text!
-      detailRealmDB?.startTime = setData!.startTime
-      detailRealmDB?.EndTime = setData!.endTime
-      detailRealmDB?.memo = setData!.memoTextInput.text!
-      detailRealmDB?.oneLineMemo = setData!.miniMemoTextInput.text!
+      detailRealmDB?.color = setData.colorPik
+      detailRealmDB?.title = setData.titleTextInput.text ?? ""
+      detailRealmDB?.startTime = setData.startTime
+      detailRealmDB?.EndTime = setDate.endTime
+      detailRealmDB?.memo = setData.memoTextInput.text ?? ""
+      detailRealmDB?.oneLineMemo = setDatae.miniMemoTextInput.text ?? ""
     }
     
     self.navigationController?.popViewController(animated: true)

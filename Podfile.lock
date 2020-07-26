@@ -10,11 +10,6 @@ PODS:
   - GooglePlaces (3.3.0):
     - GoogleMaps/Base (= 3.3.0)
   - IQKeyboardManagerSwift (6.5.5)
-  - Realm (4.3.2):
-    - Realm/Headers (= 4.3.2)
-  - Realm/Headers (4.3.2)
-  - RealmSwift (4.3.2):
-    - Realm (= 4.3.2)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -34,8 +29,6 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - IQKeyboardManagerSwift
-  - Realm
-  - RealmSwift
   - RxCocoa
   - RxDataSources
   - RxSwift
@@ -50,8 +43,6 @@ SPEC REPOS:
     - GoogleMaps
     - GooglePlaces
     - IQKeyboardManagerSwift
-    - Realm
-    - RealmSwift
     - RxCocoa
     - RxDataSources
     - RxRelay
@@ -66,8 +57,6 @@ SPEC CHECKSUMS:
   GoogleMaps: cfee83da305b9aaeccf92c24ac79df11c3003492
   GooglePlaces: 1e2a87bd9efee9623ee65d44ecc35ebfecd7b13c
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
-  Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
-  RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
@@ -75,6 +64,6 @@ SPEC CHECKSUMS:
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 9435418172b31dd706d78c767164c8c800cf4f98
+PODFILE CHECKSUM: e8b314261f6f41383ed8bcad13467a82008ff6ee
 
 COCOAPODS: 1.8.4

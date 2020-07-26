@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 import SnapKit
 
 class TripDescriptionView: UIView {
@@ -176,47 +176,6 @@ class AddDetailViewCellButtonView: UIView {
 //    button.layer.zeplinStyleShadows(color: UIColor(red: 1.0, green: 250.0 / 255.0, blue: 221.0 / 255.0, alpha: 1.0), alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
     return button
   }()
-
-  let addBtn: UIButton = {
-    let button = UIButton(type: .custom)
-    let image = UIImage(named: "addBtn")?.withRenderingMode(.alwaysTemplate)
-    button.setImage(image, for: .normal)
-    button.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    return button
-  }()
-  var moneyBtn: UIButton = {
-    let button = UIButton(type: .custom)
-    button.alpha = 0.0
-    let image = UIImage(named: "moneyBtn")?.withRenderingMode(.alwaysTemplate)
-    button.setImage(image, for: .normal)
-    button.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    return button
-  }()
-  let detailBtn: UIButton = {
-    let button = UIButton(type: .custom)
-    button.alpha = 0.0
-    let image = UIImage(named: "detailBtn")?.withRenderingMode(.alwaysTemplate)
-    button.setImage(image, for: .normal)
-    button.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    return button
-  }()
-  let pathBtn: UIButton = {
-    let button = UIButton(type: .custom)
-    button.alpha = 0.0
-    let image = UIImage(named: "pathBtn")?.withRenderingMode(.alwaysTemplate)
-    button.setImage(image, for: .normal)
-    button.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    return button
-  }()
-  
   let view: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false

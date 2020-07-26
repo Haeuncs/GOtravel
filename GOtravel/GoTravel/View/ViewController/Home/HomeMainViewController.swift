@@ -10,7 +10,12 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
-import RealmSwift
+
+enum TravelContentType {
+    case traveling
+    case past
+    case future
+}
 
 class HomeMainViewController: UIViewController {
   
@@ -23,9 +28,20 @@ class HomeMainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    //    print(Realm.Configuration.defaultConfiguration.fileURL!)
+
     initView()
     rx()
-    //    print(Realm.Configuration.defaultConfiguration.fileURL!)
+    viewModel.getTripData()
+
+    NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(tripDataChanged),
+        name: .tripDataChange,
+        object: nil
+    )
+
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -34,7 +50,7 @@ class HomeMainViewController: UIViewController {
     }
     
     navigationController?.navigationBar.isHidden = true
-    viewModel.getTripData()
+
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -87,7 +103,9 @@ class HomeMainViewController: UIViewController {
     service = HomeModelService()
     viewModel = HomeViewModel(service: self.service)
     
-    viewModel.tripData.subscribe(onNext: { [weak self] (arr) in
+    viewModel.tripData
+        .distinctUntilChanged({ $0.count == $1.count })
+        .subscribe(onNext: { [weak self] (arr) in
       self?.setup(count: arr.count)
     })
       .disposed(by: disposeBag)
@@ -97,16 +115,15 @@ class HomeMainViewController: UIViewController {
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { _, model, cell in
           cell.configure(withDelegate: MainVCCVCViewModel(model))
-          cell.mainBackgroundView.backgroundColor = HSBrandomColor()
+            cell.mainBackgroundView.backgroundColor = UIColor().HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.6, x: 0, y: 0, blur: 20, spread: 0)
           
     }
     .disposed(by: disposeBag)
     
-    contentView.tripCollectionView.rx.modelSelected(countryRealm.self)
-      .subscribe(onNext: { [weak self] (country) in
-        let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country
+    contentView.tripCollectionView.rx.modelSelected(TripDataType.self)
+      .subscribe(onNext: { [weak self] (tripData) in
+        let tripViewController = TripDetailMainViewController(trip: tripData.trip)
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen
@@ -146,6 +163,10 @@ extension HomeMainViewController {
     let page: Int? = sender.currentPage
     contentView.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
   }
+
+    @objc func tripDataChanged() {
+        viewModel.getTripData()
+    }
 }
 
 extension HomeMainViewController: UICollectionViewDelegate {

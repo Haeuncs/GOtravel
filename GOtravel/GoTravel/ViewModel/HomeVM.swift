@@ -14,32 +14,40 @@ protocol mainVC_protocol {
     var cityTitle: String{ get }
     var ddayTitle: String{ get }
 }
-struct  MainVCCVCViewModel: mainVC_protocol{
+
+struct  MainVCCVCViewModel: mainVC_protocol {
     var countryTitle: String
     var cityTitle: String
     var ddayTitle: String
-    
-    init(_ model: countryRealm) {
-        self.countryTitle = model.country
-        self.cityTitle = model.city
+
+    init(_ model: TripDataType) {
+        let countryData = model.trip
+        self.countryTitle = countryData.country
+        self.cityTitle = countryData.city
         self.ddayTitle = ""
-      
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yy.M.dd"
-      var dday = model.date?.totalDistance(from: Date(), resultIn: .day)
-      print("비교하는 \(dateFormatter.string(from: model.date!))")
-      print("오늘 날짜 \(dateFormatter.string(from: Date()))")
-      print(dday)
-      // 여행 시작 날이거나 여행 중인 날
-      if dday! >= 0 {
-        let endDate = Calendar.current.date(byAdding: .day, value: model.period - 1, to: model.date ?? Date())
-        if endDate! > Date() {
-          self.ddayTitle = "\(dday! + 1)일차"
-        }else{
-          self.ddayTitle = "\(dateFormatter.string(from: model.date!)) ~ \(dateFormatter.string(from: endDate!))"
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.M.dd"
+
+        let date = countryData.date
+        guard let endDate = Calendar.current.date(byAdding: .day, value: countryData.period - 1, to: date) else {
+            return
         }
-      }else{
-        self.ddayTitle = "D-\((dday!*(-1)) + 1)"
-      }
+        let dday = date.interval(ofComponent: .day, fromDate: Date())
+
+        print("비교하는 \(date.localDateString())")
+        print("비교하는 \(endDate.localDateString())")
+        print("오늘 날짜 \(Date().localDateString())")
+        print(dday)
+
+        // 여행 시작 날이거나 여행 중인 날
+        switch model.contentType {
+        case .future:
+            self.ddayTitle = "D-\(dday + 1)"
+        case .past:
+            self.ddayTitle = "\(dateFormatter.string(from: date)) ~ \(dateFormatter.string(from: endDate))"
+        case .traveling:
+            self.ddayTitle = "\(abs(dday))일차"
+        }
     }
 }

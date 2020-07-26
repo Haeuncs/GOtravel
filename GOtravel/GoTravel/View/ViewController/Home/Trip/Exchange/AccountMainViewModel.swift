@@ -7,45 +7,56 @@
 //
 
 import Foundation
-import RealmSwift
 import RxSwift
 import RxCocoa
 
 protocol AccountMainInput {
-  var tripMoneyData: BehaviorRelay<[moneyRealm]> { get }
-  var selectedDay: BehaviorRelay<Int> { get }
+    var trip: BehaviorRelay<Trip> { get }
+    var paybyDay: BehaviorRelay<PayByDays> { get }
+    var selectedDay: BehaviorRelay<Int> { get }
 }
 
 protocol AccountMainOutput {
-  var specificDayDetail: BehaviorRelay<List<moneyDetailRealm>> { get }
+    var payByDays: BehaviorRelay<[PayByDays]> { get }
+    var pays: BehaviorRelay<[Pay]> { get }
 }
 
 protocol AccountMainType {
-  var input: AccountMainInput { get }
-  var output: AccountMainOutput { get }
+    var input: AccountMainInput { get }
+    var output: AccountMainOutput { get }
 }
 
 class AccountMainViewModel: AccountMainInput, AccountMainOutput, AccountMainType {
-  
-  var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
-  var selectedDay: BehaviorRelay<Int>
-  var input: AccountMainInput { return self }
-  var output: AccountMainOutput { return self }
-  
-  var tripMoneyData: BehaviorRelay<[moneyRealm]>
-  var specificDayDetail: BehaviorRelay<List<moneyDetailRealm>>
-  
-  init(data: [moneyRealm], day: Int) {
-    self.selectedDay = BehaviorRelay(value: day)
-    self.tripMoneyData = BehaviorRelay(value: data)
-    self.specificDayDetail = BehaviorRelay(value: data[day].detailList)
-    
-    self.selectedDay
-      .map { (day) -> List<moneyDetailRealm> in
-        print("\(day)일 \(self.tripMoneyData.value[day])")
-      return self.tripMoneyData.value[day].detailList}
-      .bind(to: self.specificDayDetail)
-    .disposed(by: disposeBag)
-  }
+    var trip: BehaviorRelay<Trip>
+    var selectedDay: BehaviorRelay<Int>
+    var paybyDay: BehaviorRelay<PayByDays>
+
+    var payByDays: BehaviorRelay<[PayByDays]>
+    var pays: BehaviorRelay<[Pay]>
+
+    var input: AccountMainInput { return self }
+    var output: AccountMainOutput { return self }
+
+    init(trip: Trip, day: Int) {
+        self.trip = BehaviorRelay(value: trip)
+        self.selectedDay = BehaviorRelay(value: day)
+        self.paybyDay = BehaviorRelay(value: trip.payByDays[day])
+        self.payByDays = BehaviorRelay(value: trip.payByDays)
+        self.pays = BehaviorRelay(value: trip.payByDays[day].pays)
+
+        self.selectedDay.map { (day) -> [Pay] in
+            return self.trip.value.payByDays[day].pays
+        }
+        .bind(to: self.pays)
+        .disposed(by: disposeBag)
+
+        self.trip.subscribe(onNext: { [weak self] (trip) in
+            guard let self = self else { return }
+            self.paybyDay.accept(trip.payByDays[self.selectedDay.value])
+            self.payByDays.accept(trip.payByDays)
+            self.pays.accept(trip.payByDays[self.selectedDay.value].pays)
+        }).disposed(by: disposeBag)
+    }
 }

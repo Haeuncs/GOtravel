@@ -135,7 +135,7 @@ class DireactAddReceiptPriceViewController: UIViewController {
         let nav = self.navigationController
         switch self.currentType {
         case .korean:
-          self.directAddReceiptDelegate?.addKoreanPrice(price: self.priceText)
+          self.directAddReceiptDelegate?.addKoreanPrice(price: self.priceText.addDotInNumber())
           nav?.popViewController(animated: true)
         case .other:
           self.directAddReceiptDelegate?.addExchangePrice(exchange: (self.exchangeModel?.foreignName!)!, price: self.viewModel.output.calculatedKor.value)

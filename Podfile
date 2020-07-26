@@ -7,8 +7,7 @@ target 'GOtravel' do
 
   # Pods for GOtravel
 #pod 'RealmSwift'
-pod 'Realm'
-pod 'RealmSwift'
+
 pod 'GoogleMaps'
 pod 'GooglePlaces'
 pod 'IQKeyboardManagerSwift'

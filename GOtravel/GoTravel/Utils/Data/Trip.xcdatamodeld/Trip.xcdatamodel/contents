@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Coordinate" representedClassName="ManagedCoordinate" syncable="YES">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="ofPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plan" inverseName="coordinate" inverseEntity="Plan"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="coordinate" inverseEntity="Trip"/>
+    </entity>
+    <entity name="Pay" representedClassName="ManagedPay" syncable="YES">
+        <attribute name="category" attributeType="String"/>
+        <attribute name="displayOrder" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="exchangeName" optional="YES" attributeType="String"/>
+        <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="krWon" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="ofPayByDays" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PayByDays" inverseName="pays" inverseEntity="PayByDays"/>
+    </entity>
+    <entity name="PayByDays" representedClassName="ManagedPayByDays" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="payByDays" inverseEntity="Trip"/>
+        <relationship name="pays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pay" inverseName="ofPayByDays" inverseEntity="Pay"/>
+    </entity>
+    <entity name="Plan" representedClassName="ManagedPlan" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="displayOrder" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="oneLineMemo" optional="YES" attributeType="String"/>
+        <attribute name="pinColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="coordinate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coordinate" inverseName="ofPlan" inverseEntity="Coordinate"/>
+        <relationship name="ofPlanByDays" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlanByDays" inverseName="plans" inverseEntity="PlanByDays"/>
+    </entity>
+    <entity name="PlanByDays" representedClassName="ManagedPlanByDays" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="planByDays" inverseEntity="Trip"/>
+        <relationship name="plans" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plan" inverseName="ofPlanByDays" inverseEntity="Plan"/>
+    </entity>
+    <entity name="Trip" representedClassName="ManagedTrip" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="identifier" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="period" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="coordinate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coordinate" inverseName="ofTrip" inverseEntity="Coordinate"/>
+        <relationship name="payByDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PayByDays" inverseName="ofTrip" inverseEntity="PayByDays"/>
+        <relationship name="planByDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PlanByDays" inverseName="ofTrip" inverseEntity="PlanByDays"/>
+    </entity>
+    <elements>
+        <element name="Coordinate" positionX="-349.39453125" positionY="-321.05078125" width="128" height="103"/>
+        <element name="Pay" positionX="-73.7421875" positionY="46.1796875" width="128" height="148"/>
+        <element name="PayByDays" positionX="-244.796875" positionY="127.26171875" width="128" height="88"/>
+        <element name="Plan" positionX="-107.171875" positionY="-160.3515625" width="128" height="178"/>
+        <element name="PlanByDays" positionX="-557.70703125" positionY="124.5" width="128" height="88"/>
+        <element name="Trip" positionX="-525.23828125" positionY="-179.453125" width="128" height="163"/>
+    </elements>
+</model>

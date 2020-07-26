@@ -1,7 +1,7 @@
 
 import UIKit
 import CenteredCollectionView
-import RealmSwift
+
 import EasyTipView
 
 //FIXIT : 클릭하면 이동하는거 index row 기준 아니고 데이터 자체를 이동하기

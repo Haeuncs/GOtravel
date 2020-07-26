@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RealmSwift
+
 // swiftlint:disable all
 class realmTravelDetailInfo : Object{
     @objc dynamic var startDate = Date()

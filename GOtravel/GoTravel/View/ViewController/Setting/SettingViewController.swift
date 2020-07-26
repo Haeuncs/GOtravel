@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 class SettingViewController: UIViewController {
+  // 테이블뷰
+  let belowView: SettingView = {
+    let view = SettingView()
+    view.layer.cornerRadius = 10
+    view.backgroundColor = UIColor.white
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   override func viewDidLoad() {
     self.navigationItem.title = "설정"
     view.backgroundColor = .white
@@ -20,17 +29,20 @@ class SettingViewController: UIViewController {
     // back button color
     self.navigationController?.navigationBar.tintColor = .black
   }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.isHidden = false
     initView()
   }
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     if let indexPath = belowView.table.indexPathForSelectedRow {
       belowView.table.deselectRow(at: indexPath, animated: true)
     }
   }
+
   func initView() {
     belowView.delegate = self
     self.view.addSubview(belowView)
@@ -41,15 +53,6 @@ class SettingViewController: UIViewController {
       belowView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
       ])
   }
-  // 테이블뷰
-  let belowView: SettingView = {
-    let view = SettingView()
-    view.layer.cornerRadius = 10
-    view.backgroundColor = UIColor.white
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
 }
 
 extension SettingViewController: ViewControllerDelegate {

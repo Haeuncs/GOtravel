@@ -11,7 +11,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
-import RealmSwift
+
 
 class PastTripViewController: UIViewController {
   //    @IBOutlet weak var subView: UIView!
@@ -22,10 +22,10 @@ class PastTripViewController: UIViewController {
   
   var disposeBag = DisposeBag()
   /// realm trip data
-  var tripData = BehaviorSubject(value: [countryRealm]())
-  let realm = try? Realm()
-  // 기본 저장 데이터
-  var countryRealmDB: List<countryRealm>?
+  var tripData = BehaviorSubject(value: [TripDataType]())
+//  let realm = try? Realm()
+//  // 기본 저장 데이터
+//  var countryRealmDB: List<countryRealm>?
   /// for titleView Animation
   var titleConstraint: NSLayoutConstraint?
   
@@ -33,11 +33,20 @@ class PastTripViewController: UIViewController {
     super.viewDidLoad()
     initView()
     rx()
+    tripDataChanged()
+
+    NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(tripDataChanged),
+        name: .tripDataChange,
+        object: nil
+    )
+
   }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.isHidden = true
-    processingDateData()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -64,15 +73,14 @@ class PastTripViewController: UIViewController {
         cellIdentifier: String(describing: TripCell.self),
         cellType: TripCell.self)) { _, model, cell in
           cell.configure(withDelegate: MainVCCVCViewModel(model))
-          cell.mainBackgroundView.backgroundColor = HSBrandomColor()
+            cell.mainBackgroundView.backgroundColor = UIColor().HSBrandomColor()
           cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
-          
+
     }.disposed(by: disposeBag)
     
-    tripCollectionView.rx.modelSelected(countryRealm.self)
-      .subscribe(onNext: { (country) in
-        let tripViewController = TripDetailMainViewController()
-        tripViewController.countryRealmDB = country
+    tripCollectionView.rx.modelSelected(TripDataType.self)
+      .subscribe(onNext: { (tripData) in
+        let tripViewController = TripDetailMainViewController(trip: tripData.trip)
         let nav = UINavigationController(rootViewController: tripViewController)
         nav.modalTransitionStyle = .coverVertical
         nav.modalPresentationStyle = .fullScreen
@@ -179,35 +187,24 @@ class PastTripViewController: UIViewController {
         }
   }
   
-  func processingDateData(){
-    var processedData = List<countryRealm>()
-    
-    // 1. load
-    var countryRealmDB = realm?.objects(countryRealm.self)
-    
-    countryRealmDB = countryRealmDB?.sorted(byKeyPath: "date", ascending: true)
-    // 2. processing
-    if let countryRealmDB = countryRealmDB {
-      for i in countryRealmDB {
-        let startDay = i.date ?? Date()
-        let endDate = Calendar.current.date(byAdding: .day, value: i.period, to: startDay)
-        if endDate ?? Date() < Date() {
-          processedData.append(i)
-        }
-      }
+  @objc func tripDataChanged() {
+    guard let trips = TripCoreDataManager.shared.fetchAllTrip() else {
+        tripData.onNext([])
+        return
     }
-    // 3. order
-    processedData.sort { (($0.date)?.compare($1.date!))! == .orderedDescending }
-    
-    if processedData.count == 0 {
+
+    let data = HomeModelService.pastOrderByDate(trip: trips)
+    tripData.onNext(data)
+
+    if data.count == 0 {
       tripCollectionView.backgroundView = emptyView
     }else{
       tripCollectionView.backgroundView = .none
     }
-    self.pageControl.numberOfPages = processedData.count
+    self.pageControl.numberOfPages = data.count
     self.pageControl.currentPage = 0
-    tripData.onNext(Array(processedData))
   }
+
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
     self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
