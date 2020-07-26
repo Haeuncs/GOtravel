@@ -118,7 +118,11 @@ class PullUpPopupViewController: UIViewController {
         }
         contentView.snp.makeConstraints { (make) in
             make.top.greaterThanOrEqualTo(view)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            if hasTopNotch {
+                make.bottom.equalTo(view.safeAreaLayoutGuide)
+            } else {
+                make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            }
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-16)
         }

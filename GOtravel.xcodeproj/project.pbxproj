@@ -55,6 +55,7 @@
 		7D276E5E24C1CF2000CA4554 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5D24C1CF2000CA4554 /* Double+.swift */; };
 		7D276E6024C1CF5C00CA4554 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */; };
 		7D276E6224C1CF7F00CA4554 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */; };
+		7D2D3AD124CD804000D0E7CC /* DirectAddTripCostCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2D3AD024CD804000D0E7CC /* DirectAddTripCostCategoryCell.swift */; };
 		7D2EC23024CB55A300BE30BC /* PullUpPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC22F24CB55A300BE30BC /* PullUpPopupViewController.swift */; };
 		7D2EC23224CB565F00BE30BC /* PullUpPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC23124CB565F00BE30BC /* PullUpPopupCell.swift */; };
 		7D2EC23424CB573300BE30BC /* PullUpPopupDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2EC23324CB573300BE30BC /* PullUpPopupDataType.swift */; };
@@ -90,7 +91,7 @@
 		7D72597E2301AC800034FA8E /* DirectAddAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72597D2301AC800034FA8E /* DirectAddAccountCell.swift */; };
 		7D72598023023AB80034FA8E /* ExchangeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72597F23023AB70034FA8E /* ExchangeSelectViewModel.swift */; };
 		7D72671022E33EB500589C82 /* settingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72670F22E33EB400589C82 /* settingModel.swift */; };
-		7D72931A2309252A00578A5F /* AccountMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7293192309252A00578A5F /* AccountMainViewController.swift */; };
+		7D72931A2309252A00578A5F /* TripCostMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7293192309252A00578A5F /* TripCostMainViewController.swift */; };
 		7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931B23097CBA00578A5F /* UITableView+.swift */; };
 		7D72931E23097CF400578A5F /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72931D23097CF400578A5F /* Reactive+.swift */; };
 		7D7394192308226E00FBA898 /* HomeMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7394182308226E00FBA898 /* HomeMainViewController.swift */; };
@@ -116,7 +117,7 @@
 		7D895C7A23D4368B001AB3B6 /* AddTripDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D895C7923D4368B001AB3B6 /* AddTripDateViewModel.swift */; };
 		7D8DBB9522F0A230008C20E9 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */; };
 		7D9E123A241689F00061E7BF /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9E1239241689EF0061E7BF /* TextField.swift */; };
-		7D9E123C241A69930061E7BF /* DirectAddReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9E123B241A69930061E7BF /* DirectAddReceiptViewController.swift */; };
+		7D9E123C241A69930061E7BF /* DirectAddTripCostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9E123B241A69930061E7BF /* DirectAddTripCostViewController.swift */; };
 		7DB3FF8823057EB4007A180B /* Formatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3FF8723057EB4007A180B /* Formatter+.swift */; };
 		7DBA0D93242CF9DD00C248E4 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBA0D92242CF9DD00C248E4 /* HomeMainView.swift */; };
 		7DBA0D95242E1BED00C248E4 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBA0D94242E1BED00C248E4 /* RealmManager.swift */; };
@@ -205,6 +206,7 @@
 		7D276E5D24C1CF2000CA4554 /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		7D276E5F24C1CF5C00CA4554 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		7D276E6124C1CF7F00CA4554 /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
+		7D2D3AD024CD804000D0E7CC /* DirectAddTripCostCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAddTripCostCategoryCell.swift; sourceTree = "<group>"; };
 		7D2EC22F24CB55A300BE30BC /* PullUpPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpPopupViewController.swift; sourceTree = "<group>"; };
 		7D2EC23124CB565F00BE30BC /* PullUpPopupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpPopupCell.swift; sourceTree = "<group>"; };
 		7D2EC23324CB573300BE30BC /* PullUpPopupDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpPopupDataType.swift; sourceTree = "<group>"; };
@@ -242,7 +244,7 @@
 		7D72597D2301AC800034FA8E /* DirectAddAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAddAccountCell.swift; sourceTree = "<group>"; };
 		7D72597F23023AB70034FA8E /* ExchangeSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeSelectViewModel.swift; sourceTree = "<group>"; };
 		7D72670F22E33EB400589C82 /* settingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingModel.swift; sourceTree = "<group>"; };
-		7D7293192309252A00578A5F /* AccountMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMainViewController.swift; sourceTree = "<group>"; };
+		7D7293192309252A00578A5F /* TripCostMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCostMainViewController.swift; sourceTree = "<group>"; };
 		7D72931B23097CBA00578A5F /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		7D72931D23097CF400578A5F /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		7D7394182308226E00FBA898 /* HomeMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewController.swift; sourceTree = "<group>"; };
@@ -268,7 +270,7 @@
 		7D895C7923D4368B001AB3B6 /* AddTripDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripDateViewModel.swift; sourceTree = "<group>"; };
 		7D8DBB9422F0A230008C20E9 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenSourceLicenseViewController.swift; path = ../OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		7D9E1239241689EF0061E7BF /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
-		7D9E123B241A69930061E7BF /* DirectAddReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAddReceiptViewController.swift; sourceTree = "<group>"; };
+		7D9E123B241A69930061E7BF /* DirectAddTripCostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAddTripCostViewController.swift; sourceTree = "<group>"; };
 		7DB3FF8723057EB4007A180B /* Formatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+.swift"; sourceTree = "<group>"; };
 		7DBA0D92242CF9DD00C248E4 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		7DBA0D94242E1BED00C248E4 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -348,13 +350,14 @@
 		4A5F61F4220C9DF600531239 /* Exchange */ = {
 			isa = PBXGroup;
 			children = (
-				7D7293192309252A00578A5F /* AccountMainViewController.swift */,
 				7DBA0D96242E2A3500C248E4 /* AccountMainViewModel.swift */,
 				7DFC581022FF05E5002BFD86 /* DirectAddExchangeViewController.swift */,
+				7D2D3AD024CD804000D0E7CC /* DirectAddTripCostCategoryCell.swift */,
 				7D276E5524C09C1E00CA4554 /* ExchangeCell.swift */,
 				7D72596922FFEFA50034FA8E /* ExchangeSelectCountryViewController.swift */,
 				7D276E5924C09C6900CA4554 /* ExchangeSubView.swift */,
 				7D276E5724C09C4C00CA4554 /* ExchangeTableView.swift */,
+				7D7293192309252A00578A5F /* TripCostMainViewController.swift */,
 				7D33700E242A5FA900138DDE /* Add */,
 			);
 			path = Exchange;
@@ -529,7 +532,7 @@
 			children = (
 				7DBC1D6F2428F1D40011ED2B /* DireactAddReceiptPriceViewController.swift */,
 				7DBC1D7124290B4B0011ED2B /* DirectAddReceiptPriceViewModel.swift */,
-				7D9E123B241A69930061E7BF /* DirectAddReceiptViewController.swift */,
+				7D9E123B241A69930061E7BF /* DirectAddTripCostViewController.swift */,
 				7DBC1D6D2428EAE90011ED2B /* DirectAddReceiptViewModel.swift */,
 			);
 			path = Add;
@@ -977,7 +980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D72931A2309252A00578A5F /* AccountMainViewController.swift in Sources */,
+				7D72931A2309252A00578A5F /* TripCostMainViewController.swift in Sources */,
 				7D2EC25E24CC0FB900BE30BC /* Notification.Name+.swift in Sources */,
 				7DFC581A22FF29BD002BFD86 /* Toast.swift in Sources */,
 				7D72596D22FFF0F90034FA8E /* exchangeCell.swift in Sources */,
@@ -1026,7 +1029,7 @@
 				4AC7107421EFD5B200B20448 /* UIDevice+.swfit in Sources */,
 				7D895C6423D2E235001AB3B6 /* CustomNavigationContoller.swift in Sources */,
 				4AC710B121F0EE1400B20448 /* struct.swift in Sources */,
-				7D9E123C241A69930061E7BF /* DirectAddReceiptViewController.swift in Sources */,
+				7D9E123C241A69930061E7BF /* DirectAddTripCostViewController.swift in Sources */,
 				4A779F5921E7C24C00CCE52F /* MKPlacemark+.swift in Sources */,
 				4A5B322721F6913E0007AB21 /* DefaultStyle.swift in Sources */,
 				4AC710B321F103EF00B20448 /* TripDescriptionView.swift in Sources */,
@@ -1081,6 +1084,7 @@
 				7D72597B2301A7750034FA8E /* DirectAddAccountViewModel.swift in Sources */,
 				7D2EC23024CB55A300BE30BC /* PullUpPopupViewController.swift in Sources */,
 				7D276E5C24C1CF0D00CA4554 /* Int+.swift in Sources */,
+				7D2D3AD124CD804000D0E7CC /* DirectAddTripCostCategoryCell.swift in Sources */,
 				7D895C4C23CF6FF2001AB3B6 /* HomeTripEmptyView.swift in Sources */,
 				7D03765024BB8B640071124E /* UIButton+.swift in Sources */,
 				7D72931C23097CBA00578A5F /* UITableView+.swift in Sources */,

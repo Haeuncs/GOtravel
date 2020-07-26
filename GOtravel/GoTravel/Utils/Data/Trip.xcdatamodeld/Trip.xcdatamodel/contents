@@ -7,6 +7,7 @@
         <relationship name="ofTrip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="coordinate" inverseEntity="Trip"/>
     </entity>
     <entity name="Pay" representedClassName="ManagedPay" syncable="YES">
+        <attribute name="category" attributeType="String"/>
         <attribute name="displayOrder" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="exchangeName" optional="YES" attributeType="String"/>
         <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
@@ -47,10 +48,10 @@
     </entity>
     <elements>
         <element name="Coordinate" positionX="-349.39453125" positionY="-321.05078125" width="128" height="103"/>
-        <element name="Pay" positionX="-73.7421875" positionY="46.1796875" width="128" height="133"/>
-        <element name="Plan" positionX="-107.171875" positionY="-160.3515625" width="128" height="178"/>
-        <element name="Trip" positionX="-525.23828125" positionY="-179.453125" width="128" height="163"/>
-        <element name="PlanByDays" positionX="-557.70703125" positionY="124.5" width="128" height="88"/>
+        <element name="Pay" positionX="-73.7421875" positionY="46.1796875" width="128" height="148"/>
         <element name="PayByDays" positionX="-244.796875" positionY="127.26171875" width="128" height="88"/>
+        <element name="Plan" positionX="-107.171875" positionY="-160.3515625" width="128" height="178"/>
+        <element name="PlanByDays" positionX="-557.70703125" positionY="124.5" width="128" height="88"/>
+        <element name="Trip" positionX="-525.23828125" positionY="-179.453125" width="128" height="163"/>
     </elements>
 </model>

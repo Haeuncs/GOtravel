@@ -22,7 +22,7 @@ class PastTripViewController: UIViewController {
   
   var disposeBag = DisposeBag()
   /// realm trip data
-//  var tripData = BehaviorSubject(value: [TravelDataType]())
+  var tripData = BehaviorSubject(value: [TripDataType]())
 //  let realm = try? Realm()
 //  // 기본 저장 데이터
 //  var countryRealmDB: List<countryRealm>?
@@ -33,11 +33,20 @@ class PastTripViewController: UIViewController {
     super.viewDidLoad()
     initView()
     rx()
+    tripDataChanged()
+
+    NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(tripDataChanged),
+        name: .tripDataChange,
+        object: nil
+    )
+
   }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.isHidden = true
-    processingDateData()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -59,15 +68,15 @@ class PastTripViewController: UIViewController {
   }
   
   func rx(){
-//    tripData.asObservable()
-//      .bind(to: tripCollectionView.rx.items(
-//        cellIdentifier: String(describing: TripCell.self),
-//        cellType: TripCell.self)) { _, model, cell in
-//          cell.configure(withDelegate: MainVCCVCViewModel(model))
-//          cell.mainBackgroundView.backgroundColor = HSBrandomColor()
-//          cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
-//          
-//    }.disposed(by: disposeBag)
+    tripData.asObservable()
+      .bind(to: tripCollectionView.rx.items(
+        cellIdentifier: String(describing: TripCell.self),
+        cellType: TripCell.self)) { _, model, cell in
+          cell.configure(withDelegate: MainVCCVCViewModel(model))
+            cell.mainBackgroundView.backgroundColor = UIColor().HSBrandomColor()
+          cell.mainBackgroundView.layer.zeplinStyleShadows(color: cell.mainBackgroundView.backgroundColor ?? .white , alpha: 0.3, x: 0, y: 15, blur: 15, spread: 0)
+
+    }.disposed(by: disposeBag)
     
     tripCollectionView.rx.modelSelected(TripDataType.self)
       .subscribe(onNext: { (tripData) in
@@ -178,26 +187,24 @@ class PastTripViewController: UIViewController {
         }
   }
   
-  func processingDateData(){
-    // 1. load
-//    guard let countryRealmDB = realm?.objects(countryRealm.self) else {
-//        tripData.onNext([])
-//        return
-//    }
-//
-//    var processedTravel = HomeModelService.pastTravel(data: countryRealmDB)
-//    // 3. order
-//    processedTravel.sort { (($0.countryData.date)?.compare($1.countryData.date!))! == .orderedDescending }
-//
-//    if processedTravel.count == 0 {
-//      tripCollectionView.backgroundView = emptyView
-//    }else{
-//      tripCollectionView.backgroundView = .none
-//    }
-//    self.pageControl.numberOfPages = processedTravel.count
-//    self.pageControl.currentPage = 0
-//    tripData.onNext(Array(processedTravel))
+  @objc func tripDataChanged() {
+    guard let trips = TripCoreDataManager.shared.fetchAllTrip() else {
+        tripData.onNext([])
+        return
+    }
+
+    let data = HomeModelService.pastOrderByDate(trip: trips)
+    tripData.onNext(data)
+
+    if data.count == 0 {
+      tripCollectionView.backgroundView = emptyView
+    }else{
+      tripCollectionView.backgroundView = .none
+    }
+    self.pageControl.numberOfPages = data.count
+    self.pageControl.currentPage = 0
   }
+
   @objc func changeCell(_ sender: UIPageControl) {
     let page: Int? = sender.currentPage
     self.tripCollectionView.selectItem(at: IndexPath(row: page ?? 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)

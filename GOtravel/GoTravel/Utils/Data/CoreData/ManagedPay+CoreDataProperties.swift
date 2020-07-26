@@ -15,13 +15,15 @@ struct Pay {
         krWon: Float,
         name: String? = nil,
         displayOrder: Int16,
-        identifier: UUID
+        identifier: UUID,
+        category: String
     ) {
         self.exchangeName = exchangeName
         self.krWon = krWon
         self.name = name
         self.displayOrder = displayOrder
         self.identifier = identifier
+        self.category = category
     }
 
     var exchangeName: String?
@@ -29,6 +31,7 @@ struct Pay {
     var name: String?
     var displayOrder: Int16
     var identifier: UUID
+    var category: String
 }
 
 extension Pay {
@@ -38,6 +41,8 @@ extension Pay {
         managedPay.krWon = self.krWon
         managedPay.name = self.name ?? ""
         managedPay.identifier = self.identifier
+        managedPay.category = category
+        managedPay.displayOrder = displayOrder
         return managedPay
     }
 }
@@ -51,6 +56,7 @@ extension ManagedPay {
     @NSManaged public var exchangeName: String?
     @NSManaged public var krWon: Float
     @NSManaged public var name: String
+    @NSManaged public var category: String
     @NSManaged public var displayOrder: Int16
     @NSManaged public var identifier: UUID
     @NSManaged public var ofPayByDays: ManagedPayByDays?
@@ -65,7 +71,8 @@ extension ManagedPay {
             krWon: self.krWon,
             name: self.name,
             displayOrder: self.displayOrder,
-            identifier: self.identifier
+            identifier: self.identifier,
+            category: category
         )
     }
 }

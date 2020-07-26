@@ -60,9 +60,9 @@ class DirectAddReceiptViewModel: DirectAddReceiptViewModelInputs, DirectAddRecei
     exchangeName = BehaviorRelay(value: nil)
     saveEnabled = PublishSubject()
     
-    Observable.combineLatest(money, title, subTitle, exchangeName)
-      .flatMapLatest { (_, title, subTitle, exchangeName) -> Observable<Bool> in
-        if title != nil && subTitle != nil && exchangeName != nil {
+    Observable.combineLatest(money, title, subTitle)
+      .flatMapLatest { (_, title, subTitle) -> Observable<Bool> in
+        if title != nil && title?.isEmpty == false && subTitle != nil {
           return Observable.just(true)
         } else {
           return Observable.just(false)

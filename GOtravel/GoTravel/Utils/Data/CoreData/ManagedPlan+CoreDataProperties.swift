@@ -53,6 +53,7 @@ extension Plan {
         managedPlan.coordinate = self.coordinate.toManaged(context: context)
         managedPlan.address = self.address
         managedPlan.identifier = self.identifier
+        managedPlan.displayOrder = displayOrder
         return managedPlan
     }
 }

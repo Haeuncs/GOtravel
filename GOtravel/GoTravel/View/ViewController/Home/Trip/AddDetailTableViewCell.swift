@@ -209,15 +209,15 @@ extension AddDetailTableViewCell: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
-        guard var plans = planByDay?.plans else {
+        guard var planByDay = planByDay else {
             return
         }
 
         if editingStyle == .delete {
 //            try! self.realm.write {
-                plans.remove(at: indexPath.row)
+            planByDay.plans.remove(at: indexPath.row)
 //            }
-            self.mydelegate?.tableViewDeleteEvent(self)
+            self.mydelegate?.tableViewDeleteEvent(planByDay: planByDay)
 
         }
     }

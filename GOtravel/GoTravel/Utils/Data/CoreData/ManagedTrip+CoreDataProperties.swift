@@ -31,7 +31,6 @@ struct Trip {
     var planByDays: [PlanByDays]
 }
 
-
 extension Trip {
     func toManaged(context: NSManagedObjectContext) -> ManagedTrip {
         let trip = ManagedTrip(context: context)

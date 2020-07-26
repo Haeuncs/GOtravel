@@ -109,7 +109,7 @@ class TripDetailMainViewController: BaseUIViewController {
         button.addTarget(self, action: #selector(cancelEditPlans), for: .touchUpInside)
         return button
     }()
-    
+
     init(trip: Trip) {
         self.tripData = trip
         self.editedPlanByDays = trip.planByDays
@@ -375,23 +375,22 @@ extension TripDetailMainViewController: UITableViewDataSource {
 
 extension TripDetailMainViewController{
     @objc func pushExchangeViewController(){
-//        let vc = AccountMainViewController(
-//            trip: tripData,
-//            day: 0
-//        )
-//        //    vc.countryRealmDB = self.countryRealmDB
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = TripCostMainViewController(
+            trip: tripData,
+            day: 0
+        )
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension TripDetailMainViewController: TripDetailDataPopupDelegate {
     func TripDetailDataPopupMoney(day: Int) {
         // 여행 전 경비가 있음으로 + 1
-//        let vc = AccountMainViewController(
-//            trip: tripData,
-//            day: day + 1
-//        )
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = TripCostMainViewController(
+            trip: tripData,
+            day: day + 1
+        )
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func TripDetailDataPopupSchedule(day: Int) {
