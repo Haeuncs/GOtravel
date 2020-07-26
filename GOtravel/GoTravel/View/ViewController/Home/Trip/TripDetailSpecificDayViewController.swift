@@ -11,8 +11,8 @@ import RxSwift
 import RxCocoa
 import AnimatedTextInput
 import SnapKit
-
 import IQKeyboardManagerSwift
+import TravelDesignSystem
 
 class TripDetailSpecificDayViewController: BaseUIViewController {
 
@@ -87,10 +87,9 @@ class TripDetailSpecificDayViewController: BaseUIViewController {
         myCollectionView.register(ColorCVCell.self, forCellWithReuseIdentifier: "Cell")
         return myCollectionView
     }()
-    lazy var confirmButton: BottomButton = {
-        let button = BottomButton()
+    lazy var confirmButton: AccentButton = {
+        let button = AccentButton(title: "저장하기")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.title = "저장하기"
         button.addTarget(self, action: #selector(saveDidTap), for: .touchUpInside)
         return button
     }()

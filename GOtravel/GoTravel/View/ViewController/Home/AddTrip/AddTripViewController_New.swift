@@ -11,6 +11,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import TravelDesignSystem
 
 class AddTripViewControllerNew: BaseUIViewController {
   var disposeBag = DisposeBag()
@@ -52,7 +53,6 @@ class AddTripViewControllerNew: BaseUIViewController {
       make.bottom.equalTo(view.snp.bottom)
     }
     confirmButton.snp.makeConstraints { (make) in
-      make.height.equalTo(56)
       make.leading.equalTo(view.snp.leading).offset(16)
       make.trailing.equalTo(view.snp.trailing).offset(-16)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45)
@@ -115,7 +115,7 @@ class AddTripViewControllerNew: BaseUIViewController {
         return
       }
       self?.confirmButton.isHidden = false
-      self?.confirmButton.title = "\(place.title) 여행"
+        self?.confirmButton.titleLabel?.text = "\(place.title) 여행"
     })
       .disposed(by: disposeBag)
     
@@ -161,8 +161,9 @@ class AddTripViewControllerNew: BaseUIViewController {
     tableView.register(PlaceSearchTableViewCell.self, forCellReuseIdentifier: "cell")
     return tableView
   }()
-  lazy var confirmButton: BottomButton = {
-    let button = BottomButton()
+
+  lazy var confirmButton: AccentButton = {
+    let button = AccentButton(title: "")
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()

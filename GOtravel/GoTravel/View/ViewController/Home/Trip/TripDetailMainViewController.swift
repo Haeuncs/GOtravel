@@ -8,10 +8,10 @@
 
 import Foundation
 import UIKit
-
 import RxCocoa
 import RxSwift
 import SnapKit
+import TravelDesignSystem
 
 public enum SizeConstant {
     public static let paddingSize = 50
@@ -94,18 +94,16 @@ class TripDetailMainViewController: BaseUIViewController {
         return stack
     }()
 
-    lazy var editConfirmButton: BottomButton = {
-        let button = BottomButton()
+    lazy var editConfirmButton: AccentButton = {
+        let button = AccentButton(title: "수정 완료")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.title = "수정 완료"
         button.addTarget(self, action: #selector(saveEditPlans), for: .touchUpInside)
         return button
     }()
 
-    lazy var editCancelButton: BottomButton = {
-        let button = BottomButton()
+    lazy var editCancelButton: AccentButton = {
+        let button = AccentButton(title: "취소", backgroundColor: UIColor.greyishTeal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.title = "취소"
         button.addTarget(self, action: #selector(cancelEditPlans), for: .touchUpInside)
         return button
     }()
@@ -165,7 +163,7 @@ class TripDetailMainViewController: BaseUIViewController {
         ])
 
         editPlanStackView.snp.makeConstraints { (make) in
-            make.height.equalTo(56)
+//            make.height.equalTo(56)
             make.leading.equalTo(view.snp.leading).offset(16)
             make.trailing.equalTo(view.snp.trailing).offset(-16)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-45)
