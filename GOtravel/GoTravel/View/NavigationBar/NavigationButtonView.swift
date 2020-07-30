@@ -47,6 +47,12 @@ class NavigationButtonView: UIView {
     btn.translatesAutoresizingMaskIntoConstraints = false
     return btn
   }()
+
+    lazy var actionButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 }
 
 class NavigationButton: UIButton{
@@ -71,7 +77,6 @@ class NavigationButton: UIButton{
       make.centerY.equalTo(contentView.snp.centerY)
       make.leading.equalTo(imageView_.snp.trailing).offset(4)
       make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-      
     }
   }
   
@@ -88,7 +93,7 @@ class NavigationButton: UIButton{
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFit
-    view.image = UIImage(named: "back3X")
+    view.image = UIImage(named: "back")
     return view
   }()
   lazy var popLabel: UILabel = {
